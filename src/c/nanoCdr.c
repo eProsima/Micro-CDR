@@ -1,7 +1,7 @@
-#include "nanoCdr.h"
+#include <nanocdr/nanoCdr.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nanoBuffer.h"
+#include <nanocdr/nanoBuffer.h>
 
 #include <stdio.h>
 
@@ -2127,7 +2127,7 @@ short serializeLongArray (const long * long_t, const unsigned int numElements)
 	return result;
 }
 
-short serializeLongArrayEndiannes (const long * long_t, const unsigned int numElements, Endianness endianness)
+short serializeLongArrayEndianness (const long * long_t, const unsigned int numElements, Endianness endianness)
 {
 	short result = 0;
 	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);

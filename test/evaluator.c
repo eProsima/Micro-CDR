@@ -21,127 +21,127 @@ int main (int argc, const char* argv[])
 
 	printf("\nSERIALIZE basic\n\n");
 
-	char char_in = 'b';
+	const char char_in = 'b';
 	printf("----> char: %c\n", char_in);
 	serializeChar(char_in);
 
-	unsigned char uchar_in = 'b';
+	const unsigned char uchar_in = 'b';
 	printf("----> uchar: %c\n", uchar_in);
 	serializeChar(uchar_in);
 
-	signed char schar_in = 'b';
+	const signed char schar_in = 'b';
 	printf("----> schar: %c\n", schar_in);
 	serializeChar(schar_in);
 
-	char string_in[25] = "En un lugar de la mancha";
+	const char string_in[25] = "En un lugar de la mancha";
 	printf("----> string: %s .\n", string_in);
 	serializeString(string_in, strlen(string_in));
 
-	short short_in = -256;
+	const short short_in = -256;
 	printf("----> short: %d\n", short_in);
 	serializeShort(short_in);
 
-	unsigned short ushort_in = 256;
+	const unsigned short ushort_in = 256;
 	printf("----> ushort: %d\n", ushort_in);
 	serializeUnsignedShort(ushort_in);
 
-	int int_in = -2549;
+	const int int_in = -2549;
 	printf("----> int: %d\n", int_in);
 	serializeInt(int_in);
 
-	unsigned uint_in = 2549;
+	const unsigned uint_in = 2549;
 	printf("----> uint: %d\n", uint_in);
 	serializeUnsignedInt(uint_in);
 
-	long long_in = -25564852;
+	const long long_in = -25564852;
 	printf("----> long: %ld\n", long_in);
 	serializeLong(long_in);
 
-	unsigned long ulong_in = 25564852;
+	const unsigned long ulong_in = 25564852;
 	printf("----> ulong: %ld\n", ulong_in);
 	serializeUnsignedLong(ulong_in);
 
-	long long longlong_in = -25564852;
+	const long long longlong_in = -25564852;
 	printf("----> long long: %lld\n", longlong_in);
 	serializeLong(longlong_in);
 
-	unsigned long long ulonglong_in = 25564852;
+	const unsigned long long ulonglong_in = 25564852;
 	printf("----> ulonglong: %lld\n", ulonglong_in);
 	serializeUnsignedLongLong(ulonglong_in);
 
-	float float_in = 256.25;
+	const float float_in = 256.25;
 	printf("----> float: %f\n", float_in);
 	serializeFloat(float_in);
 
-	double double_in = 125256.25;
+	const double double_in = 125256.25;
 	printf("----> double: %lf\n", double_in);
 	serializeDouble(double_in);
 
-	long double longdouble_in = 125256.25;
+	const long double longdouble_in = 125256.25;
 	printf("----> long double: %LF\n", longdouble_in);
 	serializeLongDouble(longdouble_in);
 
 	printf("\nSERIALIZE Sequences\n\n");
 
-	char *a[2];
+	const char *a[2];
 	a[0] = "en un lugar de la mancha";
 	a[1] = "en un lugar de la mancha";
 	printf("----> stringSequence\n");
 	serializeStringSequence(a,2);
 
-	char SequenceChar[10] = {'a','b','c','d','e','f','h','j','u','p'};
+	const char SequenceChar[10] = {'a','b','c','d','e','f','h','j','u','p'};
 	printf("----> charSequence\n");
 	serializeCharSequence(SequenceChar, 10);
 
-	unsigned char SequenceUChar[10] = {'a','b','c','d','e','f','h','j','u','p'};
+	const unsigned char SequenceUChar[10] = {'a','b','c','d','e','f','h','j','u','p'};
 	printf("----> uCharSequence\n");
 	serializeUnsignedCharSequence(SequenceUChar, 10);
 
-	signed char SequenceSChar[10] = {'a','b','c','d','e','f','h','j','u','p'};
+	const signed char SequenceSChar[10] = {'a','b','c','d','e','f','h','j','u','p'};
 	printf("----> sCharSequence\n");
 	serializeSignedCharSequence(SequenceSChar, 10);
 
-	short SequenceShort[10] = {1,2,3,4,5,6,-7,8,9,-10};
+	const short SequenceShort[10] = {1,2,3,4,5,6,-7,8,9,-10};
 	printf("----> shortSequence\n");
 	serializeShortSequence(SequenceShort, 10);
 
-	unsigned short SequenceUShort[10] = {1,2,3,4,5,6,7,8,9,10};
+	const unsigned short SequenceUShort[10] = {1,2,3,4,5,6,7,8,9,10};
 	printf("----> ushortSequence\n");
 	serializeUnsignedShortSequence(SequenceUShort, 10);
 
-	int SequenceInt[10] = {1,2,3,4,5,6,-7,8,9,-10};
+	const int SequenceInt[10] = {1,2,3,4,5,6,-7,8,9,-10};
 	printf("----> intSequence\n");
 	serializeIntSequence(SequenceInt, 10);
 
-	unsigned int SequenceUInt[10] = {1,2,3,4,5,6,7,8,9,10};
+	const unsigned int SequenceUInt[10] = {1,2,3,4,5,6,7,8,9,10};
 	printf("----> uintSequence\n");
 	serializeUnsignedIntSequence(SequenceUInt, 10);
 
-	long SequenceLong[10] = {1,2,3,4,5,-6,7,8,9,-10};
+	const long SequenceLong[10] = {1,2,3,4,5,-6,7,8,9,-10};
 	printf("----> longSequence\n");
 	serializeLongSequence(SequenceLong, 10);
 
-	unsigned long SequenceULong[10] = {1,2,3,4,5,6,7,8,9,10};
+	const unsigned long SequenceULong[10] = {1,2,3,4,5,6,7,8,9,10};
 	printf("----> ulongSequence\n");
 	serializeUnsignedLongSequence(SequenceULong, 10);
 
-	long long SequenceLongLong[10] = {1,2,3,4,5,-6,7,8,9,-10};
+	const long long SequenceLongLong[10] = {1,2,3,4,5,-6,7,8,9,-10};
 	printf("----> longlongSequence\n");
 	serializeLongLongSequence(SequenceLongLong, 10);
 
-	unsigned long long SequenceULongLong[10] = {1,2,3,4,5,6,7,8,9,10};
+	const unsigned long long SequenceULongLong[10] = {1,2,3,4,5,6,7,8,9,10};
 	printf("----> ulonglongSequence\n");
 	serializeUnsignedLongLongSequence(SequenceULongLong, 10);
 
-	float SequenceFloat[10] = {1.0,2.0,3.0,4.0,5.0,6.0,-7.0,8.0,9.0,-10.0};
+	const float SequenceFloat[10] = {1.0,2.0,3.0,4.0,5.0,6.0,-7.0,8.0,9.0,-10.0};
 	printf("----> floatSequence\n");
 	serializeFloatSequence(SequenceFloat, 10);
 
-	double SequenceDouble[10] = {1.0,2.0,3.0,4.0,5.0,6.0,-0.7,8.0,9.0,-10.0};
+	const double SequenceDouble[10] = {1.0,2.0,3.0,4.0,5.0,6.0,-0.7,8.0,9.0,-10.0};
 	printf("----> doubleSequence\n");
 	serializeDoubleSequence(SequenceDouble, 10);
 
-	long double SequenceLongDouble[10] = {1.0,2.0,3.0,4.0,5.0,6.0,-0.7,8.0,9.0,-10.0};
+	const long double SequenceLongDouble[10] = {1.0,2.0,3.0,4.0,5.0,6.0,-0.7,8.0,9.0,-10.0};
 	printf("----> longdoubleSequence\n");
 	serializeLongDoubleSequence(SequenceLongDouble, 10);
 
