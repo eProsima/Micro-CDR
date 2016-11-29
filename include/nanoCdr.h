@@ -728,6 +728,8 @@ short serializeLongDoubleArrayEndianness (const long double * longdouble_t, cons
 
 /*!
 * @brief This function deserializes an array of chars.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param char_t The variable that will store the array of chars read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -736,6 +738,8 @@ short deserializeCharArray (char ** char_t, const unsigned int numElements);
 
 /*!
 * @brief This function deserializes an array of unsigned chars.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param uchar_t The variable that will store the array of chars read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -744,6 +748,8 @@ short deserializeUnsignedCharArray (unsigned char ** uchar_t, const unsigned int
 
 /*!
 * @brief This function deserializes an array of signed chars.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param schar_t The variable that will store the array of signed chars read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -752,6 +758,8 @@ short deserializeSignedCharArray (signed char ** schar_t, const unsigned int num
 
 /*!
 * @brief This function deserializes an array of strings.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param string_t The variable that will store the array of strings read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -760,6 +768,8 @@ short deserializeStringArray (char *** string_t, const unsigned int numElements)
 
 /*!
 * @brief This function deserializes an array of strings with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param string_t The variable that will store the array of strings read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -769,6 +779,8 @@ short deserializeStringArrayEndiannes (char *** string_t, const unsigned int num
 
 /*!
 * @brief This function deserializes an array of shorts.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param short_t The variable that will store the array of shorts read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -777,6 +789,8 @@ short deserializeShortArray (short ** short_t, const unsigned int numElements);
 
 /*!
 * @brief This function deserializes an array of shorts with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param short_t The variable that will store the array of shorts read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -786,6 +800,8 @@ short deserializeShortArrayEndianness (short ** short_t, const unsigned int numE
 
 /*!
 * @brief This function deserializes an array of unsigned shorts.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param ushort_t The variable that will store the array of unsigned shorts read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -794,6 +810,8 @@ short deserializeUnsignedShortArray (unsigned short ** ushort_t, const unsigned 
 
 /*!
 * @brief This function deserializes an array of unsigned shorts with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param ushort_t The variable that will store the array of unsigned shorts read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -803,6 +821,8 @@ short deserializeUnsignedShortArrayEndianness (unsigned short ** ushort_t, const
 
 /*!
 * @brief This function deserializes an array of ints.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param int_t The variable that will store the array of ints read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -811,6 +831,8 @@ short deserializeIntArray (int ** int_t, const unsigned int numElements);
 
 /*!
 * @brief This function deserializes an array of ints with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param int_t The variable that will store the array of ints read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -820,6 +842,8 @@ short deserializeIntArrayEndianness (int ** int_t, const unsigned int numElement
 
 /*!
 * @brief This function deserializes an array of unsigned ints.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param uint_t The variable that will store the array of unsigned ints read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -828,6 +852,8 @@ short deserializeUnsignedIntArray (unsigned int ** int_t, const unsigned int num
 
 /*!
 * @brief This function deserializes an array of unsigned ints with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param uint_t The variable that will store the array of unsigned ints read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -837,6 +863,8 @@ short deserializeUnsignedIntArrayEndianness (unsigned int ** int_t, const unsign
 
 /*!
 * @brief This function deserializes an array of longs.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param long_t The variable that will store the array of longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -845,6 +873,8 @@ short deserializeLongArray (long ** long_t, const unsigned int numElements);
 
 /*!
 * @brief This function deserializes an array of longs with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param long_t The variable that will store the array of longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -854,6 +884,8 @@ short deserializeLongArrayEndianness (long ** long_t, const unsigned int numElem
 
 /*!
 * @brief This function deserializes an array of unsigned longs.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param ulong_t The variable that will store the array of unsigned longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -862,6 +894,8 @@ short deserializeUnsignedLongArray (unsigned long ** ulong_t, const unsigned int
 
 /*!
 * @brief This function deserializes an array of unsigned longs with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param ulong_t The variable that will store the array of unsigned longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -871,6 +905,8 @@ short deserializeUnsignedLongArrayEndiannness (unsigned long ** ulong_t, const u
 
 /*!
 * @brief This function deserializes an array of long longs.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param longlong_t The variable that will store the array of long longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -879,6 +915,8 @@ short deserializeLongLongArray (long long ** longlong_t, const unsigned int numE
 
 /*!
 * @brief This function deserializes an array of long longs with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param longlong_t The variable that will store the array of long longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -888,6 +926,8 @@ short deserializeLongLongArrayEndianness (long long ** longlong_t, const unsigne
 
 /*!
 * @brief This function deserializes an array of unsigned long longs.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param ulonglong_t The variable that will store the array of unsigned long longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -896,6 +936,8 @@ short deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, const
 
 /*!
 * @brief This function deserializes an array of unsigned long longs with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param ulonglong_t The variable that will store the array of unsigned long longs read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -905,6 +947,8 @@ short deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglon
 
 /*!
 * @brief This function deserializes an array of floats.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param float_t The variable that will store the array of floats read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -913,6 +957,8 @@ short deserializeFloatArray (float ** float_t, const unsigned int numElements);
 
 /*!
 * @brief This function deserializes an array of floats with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param float_t The variable that will store the array of floats read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -922,6 +968,8 @@ short deserializeFloatArrayEndianness (float ** float_t, const unsigned int numE
 
 /*!
 * @brief This function deserializes an array of doubles.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param float_t The variable that will store the array of doubles read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -930,6 +978,8 @@ short deserializeDoubleArray (double ** double_t, const unsigned int numElements
 
 /*!
 * @brief This function deserializes an array of doubles with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param float_t The variable that will store the array of doubles read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
@@ -939,6 +989,8 @@ short deserializeDoubleArrayEndianness (double ** double_t, const unsigned int n
 
 /*!
 * @brief This function deserializes an array of long doubles.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param longdouble_t The variable that will store the array of long doubles read from the buffer.
 * @param numElements Number of the elements in the array.
 * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
@@ -947,6 +999,8 @@ short deserializeLongDoubleArray (long double ** longdouble_t, const unsigned in
 
 /*!
 * @brief This function deserializes an array of long doubles with a different endianness.
+* This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+* The user will have to free this allocated memory using free() or freeCdr()
 * @param longdouble_t The variable that will store the array of long doubles read from the buffer.
 * @param numElements Number of the elements in the array.
 * @param endianness Endianness that will be used in the deserialization of this value.
