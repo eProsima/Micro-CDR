@@ -99,7 +99,7 @@ if(MSVC OR MSVC_IDE)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
     endif()
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra --std=c++11")
 endif()
 
 ###############################################################################
@@ -150,11 +150,11 @@ add_subdirectory(src/c)
 if(NOT EPROSIMA_INSTALLER)
     include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
     check_gtest()
-    #if(GTEST_FOUND)
+    if(GTEST_FOUND)
         enable_testing()
         include(CTest)
         add_subdirectory(test)
-    #endif()
+    endif()
 endif()
 
 ###############################################################################

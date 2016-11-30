@@ -43,6 +43,8 @@
     '-fexceptions',
     '-Os',
     '-x',
+    '-std=c99',
+    '-std=c++11',
     '-isystem',
     '/usr/include',
     '-I',

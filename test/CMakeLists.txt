@@ -1,4 +1,4 @@
-     
+
 
     # Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
     #
@@ -13,22 +13,23 @@
     # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     # See the License for the specific language governing permissions and
     # limitations under the License.
-     
+
     if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
         include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
-     
+
         # If Windows, link against export dll functions
         if(WIN32)
             add_definitions(-DNANOCDR_DYN_LINK)
         endif()
-     
-     
+
+
         ###############################################################################
         # Unit tests
         ###############################################################################
-        set(UNITTESTS_SOURCE evaluator.c)
+        set(UNITTESTS_SOURCE DynamicTest.cpp)
         add_executable(UnitTests ${UNITTESTS_SOURCE})
         add_gtest(UnitTests ${UNITTESTS_SOURCE})
         target_include_directories(UnitTests PRIVATE ${GTEST_INCLUDE_DIRS})
         target_link_libraries(UnitTests nanocdr ${GTEST_BOTH_LIBRARIES})
+
     endif()
