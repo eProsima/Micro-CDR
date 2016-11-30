@@ -10,79 +10,77 @@ extern "C" {
   #include <nanocdr/nanoCdr.h>
 }
 
-  #define BUFFER_LENGTH 2000
+  const signed char d_octet_t = 32;
+  const char d_char_t =  'Z';
 
-  const signed char octet_t = 32;
-  const char char_t =  'Z';
+  const unsigned short d_ushort_t = 65500;
+  const short d_short_t = -32700;
+  const unsigned int d_ulong_t = 4294967200;
+  const int d_long_t = -2147483600;
 
-  const unsigned short ushort_t = 65500;
-  const short short_t = -32700;
-  const unsigned int ulong_t = 4294967200;
-  const int long_t = -2147483600;
+  const unsigned long d_ulonglong_t = 18446744073709551600u;
+  const long d_longlong_t = -9223372036800;
 
-  const unsigned long ulonglong_t = 18446744073709551600u;
-  const long longlong_t = -9223372036800;
-
-  const float float_tt = FLT_MIN;
-  const double double_tt = DBL_MIN;
+  const float d_float_tt = FLT_MIN;
+  const double d_double_tt = DBL_MIN;
 
   //TODO bool
   //static const bool bool_t = true;
 
-  const char * string_t = "Hola a todos, esto es un test";
-  const char * emptystring_t = "";
+  const char * d_string_t = "Hola a todos, esto es un test";
+  const char * d_emptystring_t = "";
 
-  const unsigned char octet_array_t[5] = {1, 2, 3, 4, 5};
-  const unsigned char octet_array_2_t[5] = {5, 4, 3, 2, 1};
-  const char char_array_t[5] = {'A', 'B', 'C', 'D', 'E'};
-  const char char_array_2_t[5] = {'E', 'D', 'C', 'B', 'A'};
+  const unsigned char d_octet_array_t[5] = {1, 2, 3, 4, 5};
+  const unsigned char d_octet_array_2_t[5] = {5, 4, 3, 2, 1};
+  const char d_char_array_t[5] = {'A', 'B', 'C', 'D', 'E'};
+  const char d_char_array_2_t[5] = {'E', 'D', 'C', 'B', 'A'};
 
-  const unsigned short ushort_array_t [5] = {65500, 65501, 65502, 65503, 65504};
-  const unsigned short ushort_array_2_t[5] = {65504, 65503, 65502, 65501, 65500};
-  const short short_array_t[5] = {-32700, -32701, -32702, -32703, -32704};
-  const short short_array_2_t[5] = {-32704, -32703, -32702, -32701, -32700};
+  const unsigned short d_ushort_array_t [5] = {65500, 65501, 65502, 65503, 65504};
+  const unsigned short d_ushort_array_2_t[5] = {65504, 65503, 65502, 65501, 65500};
+  const short d_short_array_t[5] = {-32700, -32701, -32702, -32703, -32704};
+  const short d_short_array_2_t[5] = {-32704, -32703, -32702, -32701, -32700};
 
-  const unsigned int ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 4294967203, 4294967204};
-  const unsigned int ulong_array_2_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
-  const int long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
-  const int long_array_2_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
-
-
-  const unsigned long ulonglong_array_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
-  const unsigned long ulonglong_array_2_t[5] = {18446744073709551604u, 18446744073709551603u, 18446744073709551602u, 18446744073709551601u, 18446744073709551600u};
-  const long  longlong_array_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
-  const long longlong_array_2_t[5] = {-9223372036804, -9223372036803, -9223372036802, -9223372036801, -9223372036800};
+  const unsigned int d_ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 4294967203, 4294967204};
+  const unsigned int d_ulong_array_2_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
+  const int d_long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
+  const int d_long_array_2_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
 
 
-  const float float_array_t[5] = {float_tt, float_tt + 1, float_tt + 2, float_tt + 3, float_tt + 4};
-  const float float_array_2_t[5] = {float_tt + 4, float_tt + 3, float_tt + 2, float_tt + 1, float_tt};
+  const unsigned long d_ulonglong_array_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
+  const unsigned long d_ulonglong_array_2_t[5] = {18446744073709551604u, 18446744073709551603u, 18446744073709551602u, 18446744073709551601u, 18446744073709551600u};
+  const long  d_longlong_array_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
+  const long d_longlong_array_2_t[5] = {-9223372036804, -9223372036803, -9223372036802, -9223372036801, -9223372036800};
 
-  const double double_array_t[5] = {double_tt, double_tt + 1, double_tt + 2, double_tt + 3, double_tt + 4};
-  const double double_array_2_t[5] = {double_tt + 4, double_tt + 3, double_tt + 2, double_tt + 1, double_tt};
+
+  const float d_float_array_t[5] = {d_float_tt, d_float_tt + 1, d_float_tt + 2, d_float_tt + 3, d_float_tt + 4};
+  const float d_float_array_2_t[5] = {d_float_tt + 4, d_float_tt + 3, d_float_tt + 2, d_float_tt + 1, d_float_tt};
+
+  const double d_double_array_t[5] = {d_double_tt, d_double_tt + 1, d_double_tt + 2, d_double_tt + 3, d_double_tt + 4};
+  const double d_double_array_2_t[5] = {d_double_tt + 4, d_double_tt + 3, d_double_tt + 2, d_double_tt + 1, d_double_tt};
 
   //TODO bool
   //static const std::array<bool, 5> bool_array_t = {{true, false, true, false, true}};
   //static const bool bool_array_2_t[5] = {false, true, false, true, false};
 
   // Added because error 336.
-  const unsigned char octet_seq_t[5] = {5, 4, 3, 2, 1};
-  const char char_seq_t[5] = {'E', 'D', 'C', 'B', 'A'};
-  const unsigned short ushort_seq_t[5] = {65504, 65503, 65502, 65501, 65500};
-  const short short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
-  const unsigned int ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
-  const int long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
+  const unsigned char d_octet_seq_t[5] = {5, 4, 3, 2, 1};
+  const char d_char_seq_t[5] = {'E', 'D', 'C', 'B', 'A'};
+  const unsigned short d_ushort_seq_t[5] = {65504, 65503, 65502, 65501, 65500};
+  const short d_short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
+  const unsigned int d_ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
+  const int d_long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
 
-  const unsigned long ulonglong_seq_t[5] = {18446744073709551604u, 18446744073709551603u, 18446744073709551602u, 18446744073709551601u, 18446744073709551600u};
-  const long longlong_seq_t[5] = {-9223372036804, -9223372036803, -9223372036802, -9223372036801, -9223372036800};
+  const unsigned long d_ulonglong_seq_t[5] = {18446744073709551604u, 18446744073709551603u, 18446744073709551602u, 18446744073709551601u, 18446744073709551600u};
+  const long d_longlong_seq_t[5] = {-9223372036804, -9223372036803, -9223372036802, -9223372036801, -9223372036800};
 
-  const float float_seq_t[5] = {float_tt + 4, float_tt + 3, float_tt + 2, float_tt + 1, float_tt};
-  const double double_seq_t[5] = {double_tt + 4, double_tt + 3, double_tt + 2, double_tt + 1, double_tt};
+  const float d_float_seq_t[5] = {d_float_tt + 4, d_float_tt + 3, d_float_tt + 2, d_float_tt + 1, d_float_tt};
+  const double d_double_seq_t[5] = {d_double_tt + 4, d_double_tt + 3, d_double_tt + 2, d_double_tt + 1, d_double_tt};
 
   //static const bool bool_seq_t[5] = {true, true, false, false, true};
 
-  const char * string_seq_t[5] = {"HELLO", "BYE", "GOODBYE", "HOLA", "ADIOS"};
+  const char * d_string_seq_t[5] = {"HELLO", "BYE", "GOODBYE", "HOLA", "ADIOS"};
   // Added because error 337
-  const char * c_string_t = "HOLA";
+  const char * d_c_string_t = "HOLA";
 
 
   TEST(nanoCDRDynamicTests, Char)
@@ -93,12 +91,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeChar(char_t);
+      serializeChar(d_char_t);
 
       // Deseriazliation.
       deserializeChar(&char_out);
 
-      EXPECT_EQ(char_out, char_t);
+      EXPECT_EQ(char_out, d_char_t);
   }
 
   TEST(nanoCDRDynamicTests, SignedChar)
@@ -108,12 +106,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeSignedChar(octet_t);
+      serializeSignedChar(d_octet_t);
 
       // Deseriazliation.
       deserializeSignedChar(&octect_out);
 
-      EXPECT_EQ(octect_out, octet_t);
+      EXPECT_EQ(octect_out, d_octet_t);
 
       destroyBuffer();
   }
@@ -125,12 +123,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeShort(short_t);
+      serializeShort(d_short_t);
 
       // Deseriazliation.
       deserializeShort(&short_out);
 
-      EXPECT_EQ(short_out, short_t);
+      EXPECT_EQ(short_out, d_short_t);
 
       destroyBuffer();
   }
@@ -142,12 +140,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedShort(ushort_t);
+      serializeUnsignedShort(d_ushort_t);
 
       // Deseriazliation.
       deserializeUnsignedShort(&ushort_out);
 
-      EXPECT_EQ(ushort_out, ushort_t);
+      EXPECT_EQ(ushort_out, d_ushort_t);
 
       destroyBuffer();
   }
@@ -159,12 +157,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeInt(long_t);
+      serializeInt(d_long_t);
 
       // Deseriazliation.
       deserializeInt(&long_out);
 
-      EXPECT_EQ(long_out, long_t);
+      EXPECT_EQ(long_out, d_long_t);
 
       destroyBuffer();
   }
@@ -176,12 +174,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedInt(ulong_t);
+      serializeUnsignedInt(d_ulong_t);
 
       // Deseriazliation.
       deserializeUnsignedInt(&ulong_out);
 
-      EXPECT_EQ(ulong_out, ulong_t);
+      EXPECT_EQ(ulong_out, d_ulong_t);
 
       destroyBuffer();
   }
@@ -193,12 +191,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeFloat(float_tt);
+      serializeFloat(d_float_tt);
 
       // Deseriazliation.
       deserializeFloat(&float_out);
 
-      EXPECT_EQ(float_out, float_tt);
+      EXPECT_EQ(float_out, d_float_tt);
 
       destroyBuffer();
   }
@@ -210,12 +208,12 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeDouble(double_tt);
+      serializeDouble(d_double_tt);
 
       // Deseriazliation.
       deserializeDouble(&double_out);
 
-      EXPECT_EQ(double_out, double_tt);
+      EXPECT_EQ(double_out, d_double_tt);
 
       destroyBuffer();
   }
@@ -226,16 +224,16 @@ extern "C" {
       // Check good case.
       newDynamicBuffer();
 
-      const unsigned int length = std::strlen(string_t);
+      const unsigned int length = std::strlen(d_string_t);
       unsigned int length_out;
 
       // Serialization.
-      serializeString(string_t, length);
+      serializeString(d_string_t, length);
 
       // Deseriazliation.
       deserializeString(&string_out, &length_out);
 
-      unsigned int comparative = std::strcmp(string_out, string_t);
+      unsigned int comparative = std::strcmp(string_out, d_string_t);
 
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
@@ -250,16 +248,16 @@ extern "C" {
       // Check good case.
       newDynamicBuffer();
 
-      const unsigned int length = std::strlen(emptystring_t);
+      const unsigned int length = std::strlen(d_emptystring_t);
       unsigned int length_out;
 
       // Serialization.
-      serializeString(emptystring_t, length);
+      serializeString(d_emptystring_t, length);
 
       // Deseriazliation.
       deserializeString(&string_out, &length_out);
 
-      unsigned int comparative = std::strcmp(string_out, emptystring_t);
+      unsigned int comparative = std::strcmp(string_out, d_emptystring_t);
 
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
@@ -275,7 +273,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeCharArray(char_array_t, 5);
+      serializeCharArray(d_char_array_t, 5);
 
       // Deseriazliation.
       deserializeCharArray(&char_out, 5);
@@ -283,7 +281,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(char_array_t[i], char_out[i]);
+        EXPECT_EQ(d_char_array_t[i], char_out[i]);
       }
       free(char_out);
 
@@ -297,7 +295,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedCharArray(octet_array_t, 5);
+      serializeUnsignedCharArray(d_octet_array_t, 5);
 
       // Deseriazliation.
       deserializeUnsignedCharArray(&char_out, 5);
@@ -305,7 +303,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(octet_array_t[i], char_out[i]);
+        EXPECT_EQ(d_octet_array_t[i], char_out[i]);
       }
       free(char_out);
 
@@ -319,7 +317,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeShortArray(short_array_t, 5);
+      serializeShortArray(d_short_array_t, 5);
 
       // Deseriazliation.
       deserializeShortArray(&short_out, 5);
@@ -327,7 +325,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(short_array_t[i], short_out[i]);
+        EXPECT_EQ(d_short_array_t[i], short_out[i]);
       }
       free(short_out);
 
@@ -341,7 +339,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedShortArray(ushort_array_t, 5);
+      serializeUnsignedShortArray(d_ushort_array_t, 5);
 
       // Deseriazliation.
       deserializeUnsignedShortArray(&ushort_out, 5);
@@ -349,7 +347,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(ushort_array_t[i], ushort_out[i]);
+        EXPECT_EQ(d_ushort_array_t[i], ushort_out[i]);
       }
       free(ushort_out);
 
@@ -363,7 +361,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeIntArray(long_array_t, 5);
+      serializeIntArray(d_long_array_t, 5);
 
       // Deseriazliation.
       deserializeIntArray(&int_out, 5);
@@ -371,7 +369,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(long_array_t[i], int_out[i]);
+        EXPECT_EQ(d_long_array_t[i], int_out[i]);
       }
       free(int_out);
 
@@ -385,7 +383,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedIntArray(ulong_array_t, 5);
+      serializeUnsignedIntArray(d_ulong_array_t, 5);
 
       // Deseriazliation.
       deserializeUnsignedIntArray(&uint_out, 5);
@@ -393,7 +391,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(ulong_array_t[i], uint_out[i]);
+        EXPECT_EQ(d_ulong_array_t[i], uint_out[i]);
       }
       free(uint_out);
 
@@ -407,7 +405,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeFloatArray(float_array_t, 5);
+      serializeFloatArray(d_float_array_t, 5);
 
       // Deseriazliation.
       deserializeFloatArray(&float_out, 5);
@@ -415,7 +413,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(float_array_t[i], float_out[i]);
+        EXPECT_EQ(d_float_array_t[i], float_out[i]);
       }
       free(float_out);
 
@@ -429,7 +427,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeDoubleArray(double_array_t, 5);
+      serializeDoubleArray(d_double_array_t, 5);
 
       // Deseriazliation.
       deserializeDoubleArray(&double_out, 5);
@@ -437,7 +435,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(double_array_t[i], double_out[i]);
+        EXPECT_EQ(d_double_array_t[i], double_out[i]);
       }
 
       free(double_out);
@@ -446,14 +444,14 @@ extern "C" {
   }
 
 /*
-  TEST(nanoCDRDynamicTests, StringArray)
+  TEST(nanoCDRDynamicTests, long long int)
   {
       char ** string_out;
       // Check good case.
       newDynamicBuffer();
 
       // Serialization.
-      serializeStringArray(string_seq_t, 5);
+      serializeStringArray(d_string_seq_t, 5);
 
       // Deseriazliation.
       deserializeStringArray(&string_out, 5);
@@ -461,9 +459,9 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
+        int length_in = std::strlen(d_string_seq_t[i]);
         int length_out = std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
+        int comparative = std::strcmp(d_string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
         free(string_out[i]);
@@ -482,7 +480,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeCharSequence(char_seq_t, 5);
+      serializeCharSequence(d_char_seq_t, 5);
 
       // Deseriazliation.
       deserializeCharSequence(&char_out, &size_out);
@@ -492,7 +490,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(char_seq_t[i], char_out[i]);
+        EXPECT_EQ(d_char_seq_t[i], char_out[i]);
       }
 
       free(char_out);
@@ -508,7 +506,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedCharSequence(octet_seq_t, 5);
+      serializeUnsignedCharSequence(d_octet_seq_t, 5);
 
       // Deseriazliation.
       deserializeUnsignedCharSequence(&char_out, &size_out);
@@ -518,7 +516,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(octet_seq_t[i], char_out[i]);
+        EXPECT_EQ(d_octet_seq_t[i], char_out[i]);
       }
 
       free(char_out);
@@ -534,7 +532,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeShortSequence(short_seq_t, 5);
+      serializeShortSequence(d_short_seq_t, 5);
 
       // Deseriazliation.
       deserializeShortSequence(&short_out, &size_out);
@@ -544,7 +542,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(short_seq_t[i], short_out[i]);
+        EXPECT_EQ(d_short_seq_t[i], short_out[i]);
       }
 
       free(short_out);
@@ -560,7 +558,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedShortSequence(ushort_seq_t, 5);
+      serializeUnsignedShortSequence(d_ushort_seq_t, 5);
 
       // Deseriazliation.
       deserializeUnsignedShortSequence(&ushort_out, &size_out);
@@ -570,7 +568,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(ushort_seq_t[i], ushort_out[i]);
+        EXPECT_EQ(d_ushort_seq_t[i], ushort_out[i]);
       }
 
       free(ushort_out);
@@ -586,7 +584,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeIntSequence(long_seq_t, 5);
+      serializeIntSequence(d_long_seq_t, 5);
 
       // Deseriazliation.
       deserializeIntSequence(&int_out, &size_out);
@@ -596,7 +594,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(long_seq_t[i], int_out[i]);
+        EXPECT_EQ(d_long_seq_t[i], int_out[i]);
       }
 
       free(int_out);
@@ -612,7 +610,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeUnsignedIntSequence(ulong_seq_t, 5);
+      serializeUnsignedIntSequence(d_ulong_seq_t, 5);
 
       // Deseriazliation.
       deserializeUnsignedIntSequence(&uint_out, &size_out);
@@ -622,7 +620,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(ulong_seq_t[i], uint_out[i]);
+        EXPECT_EQ(d_ulong_seq_t[i], uint_out[i]);
       }
 
       free(uint_out);
@@ -638,7 +636,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeFloatSequence(float_seq_t, 5);
+      serializeFloatSequence(d_float_seq_t, 5);
 
       // Deseriazliation.
       deserializeFloatSequence(&float_out, &size_out);
@@ -648,7 +646,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(float_seq_t[i], float_out[i]);
+        EXPECT_EQ(d_float_seq_t[i], float_out[i]);
       }
 
       free(float_out);
@@ -664,7 +662,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeDoubleSequence(double_seq_t, 5);
+      serializeDoubleSequence(d_double_seq_t, 5);
 
       // Deseriazliation.
       deserializeDoubleSequence(&double_out, &size_out);
@@ -674,7 +672,7 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        EXPECT_EQ(double_seq_t[i], double_out[i]);
+        EXPECT_EQ(d_double_seq_t[i], double_out[i]);
       }
 
       free(double_out);
@@ -690,7 +688,7 @@ extern "C" {
       newDynamicBuffer();
 
       // Serialization.
-      serializeStringSequence(string_seq_t, 5);
+      serializeStringSequence(d_string_seq_t, 5);
 
       unsigned int size_out;
 
@@ -702,9 +700,9 @@ extern "C" {
       int i;
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
+        int length_in = std::strlen(d_string_seq_t[i]);
         int length_out = std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
+        int comparative = std::strcmp(d_string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
       }
@@ -728,23 +726,23 @@ TEST(nanoCDRDynamicTests, SimpleVar)
 
   newDynamicBuffer();
 
-  const unsigned int length = std::strlen(string_t);
+  const unsigned int length = std::strlen(d_string_t);
   unsigned int length_out;
 
-  const unsigned int length_2 = std::strlen(emptystring_t);
+  const unsigned int length_2 = std::strlen(d_emptystring_t);
   unsigned int length_out_2;
 
   // Serialization.
-  serializeChar(char_t);
-  serializeSignedChar(octet_t);
-  serializeShort(short_t);
-  serializeUnsignedShort(ushort_t);
-  serializeInt(long_t);
-  serializeUnsignedInt(ulong_t);
-  serializeFloat(float_tt);
-  serializeDouble(double_tt);
-  serializeString(string_t, length);
-  serializeString(emptystring_t, length_2);
+  serializeChar(d_char_t);
+  serializeSignedChar(d_octet_t);
+  serializeShort(d_short_t);
+  serializeUnsignedShort(d_ushort_t);
+  serializeInt(d_long_t);
+  serializeUnsignedInt(d_ulong_t);
+  serializeFloat(d_float_tt);
+  serializeDouble(d_double_tt);
+  serializeString(d_string_t, length);
+  serializeString(d_emptystring_t, length_2);
 
   // Deseriazliation.
   deserializeChar(&char_out);
@@ -758,17 +756,17 @@ TEST(nanoCDRDynamicTests, SimpleVar)
   deserializeString(&string_out, &length_out);
   deserializeString(&string_out_2, &length_out_2);
 
-  unsigned int comparative = std::strcmp(string_out, string_t);
-  unsigned int comparative_2 = std::strcmp(string_out_2, emptystring_t);
+  unsigned int comparative = std::strcmp(string_out, d_string_t);
+  unsigned int comparative_2 = std::strcmp(string_out_2, d_emptystring_t);
 
-  EXPECT_EQ(char_out, char_t);
-  EXPECT_EQ(octect_out, octet_t);
-  EXPECT_EQ(short_out, short_t);
-  EXPECT_EQ(ushort_out, ushort_t);
-  EXPECT_EQ(long_out, long_t);
-  EXPECT_EQ(ulong_out, ulong_t);
-  EXPECT_EQ(float_out, float_tt);
-  EXPECT_EQ(double_out, double_tt);
+  EXPECT_EQ(char_out, d_char_t);
+  EXPECT_EQ(octect_out, d_octet_t);
+  EXPECT_EQ(short_out, d_short_t);
+  EXPECT_EQ(ushort_out, d_ushort_t);
+  EXPECT_EQ(long_out, d_long_t);
+  EXPECT_EQ(ulong_out, d_ulong_t);
+  EXPECT_EQ(float_out, d_float_tt);
+  EXPECT_EQ(double_out, d_double_tt);
   EXPECT_EQ(comparative, 0);
   EXPECT_EQ(length, length_out);
   EXPECT_EQ(comparative_2, 0);
@@ -795,15 +793,15 @@ TEST(nanoCDRDynamicTests, Arrays)
   short result = 0;
 
   // Serialization.
-  result += serializeCharArray(char_array_t, 5); //5
-  result += serializeUnsignedCharArray(octet_array_t, 5); //5
-  result += serializeShortArray(short_array_t, 5); //10
-  result += serializeUnsignedShortArray(ushort_array_t, 5); //10
-  result += serializeIntArray(long_array_t, 5); //20
-  result += serializeUnsignedIntArray(ulong_array_t, 5); //20
-  result += serializeFloatArray(float_array_t, 5); //20
-  result += serializeDoubleArray(double_array_t, 5); //40
-  //result += serializeStringArray(string_seq_t, 5);
+  result += serializeCharArray(d_char_array_t, 5); //5
+  result += serializeUnsignedCharArray(d_octet_array_t, 5); //5
+  result += serializeShortArray(d_short_array_t, 5); //10
+  result += serializeUnsignedShortArray(d_ushort_array_t, 5); //10
+  result += serializeIntArray(d_long_array_t, 5); //20
+  result += serializeUnsignedIntArray(d_ulong_array_t, 5); //20
+  result += serializeFloatArray(d_float_array_t, 5); //20
+  result += serializeDoubleArray(d_double_array_t, 5); //40
+  //result += serializeStringArray(d_string_seq_t, 5);
 
   unsigned int serialized = getSerializedDataLength();
 
@@ -826,34 +824,34 @@ TEST(nanoCDRDynamicTests, Arrays)
 
     if(result == 0){
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(char_array_t[i], char_out[i]);
+        EXPECT_EQ(d_char_array_t[i], char_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(octet_array_t[i], uchar_out[i]);
+        EXPECT_EQ(d_octet_array_t[i], uchar_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(short_array_t[i], short_out[i]);
+        EXPECT_EQ(d_short_array_t[i], short_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ushort_array_t[i], ushort_out[i]);
+        EXPECT_EQ(d_ushort_array_t[i], ushort_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(long_array_t[i], int_out[i]);
+        EXPECT_EQ(d_long_array_t[i], int_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ulong_array_t[i], uint_out[i]);
+        EXPECT_EQ(d_ulong_array_t[i], uint_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(float_array_t[i], float_out[i]);
+        EXPECT_EQ(d_float_array_t[i], float_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(double_array_t[i], double_out[i]);
+        EXPECT_EQ(d_double_array_t[i], double_out[i]);
       }
       /*for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
+        int length_in = std::strlen(d_string_seq_t[i]);
         int length_out = std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
+        int comparative = std::strcmp(d_string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
       }*/
@@ -898,15 +896,15 @@ TEST(nanoCDRDynamicTests, Sequences)
   newDynamicBuffer();
 
   // Serialization.
-  result += serializeCharSequence(char_seq_t, 5); //9
-  result += serializeUnsignedCharSequence(octet_seq_t, 5); //9
-  result += serializeShortSequence(short_seq_t, 5);//14
-  result += serializeUnsignedShortSequence(ushort_seq_t, 5);//14
-  result += serializeIntSequence(long_seq_t, 5);//24
-  result += serializeUnsignedIntSequence(ulong_seq_t, 5);//24
-  result += serializeFloatSequence(float_seq_t, 5);//24
-  result += serializeDoubleSequence(double_seq_t, 5);//44
-  //result += serializeStringArray(string_seq_t, 5);
+  result += serializeCharSequence(d_char_seq_t, 5); //9
+  result += serializeUnsignedCharSequence(d_octet_seq_t, 5); //9
+  result += serializeShortSequence(d_short_seq_t, 5);//14
+  result += serializeUnsignedShortSequence(d_ushort_seq_t, 5);//14
+  result += serializeIntSequence(d_long_seq_t, 5);//24
+  result += serializeUnsignedIntSequence(d_ulong_seq_t, 5);//24
+  result += serializeFloatSequence(d_float_seq_t, 5);//24
+  result += serializeDoubleSequence(d_double_seq_t, 5);//44
+  //result += serializeStringArray(d_string_seq_t, 5);
 
   unsigned int serialized = getSerializedDataLength();
   EXPECT_EQ(serialized, 162);
@@ -938,34 +936,34 @@ TEST(nanoCDRDynamicTests, Sequences)
       EXPECT_EQ(double_out_size, 5);
 
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(char_seq_t[i], char_out[i]);
+        EXPECT_EQ(d_char_seq_t[i], char_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(octet_seq_t[i], uchar_out[i]);
+        EXPECT_EQ(d_octet_seq_t[i], uchar_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(short_seq_t[i], short_out[i]);
+        EXPECT_EQ(d_short_seq_t[i], short_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ushort_seq_t[i], ushort_out[i]);
+        EXPECT_EQ(d_ushort_seq_t[i], ushort_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(long_seq_t[i], int_out[i]);
+        EXPECT_EQ(d_long_seq_t[i], int_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ulong_seq_t[i], uint_out[i]);
+        EXPECT_EQ(d_ulong_seq_t[i], uint_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(float_seq_t[i], float_out[i]);
+        EXPECT_EQ(d_float_seq_t[i], float_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(double_seq_t[i], double_out[i]);
+        EXPECT_EQ(d_double_seq_t[i], double_out[i]);
       }
       /*for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
+        int length_in = std::strlen(d_string_seq_t[i]);
         int length_out = std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
+        int comparative = std::strcmp(d_string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
       }*/
@@ -1029,44 +1027,44 @@ TEST(nanoCDRDynamicTests, All)
 
   newDynamicBuffer();
 
-  const unsigned int length = std::strlen(string_t);
+  const unsigned int length = std::strlen(d_string_t);
   unsigned int length_out;
 
   short result = 0;
 
-  const unsigned int length_2 = std::strlen(emptystring_t);
+  const unsigned int length_2 = std::strlen(d_emptystring_t);
   unsigned int length_out_2;
 
   // Serialization.
-  result += serializeChar(char_t); //1
-  result += serializeSignedChar(octet_t); //1
-  result += serializeShort(short_t); //2
-  result += serializeUnsignedShort(ushort_t); //2
-  result += serializeInt(long_t); //4
-  result += serializeUnsignedInt(ulong_t); //4
-  result += serializeFloat(float_tt); //4
-  result += serializeDouble(double_tt); //8
-  result += serializeString(string_t, length); //4 + 30
-  result += serializeString(emptystring_t, length_2); //4 + 1
+  result += serializeChar(d_char_t); //1
+  result += serializeSignedChar(d_octet_t); //1
+  result += serializeShort(d_short_t); //2
+  result += serializeUnsignedShort(d_ushort_t); //2
+  result += serializeInt(d_long_t); //4
+  result += serializeUnsignedInt(d_ulong_t); //4
+  result += serializeFloat(d_float_tt); //4
+  result += serializeDouble(d_double_tt); //8
+  result += serializeString(d_string_t, length); //4 + 30
+  result += serializeString(d_emptystring_t, length_2); //4 + 1
 
-  result += serializeCharArray(char_array_t, 5); //5
-  result += serializeUnsignedCharArray(octet_array_t, 5); //5
-  result += serializeShortArray(short_array_t, 5); //10
-  result += serializeUnsignedShortArray(ushort_array_t, 5); //10
-  result += serializeIntArray(long_array_t, 5); //20
-  result += serializeUnsignedIntArray(ulong_array_t, 5); //20
-  result += serializeFloatArray(float_array_t, 5); //20
-  result += serializeDoubleArray(double_array_t, 5); //40
-  //result += serializeStringArray(string_seq_t, 5);
+  result += serializeCharArray(d_char_array_t, 5); //5
+  result += serializeUnsignedCharArray(d_octet_array_t, 5); //5
+  result += serializeShortArray(d_short_array_t, 5); //10
+  result += serializeUnsignedShortArray(d_ushort_array_t, 5); //10
+  result += serializeIntArray(d_long_array_t, 5); //20
+  result += serializeUnsignedIntArray(d_ulong_array_t, 5); //20
+  result += serializeFloatArray(d_float_array_t, 5); //20
+  result += serializeDoubleArray(d_double_array_t, 5); //40
+  //result += serializeStringArray(d_string_seq_t, 5);
 
-  result += serializeCharSequence(char_seq_t, 5); //9
-  result += serializeUnsignedCharSequence(octet_seq_t, 5); //9
-  result += serializeShortSequence(short_seq_t, 5);//14
-  result += serializeUnsignedShortSequence(ushort_seq_t, 5);//14
-  result += serializeIntSequence(long_seq_t, 5);//24
-  result += serializeUnsignedIntSequence(ulong_seq_t, 5);//24
-  result += serializeFloatSequence(float_seq_t, 5);//24
-  result += serializeDoubleSequence(double_seq_t, 5);//44
+  result += serializeCharSequence(d_char_seq_t, 5); //9
+  result += serializeUnsignedCharSequence(d_octet_seq_t, 5); //9
+  result += serializeShortSequence(d_short_seq_t, 5);//14
+  result += serializeUnsignedShortSequence(d_ushort_seq_t, 5);//14
+  result += serializeIntSequence(d_long_seq_t, 5);//24
+  result += serializeUnsignedIntSequence(d_ulong_seq_t, 5);//24
+  result += serializeFloatSequence(d_float_seq_t, 5);//24
+  result += serializeDoubleSequence(d_double_seq_t, 5);//44
 
   unsigned int serialized = getSerializedDataLength();
   EXPECT_EQ(serialized, 357);
@@ -1108,51 +1106,51 @@ TEST(nanoCDRDynamicTests, All)
 
     if(result == 0)
     {
-      unsigned int comparative = std::strcmp(string_out, string_t);
-      unsigned int comparative_2 = std::strcmp(string_out_2, emptystring_t);
+      unsigned int comparative = std::strcmp(string_out, d_string_t);
+      unsigned int comparative_2 = std::strcmp(string_out_2, d_emptystring_t);
 
-      EXPECT_EQ(char_out, char_t);
-      EXPECT_EQ(octect_out, octet_t);
-      EXPECT_EQ(short_out, short_t);
-      EXPECT_EQ(ushort_out, ushort_t);
-      EXPECT_EQ(long_out, long_t);
-      EXPECT_EQ(ulong_out, ulong_t);
-      EXPECT_EQ(float_out, float_tt);
-      EXPECT_EQ(double_out, double_tt);
+      EXPECT_EQ(char_out, d_char_t);
+      EXPECT_EQ(octect_out, d_octet_t);
+      EXPECT_EQ(short_out, d_short_t);
+      EXPECT_EQ(ushort_out, d_ushort_t);
+      EXPECT_EQ(long_out, d_long_t);
+      EXPECT_EQ(ulong_out, d_ulong_t);
+      EXPECT_EQ(float_out, d_float_tt);
+      EXPECT_EQ(double_out, d_double_tt);
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
       EXPECT_EQ(comparative_2, 0);
       EXPECT_EQ(length_2, length_out_2);
 
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(char_array_t[i], char_array_out[i]);
+        EXPECT_EQ(d_char_array_t[i], char_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(octet_array_t[i], uchar_array_out[i]);
+        EXPECT_EQ(d_octet_array_t[i], uchar_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(short_array_t[i], short_array_out[i]);
+        EXPECT_EQ(d_short_array_t[i], short_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ushort_array_t[i], ushort_array_out[i]);
+        EXPECT_EQ(d_ushort_array_t[i], ushort_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(long_array_t[i], int_array_out[i]);
+        EXPECT_EQ(d_long_array_t[i], int_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ulong_array_t[i], uint_array_out[i]);
+        EXPECT_EQ(d_ulong_array_t[i], uint_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(float_array_t[i], float_array_out[i]);
+        EXPECT_EQ(d_float_array_t[i], float_array_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(double_array_t[i], double_array_out[i]);
+        EXPECT_EQ(d_double_array_t[i], double_array_out[i]);
       }
       /*for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
+        int length_in = std::strlen(d_string_seq_t[i]);
         int length_out = std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
+        int comparative = std::strcmp(d_string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
       }*/
@@ -1167,35 +1165,35 @@ TEST(nanoCDRDynamicTests, All)
       EXPECT_EQ(double_out_size, 5);
 
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(char_seq_t[i], char_seq_out[i]);
+        EXPECT_EQ(d_char_seq_t[i], char_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(octet_seq_t[i], uchar_seq_out[i]);
+        EXPECT_EQ(d_octet_seq_t[i], uchar_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(short_seq_t[i], short_seq_out[i]);
+        EXPECT_EQ(d_short_seq_t[i], short_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ushort_seq_t[i], ushort_seq_out[i]);
+        EXPECT_EQ(d_ushort_seq_t[i], ushort_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(long_seq_t[i], int_seq_out[i]);
+        EXPECT_EQ(d_long_seq_t[i], int_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(ulong_seq_t[i], uint_seq_out[i]);
+        EXPECT_EQ(d_ulong_seq_t[i], uint_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(float_seq_t[i], float_seq_out[i]);
+        EXPECT_EQ(d_float_seq_t[i], float_seq_out[i]);
       }
       for(i = 0; i < 5; i++){
-        EXPECT_EQ(double_seq_t[i], double_seq_out[i]);
+        EXPECT_EQ(d_double_seq_t[i], double_seq_out[i]);
       }
 
       /*for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
+        int length_in = std::strlen(d_string_seq_t[i]);
         int length_out = std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
+        int comparative = std::strcmp(d_string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
       }*/
