@@ -107,7 +107,7 @@ short resize(unsigned int  minSizeInc)
 {
     if(m_cdrBuffer->m_internalBuffer == '1')
     {
-        if(m_cdrBuffer->m_buffer == NULL)
+        if(m_cdrBuffer->m_bufferSize == 0)
         {
            	m_cdrBuffer->m_bufferSize = minSizeInc;
 						m_cdrBuffer->m_buffer = (char*)malloc(m_cdrBuffer->m_bufferSize);
