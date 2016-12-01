@@ -24,8 +24,8 @@
     #ifndef NANOCDR_VERSION_MICRO
     #define NANOCDR_VERSION_MICRO @NANOCDR_VERSION_MICRO@
     #endif
-    #ifndef FASTCDR_VERSION_STR
-    #define FASTCDR_VERSION_STR "@NANOCDR_VERSION_STR@"
+    #ifndef NANOCDR_VERSION_STR
+    #define NANOCDR_VERSION_STR "@NANOCDR_VERSION_STR@"
     #endif
 
     // C++11 support defines
