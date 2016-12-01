@@ -18,8 +18,8 @@ const short short_t = -32700;
 const unsigned int ulong_t = 4294967200;
 const int long_t = -2147483600;
 
-const unsigned long ulonglong_t = 18446744073709551600u;
-const long longlong_t = -9223372036800;
+const unsigned long ulonglong_t = (unsigned long)18446744073709551600u;
+const long longlong_t = (long)-9223372036800;
 
 const unsigned long long ulonglonglong_t = 18446744073709551600u;
 const long long longlonglong_t = -9223372036800;
@@ -44,8 +44,8 @@ const unsigned int ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 42949
 const int long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
 
 
-const unsigned long ulonglong_array_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
-const long  longlong_array_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
+const unsigned long ulonglong_array_t[5] = {(unsigned long)18446744073709551600u, (unsigned long)18446744073709551601u, (unsigned long)18446744073709551602u, (unsigned long)18446744073709551603u, (unsigned long)18446744073709551604u};
+const long  longlong_array_t[5] = {(long)-9223372036800, (long)-9223372036801, (long)-9223372036802, (long)-9223372036803, (long)-9223372036804};
 
 const unsigned long long ulonglonglong_array_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
 const long long longlonglong_array_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
@@ -66,8 +66,8 @@ const short short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
 const unsigned int ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
 const int long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
 
-const unsigned long ulonglong_seq_t[5] = {18446744073709551604u, 18446744073709551603u, 18446744073709551602u, 18446744073709551601u, 18446744073709551600u};
-const long longlong_seq_t[5] = {-9223372036804, -9223372036803, -9223372036802, -9223372036801, -9223372036800};
+const unsigned long ulonglong_seq_t[5] = {(unsigned long)18446744073709551600u, (unsigned long)18446744073709551601u, (unsigned long)18446744073709551602u, (unsigned long)18446744073709551603u, (unsigned long)18446744073709551604u};
+const long  longlong_seq_t[5] = {(long)-9223372036800, (long)-9223372036801, (long)-9223372036802, (long)-9223372036803, (long)-9223372036804};
 
 const unsigned long long ulonglonglong_seq_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
 const long long longlonglong_seq_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
@@ -326,7 +326,7 @@ TEST(nanoCDRDynamicBasicTests, String)
     // Check good case.
     newDynamicBuffer();
 
-    const unsigned int length = std::strlen(string_t);
+    const unsigned int length = (unsigned int)std::strlen(string_t);
     unsigned int length_out;
 
     // Serialization.
@@ -351,7 +351,7 @@ TEST(nanoCDRDynamicBasicTests, EmptyString)
     // Check good case.
     newDynamicBuffer();
 
-    const unsigned int length = std::strlen(emptystring_t);
+    const unsigned int length = (unsigned int)std::strlen(emptystring_t);
     unsigned int length_out;
 
     // Serialization.
@@ -685,8 +685,8 @@ TEST(nanoCDRDynamicArrayTests, StringArray)
     int i;
     for(i = 0; i < 5; i++)
     {
-      int length_in = std::strlen(string_seq_t[i]);
-      int length_out = std::strlen(string_out[i]);
+      int length_in = (unsigned int)std::strlen(string_seq_t[i]);
+      int length_out = (unsigned int)std::strlen(string_out[i]);
       int comparative = std::strcmp(string_seq_t[i], string_out[i]);
       EXPECT_EQ(length_in, length_out);
       EXPECT_EQ(comparative, 0);
@@ -1068,8 +1068,8 @@ TEST(nanoCDRDynamicSequencesTests, StringSequence)
     int i;
     for(i = 0; i < 5; i++)
     {
-      int length_in = std::strlen(string_seq_t[i]);
-      int length_out = std::strlen(string_out[i]);
+      int length_in = (unsigned int)std::strlen(string_seq_t[i]);
+      int length_out = (unsigned int)std::strlen(string_out[i]);
       int comparative = std::strcmp(string_seq_t[i], string_out[i]);
       EXPECT_EQ(length_in, length_out);
       EXPECT_EQ(comparative, 0);
@@ -1102,10 +1102,10 @@ TEST(nanoCDRDynamicTests, SimpleVar)
   // Check good case.
   newDynamicBuffer();
 
-  const unsigned int length = std::strlen(string_t);
+  const unsigned int length = (unsigned int)std::strlen(string_t);
   unsigned int length_out;
 
-  const unsigned int length_2 = std::strlen(emptystring_t);
+  const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
   unsigned int length_out_2;
 
   // Serialization.
@@ -1273,8 +1273,8 @@ TEST(nanoCDRDynamicTests, Arrays)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
-        int length_out = std::strlen(string_out[i]);
+        int length_in = (unsigned int)std::strlen(string_seq_t[i]);
+        int length_out = (unsigned int)std::strlen(string_out[i]);
         int comparative = std::strcmp(string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
@@ -1437,8 +1437,8 @@ TEST(nanoCDRDynamicTests, Sequences)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
-        int length_out = std::strlen(string_out[i]);
+        int length_in = (unsigned int)std::strlen(string_seq_t[i]);
+        int length_out = (unsigned int)std::strlen(string_out[i]);
         int comparative = std::strcmp(string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in, length_out);
         EXPECT_EQ(comparative, 0);
@@ -1536,12 +1536,12 @@ TEST(nanoCDRDynamicTests, All)
   // Check good case.
   newDynamicBuffer();
 
-  const unsigned int length = std::strlen(string_t);
+  const unsigned int length = (unsigned int)std::strlen(string_t);
   unsigned int length_out;
 
   short result = 0;
 
-  const unsigned int length_2 = std::strlen(emptystring_t);
+  const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
   unsigned int length_out_2;
 
   // Serialization.
@@ -1719,11 +1719,11 @@ TEST(nanoCDRDynamicTests, All)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
-        int length_out = std::strlen(string_array_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_array_out[i]);
-        EXPECT_EQ(length_in, length_out);
-        EXPECT_EQ(comparative, 0);
+        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
+        int length_out_aux = (unsigned int)std::strlen(string_array_out[i]);
+        int comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
+        EXPECT_EQ(length_in_aux, length_out_aux);
+        EXPECT_EQ(comparative_aux, 0);
         free(string_array_out[i]);
       }
       free(string_array_out);
@@ -1789,11 +1789,11 @@ TEST(nanoCDRDynamicTests, All)
 
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
-        int length_out = std::strlen(string_seq_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_seq_out[i]);
-        EXPECT_EQ(length_in, length_out);
-        EXPECT_EQ(comparative, 0);
+        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
+        int length_out_aux = (unsigned int)std::strlen(string_seq_out[i]);
+        int comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
+        EXPECT_EQ(length_in_aux, length_out_aux);
+        EXPECT_EQ(comparative_aux, 0);
         free(string_seq_out[i]);
       }
       free(string_seq_out);
@@ -1906,12 +1906,12 @@ TEST(nanoCDRDynamicTests, AllEndianness)
   // Check good case.
   newDynamicBuffer();
 
-  const unsigned int length = std::strlen(string_t);
+  const unsigned int length = (unsigned int)std::strlen(string_t);
   unsigned int length_out;
 
   short result = 0;
 
-  const unsigned int length_2 = std::strlen(emptystring_t);
+  const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
   unsigned int length_out_2;
 
   // Serialization.
@@ -2089,11 +2089,11 @@ TEST(nanoCDRDynamicTests, AllEndianness)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
-        int length_out = std::strlen(string_array_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_array_out[i]);
-        EXPECT_EQ(length_in, length_out);
-        EXPECT_EQ(comparative, 0);
+        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
+        int length_out_aux = (unsigned int)std::strlen(string_array_out[i]);
+        int comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
+        EXPECT_EQ(length_in_aux, length_out_aux);
+        EXPECT_EQ(comparative_aux, 0);
         free(string_array_out[i]);
       }
       free(string_array_out);
@@ -2159,11 +2159,11 @@ TEST(nanoCDRDynamicTests, AllEndianness)
 
       for(i = 0; i < 5; i++)
       {
-        int length_in = std::strlen(string_seq_t[i]);
-        int length_out = std::strlen(string_seq_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_seq_out[i]);
-        EXPECT_EQ(length_in, length_out);
-        EXPECT_EQ(comparative, 0);
+        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
+        int length_out_aux = (unsigned int)std::strlen(string_seq_out[i]);
+        int comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
+        EXPECT_EQ(length_in_aux, length_out_aux);
+        EXPECT_EQ(comparative_aux, 0);
         free(string_seq_out[i]);
       }
       free(string_seq_out);
@@ -2411,7 +2411,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, String)
     // Check good case.
     newDynamicBuffer();
 
-    const unsigned int length = std::strlen(string_t);
+    const unsigned int length = (unsigned int)std::strlen(string_t);
     unsigned int length_out;
 
     // Serialization.
@@ -2436,7 +2436,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, EmptyString)
     // Check good case.
     newDynamicBuffer();
 
-    const unsigned int length = std::strlen(emptystring_t);
+    const unsigned int length = (unsigned int)std::strlen(emptystring_t);
     unsigned int length_out;
 
     // Serialization.
@@ -2724,11 +2724,11 @@ TEST(nanoCDRDynamicArrayEndiannessTests, StringArray)
     int i;
     for(i = 0; i < 5; i++)
     {
-      int length_in = std::strlen(string_seq_t[i]);
-      int length_out = std::strlen(string_out[i]);
-      int comparative = std::strcmp(string_seq_t[i], string_out[i]);
-      EXPECT_EQ(length_in, length_out);
-      EXPECT_EQ(comparative, 0);
+      int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
+      int length_out_aux = (unsigned int)std::strlen(string_out[i]);
+      int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+      EXPECT_EQ(length_in_aux, length_out_aux);
+      EXPECT_EQ(comparative_aux, 0);
       free(string_out[i]);
     }
     free(string_out);
@@ -3107,11 +3107,11 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, StringSequence)
     int i;
     for(i = 0; i < 5; i++)
     {
-      int length_in = std::strlen(string_seq_t[i]);
-      int length_out = std::strlen(string_out[i]);
-      int comparative = std::strcmp(string_seq_t[i], string_out[i]);
-      EXPECT_EQ(length_in, length_out);
-      EXPECT_EQ(comparative, 0);
+      int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
+      int length_out_aux = (unsigned int)std::strlen(string_out[i]);
+      int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+      EXPECT_EQ(length_in_aux, length_out_aux);
+      EXPECT_EQ(comparative_aux, 0);
       free(string_out[i]);
     }
     free(string_out);
