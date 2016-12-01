@@ -2617,6 +2617,7 @@ short deserializeStringArray (char *** string_t, const unsigned int numElements)
 	short result = 0;
 
 	char ** swap = malloc(numElements * sizeof(char * ));
+	*string_t = malloc(numElements * sizeof(char *));
 
 	unsigned int i = 0;
 	unsigned int length = 0;
@@ -2635,6 +2636,7 @@ short deserializeStringArrayEndiannes (char *** string_t, const unsigned int num
 	short result = 0;
 
 	char ** swap = malloc(numElements * sizeof(char * ));
+	*string_t = malloc(numElements * sizeof(char *));
 
 	unsigned int i = 0;
 	unsigned int length = 0;

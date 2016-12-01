@@ -24,7 +24,7 @@
 
 
         ###############################################################################
-        # Unit tests
+        # Unit tests                                                                  #
         ###############################################################################
         set(UNITTESTS_SOURCE StaticTest.cpp)
         add_executable(UnitTests ${UNITTESTS_SOURCE})
