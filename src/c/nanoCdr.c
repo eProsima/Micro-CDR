@@ -1489,14 +1489,14 @@ short deserializeDoubleEndianness (double * double_t, Endianness endianness)
 		if(m_swapBytes == TRUE) { m_swapBytes = FALSE; }
 		else { m_swapBytes = TRUE; }
 
-		result = deserializeDoubleEndianness(double_t, endianness);
+		result = deserializeDouble(double_t);
 
 		if(m_swapBytes == TRUE) { m_swapBytes = FALSE; }
 		else { m_swapBytes = TRUE; }
 	}
 	else
 	{
-		result = deserializeDoubleEndianness(double_t, endianness);
+		result = deserializeDouble(double_t);
 	}
 	return result;
 }
@@ -1543,14 +1543,14 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
 		if(m_swapBytes == TRUE) { m_swapBytes = FALSE; }
 		else { m_swapBytes = TRUE; }
 
-		result = deserializeLongDoubleEndianness(longdouble_t, endianness);
+		result = deserializeLongDouble(longdouble_t);
 
 		if(m_swapBytes == TRUE) { m_swapBytes = FALSE; }
 		else { m_swapBytes = TRUE; }
 	}
 	else
 	{
-		result = deserializeLongDoubleEndianness(longdouble_t, endianness);
+		result = deserializeLongDouble(longdouble_t);
 	}
 	return result;
 }
@@ -2600,7 +2600,7 @@ short deserializeStringSequenceEndianness(char *** string_t, unsigned int * numE
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
 		if(result < 0) return -1;
 		char ** swap = malloc(*numElements * sizeof(char *));
-		result = deserializeStringArrayEndiannes(&swap, *numElements, endianness);
+		result = deserializeStringArrayEndianness(&swap, *numElements, endianness);
 		*string_t = malloc(*numElements * sizeof(char *));
 		memcpy(*string_t, swap, (*numElements * sizeof(char *)));
 		free(swap);
@@ -2631,7 +2631,7 @@ short deserializeStringArray (char *** string_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeStringArrayEndiannes (char *** string_t, const unsigned int numElements, Endianness endianness)
+short deserializeStringArrayEndianness (char *** string_t, const unsigned int numElements, Endianness endianness)
 {
 	short result = 0;
 
@@ -3316,7 +3316,7 @@ short deserializeUnsignedLongSequenceEndianness (unsigned long ** ulong_t, unsig
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
 		if(result < 0) return -1;
-		result = deserializeUnsignedLongArrayEndiannness(ulong_t, *numElements, endianness);
+		result = deserializeUnsignedLongArrayEndianness(ulong_t, *numElements, endianness);
 	}
 	else
 	{
@@ -3354,7 +3354,7 @@ short deserializeUnsignedLongArray (unsigned long ** ulong_t, const unsigned int
 	return result;
 }
 
-short deserializeUnsignedLongArrayEndiannness (unsigned long ** ulong_t, const unsigned int numElements, Endianness endianness)
+short deserializeUnsignedLongArrayEndianness (unsigned long ** ulong_t, const unsigned int numElements, Endianness endianness)
 {
 	short result = 0;
 

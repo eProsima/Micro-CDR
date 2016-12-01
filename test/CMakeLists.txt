@@ -26,7 +26,7 @@
         ###############################################################################
         # Unit tests                                                                  #
         ###############################################################################
-        set(UNITTESTS_SOURCE StaticTest.cpp)
+        set(UNITTESTS_SOURCE DynamicTest.cpp)
         add_executable(UnitTests ${UNITTESTS_SOURCE})
         add_gtest(UnitTests ${UNITTESTS_SOURCE})
         target_include_directories(UnitTests PRIVATE ${GTEST_INCLUDE_DIRS})

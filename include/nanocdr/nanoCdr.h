@@ -775,7 +775,7 @@
   * @param endianness Endianness that will be used in the deserialization of this value.
   * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
   */
-  short deserializeStringArrayEndiannes (char *** string_t, const unsigned int numElements, Endianness endianness);
+  short deserializeStringArrayEndianness (char *** string_t, const unsigned int numElements, Endianness endianness);
 
   /*!
   * @brief This function deserializes an array of shorts.
@@ -901,7 +901,7 @@
   * @param endianness Endianness that will be used in the deserialization of this value.
   * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
   */
-  short deserializeUnsignedLongArrayEndiannness (unsigned long ** ulong_t, const unsigned int numElements, Endianness endianness);
+  short deserializeUnsignedLongArrayEndianness (unsigned long ** ulong_t, const unsigned int numElements, Endianness endianness);
 
   /*!
   * @brief This function deserializes an array of long longs.
