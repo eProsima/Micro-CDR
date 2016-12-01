@@ -1585,7 +1585,7 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
 
  	unsigned int i = 0;
  	for (i = 0; i < numElements; i++){
- 		totalSpace += strlen(string_t[i]);
+ 		totalSpace += (unsigned int)strlen(string_t[i]);
  		totalSpace += 1;
  		totalSpace += sizeof(unsigned int);
  	}
