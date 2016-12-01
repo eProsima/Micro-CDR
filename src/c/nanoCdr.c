@@ -115,7 +115,7 @@ short resize(unsigned int  minSizeInc)
         }
         else
         {
-					int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+					unsigned int freeSpace = (unsigned int)(m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 
 					if(freeSpace < minSizeInc)
 					{
@@ -1563,7 +1563,7 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
 
 	unsigned int i = 0;
 	for (i = 0; i < numElements; i++){
-		totalSpace += strlen(string_t[i]);
+		totalSpace += (unsigned int)strlen(string_t[i]);
 		totalSpace += 1;
 		totalSpace += sizeof(unsigned int);
 	}
@@ -1607,7 +1607,7 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
 	unsigned int i = 0;
 	unsigned int totalSpace = 0;
 	for (i = 0; i < numElements; i++){
-		totalSpace += strlen(string_t[i]);
+		totalSpace += (unsigned int)strlen(string_t[i]);
 		totalSpace += 1;
 		totalSpace += sizeof(unsigned int);
 	}
@@ -1616,7 +1616,7 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
  	{
  		for(i = 0; i < numElements; i++)
  		{
- 			result = serializeString(string_t[i], strlen(string_t[i]));
+ 			result = serializeString(string_t[i], (unsigned int)strlen(string_t[i]));
  			if(result < 0) return -1;
  		}
  	}
@@ -1631,7 +1631,7 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
  	unsigned int i = 0;
  	unsigned int totalSpace = 0;
  	for (i = 0; i < numElements; i++){
- 		totalSpace += strlen(string_t[i]);
+ 		totalSpace += (unsigned int)strlen(string_t[i]);
  		totalSpace += 1;
  		totalSpace += sizeof(unsigned int);
  	}
@@ -1640,7 +1640,7 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
   	{
   		for(i = 0; i < numElements; i++)
   		{
-  			result = serializeStringEndianness(string_t[i], strlen(string_t[i]), endianness);
+  			result = serializeStringEndianness(string_t[i], (unsigned int)strlen(string_t[i]), endianness);
   			if(result < 0) return -1;
   		}
   	}
