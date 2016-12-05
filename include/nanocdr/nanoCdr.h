@@ -632,7 +632,7 @@
   * @param numElements Number of the elements in the array.
   * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
   */
-  nanocdr_DllAPI int8_t serializeUnsignedLongArray (const unsigned long * ulong_t, const uint32_t numElements);
+  nanocdr_DllAPI int8_t serializeUnsignedLongArray (const uint64_t * ulong_t, const uint32_t numElements);
 
   /*!
   * @brief This function serializes an array of unsigned longs with a different endianness.
@@ -641,7 +641,7 @@
   * @param endianness Endianness that will be used in the serialization of this value.
   * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
   */
-  nanocdr_DllAPI int8_t serializeUnsignedLongArrayEndianness (const unsigned long * ulong_t, const uint32_t numElements, Endianness endiannes);
+  nanocdr_DllAPI int8_t serializeUnsignedLongArrayEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endiannes);
 
   /*!
   * @brief This function serializes an array of long longs.
