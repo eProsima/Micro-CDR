@@ -3,6 +3,8 @@
 #include <string.h>
 #include <nanocdr/nanoBuffer.h>
 
+#include <stdint.h>
+
 #include <stdio.h>
 
 void newDynamicBuffer()
@@ -14,7 +16,7 @@ void newDynamicBuffer()
 	m_cdrBuffer->m_iterator = 0;
  	m_cdrBuffer->m_serializedBuffer = 0;
 
-	int local_i = 1;
+	int32_t local_i = 1;
 	char *local_c = (char*)&local_i;
 	char endia = (*local_c);
 	if(endia == '1')
@@ -29,7 +31,7 @@ void newDynamicBuffer()
 }
 
 
-void newStaticBuffer (char * buffer, unsigned int bufferSize)
+void newStaticBuffer (char * buffer, uint32_t bufferSize)
 {
 	m_cdrBuffer = malloc(sizeof(nanoBuffer));
 
@@ -39,7 +41,7 @@ void newStaticBuffer (char * buffer, unsigned int bufferSize)
 	m_cdrBuffer->m_serializedBuffer = 0;
 	m_cdrBuffer->m_buffer = buffer;
 
-	int local_i = 1;
+	int32_t local_i = 1;
 	char *local_c = (char*)&local_i;
 	char endia = (*local_c);
 	if(endia == '1')
@@ -63,7 +65,7 @@ void destroyBuffer()
 	free(m_cdrBuffer);
 }
 
-void mallocCdr (void ** point_t, unsigned int size)
+void mallocCdr (void ** point_t, uint32_t size)
 {
 	*point_t = malloc(size);
 }
@@ -78,7 +80,7 @@ void resetAlignment()
 		m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_currentPosition;
 }
 
-unsigned int getSerializedDataLength()
+uint32_t getSerializedDataLength()
 {
 	return m_cdrBuffer->m_serializedBuffer;
 }
@@ -103,7 +105,7 @@ void changeEndianness (Endianness endianness)
 	}
 }
 
-short resize(unsigned int  minSizeInc)
+int8_t resize(uint32_t  minSizeInc)
 {
     if(m_cdrBuffer->m_internalBuffer == '1')
     {
@@ -115,11 +117,11 @@ short resize(unsigned int  minSizeInc)
         }
         else
         {
-					unsigned int freeSpace = (unsigned int)(m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+					uint32_t freeSpace = (uint32_t)(m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 
 					if(freeSpace < minSizeInc)
 					{
-						int sizeInc = minSizeInc - freeSpace;
+						int32_t sizeInc = minSizeInc - freeSpace;
 	          m_cdrBuffer->m_bufferSize += sizeInc;
         	  m_cdrBuffer->m_buffer = (char*)realloc(m_cdrBuffer->m_buffer, m_cdrBuffer->m_bufferSize);
             return 0;
@@ -134,10 +136,10 @@ void reset ()
 	m_cdrBuffer->m_serializedBuffer = 0;
 }
 
-short jump (unsigned short bytes)
+int8_t jump (uint16_t bytes)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 	if(freeSpace > bytes || resize(bytes) == 0)
 	{
 		m_cdrBuffer->m_serializedBuffer += bytes;
@@ -150,12 +152,12 @@ short jump (unsigned short bytes)
 }
 
 
-short serializeChar (const char char_t)
+int8_t serializeChar (const char char_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int needed = sizeof(char);
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t needed = sizeof(char);
 
 	if((resize(needed) == 0) || free >= needed)
 	{
@@ -171,12 +173,12 @@ short serializeChar (const char char_t)
 	return result;
 }
 
-short serializeUnsignedChar (const unsigned char uchar_t)
+int8_t serializeUnsignedChar (const unsigned char uchar_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int needed = sizeof(unsigned char);
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t needed = sizeof(unsigned char);
 
 	if((resize(needed) == 0) || free >= needed)
 	{
@@ -193,12 +195,12 @@ short serializeUnsignedChar (const unsigned char uchar_t)
 }
 
 
-short serializeSignedChar (const signed char schar_t)
+int8_t serializeSignedChar (const signed char schar_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int needed = sizeof(signed char);
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t needed = sizeof(signed char);
 
 	if((resize(needed) == 0) || free >= needed)
 	{
@@ -214,12 +216,12 @@ short serializeSignedChar (const signed char schar_t)
 	return result;
 }
 
-short serializeString (const char * string_t, const unsigned int length)
+int8_t serializeString (const char * string_t, const uint32_t length)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int needed = sizeof(length) + length + 1;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t needed = sizeof(length) + length + 1;
 
 	if((resize(needed) == 0) || free >= needed)
 	{
@@ -239,12 +241,12 @@ short serializeString (const char * string_t, const unsigned int length)
 	return result;
 }
 
-short serializeStringEndianness (const char * string_t, const unsigned int length, Endianness endianness)
+int8_t serializeStringEndianness (const char * string_t, const uint32_t length, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int needed = sizeof(length) + length + 1;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t needed = sizeof(length) + length + 1;
 
 	if((resize(needed) == 0) || free >= needed)
 	{
@@ -264,11 +266,11 @@ short serializeStringEndianness (const char * string_t, const unsigned int lengt
 	return result;
 }
 
-short deserializeChar(char * char_t)
+int8_t deserializeChar(char * char_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	if(unread >= 1)
 	{
@@ -283,11 +285,11 @@ short deserializeChar(char * char_t)
 	return result;
 }
 
-short deserializeUnsignedChar(unsigned char * uchar_t)
+int8_t deserializeUnsignedChar(unsigned char * uchar_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	if(unread >= 1)
 	{
@@ -302,11 +304,11 @@ short deserializeUnsignedChar(unsigned char * uchar_t)
 	return result;
 }
 
-short deserializeSignedChar(signed char * schar_t)
+int8_t deserializeSignedChar(signed char * schar_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	if(unread >= 1)
 	{
@@ -321,12 +323,12 @@ short deserializeSignedChar(signed char * schar_t)
 	return result;
 }
 
-short deserializeString (char ** string, unsigned int * strlen)
+int8_t deserializeString (char ** string, uint32_t * strlen)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeInt = sizeof(int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeInt = sizeof(int32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -352,12 +354,12 @@ short deserializeString (char ** string, unsigned int * strlen)
 	return result;
 }
 
-short deserializeStringEndianness (char ** string, unsigned int * strlen, Endianness endianness)
+int8_t deserializeStringEndianness (char ** string, uint32_t * strlen, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeInt = sizeof(int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeInt = sizeof(int32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -383,12 +385,12 @@ short deserializeStringEndianness (char ** string, unsigned int * strlen, Endian
 	return result;
 }
 
-short serializeShort (const short short_t)
+int8_t serializeShort (const int16_t short_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(short);
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(int16_t);
 
 	if((resize(sizeShort) == 0) || free >= sizeShort)
 	{
@@ -414,9 +416,9 @@ short serializeShort (const short short_t)
 	return result;
 }
 
-short serializeShortEndianness (const short short_t, Endianness endianness)
+int8_t serializeShortEndianness (const int16_t short_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -435,13 +437,13 @@ short serializeShortEndianness (const short short_t, Endianness endianness)
 	return result;
 }
 
-short serializeUnsignedShort (const unsigned short ushort_t)
+int8_t serializeUnsignedShort (const uint16_t ushort_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(unsigned short);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(uint16_t);
+	uint16_t i = 0;
 
 	if((resize(sizeShort) == 0) || free >= sizeShort)
 	{
@@ -468,9 +470,9 @@ short serializeUnsignedShort (const unsigned short ushort_t)
 	return result;
 }
 
-short serializeUnsignedShortEndianness (const unsigned short ushort_t, Endianness endianness)
+int8_t serializeUnsignedShortEndianness (const uint16_t ushort_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -489,13 +491,13 @@ short serializeUnsignedShortEndianness (const unsigned short ushort_t, Endiannes
 	return result;
 }
 
-short serializeInt (const int int_t)
+int8_t serializeInt (const int32_t int_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(int);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(int32_t);
+	uint16_t i = 0;
 
 	if((resize(sizeInt) == 0) || free >= sizeInt)
 	{
@@ -522,9 +524,9 @@ short serializeInt (const int int_t)
 	return result;
 }
 
-short serializeIntEndianness (const int int_t, Endianness endianness)
+int8_t serializeIntEndianness (const int32_t int_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -543,13 +545,13 @@ short serializeIntEndianness (const int int_t, Endianness endianness)
 	return result;
 }
 
-short serializeUnsignedInt (const unsigned int uint_t)
+int8_t serializeUnsignedInt (const uint32_t uint_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(unsigned int);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(uint32_t);
+	uint16_t i = 0;
 
 	if((resize(sizeInt) == 0) || free >= sizeInt)
 	{
@@ -576,9 +578,9 @@ short serializeUnsignedInt (const unsigned int uint_t)
 	return result;
 }
 
-short serializeUnsignedIntEndianness (const unsigned int uint_t, Endianness endianness)
+int8_t serializeUnsignedIntEndianness (const uint32_t uint_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -597,13 +599,13 @@ short serializeUnsignedIntEndianness (const unsigned int uint_t, Endianness endi
 	return result;
 }
 
-short serializeLong (const long long_t)
+int8_t serializeLong (const int64_t long_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(int64_t);
+	uint16_t i = 0;
 
 	if((resize(sizeLong) == 0) || free >= sizeLong)
 	{
@@ -629,9 +631,9 @@ short serializeLong (const long long_t)
 	return result;
 }
 
-short serializeLongEndianness (const long long_t, Endianness endianness)
+int8_t serializeLongEndianness (const int64_t long_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -651,13 +653,13 @@ short serializeLongEndianness (const long long_t, Endianness endianness)
 }
 
 
-short serializeUnsignedLong (const unsigned long ulong_t)
+int8_t serializeUnsignedLong (const uint64_t ulong_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(int64_t);
+	uint16_t i = 0;
 
 	if((resize(sizeLong) == 0) || free >= sizeLong)
 	{
@@ -682,9 +684,9 @@ short serializeUnsignedLong (const unsigned long ulong_t)
 	return result;
 }
 
-short serializeUnsignedLongEndianness (const unsigned long ulong_t, Endianness endianness)
+int8_t serializeUnsignedLongEndianness (const uint64_t ulong_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -703,13 +705,13 @@ short serializeUnsignedLongEndianness (const unsigned long ulong_t, Endianness e
 	return result;
 }
 
-short serializeLongLong (const long long longlong_t)
+int8_t serializeLongLong (const long long longlong_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long long);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(long long);
+	uint16_t i = 0;
 
 	if((resize(sizeLong) == 0) || free >= sizeLong)
 	{
@@ -734,9 +736,9 @@ short serializeLongLong (const long long longlong_t)
 	return result;
 }
 
-short serializeLongLongEndianness (const long long longlong_t, Endianness endianness)
+int8_t serializeLongLongEndianness (const long long longlong_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -755,13 +757,13 @@ short serializeLongLongEndianness (const long long longlong_t, Endianness endian
 	return result;
 }
 
-short serializeUnsignedLongLong (const unsigned long long ulonglong_t)
+int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long long);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(unsigned long long);
+	uint16_t i = 0;
 
 	if((resize(sizeLong) == 0) || free >= sizeLong)
 	{
@@ -786,9 +788,9 @@ short serializeUnsignedLongLong (const unsigned long long ulonglong_t)
 	return result;
 }
 
-short serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t, Endianness endianness)
+int8_t serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -807,13 +809,13 @@ short serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t,
 	return result;
 }
 
-short serializeFloat (const float float_t)
+int8_t serializeFloat (const float float_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeFloat = sizeof(float);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeFloat = sizeof(float);
+	uint16_t i = 0;
 
 	if((resize(sizeFloat) == 0) || free >= sizeFloat)
 	{
@@ -841,9 +843,9 @@ short serializeFloat (const float float_t)
 	return result;
 }
 
-short serializeFloatEndianness (const float float_t, Endianness endianness)
+int8_t serializeFloatEndianness (const float float_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -862,13 +864,13 @@ short serializeFloatEndianness (const float float_t, Endianness endianness)
 	return result;
 }
 
-short serializeDouble (const double double_t)
+int8_t serializeDouble (const double double_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(double);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(double);
+	uint16_t i = 0;
 
 	if((resize(sizeDouble) == 0) || free >= sizeDouble)
 	{
@@ -894,9 +896,9 @@ short serializeDouble (const double double_t)
 	return result;
 }
 
-short serializeDoubleEndianness (const double double_t, Endianness endianness)
+int8_t serializeDoubleEndianness (const double double_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -915,13 +917,13 @@ short serializeDoubleEndianness (const double double_t, Endianness endianness)
 	return result;
 }
 
-short serializeLongDouble (const long double longdouble_t)
+int8_t serializeLongDouble (const long double longdouble_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(long double);
-	unsigned short i = 0;
+	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(long double);
+	uint16_t i = 0;
 
 	if((resize(sizeDouble) == 0) || free >= sizeDouble)
 	{
@@ -947,9 +949,9 @@ short serializeLongDouble (const long double longdouble_t)
 	return result;
 }
 
-short serializeLongDoubleEndianness (const long double longdouble_t, Endianness endianness)
+int8_t serializeLongDoubleEndianness (const long double longdouble_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -968,13 +970,13 @@ short serializeLongDoubleEndianness (const long double longdouble_t, Endianness 
 	return result;
 }
 
-short deserializeShort(short * short_t)
+int8_t deserializeShort(int16_t * short_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeShort = sizeof(short);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeShort = sizeof(int16_t);
+	uint32_t i;
 
 	if(unread >= sizeShort)
 	{
@@ -1000,9 +1002,9 @@ short deserializeShort(short * short_t)
 	return result;
 }
 
-short deserializeShortEndianness (short * short_t, Endianness endianness)
+int8_t deserializeShortEndianness (int16_t * short_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1021,13 +1023,13 @@ short deserializeShortEndianness (short * short_t, Endianness endianness)
 	return result;
 }
 
-short deserializeUnsignedShort(unsigned short * ushort_t)
+int8_t deserializeUnsignedShort(uint16_t * ushort_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeShort = sizeof(unsigned short);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeShort = sizeof(uint16_t);
+	uint32_t i;
 
 	if(unread >= sizeShort)
 	{
@@ -1053,9 +1055,9 @@ short deserializeUnsignedShort(unsigned short * ushort_t)
 	return result;
 }
 
-short deserializeUnsignedShortEndianness (unsigned short * ushort_t, Endianness endianness)
+int8_t deserializeUnsignedShortEndianness (uint16_t * ushort_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1074,13 +1076,13 @@ short deserializeUnsignedShortEndianness (unsigned short * ushort_t, Endianness 
 	return result;
 }
 
-short deserializeInt(int * int_t)
+int8_t deserializeInt(int32_t * int_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeInt = sizeof(int);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeInt = sizeof(int32_t);
+	uint32_t i;
 
 	if(unread >= sizeInt)
 	{
@@ -1106,9 +1108,9 @@ short deserializeInt(int * int_t)
 	return result;
 }
 
-short deserializeIntEndianness (int * int_t, Endianness endianness)
+int8_t deserializeIntEndianness (int32_t * int_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1127,13 +1129,13 @@ short deserializeIntEndianness (int * int_t, Endianness endianness)
 	return result;
 }
 
-short deserializeUnsignedInt(unsigned int * int_t)
+int8_t deserializeUnsignedInt(uint32_t * int_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeInt = sizeof(unsigned int);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeInt = sizeof(uint32_t);
+	uint32_t i;
 
 	if(unread >= sizeInt)
 	{
@@ -1159,9 +1161,9 @@ short deserializeUnsignedInt(unsigned int * int_t)
 	return result;
 }
 
-short deserializeUnsignedIntEndianness (unsigned int * uint_t, Endianness endianness)
+int8_t deserializeUnsignedIntEndianness (uint32_t * uint_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1181,13 +1183,13 @@ short deserializeUnsignedIntEndianness (unsigned int * uint_t, Endianness endian
 }
 
 
-short deserializeLong(long * long_t)
+int8_t deserializeLong(int64_t * long_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeLong = sizeof(long);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeLong = sizeof(int64_t);
+	uint32_t i;
 
 	if(unread >= sizeLong)
 	{
@@ -1213,9 +1215,9 @@ short deserializeLong(long * long_t)
 	return result;
 }
 
-short deserializeLongEndianness (long * long_t, Endianness endianness)
+int8_t deserializeLongEndianness (int64_t * long_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1234,13 +1236,13 @@ short deserializeLongEndianness (long * long_t, Endianness endianness)
 	return result;
 }
 
-short deserializeUnsignedLong(unsigned long * ulong_t)
+int8_t deserializeUnsignedLong(uint64_t * ulong_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeLong = sizeof(unsigned long);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeLong = sizeof(uint64_t);
+	uint32_t i;
 
 	if(unread >= sizeLong)
 	{
@@ -1267,9 +1269,9 @@ short deserializeUnsignedLong(unsigned long * ulong_t)
 	return result;
 }
 
-short deserializeUnsignedLongEndianness (unsigned long * ulong_t, Endianness endianness)
+int8_t deserializeUnsignedLongEndianness (uint64_t * ulong_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1288,13 +1290,13 @@ short deserializeUnsignedLongEndianness (unsigned long * ulong_t, Endianness end
 	return result;
 }
 
-short deserializeLongLong(long long * longlong_t)
+int8_t deserializeLongLong(long long * longlong_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeLong = sizeof(long long);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeLong = sizeof(long long);
+	uint32_t i;
 
 	if(unread >= sizeLong)
 	{
@@ -1320,9 +1322,9 @@ short deserializeLongLong(long long * longlong_t)
 	return result;
 }
 
-short deserializeLongLongEndianness (long long * longlong_t, Endianness endianness)
+int8_t deserializeLongLongEndianness (long long * longlong_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1341,13 +1343,13 @@ short deserializeLongLongEndianness (long long * longlong_t, Endianness endianne
 	return result;
 }
 
-short deserializeUnsignedLongLong(unsigned long long * long_t)
+int8_t deserializeUnsignedLongLong(unsigned long long * long_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeLong = sizeof(unsigned long long);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeLong = sizeof(unsigned long long);
+	uint32_t i;
 
 	if(unread >= sizeLong)
 	{
@@ -1373,9 +1375,9 @@ short deserializeUnsignedLongLong(unsigned long long * long_t)
 	return result;
 }
 
-short deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, Endianness endianness)
+int8_t deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1394,13 +1396,13 @@ short deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, E
 	return result;
 }
 
-short deserializeFloat(float * float_t)
+int8_t deserializeFloat(float * float_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeFloat = sizeof(float);
-	unsigned int i;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeFloat = sizeof(float);
+	uint32_t i;
 
 	if(unread >= sizeFloat)
 	{
@@ -1426,9 +1428,9 @@ short deserializeFloat(float * float_t)
 	return result;
 }
 
-short deserializeFloatEndianness (float * float_t, Endianness endianness)
+int8_t deserializeFloatEndianness (float * float_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1447,14 +1449,14 @@ short deserializeFloatEndianness (float * float_t, Endianness endianness)
 	return result;
 }
 
-short deserializeDouble(double * double_t)
+int8_t deserializeDouble(double * double_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeDouble = sizeof(double);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeDouble = sizeof(double);
 
-	unsigned short i;
+	uint16_t i;
 
 	if(unread >= sizeDouble)
 	{
@@ -1480,9 +1482,9 @@ short deserializeDouble(double * double_t)
 	return result;
 }
 
-short deserializeDoubleEndianness (double * double_t, Endianness endianness)
+int8_t deserializeDoubleEndianness (double * double_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1501,14 +1503,14 @@ short deserializeDoubleEndianness (double * double_t, Endianness endianness)
 	return result;
 }
 
-short deserializeLongDouble(long double * longdouble_t)
+int8_t deserializeLongDouble(long double * longdouble_t)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned short sizeDouble = sizeof(long double);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint16_t sizeDouble = sizeof(long double);
 
-	unsigned short i;
+	uint16_t i;
 
 	if(unread >= sizeDouble)
 	{
@@ -1534,9 +1536,9 @@ short deserializeLongDouble(long double * longdouble_t)
 	return result;
 }
 
-short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness endianness)
+int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	if(endianness != m_endianness)
 	{
@@ -1555,17 +1557,17 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
 	return result;
 }
 
- short serializeStringSequence (const char ** string_t, const unsigned int numElements)
+ int8_t serializeStringSequence (const char ** string_t, const uint32_t numElements)
  {
- 	short result = 0;
- 	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
- 	unsigned int totalSpace = sizeof(unsigned int);
+ 	int8_t result = 0;
+ 	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+ 	uint32_t totalSpace = sizeof(uint32_t);
 
-	unsigned int i = 0;
+	uint32_t i = 0;
 	for (i = 0; i < numElements; i++){
-		totalSpace += (unsigned int)strlen(string_t[i]);
+		totalSpace += (uint32_t)strlen(string_t[i]);
 		totalSpace += 1;
-		totalSpace += sizeof(unsigned int);
+		totalSpace += sizeof(uint32_t);
 	}
 
  	if((resize(totalSpace) == 0) || totalSpace <= freeSpace)
@@ -1577,17 +1579,17 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
  	return result;
  }
 
- short serializeStringSequenceEndianness (const char ** string_t, const unsigned int numElements, Endianness endianness)
+ int8_t serializeStringSequenceEndianness (const char ** string_t, const uint32_t numElements, Endianness endianness)
  {
-	 short result = 0;
-  	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-  	unsigned int totalSpace = sizeof(unsigned int);
+	 int8_t result = 0;
+  	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  	uint32_t totalSpace = sizeof(uint32_t);
 
- 	unsigned int i = 0;
+ 	uint32_t i = 0;
  	for (i = 0; i < numElements; i++){
- 		totalSpace += (unsigned int)strlen(string_t[i]);
+ 		totalSpace += (uint32_t)strlen(string_t[i]);
  		totalSpace += 1;
- 		totalSpace += sizeof(unsigned int);
+ 		totalSpace += sizeof(uint32_t);
  	}
 
   	if((resize(totalSpace) == 0) || totalSpace <= freeSpace)
@@ -1599,59 +1601,59 @@ short deserializeLongDoubleEndianness (long double * longdouble_t, Endianness en
   	return result;
  }
 
- short serializeStringArray (const char ** string_t, const unsigned int numElements)
+ int8_t serializeStringArray (const char ** string_t, const uint32_t numElements)
  {
- 	short result = 0;
- 	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+ 	int8_t result = 0;
+ 	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 
-	unsigned int i = 0;
-	unsigned int totalSpace = 0;
+	uint32_t i = 0;
+	uint32_t totalSpace = 0;
 	for (i = 0; i < numElements; i++){
-		totalSpace += (unsigned int)strlen(string_t[i]);
+		totalSpace += (uint32_t)strlen(string_t[i]);
 		totalSpace += 1;
-		totalSpace += sizeof(unsigned int);
+		totalSpace += sizeof(uint32_t);
 	}
 
  	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
  	{
  		for(i = 0; i < numElements; i++)
  		{
- 			result = serializeString(string_t[i], (unsigned int)strlen(string_t[i]));
+ 			result = serializeString(string_t[i], (uint32_t)strlen(string_t[i]));
  			if(result < 0) return -1;
  		}
  	}
  	return result;
  }
 
- short serializeStringArrayEndianness (const char ** string_t, const unsigned int numElements, Endianness endianness)
+ int8_t serializeStringArrayEndianness (const char ** string_t, const uint32_t numElements, Endianness endianness)
  {
-	 short result = 0;
-  	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	 int8_t result = 0;
+  	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 
- 	unsigned int i = 0;
- 	unsigned int totalSpace = 0;
+ 	uint32_t i = 0;
+ 	uint32_t totalSpace = 0;
  	for (i = 0; i < numElements; i++){
- 		totalSpace += (unsigned int)strlen(string_t[i]);
+ 		totalSpace += (uint32_t)strlen(string_t[i]);
  		totalSpace += 1;
- 		totalSpace += sizeof(unsigned int);
+ 		totalSpace += sizeof(uint32_t);
  	}
 
   	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
   	{
   		for(i = 0; i < numElements; i++)
   		{
-  			result = serializeStringEndianness(string_t[i], (unsigned int)strlen(string_t[i]), endianness);
+  			result = serializeStringEndianness(string_t[i], (uint32_t)strlen(string_t[i]), endianness);
   			if(result < 0) return -1;
   		}
   	}
   	return result;
  }
 
-short serializeCharSequence (const char * char_t, const unsigned int numElements)
+int8_t serializeCharSequence (const char * char_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int totalSpace = sizeof(unsigned int) + numElements;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1662,11 +1664,11 @@ short serializeCharSequence (const char * char_t, const unsigned int numElements
 	return result;
 }
 
-short serializeCharSequenceEndianness (const char * char_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeCharSequenceEndianness (const char * char_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-  unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-  unsigned int totalSpace = sizeof(unsigned int) + numElements;
+	int8_t result = 0;
+  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
   if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
   {
@@ -1677,12 +1679,12 @@ short serializeCharSequenceEndianness (const char * char_t, const unsigned int n
   return result;
 }
 
-short serializeCharArray (const char * char_t, const unsigned int numElements)
+int8_t serializeCharArray (const char * char_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int totalSpace = numElements;
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t totalSpace = numElements;
+	uint32_t i = 0;
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
 		for(i = 0; i < numElements; i++)
@@ -1694,11 +1696,11 @@ short serializeCharArray (const char * char_t, const unsigned int numElements)
 	return result;
 }
 
-short serializeUnsignedCharSequence (const unsigned char * uchar_t, const unsigned int numElements)
+int8_t serializeUnsignedCharSequence (const unsigned char * uchar_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int totalSpace = sizeof(unsigned int) + numElements;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1709,11 +1711,11 @@ short serializeUnsignedCharSequence (const unsigned char * uchar_t, const unsign
 	return result;
 }
 
-short serializeUnsignedCharSequenceEndianness (const unsigned char * uchar_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedCharSequenceEndianness (const unsigned char * uchar_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-  unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-  unsigned int totalSpace = sizeof(unsigned int) + numElements;
+	int8_t result = 0;
+  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
   if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
   {
@@ -1724,12 +1726,12 @@ short serializeUnsignedCharSequenceEndianness (const unsigned char * uchar_t, co
   return result;
 }
 
-short serializeUnsignedCharArray (const unsigned char * uchar_t, const unsigned int numElements)
+int8_t serializeUnsignedCharArray (const unsigned char * uchar_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int totalSpace = numElements;
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t totalSpace = numElements;
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1742,11 +1744,11 @@ short serializeUnsignedCharArray (const unsigned char * uchar_t, const unsigned 
 	return result;
 }
 
-short serializeSignedCharSequence (const signed char * schar_t, const unsigned int numElements)
+int8_t serializeSignedCharSequence (const signed char * schar_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int totalSpace = sizeof(unsigned int) + numElements;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1757,9 +1759,9 @@ short serializeSignedCharSequence (const signed char * schar_t, const unsigned i
 	return result;
 }
 
-short serializeSignedCharSequenceEndianness (const signed char * schar_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeSignedCharSequenceEndianness (const signed char * schar_t, const uint32_t numElements, Endianness endianness)
 {
- short result = 0;
+ int8_t result = 0;
 
  if(endianness != m_endianness)
  {
@@ -1778,12 +1780,12 @@ short serializeSignedCharSequenceEndianness (const signed char * schar_t, const 
  return result;
 }
 
-short serializeSignedCharArray (const signed char * schar_t, const unsigned int numElements)
+int8_t serializeSignedCharArray (const signed char * schar_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned int totalSpace = numElements;
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t totalSpace = numElements;
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1796,12 +1798,12 @@ short serializeSignedCharArray (const signed char * schar_t, const unsigned int 
 	return result;
 }
 
-short serializeShortSequence (const short * short_t, const unsigned int numElements)
+int8_t serializeShortSequence (const int16_t * short_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(short);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeShort);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(int16_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1812,12 +1814,12 @@ short serializeShortSequence (const short * short_t, const unsigned int numEleme
 	return result;
 }
 
-short serializeShortSequenceEndianness (const short * short_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeShortSequenceEndianness (const int16_t * short_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-  unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-  unsigned short sizeShort = sizeof(short);
-  unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeShort);
+	int8_t result = 0;
+  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint16_t sizeShort = sizeof(int16_t);
+  uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
   if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
   {
@@ -1828,13 +1830,13 @@ short serializeShortSequenceEndianness (const short * short_t, const unsigned in
   return result;
 }
 
-short serializeShortArray (const short * short_t, const unsigned int numElements)
+int8_t serializeShortArray (const int16_t * short_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(short);
-	unsigned int totalSpace = (numElements * sizeShort);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(int16_t);
+	uint32_t totalSpace = (numElements * sizeShort);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1847,13 +1849,13 @@ short serializeShortArray (const short * short_t, const unsigned int numElements
 	return result;
 }
 
-short serializeShortArrayEndianness (const short * short_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeShortArrayEndianness (const int16_t * short_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-  unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-  unsigned short sizeShort = sizeof(short);
-  unsigned int totalSpace = (numElements * sizeShort);
-  unsigned int i = 0;
+	int8_t result = 0;
+  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint16_t sizeShort = sizeof(int16_t);
+  uint32_t totalSpace = (numElements * sizeShort);
+  uint32_t i = 0;
 
   if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
   {
@@ -1866,12 +1868,12 @@ short serializeShortArrayEndianness (const short * short_t, const unsigned int n
   return result;
 }
 
-short serializeUnsignedShortSequence (const unsigned short * ushort_t, const unsigned int numElements)
+int8_t serializeUnsignedShortSequence (const uint16_t * ushort_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(unsigned short);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeShort);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(uint16_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1882,12 +1884,12 @@ short serializeUnsignedShortSequence (const unsigned short * ushort_t, const uns
 	return result;
 }
 
-short serializeUnsignedShortSequenceEndianness (const unsigned short * ushort_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedShortSequenceEndianness (const uint16_t * ushort_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(unsigned short);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeShort);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(uint16_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1898,13 +1900,13 @@ short serializeUnsignedShortSequenceEndianness (const unsigned short * ushort_t,
 	return result;
 }
 
-short serializeUnsignedShortArray (const unsigned short * ushort_t, const unsigned int numElements)
+int8_t serializeUnsignedShortArray (const uint16_t * ushort_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(unsigned short);
-	unsigned int totalSpace = (numElements * sizeShort);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(uint16_t);
+	uint32_t totalSpace = (numElements * sizeShort);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1917,13 +1919,13 @@ short serializeUnsignedShortArray (const unsigned short * ushort_t, const unsign
 	return result;
 }
 
-short serializeUnsignedShortArrayEndianness (const unsigned short * ushort_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedShortArrayEndianness (const uint16_t * ushort_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeShort = sizeof(unsigned short);
-	unsigned int totalSpace = (numElements * sizeShort);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeShort = sizeof(uint16_t);
+	uint32_t totalSpace = (numElements * sizeShort);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1936,12 +1938,12 @@ short serializeUnsignedShortArrayEndianness (const unsigned short * ushort_t, co
 	return result;
 }
 
-short serializeIntSequence (const int * int_t, const unsigned int numElements)
+int8_t serializeIntSequence (const int32_t * int_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(int);
-	unsigned int totalSpace = sizeInt + (numElements * sizeInt);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(int32_t);
+	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1952,12 +1954,12 @@ short serializeIntSequence (const int * int_t, const unsigned int numElements)
 	return result;
 }
 
-short serializeIntSequenceEndianness (const int * int_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeIntSequenceEndianness (const int32_t * int_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(int);
-	unsigned int totalSpace = sizeInt + (numElements * sizeInt);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(int32_t);
+	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1968,13 +1970,13 @@ short serializeIntSequenceEndianness (const int * int_t, const unsigned int numE
 	return result;
 }
 
-short serializeIntArray (const int * int_t, const unsigned int numElements)
+int8_t serializeIntArray (const int32_t * int_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(int);
-	unsigned int totalSpace = (numElements * sizeInt);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(int32_t);
+	uint32_t totalSpace = (numElements * sizeInt);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -1987,13 +1989,13 @@ short serializeIntArray (const int * int_t, const unsigned int numElements)
 	return result;
 }
 
-short serializeIntArrayEndianness (const int * int_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeIntArrayEndianness (const int32_t * int_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(int);
-	unsigned int totalSpace = (numElements * sizeInt);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(int32_t);
+	uint32_t totalSpace = (numElements * sizeInt);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2006,12 +2008,12 @@ short serializeIntArrayEndianness (const int * int_t, const unsigned int numElem
 	return result;
 }
 
-short serializeUnsignedIntSequence (const unsigned int * uint_t, const unsigned int numElements)
+int8_t serializeUnsignedIntSequence (const uint32_t * uint_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(unsigned int);
-	unsigned int totalSpace = sizeInt + (numElements * sizeInt);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(uint32_t);
+	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2022,12 +2024,12 @@ short serializeUnsignedIntSequence (const unsigned int * uint_t, const unsigned 
 	return result;
 }
 
-short serializeUnsignedIntSequenceEndianness (const unsigned int * uint_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedIntSequenceEndianness (const uint32_t * uint_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(unsigned int);
-	unsigned int totalSpace = sizeInt + (numElements * sizeInt);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(uint32_t);
+	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2038,13 +2040,13 @@ short serializeUnsignedIntSequenceEndianness (const unsigned int * uint_t, const
 	return result;
 }
 
-short serializeUnsignedIntArray (const unsigned int * uint_t, const unsigned int numElements)
+int8_t serializeUnsignedIntArray (const uint32_t * uint_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(unsigned int);
-	unsigned int totalSpace = (numElements * sizeInt);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(uint32_t);
+	uint32_t totalSpace = (numElements * sizeInt);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2057,13 +2059,13 @@ short serializeUnsignedIntArray (const unsigned int * uint_t, const unsigned int
 	return result;
 }
 
-short serializeUnsignedIntArrayEndianness (const unsigned int * uint_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedIntArrayEndianness (const uint32_t * uint_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeInt = sizeof(unsigned int);
-	unsigned int totalSpace = (numElements * sizeInt);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeInt = sizeof(uint32_t);
+	uint32_t totalSpace = (numElements * sizeInt);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2076,12 +2078,12 @@ short serializeUnsignedIntArrayEndianness (const unsigned int * uint_t, const un
 	return result;
 }
 
-short serializeLongSequence (const long * long_t, const unsigned int numElements)
+int8_t serializeLongSequence (const int64_t * long_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(int64_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2092,12 +2094,12 @@ short serializeLongSequence (const long * long_t, const unsigned int numElements
 	return result;
 }
 
-short serializeLongSequenceEndianness (const long * long_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeLongSequenceEndianness (const int64_t * long_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(int64_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2108,13 +2110,13 @@ short serializeLongSequenceEndianness (const long * long_t, const unsigned int n
 	return result;
 }
 
-short serializeLongArray (const long * long_t, const unsigned int numElements)
+int8_t serializeLongArray (const int64_t * long_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(int64_t);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2127,13 +2129,13 @@ short serializeLongArray (const long * long_t, const unsigned int numElements)
 	return result;
 }
 
-short serializeLongArrayEndianness (const long * long_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeLongArrayEndianness (const int64_t * long_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(int64_t);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2146,12 +2148,12 @@ short serializeLongArrayEndianness (const long * long_t, const unsigned int numE
 	return result;
 }
 
-short serializeUnsignedLongSequence (const unsigned long * ulong_t, const unsigned int numElements)
+int8_t serializeUnsignedLongSequence (const uint64_t * ulong_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(uint64_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2162,12 +2164,12 @@ short serializeUnsignedLongSequence (const unsigned long * ulong_t, const unsign
 	return result;
 }
 
-short serializeUnsignedLongSequenceEndianness (const unsigned long * ulong_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedLongSequenceEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(uint64_t);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2178,13 +2180,13 @@ short serializeUnsignedLongSequenceEndianness (const unsigned long * ulong_t, co
 	return result;
 }
 
-short serializeUnsignedLongArray (const unsigned long * ulong_t, const unsigned int numElements)
+int8_t serializeUnsignedLongArray (const uint64_t * ulong_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(uint64_t);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2197,13 +2199,13 @@ short serializeUnsignedLongArray (const unsigned long * ulong_t, const unsigned 
 	return result;
 }
 
-short serializeUnsignedLongArrayEndianness (const unsigned long * ulong_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedLongArrayEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(uint64_t);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2216,12 +2218,12 @@ short serializeUnsignedLongArrayEndianness (const unsigned long * ulong_t, const
 	return result;
 }
 
-short serializeLongLongSequence (const long long * longlong_t, const unsigned int numElements)
+int8_t serializeLongLongSequence (const long long * longlong_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(long long);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2232,12 +2234,12 @@ short serializeLongLongSequence (const long long * longlong_t, const unsigned in
 	return result;
 }
 
-short serializeLongLongSequenceEndianness (const long long * longlong_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeLongLongSequenceEndianness (const long long * longlong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(long long);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2248,13 +2250,13 @@ short serializeLongLongSequenceEndianness (const long long * longlong_t, const u
 	return result;
 }
 
-short serializeLongLongArray (const long long * longlong_t, const unsigned int numElements)
+int8_t serializeLongLongArray (const long long * longlong_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(long long);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2267,13 +2269,13 @@ short serializeLongLongArray (const long long * longlong_t, const unsigned int n
 	return result;
 }
 
-short serializeLongLongArrayEndianness (const long long * longlong_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeLongLongArrayEndianness (const long long * longlong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(long long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(long long);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2286,12 +2288,12 @@ short serializeLongLongArrayEndianness (const long long * longlong_t, const unsi
 	return result;
 }
 
-short serializeUnsignedLongLongSequence (const unsigned long long * ulonglong_t, const unsigned int numElements)
+int8_t serializeUnsignedLongLongSequence (const unsigned long long * ulonglong_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(unsigned long long);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2302,12 +2304,12 @@ short serializeUnsignedLongLongSequence (const unsigned long long * ulonglong_t,
 	return result;
 }
 
-short serializeUnsignedLongLongSequenceEndianness (const unsigned long long * ulonglong_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedLongLongSequenceEndianness (const unsigned long long * ulonglong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long long);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeLong);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(unsigned long long);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2318,13 +2320,13 @@ short serializeUnsignedLongLongSequenceEndianness (const unsigned long long * ul
 	return result;
 }
 
-short serializeUnsignedLongLongArray (const unsigned long long * ulonglong_t, const unsigned int numElements)
+int8_t serializeUnsignedLongLongArray (const unsigned long long * ulonglong_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(unsigned long long);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2337,13 +2339,13 @@ short serializeUnsignedLongLongArray (const unsigned long long * ulonglong_t, co
 	return result;
 }
 
-short serializeUnsignedLongLongArrayEndianness (const unsigned long long * ulonglong_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeUnsignedLongLongArrayEndianness (const unsigned long long * ulonglong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeLong = sizeof(unsigned long long);
-	unsigned int totalSpace = (numElements * sizeLong);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeLong = sizeof(unsigned long long);
+	uint32_t totalSpace = (numElements * sizeLong);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2356,12 +2358,12 @@ short serializeUnsignedLongLongArrayEndianness (const unsigned long long * ulong
 	return result;
 }
 
-short serializeFloatSequence (const float * float_t, const unsigned int numElements)
+int8_t serializeFloatSequence (const float * float_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeFloat = sizeof(float);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeFloat);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeFloat = sizeof(float);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeFloat);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2372,12 +2374,12 @@ short serializeFloatSequence (const float * float_t, const unsigned int numEleme
 	return result;
 }
 
-short serializeFloatSequenceEndianness (const float * float_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeFloatSequenceEndianness (const float * float_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeFloat = sizeof(float);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeFloat);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeFloat = sizeof(float);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeFloat);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2388,13 +2390,13 @@ short serializeFloatSequenceEndianness (const float * float_t, const unsigned in
 	return result;
 }
 
-short serializeFloatArray (const float * float_t, const unsigned int numElements)
+int8_t serializeFloatArray (const float * float_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeFloat = sizeof(float);
-	unsigned int totalSpace = (numElements * sizeFloat);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeFloat = sizeof(float);
+	uint32_t totalSpace = (numElements * sizeFloat);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2407,13 +2409,13 @@ short serializeFloatArray (const float * float_t, const unsigned int numElements
 	return result;
 }
 
-short serializeFloatArrayEndianness (const float * float_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeFloatArrayEndianness (const float * float_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeFloat = sizeof(float);
-	unsigned int totalSpace = (numElements * sizeFloat);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeFloat = sizeof(float);
+	uint32_t totalSpace = (numElements * sizeFloat);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2426,12 +2428,12 @@ short serializeFloatArrayEndianness (const float * float_t, const unsigned int n
 	return result;
 }
 
-short serializeDoubleSequence (const double * double_t, const unsigned int numElements)
+int8_t serializeDoubleSequence (const double * double_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(double);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeDouble);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(double);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2442,12 +2444,12 @@ short serializeDoubleSequence (const double * double_t, const unsigned int numEl
 	return result;
 }
 
-short serializeDoubleSequenceEndianness (const double * double_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeDoubleSequenceEndianness (const double * double_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(double);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeDouble);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(double);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2458,13 +2460,13 @@ short serializeDoubleSequenceEndianness (const double * double_t, const unsigned
 	return result;
 }
 
-short serializeDoubleArray (const double * double_t, const unsigned int numElements)
+int8_t serializeDoubleArray (const double * double_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(double);
-	unsigned int totalSpace = (numElements * sizeDouble);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(double);
+	uint32_t totalSpace = (numElements * sizeDouble);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2477,13 +2479,13 @@ short serializeDoubleArray (const double * double_t, const unsigned int numEleme
 	return result;
 }
 
-short serializeDoubleArrayEndianness (const double * double_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeDoubleArrayEndianness (const double * double_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(double);
-	unsigned int totalSpace = (numElements * sizeDouble);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(double);
+	uint32_t totalSpace = (numElements * sizeDouble);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2496,12 +2498,12 @@ short serializeDoubleArrayEndianness (const double * double_t, const unsigned in
 	return result;
 }
 
-short serializeLongDoubleSequence (const long double * longdouble_t, const unsigned int numElements)
+int8_t serializeLongDoubleSequence (const long double * longdouble_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(long double);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeDouble);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(long double);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2512,12 +2514,12 @@ short serializeLongDoubleSequence (const long double * longdouble_t, const unsig
 	return result;
 }
 
-short serializeLongDoubleSequenceEndianness (const long double * longdouble_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeLongDoubleSequenceEndianness (const long double * longdouble_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(long double);
-	unsigned int totalSpace = sizeof(unsigned int) + (numElements * sizeDouble);
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(long double);
+	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2528,13 +2530,13 @@ short serializeLongDoubleSequenceEndianness (const long double * longdouble_t, c
 	return result;
 }
 
-short serializeLongDoubleArray (const long double * longdouble_t, const unsigned int numElements)
+int8_t serializeLongDoubleArray (const long double * longdouble_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(long double);
-	unsigned int totalSpace = (numElements * sizeDouble);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(long double);
+	uint32_t totalSpace = (numElements * sizeDouble);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2547,13 +2549,13 @@ short serializeLongDoubleArray (const long double * longdouble_t, const unsigned
 	return result;
 }
 
-short serializeLongDoubleArrayEndianness (const long double * longdouble_t, const unsigned int numElements, Endianness endianness)
+int8_t serializeLongDoubleArrayEndianness (const long double * longdouble_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	unsigned short sizeDouble = sizeof(long double);
-	unsigned int totalSpace = (numElements * sizeDouble);
-	unsigned int i = 0;
+	int8_t result = 0;
+	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint16_t sizeDouble = sizeof(long double);
+	uint32_t totalSpace = (numElements * sizeDouble);
+	uint32_t i = 0;
 
 	if( (resize(totalSpace) == 0) || totalSpace <= freeSpace)
 	{
@@ -2568,11 +2570,11 @@ short serializeLongDoubleArrayEndianness (const long double * longdouble_t, cons
 
 //DESERIALIZE CHAR
 
-short deserializeStringSequence(char *** string_t, unsigned int * numElements)
+int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -2590,11 +2592,11 @@ short deserializeStringSequence(char *** string_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeStringSequenceEndianness(char *** string_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -2612,15 +2614,15 @@ short deserializeStringSequenceEndianness(char *** string_t, unsigned int * numE
 	return result;
 }
 
-short deserializeStringArray (char *** string_t, const unsigned int numElements)
+int8_t deserializeStringArray (char *** string_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	char ** swap = malloc(numElements * sizeof(char * ));
 	*string_t = malloc(numElements * sizeof(char *));
 
-	unsigned int i = 0;
-	unsigned int length = 0;
+	uint32_t i = 0;
+	uint32_t length = 0;
 	for (i = 0; i < numElements; i++)
 	{
 		result = deserializeString(&swap[i], &length);
@@ -2631,15 +2633,15 @@ short deserializeStringArray (char *** string_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeStringArrayEndianness (char *** string_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeStringArrayEndianness (char *** string_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
 	char ** swap = malloc(numElements * sizeof(char * ));
 	*string_t = malloc(numElements * sizeof(char *));
 
-	unsigned int i = 0;
-	unsigned int length = 0;
+	uint32_t i = 0;
+	uint32_t length = 0;
 	for (i = 0; i < numElements; i++)
 	{
 		result = deserializeStringEndianness(&swap[i], &length, endianness);
@@ -2650,11 +2652,11 @@ short deserializeStringArrayEndianness (char *** string_t, const unsigned int nu
 	return result;
 }
 
-short deserializeCharSequence (char ** char_t, unsigned int * numElements)
+int8_t deserializeCharSequence (char ** char_t, uint32_t * numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -2668,11 +2670,11 @@ short deserializeCharSequence (char ** char_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeCharSequenceEndianness (char ** char_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeCharSequenceEndianness (char ** char_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -2686,12 +2688,12 @@ short deserializeCharSequenceEndianness (char ** char_t, unsigned int * numEleme
 	return result;
 }
 
-short deserializeCharArray (char ** char_t, const unsigned int numElements)
+int8_t deserializeCharArray (char ** char_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements;
+	uint32_t totalSpace = numElements;
 	if(unread >= totalSpace)
 	{
 		*char_t = malloc(totalSpace);
@@ -2705,11 +2707,11 @@ short deserializeCharArray (char ** char_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeUnsignedCharSequence (unsigned char ** uchar_t, unsigned int * numElements)
+int8_t deserializeUnsignedCharSequence (unsigned char ** uchar_t, uint32_t * numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -2723,11 +2725,11 @@ short deserializeUnsignedCharSequence (unsigned char ** uchar_t, unsigned int * 
 	return result;
 }
 
-short deserializeUnsignedCharSequenceEndianness (unsigned char ** uchar_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeUnsignedCharSequenceEndianness (unsigned char ** uchar_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -2741,12 +2743,12 @@ short deserializeUnsignedCharSequenceEndianness (unsigned char ** uchar_t, unsig
 	return result;
 }
 
-short deserializeUnsignedCharArray (unsigned char ** uchar_t, const unsigned int numElements)
+int8_t deserializeUnsignedCharArray (unsigned char ** uchar_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements;
+	uint32_t totalSpace = numElements;
 	if(unread >= totalSpace)
 	{
 		*uchar_t = malloc(totalSpace);
@@ -2760,11 +2762,11 @@ short deserializeUnsignedCharArray (unsigned char ** uchar_t, const unsigned int
 	return result;
 }
 
-short deserializeSignedCharSequence (signed char ** schar_t, unsigned int * numElements)
+int8_t deserializeSignedCharSequence (signed char ** schar_t, uint32_t * numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -2778,11 +2780,11 @@ short deserializeSignedCharSequence (signed char ** schar_t, unsigned int * numE
 	return result;
 }
 
-short deserializeSignedCharSequenceEndianness (signed char ** schar_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeSignedCharSequenceEndianness (signed char ** schar_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -2796,12 +2798,12 @@ short deserializeSignedCharSequenceEndianness (signed char ** schar_t, unsigned 
 	return result;
 }
 
-short deserializeSignedCharArray (signed char ** char_t, const unsigned int numElements)
+int8_t deserializeSignedCharArray (signed char ** char_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements;
+	uint32_t totalSpace = numElements;
 	if(unread >= totalSpace)
 	{
 		*char_t = malloc(totalSpace);
@@ -2817,12 +2819,12 @@ short deserializeSignedCharArray (signed char ** char_t, const unsigned int numE
 
 //DESERIALIZE SHORT
 
-short deserializeShortSequence (short ** short_t, unsigned int * numElements)
+int8_t deserializeShortSequence (int16_t ** short_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -2837,12 +2839,12 @@ short deserializeShortSequence (short ** short_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeShortSequenceEndianness (short ** short_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeShortSequenceEndianness (int16_t ** short_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -2857,20 +2859,20 @@ short deserializeShortSequenceEndianness (short ** short_t, unsigned int * numEl
 	return result;
 }
 
-short deserializeShortArray (short ** short_t, const unsigned int numElements)
+int8_t deserializeShortArray (int16_t ** short_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeShort = sizeof(short);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeShort = sizeof(int16_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements * sizeShort;
+	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
 		*short_t = malloc(totalSpace);
-		short * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		int16_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeShort(&swap[i]);
@@ -2885,20 +2887,20 @@ short deserializeShortArray (short ** short_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeShortArrayEndianness (short ** short_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeShortArrayEndianness (int16_t ** short_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeShort = sizeof(short);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeShort = sizeof(int16_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements * sizeShort;
+	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
 		*short_t = malloc(totalSpace);
-		short * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		int16_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeShortEndianness(&swap[i], endianness);
@@ -2913,12 +2915,12 @@ short deserializeShortArrayEndianness (short ** short_t, const unsigned int numE
 	return result;
 }
 
-short deserializeUnsignedShortSequence (unsigned short ** ushort_t, unsigned int * numElements)
+int8_t deserializeUnsignedShortSequence (uint16_t ** ushort_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -2932,12 +2934,12 @@ short deserializeUnsignedShortSequence (unsigned short ** ushort_t, unsigned int
 	return result;
 }
 
-short deserializeUnsignedShortSequenceEndianness (unsigned short ** ushort_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeUnsignedShortSequenceEndianness (uint16_t ** ushort_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -2951,20 +2953,20 @@ short deserializeUnsignedShortSequenceEndianness (unsigned short ** ushort_t, un
 	return result;
 }
 
-short deserializeUnsignedShortArray (unsigned short ** ushort_t, const unsigned int numElements)
+int8_t deserializeUnsignedShortArray (uint16_t ** ushort_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeShort = sizeof(short);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeShort = sizeof(int16_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements * sizeShort;
+	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
 		*ushort_t = malloc(totalSpace);
-		unsigned short * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint16_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedShort(&swap[i]);
@@ -2979,20 +2981,20 @@ short deserializeUnsignedShortArray (unsigned short ** ushort_t, const unsigned 
 	return result;
 }
 
-short deserializeUnsignedShortArrayEndianness (unsigned short ** ushort_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeUnsignedShortArrayEndianness (uint16_t ** ushort_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeShort = sizeof(short);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeShort = sizeof(int16_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int totalSpace = numElements * sizeShort;
+	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
 		*ushort_t = malloc(totalSpace);
-		unsigned short * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint16_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedShortEndianness(&swap[i], endianness);
@@ -3007,11 +3009,11 @@ short deserializeUnsignedShortArrayEndianness (unsigned short ** ushort_t, const
 	return result;
 }
 
-short deserializeIntSequence (int ** int_t, unsigned int * numElements)
+int8_t deserializeIntSequence (int32_t ** int_t, uint32_t * numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -3025,11 +3027,11 @@ short deserializeIntSequence (int ** int_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeIntSequenceEndianness (int ** int_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeIntSequenceEndianness (int32_t ** int_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -3043,19 +3045,19 @@ short deserializeIntSequenceEndianness (int ** int_t, unsigned int * numElements
 	return result;
 }
 
-short deserializeIntArray (int ** int_t, const unsigned int numElements)
+int8_t deserializeIntArray (int32_t ** int_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeInt;
+	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
 	{
 		*int_t = malloc(totalSpace);
-		int * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		int32_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeInt(&swap[i]);
@@ -3070,19 +3072,19 @@ short deserializeIntArray (int ** int_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeIntArrayEndianness (int ** int_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeIntArrayEndianness (int32_t ** int_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeInt;
+	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
 	{
 		*int_t = malloc(totalSpace);
-		int * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		int32_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeIntEndianness(&swap[i], endianness);
@@ -3097,11 +3099,11 @@ short deserializeIntArrayEndianness (int ** int_t, const unsigned int numElement
 	return result;
 }
 
-short deserializeUnsignedIntSequence (unsigned int ** uint_t, unsigned int * numElements)
+int8_t deserializeUnsignedIntSequence (uint32_t ** uint_t, uint32_t * numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements);
@@ -3115,11 +3117,11 @@ short deserializeUnsignedIntSequence (unsigned int ** uint_t, unsigned int * num
 	return result;
 }
 
-short deserializeUnsignedIntSequenceEndianness (unsigned int ** int_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeUnsignedIntSequenceEndianness (uint32_t ** int_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness);
@@ -3133,19 +3135,19 @@ short deserializeUnsignedIntSequenceEndianness (unsigned int ** int_t, unsigned 
 	return result;
 }
 
-short deserializeUnsignedIntArray (unsigned int ** uint_t, const unsigned int numElements)
+int8_t deserializeUnsignedIntArray (uint32_t ** uint_t, const uint32_t numElements)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeInt;
+	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
 	{
 		*uint_t = malloc(totalSpace);
-		unsigned int * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedInt(&swap[i]);
@@ -3160,19 +3162,19 @@ short deserializeUnsignedIntArray (unsigned int ** uint_t, const unsigned int nu
 	return result;
 }
 
-short deserializeUnsignedIntArrayEndianness (unsigned int ** uint_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeUnsignedIntArrayEndianness (uint32_t ** uint_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	int8_t result = 0;
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeInt;
+	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
 	{
 		*uint_t = malloc(totalSpace);
-		unsigned int * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedIntEndianness(&swap[i], endianness);
@@ -3187,12 +3189,12 @@ short deserializeUnsignedIntArrayEndianness (unsigned int ** uint_t, const unsig
 	return result;
 }
 
-short deserializeLongSequence (long ** long_t, unsigned int * numElements)
+int8_t deserializeLongSequence (int64_t ** long_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3207,12 +3209,12 @@ short deserializeLongSequence (long ** long_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeLongSequenceEndianness (long ** long_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeLongSequenceEndianness (int64_t ** long_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3227,21 +3229,21 @@ short deserializeLongSequenceEndianness (long ** long_t, unsigned int * numEleme
 	return result;
 }
 
-short deserializeLongArray (long ** long_t, const unsigned int numElements)
+int8_t deserializeLongArray (int64_t ** long_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(int64_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*long_t = malloc(totalSpace);
-		long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		int64_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeLong(&swap[i]);
@@ -3256,21 +3258,21 @@ short deserializeLongArray (long ** long_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeLongArrayEndianness (long ** long_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeLongArrayEndianness (int64_t ** long_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(int64_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*long_t = malloc(totalSpace);
-		long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		int64_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeLongEndianness(&swap[i], endianness);
@@ -3285,12 +3287,12 @@ short deserializeLongArrayEndianness (long ** long_t, const unsigned int numElem
 	return result;
 }
 
-short deserializeUnsignedLongSequence (unsigned long ** ulong_t, unsigned int * numElements)
+int8_t deserializeUnsignedLongSequence (uint64_t ** ulong_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3305,12 +3307,12 @@ short deserializeUnsignedLongSequence (unsigned long ** ulong_t, unsigned int * 
 	return result;
 }
 
-short deserializeUnsignedLongSequenceEndianness (unsigned long ** ulong_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeUnsignedLongSequenceEndianness (uint64_t ** ulong_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3325,21 +3327,21 @@ short deserializeUnsignedLongSequenceEndianness (unsigned long ** ulong_t, unsig
 	return result;
 }
 
-short deserializeUnsignedLongArray (unsigned long ** ulong_t, const unsigned int numElements)
+int8_t deserializeUnsignedLongArray (uint64_t ** ulong_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(unsigned long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(uint64_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*ulong_t = malloc(totalSpace);
-		unsigned long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint64_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedLong(&swap[i]);
@@ -3354,21 +3356,21 @@ short deserializeUnsignedLongArray (unsigned long ** ulong_t, const unsigned int
 	return result;
 }
 
-short deserializeUnsignedLongArrayEndianness (unsigned long ** ulong_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeUnsignedLongArrayEndianness (uint64_t ** ulong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(unsigned long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(uint64_t);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*ulong_t = malloc(totalSpace);
-		unsigned long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint64_t * swap = malloc(totalSpace);
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedLongEndianness(&swap[i], endianness);
@@ -3383,12 +3385,12 @@ short deserializeUnsignedLongArrayEndianness (unsigned long ** ulong_t, const un
 	return result;
 }
 
-short deserializeLongLongSequence (long long ** longlong_t, unsigned int * numElements)
+int8_t deserializeLongLongSequence (long long ** longlong_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3403,12 +3405,12 @@ short deserializeLongLongSequence (long long ** longlong_t, unsigned int * numEl
 	return result;
 }
 
-short deserializeLongLongSequenceEndianness (long long ** longlong_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeLongLongSequenceEndianness (long long ** longlong_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3423,21 +3425,21 @@ short deserializeLongLongSequenceEndianness (long long ** longlong_t, unsigned i
 	return result;
 }
 
-short deserializeLongLongArray (long long ** longlong_t, const unsigned int numElements)
+int8_t deserializeLongLongArray (long long ** longlong_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(long long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(long long);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*longlong_t = malloc(totalSpace);
 		long long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeLongLong(&swap[i]);
@@ -3452,21 +3454,21 @@ short deserializeLongLongArray (long long ** longlong_t, const unsigned int numE
 	return result;
 }
 
-short deserializeLongLongArrayEndianness (long long ** longlong_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeLongLongArrayEndianness (long long ** longlong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(long long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(long long);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*longlong_t = malloc(totalSpace);
 		long long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeLongLongEndianness(&swap[i], endianness);
@@ -3481,12 +3483,12 @@ short deserializeLongLongArrayEndianness (long long ** longlong_t, const unsigne
 	return result;
 }
 
-short deserializeUnsignedLongLongSequence (unsigned long long ** ulonglong_t, unsigned int * numElements)
+int8_t deserializeUnsignedLongLongSequence (unsigned long long ** ulonglong_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3501,12 +3503,12 @@ short deserializeUnsignedLongLongSequence (unsigned long long ** ulonglong_t, un
 	return result;
 }
 
-short deserializeUnsignedLongLongSequenceEndianness (unsigned long long ** ulonglong_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeUnsignedLongLongSequenceEndianness (unsigned long long ** ulonglong_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3521,21 +3523,21 @@ short deserializeUnsignedLongLongSequenceEndianness (unsigned long long ** ulong
 	return result;
 }
 
-short deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, const unsigned int numElements)
+int8_t deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(unsigned long long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(unsigned long long);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*ulonglong_t = malloc(totalSpace);
 		unsigned long long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedLongLong(&swap[i]);
@@ -3550,21 +3552,21 @@ short deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, const
 	return result;
 }
 
-short deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglong_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglong_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeLong = sizeof(unsigned long long);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(unsigned long long);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeLong;
+	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
 	{
 		*ulonglong_t = malloc(totalSpace);
 		unsigned long long * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeUnsignedLongLongEndianness(&swap[i], endianness);
@@ -3579,12 +3581,12 @@ short deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglon
 	return result;
 }
 
-short deserializeFloatSequence (float ** float_t, unsigned int * numElements)
+int8_t deserializeFloatSequence (float ** float_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3599,12 +3601,12 @@ short deserializeFloatSequence (float ** float_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeFloatSequenceEndianness (float ** float_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeFloatSequenceEndianness (float ** float_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3619,21 +3621,21 @@ short deserializeFloatSequenceEndianness (float ** float_t, unsigned int * numEl
 	return result;
 }
 
-short deserializeFloatArray (float ** float_t, const unsigned int numElements)
+int8_t deserializeFloatArray (float ** float_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeFloat = sizeof(float);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeFloat = sizeof(float);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeFloat;
+	uint32_t totalSpace = numElements * sizeFloat;
 	if(unread >= totalSpace)
 	{
 		*float_t = malloc(totalSpace);
 		float * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeFloat(&swap[i]);
@@ -3648,21 +3650,21 @@ short deserializeFloatArray (float ** float_t, const unsigned int numElements)
 	return result;
 }
 
-short deserializeFloatArrayEndianness (float ** float_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeFloatArrayEndianness (float ** float_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeFloat = sizeof(float);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeFloat = sizeof(float);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeFloat;
+	uint32_t totalSpace = numElements * sizeFloat;
 	if(unread >= totalSpace)
 	{
 		*float_t = malloc(totalSpace);
 		float * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeFloatEndianness(&swap[i], endianness);
@@ -3677,12 +3679,12 @@ short deserializeFloatArrayEndianness (float ** float_t, const unsigned int numE
 	return result;
 }
 
-short deserializeDoubleSequence (double ** double_t, unsigned int * numElements)
+int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3697,12 +3699,12 @@ short deserializeDoubleSequence (double ** double_t, unsigned int * numElements)
 	return result;
 }
 
-short deserializeDoubleSequenceEndianness (double ** double_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3717,21 +3719,21 @@ short deserializeDoubleSequenceEndianness (double ** double_t, unsigned int * nu
 	return result;
 }
 
-short deserializeDoubleArray (double ** double_t, const unsigned int numElements)
+int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeDouble = sizeof(double);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeDouble = sizeof(double);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeDouble;
+	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
 	{
 		*double_t = malloc(totalSpace);
 		double * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeDouble(&swap[i]);
@@ -3746,21 +3748,21 @@ short deserializeDoubleArray (double ** double_t, const unsigned int numElements
 	return result;
 }
 
-short deserializeDoubleArrayEndianness (double ** double_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeDoubleArrayEndianness (double ** double_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeDouble = sizeof(double);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeDouble = sizeof(double);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeDouble;
+	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
 	{
 		*double_t = malloc(totalSpace);
 		double * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeDoubleEndianness(&swap[i], endianness);
@@ -3775,12 +3777,12 @@ short deserializeDoubleArrayEndianness (double ** double_t, const unsigned int n
 	return result;
 }
 
-short deserializeLongDoubleSequence (long double ** longdouble_t, unsigned int * numElements)
+int8_t deserializeLongDoubleSequence (long double ** longdouble_t, uint32_t * numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3795,12 +3797,12 @@ short deserializeLongDoubleSequence (long double ** longdouble_t, unsigned int *
 	return result;
 }
 
-short deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, unsigned int * numElements, Endianness endianness)
+int8_t deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, uint32_t * numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeInt = sizeof(unsigned int);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
 	{
@@ -3815,21 +3817,21 @@ short deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, unsi
 	return result;
 }
 
-short deserializeLongDoubleArray (long double ** longdouble_t, const unsigned int numElements)
+int8_t deserializeLongDoubleArray (long double ** longdouble_t, const uint32_t numElements)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeDouble = sizeof(long double);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeDouble = sizeof(long double);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeDouble;
+	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
 	{
 		*longdouble_t = malloc(totalSpace);
 		long double * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeLongDouble(&swap[i]);
@@ -3844,21 +3846,21 @@ short deserializeLongDoubleArray (long double ** longdouble_t, const unsigned in
 	return result;
 }
 
-short deserializeLongDoubleArrayEndianness (long double ** longdouble_t, const unsigned int numElements, Endianness endianness)
+int8_t deserializeLongDoubleArrayEndianness (long double ** longdouble_t, const uint32_t numElements, Endianness endianness)
 {
-	short result = 0;
+	int8_t result = 0;
 
-	unsigned int unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unsigned int sizeDouble = sizeof(long double);
+	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeDouble = sizeof(long double);
 
 	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	unsigned int totalSpace = numElements * sizeDouble;
+	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
 	{
 		*longdouble_t = malloc(totalSpace);
 		long double * swap = malloc(totalSpace);
-		unsigned int i = 0;
+		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeLongDoubleEndianness(&swap[i], endianness);

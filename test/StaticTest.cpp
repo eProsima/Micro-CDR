@@ -15,16 +15,16 @@ extern "C" {
   const signed char octet_t = 32;
   const char char_t =  'Z';
 
-  const unsigned short ushort_t = 65500;
-  const short short_t = -32700;
-  const unsigned int ulong_t = 4294967200;
-  const int long_t = -2147483600;
+  const uint16_t ushort_t = 65500;
+  const int16_t short_t = -32700;
+  const uint32_t ulong_t = 4294967200;
+  const int32_t long_t = -2147483600;
 
-  const unsigned long ulonglong_t = 18446744073709551600u;
-  const long longlong_t = -9223372036800;
+  const uint64_t ulonglong_t = 18446744073709551600u;
+  const int64_t longlong_t = -9223372036800;
 
-  const unsigned long long ulonglonglong_t = (unsigned long)18446744073709551600u;
-  const long long longlonglong_t = (long)-9223372036800;
+  const unsigned long long ulonglonglong_t = (uint64_t)18446744073709551600u;
+  const long long longlonglong_t = (int64_t)-9223372036800;
 
   const float float_tt = FLT_MIN;
   const double double_tt = DBL_MIN;
@@ -39,15 +39,15 @@ extern "C" {
   const unsigned char octet_array_t[5] = {1, 2, 3, 4, 5};
   const char char_array_t[5] = {'A', 'B', 'C', 'D', 'E'};
 
-  const unsigned short ushort_array_t [5] = {65500, 65501, 65502, 65503, 65504};
-  const short short_array_t[5] = {-32700, -32701, -32702, -32703, -32704};
+  const uint16_t ushort_array_t [5] = {65500, 65501, 65502, 65503, 65504};
+  const int16_t short_array_t[5] = {-32700, -32701, -32702, -32703, -32704};
 
-  const unsigned int ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 4294967203, 4294967204};
-  const int long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
+  const uint32_t ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 4294967203, 4294967204};
+  const int32_t long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
 
 
-  const unsigned long ulonglong_array_t[5] = {(unsigned long)18446744073709551600u, (unsigned long)18446744073709551601u, (unsigned long)18446744073709551602u, (unsigned long)18446744073709551603u, (unsigned long)18446744073709551604u};
-  const long  longlong_array_t[5] = {(long)-9223372036800, (long)-9223372036801, (long)-9223372036802, (long)-9223372036803, (long)-9223372036804};
+  const uint64_t ulonglong_array_t[5] = {(uint64_t)18446744073709551600u, (uint64_t)18446744073709551601u, (uint64_t)18446744073709551602u, (uint64_t)18446744073709551603u, (uint64_t)18446744073709551604u};
+  const int64_t  longlong_array_t[5] = {(int64_t)-9223372036800, (int64_t)-9223372036801, (int64_t)-9223372036802, (int64_t)-9223372036803, (int64_t)-9223372036804};
 
   const unsigned long long ulonglonglong_array_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
   const long long longlonglong_array_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
@@ -63,13 +63,13 @@ extern "C" {
   // Added because error 336.
   const unsigned char octet_seq_t[5] = {5, 4, 3, 2, 1};
   const char char_seq_t[5] = {'E', 'D', 'C', 'B', 'A'};
-  const unsigned short ushort_seq_t[5] = {65504, 65503, 65502, 65501, 65500};
-  const short short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
-  const unsigned int ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
-  const int long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
+  const uint16_t ushort_seq_t[5] = {65504, 65503, 65502, 65501, 65500};
+  const int16_t short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
+  const uint32_t ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
+  const int32_t long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
 
-  const unsigned long ulonglong_seq_t[5] = {(unsigned long)18446744073709551604u, (unsigned long)18446744073709551603u, (unsigned long)18446744073709551602u, (unsigned long)18446744073709551601u, (unsigned long)18446744073709551600u};
-  const long longlong_seq_t[5] = {(long)-9223372036804, (long)-9223372036803, (long)-9223372036802, (long)-9223372036801, (long)-9223372036800};
+  const uint64_t ulonglong_seq_t[5] = {(uint64_t)18446744073709551604u, (uint64_t)18446744073709551603u, (uint64_t)18446744073709551602u, (uint64_t)18446744073709551601u, (uint64_t)18446744073709551600u};
+  const int64_t longlong_seq_t[5] = {(int64_t)-9223372036804, (int64_t)-9223372036803, (int64_t)-9223372036802, (int64_t)-9223372036801, (int64_t)-9223372036800};
 
   const unsigned long long ulonglonglong_seq_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
   const long long longlonglong_seq_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
@@ -121,7 +121,7 @@ extern "C" {
 
   TEST(nanoCDRBasicTests, Short)
   {
-      short short_out;
+      int16_t short_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -137,7 +137,7 @@ extern "C" {
 
   TEST(nanoCDRBasicTests, UnsignedShort)
   {
-      unsigned short ushort_out;
+      uint16_t ushort_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -153,7 +153,7 @@ extern "C" {
 
   TEST(nanoCDRBasicTests, Int)
   {
-      int long_out;
+      int32_t long_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -169,7 +169,7 @@ extern "C" {
 
   TEST(nanoCDRBasicTests, UnsignedInt)
   {
-      unsigned int ulong_out;
+      uint32_t ulong_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -185,7 +185,7 @@ extern "C" {
 
   TEST(nanoCDRBasicTests, Long)
   {
-      long long_out;
+      int64_t long_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -201,7 +201,7 @@ extern "C" {
 
   TEST(nanoCDRBasicTests, uLong)
   {
-      unsigned long ulong_out;
+      uint64_t ulong_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -302,8 +302,8 @@ extern "C" {
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
 
-      const unsigned int length = (unsigned int)std::strlen(string_t);
-      unsigned int length_out;
+      const uint32_t length = (uint32_t)std::strlen(string_t);
+      uint32_t length_out;
 
       // Serialization.
       serializeString(string_t, length);
@@ -311,7 +311,7 @@ extern "C" {
       // Deseriazliation.
       deserializeString(&string_out, &length_out);
 
-      unsigned int comparative = std::strcmp(string_out, string_t);
+      uint32_t comparative = std::strcmp(string_out, string_t);
 
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
@@ -325,8 +325,8 @@ extern "C" {
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
 
-      const unsigned int length = (unsigned int)std::strlen(emptystring_t);
-      unsigned int length_out;
+      const uint32_t length = (uint32_t)std::strlen(emptystring_t);
+      uint32_t length_out;
 
       // Serialization.
       serializeString(emptystring_t, length);
@@ -334,7 +334,7 @@ extern "C" {
       // Deseriazliation.
       deserializeString(&string_out, &length_out);
 
-      unsigned int comparative = std::strcmp(string_out, emptystring_t);
+      uint32_t comparative = std::strcmp(string_out, emptystring_t);
 
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
@@ -354,7 +354,7 @@ extern "C" {
       // Deseriazliation.
       deserializeCharArray(&char_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(char_array_t[i], char_out[i]);
@@ -375,7 +375,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedCharArray(&char_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(octet_array_t[i], char_out[i]);
@@ -385,7 +385,7 @@ extern "C" {
 
   TEST(nanoCDRArrayTests, ShortArray)
   {
-      short * short_out;
+      int16_t * short_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -396,7 +396,7 @@ extern "C" {
       // Deseriazliation.
       deserializeShortArray(&short_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(short_array_t[i], short_out[i]);
@@ -406,7 +406,7 @@ extern "C" {
 
   TEST(nanoCDRArrayTests, UnsignedShortArray)
   {
-      unsigned short * ushort_out;
+      uint16_t * ushort_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -417,7 +417,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedShortArray(&ushort_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ushort_array_t[i], ushort_out[i]);
@@ -427,7 +427,7 @@ extern "C" {
 
   TEST(nanoCDRArrayTests, IntArray)
   {
-      int * int_out;
+      int32_t * int_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -438,7 +438,7 @@ extern "C" {
       // Deseriazliation.
       deserializeIntArray(&int_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(long_array_t[i], int_out[i]);
@@ -448,7 +448,7 @@ extern "C" {
 
   TEST(nanoCDRArrayTests, UnsignedIntArray)
   {
-      unsigned int * uint_out;
+      uint32_t * uint_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -459,7 +459,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedIntArray(&uint_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulong_array_t[i], uint_out[i]);
@@ -469,7 +469,7 @@ extern "C" {
 
   TEST(nanoCDRArrayTests, LongArray)
   {
-      long * long_out;
+      int64_t * long_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -480,7 +480,7 @@ extern "C" {
       // Deseriazliation.
       deserializeLongArray(&long_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlong_array_t[i], long_out[i]);
@@ -490,7 +490,7 @@ extern "C" {
 
   TEST(nanoCDRArrayTests, ULongArray)
   {
-      unsigned long * ulong_out;
+      uint64_t * ulong_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -501,7 +501,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedLongArray(&ulong_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglong_array_t[i], ulong_out[i]);
@@ -522,7 +522,7 @@ extern "C" {
       // Deseriazliation.
       deserializeLongLongArray(&longlong_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlonglong_array_t[i], longlong_out[i]);
@@ -543,7 +543,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedLongLongArray(&ulonglong_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglonglong_array_t[i], ulonglong_out[i]);
@@ -564,7 +564,7 @@ extern "C" {
       // Deseriazliation.
       deserializeFloatArray(&float_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(float_array_t[i], float_out[i]);
@@ -585,7 +585,7 @@ extern "C" {
       // Deseriazliation.
       deserializeDoubleArray(&double_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(double_array_t[i], double_out[i]);
@@ -607,7 +607,7 @@ extern "C" {
       // Deseriazliation.
       deserializeLongDoubleArray(&longdouble_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longdouble_array_t[i], longdouble_out[i]);
@@ -628,12 +628,12 @@ extern "C" {
       // Deseriazliation.
       deserializeStringArray(&string_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_out[i]);
@@ -644,7 +644,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, CharSequence)
   {
       char * char_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -657,7 +657,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(char_seq_t[i], char_out[i]);
@@ -669,7 +669,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, UnsignedCharSequence)
   {
       unsigned char * char_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -682,7 +682,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(octet_seq_t[i], char_out[i]);
@@ -693,8 +693,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesTests, ShortSequence)
   {
-      short * short_out;
-      unsigned int size_out;
+      int16_t * short_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -707,7 +707,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(short_seq_t[i], short_out[i]);
@@ -718,8 +718,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesTests, UnsignedShortSequence)
   {
-      unsigned short * ushort_out;
-      unsigned int size_out;
+      uint16_t * ushort_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -732,7 +732,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ushort_seq_t[i], ushort_out[i]);
@@ -743,8 +743,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesTests, IntSequence)
   {
-      int * int_out;
-      unsigned int size_out;
+      int32_t * int_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -757,7 +757,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(long_seq_t[i], int_out[i]);
@@ -768,8 +768,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesTests, UnsignedIntSequence)
   {
-      unsigned int * uint_out;
-      unsigned int size_out;
+      uint32_t * uint_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -782,7 +782,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulong_seq_t[i], uint_out[i]);
@@ -793,8 +793,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesTests, LongSequence)
   {
-      long * long_out;
-      unsigned int size_out;
+      int64_t * long_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -807,7 +807,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlong_seq_t[i], long_out[i]);
@@ -818,8 +818,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesTests, ULongSequence)
   {
-      unsigned long * ulong_out;
-      unsigned int size_out;
+      uint64_t * ulong_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -832,7 +832,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglong_seq_t[i], ulong_out[i]);
@@ -844,7 +844,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, LongLongSequence)
   {
       long long * longlong_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -857,7 +857,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlonglong_seq_t[i], longlong_out[i]);
@@ -869,7 +869,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, ULongLongSequence)
   {
       unsigned long long * ulonglong_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -882,7 +882,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglonglong_seq_t[i], ulonglong_out[i]);
@@ -894,7 +894,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, FloatSequence)
   {
       float * float_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -907,7 +907,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(float_seq_t[i], float_out[i]);
@@ -919,7 +919,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, DoubleSequence)
   {
       double * double_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -932,7 +932,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(double_seq_t[i], double_out[i]);
@@ -944,7 +944,7 @@ extern "C" {
   TEST(nanoCDRSequencesTests, LongDoubleSequence)
   {
       long double * longdouble_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -957,7 +957,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longdouble_seq_t[i], longdouble_out[i]);
@@ -976,19 +976,19 @@ extern "C" {
       // Serialization.
       serializeStringSequence(string_seq_t, 5);
 
-      unsigned int size_out;
+      uint32_t size_out;
 
       // Deseriazliation.
       deserializeStringSequence(&string_out, &size_out);
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_out[i]);
@@ -1000,12 +1000,12 @@ extern "C" {
   {
     char char_out;
     signed char octect_out;
-    short short_out;
-    unsigned short ushort_out;
-    int long_out;
-    unsigned int ulong_out;
-    long longlong_out;
-    unsigned long ulonglong_out;
+    int16_t short_out;
+    uint16_t ushort_out;
+    int32_t long_out;
+    uint32_t ulong_out;
+    int64_t longlong_out;
+    uint64_t ulonglong_out;
     long long longlonglong_out;
     unsigned long long ulonglonglong_out;
     float float_out;
@@ -1018,11 +1018,11 @@ extern "C" {
     // Check good case.
     newStaticBuffer(buffer, BUFFER_LENGTH);
 
-    const unsigned int length = (unsigned int)std::strlen(string_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(string_t);
+    uint32_t length_out;
 
-    const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
-    unsigned int length_out_2;
+    const uint32_t length_2 = (uint32_t)std::strlen(emptystring_t);
+    uint32_t length_out_2;
 
     // Serialization.
     serializeChar(char_t);
@@ -1058,8 +1058,8 @@ extern "C" {
     deserializeString(&string_out, &length_out);
     deserializeString(&string_out_2, &length_out_2);
 
-    unsigned int comparative = std::strcmp(string_out, string_t);
-    unsigned int comparative_2 = std::strcmp(string_out_2, emptystring_t);
+    uint32_t comparative = std::strcmp(string_out, string_t);
+    uint32_t comparative_2 = std::strcmp(string_out_2, emptystring_t);
 
     EXPECT_EQ(char_out, char_t);
     EXPECT_EQ(octect_out, octet_t);
@@ -1082,15 +1082,15 @@ extern "C" {
 
   TEST(nanoCDRTests, Arrays)
   {
-    int i;
+    int32_t i;
     char * char_out;
     unsigned char * uchar_out;
-    short * short_out;
-    unsigned short * ushort_out;
-    int * int_out;
-    unsigned int * uint_out;
-    long * long_out;
-    unsigned long * ulong_out;
+    int16_t * short_out;
+    uint16_t * ushort_out;
+    int32_t * int_out;
+    uint32_t * uint_out;
+    int64_t * long_out;
+    uint64_t * ulong_out;
     long long * longlong_out;
     unsigned long long * ulonglong_out;
     float * float_out;
@@ -1103,7 +1103,7 @@ extern "C" {
     // Check good case.
     newStaticBuffer(buffer, BUFFER_LENGTH);
 
-    short result = 0;
+    int16_t result = 0;
 
     // Serialization.
     result += serializeCharArray(char_array_t, 5); //5
@@ -1121,7 +1121,7 @@ extern "C" {
     result += serializeLongDoubleArray(longdouble_array_t, 5); //40
     result += serializeStringArray(string_seq_t, 5);
 
-    //unsigned int serialized = getSerializedDataLength();
+    //uint32_t serialized = getSerializedDataLength();
 
     EXPECT_EQ(result, 0);
     //EXPECT_EQ(serialized, 130);
@@ -1187,9 +1187,9 @@ extern "C" {
         }
         for(i = 0; i < 5; i++)
         {
-          int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-          int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-          int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+          int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+          int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+          int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
           EXPECT_EQ(length_in_aux, length_out_aux);
           EXPECT_EQ(comparative_aux, 0);
           free(string_out[i]);
@@ -1215,37 +1215,37 @@ extern "C" {
 
   TEST(nanoCDRTests, Sequences)
   {
-    int i;
+    int32_t i;
     char * char_out;
-    unsigned int char_out_size;
+    uint32_t char_out_size;
     unsigned char * uchar_out;
-    unsigned int uchar_out_size;
-    short * short_out;
-    unsigned int short_out_size;
-    unsigned short * ushort_out;
-    unsigned int ushort_out_size;
-    int * int_out;
-    unsigned int int_out_size;
-    unsigned int * uint_out;
-    unsigned int uint_out_size;
-    long * long_out;
-    unsigned int long_out_size;
-    unsigned long * ulong_out;
-    unsigned int ulong_out_size;
+    uint32_t uchar_out_size;
+    int16_t * short_out;
+    uint32_t short_out_size;
+    uint16_t * ushort_out;
+    uint32_t ushort_out_size;
+    int32_t * int_out;
+    uint32_t int_out_size;
+    uint32_t * uint_out;
+    uint32_t uint_out_size;
+    int64_t * long_out;
+    uint32_t long_out_size;
+    uint64_t * ulong_out;
+    uint32_t ulong_out_size;
     long long * longlong_out;
-    unsigned int longlong_out_size;
+    uint32_t longlong_out_size;
     unsigned long long * ulonglong_out;
-    unsigned int ulonglong_out_size;
+    uint32_t ulonglong_out_size;
     float * float_out;
-    unsigned int float_out_size;
+    uint32_t float_out_size;
     double * double_out;
-    unsigned int double_out_size;
+    uint32_t double_out_size;
     long double * longdouble_out;
-    unsigned int longdouble_out_size;
+    uint32_t longdouble_out_size;
     char ** string_out;
-    unsigned int string_out_size;
+    uint32_t string_out_size;
 
-    short result = 0;
+    int16_t result = 0;
 
 
     char buffer[BUFFER_LENGTH];
@@ -1268,7 +1268,7 @@ extern "C" {
     result += serializeLongDoubleSequence(longdouble_seq_t, 5);//44
     result += serializeStringSequence(string_seq_t, 5);
 
-    //unsigned int serialized = getSerializedDataLength();
+    //uint32_t serialized = getSerializedDataLength();
     //EXPECT_EQ(serialized, 162);
 
     EXPECT_EQ(result, 0);
@@ -1349,9 +1349,9 @@ extern "C" {
         }
         for(i = 0; i < 5; i++)
         {
-          int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-          int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-          int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+          int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+          int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+          int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
           EXPECT_EQ(length_in_aux, length_out_aux);
           EXPECT_EQ(comparative_aux, 0);
           free(string_out[i]);
@@ -1380,12 +1380,12 @@ extern "C" {
     //SIMPLE
     char char_out;
     signed char octect_out;
-    short short_out;
-    unsigned short ushort_out;
-    int long_out;
-    unsigned int ulong_out;
-    long longlong_out;
-    unsigned long ulonglong_out;
+    int16_t short_out;
+    uint16_t ushort_out;
+    int32_t long_out;
+    uint32_t ulong_out;
+    int64_t longlong_out;
+    uint64_t ulonglong_out;
     long long longlonglong_out;
     unsigned long long ulonglonglong_out;
     float float_out;
@@ -1395,15 +1395,15 @@ extern "C" {
     char * string_out_2;
 
     //ARRAYS
-    int i;
+    int32_t i;
     char * char_array_out;
     unsigned char * uchar_array_out;
-    short * short_array_out;
-    unsigned short * ushort_array_out;
-    int * int_array_out;
-    unsigned int * uint_array_out;
-    long * long_array_out;
-    unsigned long * ulong_array_out;
+    int16_t * short_array_out;
+    uint16_t * ushort_array_out;
+    int32_t * int_array_out;
+    uint32_t * uint_array_out;
+    int64_t * long_array_out;
+    uint64_t * ulong_array_out;
     long long * longlong_array_out;
     unsigned long long * ulonglong_array_out;
     float * float_array_out;
@@ -1413,46 +1413,46 @@ extern "C" {
 
     //SEQUENCES
     char * char_seq_out;
-    unsigned int char_out_size;
+    uint32_t char_out_size;
     unsigned char * uchar_seq_out;
-    unsigned int uchar_out_size;
-    short * short_seq_out;
-    unsigned int short_out_size;
-    unsigned short * ushort_seq_out;
-    unsigned int ushort_out_size;
-    int * int_seq_out;
-    unsigned int int_out_size;
-    unsigned int * uint_seq_out;
-    unsigned int uint_out_size;
-    long * long_seq_out;
-    unsigned int long_out_size;
-    unsigned long * ulong_seq_out;
-    unsigned int ulong_out_size;
+    uint32_t uchar_out_size;
+    int16_t * short_seq_out;
+    uint32_t short_out_size;
+    uint16_t * ushort_seq_out;
+    uint32_t ushort_out_size;
+    int32_t * int_seq_out;
+    uint32_t int_out_size;
+    uint32_t * uint_seq_out;
+    uint32_t uint_out_size;
+    int64_t * long_seq_out;
+    uint32_t long_out_size;
+    uint64_t * ulong_seq_out;
+    uint32_t ulong_out_size;
     long long * longlong_seq_out;
-    unsigned int longlong_out_size;
+    uint32_t longlong_out_size;
     unsigned long long * ulonglong_seq_out;
-    unsigned int ulonglong_out_size;
+    uint32_t ulonglong_out_size;
     float * float_seq_out;
-    unsigned int float_out_size;
+    uint32_t float_out_size;
     double * double_seq_out;
-    unsigned int double_out_size;
+    uint32_t double_out_size;
     long double * longdouble_seq_out;
-    unsigned int longdouble_out_size;
+    uint32_t longdouble_out_size;
     char ** string_seq_out;
-    unsigned int string_out_size;
+    uint32_t string_out_size;
 
 
     char buffer[BUFFER_LENGTH];
     // Check good case.
     newStaticBuffer(buffer, BUFFER_LENGTH);
 
-    const unsigned int length = (unsigned int)std::strlen(string_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(string_t);
+    uint32_t length_out;
 
-    short result = 0;
+    int16_t result = 0;
 
-    const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
-    unsigned int length_out_2;
+    const uint32_t length_2 = (uint32_t)std::strlen(emptystring_t);
+    uint32_t length_out_2;
 
     // Serialization.
     result += serializeChar(char_t);
@@ -1505,7 +1505,7 @@ extern "C" {
     result += serializeLongDoubleSequence(longdouble_seq_t, 5);//44
     result += serializeStringSequence(string_seq_t, 5);
 
-    //unsigned int serialized = getSerializedDataLength();
+    //uint32_t serialized = getSerializedDataLength();
     //EXPECT_EQ(serialized, 357);
     EXPECT_EQ(result, 0);
 
@@ -1565,8 +1565,8 @@ extern "C" {
 
       if(result == 0)
       {
-        unsigned int comparative = (unsigned int)std::strcmp(string_out, string_t);
-        unsigned int comparative_2 = (unsigned int)std::strcmp(string_out_2, emptystring_t);
+        uint32_t comparative = (uint32_t)std::strcmp(string_out, string_t);
+        uint32_t comparative_2 = (uint32_t)std::strcmp(string_out_2, emptystring_t);
 
         EXPECT_EQ(char_out, char_t);
         EXPECT_EQ(octect_out, octet_t);
@@ -1629,9 +1629,9 @@ extern "C" {
         }
         for(i = 0; i < 5; i++)
         {
-          int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-          int length_out_aux = (unsigned int)std::strlen(string_array_out[i]);
-          int comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
+          int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+          int32_t length_out_aux = (uint32_t)std::strlen(string_array_out[i]);
+          int32_t comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
           EXPECT_EQ(length_in_aux, length_out_aux);
           EXPECT_EQ(comparative_aux, 0);
           free(string_array_out[i]);
@@ -1699,9 +1699,9 @@ extern "C" {
 
         for(i = 0; i < 5; i++)
         {
-          int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-          int length_out_aux = (unsigned int)std::strlen(string_seq_out[i]);
-          int comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
+          int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+          int32_t length_out_aux = (uint32_t)std::strlen(string_seq_out[i]);
+          int32_t comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
           EXPECT_EQ(length_in_aux, length_out_aux);
           EXPECT_EQ(comparative_aux, 0);
           free(string_seq_out[i]);
@@ -1748,12 +1748,12 @@ extern "C" {
     //SIMPLE
     char char_out;
     signed char octect_out;
-    short short_out;
-    unsigned short ushort_out;
-    int long_out;
-    unsigned int ulong_out;
-    long longlong_out;
-    unsigned long ulonglong_out;
+    int16_t short_out;
+    uint16_t ushort_out;
+    int32_t long_out;
+    uint32_t ulong_out;
+    int64_t longlong_out;
+    uint64_t ulonglong_out;
     long long longlonglong_out;
     unsigned long long ulonglonglong_out;
     float float_out;
@@ -1763,15 +1763,15 @@ extern "C" {
     char * string_out_2;
 
     //ARRAYS
-    int i;
+    int32_t i;
     char * char_array_out;
     unsigned char * uchar_array_out;
-    short * short_array_out;
-    unsigned short * ushort_array_out;
-    int * int_array_out;
-    unsigned int * uint_array_out;
-    long * long_array_out;
-    unsigned long * ulong_array_out;
+    int16_t * short_array_out;
+    uint16_t * ushort_array_out;
+    int32_t * int_array_out;
+    uint32_t * uint_array_out;
+    int64_t * long_array_out;
+    uint64_t * ulong_array_out;
     long long * longlong_array_out;
     unsigned long long * ulonglong_array_out;
     float * float_array_out;
@@ -1781,46 +1781,46 @@ extern "C" {
 
     //SEQUENCES
     char * char_seq_out;
-    unsigned int char_out_size;
+    uint32_t char_out_size;
     unsigned char * uchar_seq_out;
-    unsigned int uchar_out_size;
-    short * short_seq_out;
-    unsigned int short_out_size;
-    unsigned short * ushort_seq_out;
-    unsigned int ushort_out_size;
-    int * int_seq_out;
-    unsigned int int_out_size;
-    unsigned int * uint_seq_out;
-    unsigned int uint_out_size;
-    long * long_seq_out;
-    unsigned int long_out_size;
-    unsigned long * ulong_seq_out;
-    unsigned int ulong_out_size;
+    uint32_t uchar_out_size;
+    int16_t * short_seq_out;
+    uint32_t short_out_size;
+    uint16_t * ushort_seq_out;
+    uint32_t ushort_out_size;
+    int32_t * int_seq_out;
+    uint32_t int_out_size;
+    uint32_t * uint_seq_out;
+    uint32_t uint_out_size;
+    int64_t * long_seq_out;
+    uint32_t long_out_size;
+    uint64_t * ulong_seq_out;
+    uint32_t ulong_out_size;
     long long * longlong_seq_out;
-    unsigned int longlong_out_size;
+    uint32_t longlong_out_size;
     unsigned long long * ulonglong_seq_out;
-    unsigned int ulonglong_out_size;
+    uint32_t ulonglong_out_size;
     float * float_seq_out;
-    unsigned int float_out_size;
+    uint32_t float_out_size;
     double * double_seq_out;
-    unsigned int double_out_size;
+    uint32_t double_out_size;
     long double * longdouble_seq_out;
-    unsigned int longdouble_out_size;
+    uint32_t longdouble_out_size;
     char ** string_seq_out;
-    unsigned int string_out_size;
+    uint32_t string_out_size;
 
 
     char buffer[BUFFER_LENGTH];
     // Check good case.
     newStaticBuffer(buffer, BUFFER_LENGTH);
 
-    const unsigned int length = (unsigned int)std::strlen(string_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(string_t);
+    uint32_t length_out;
 
-    short result = 0;
+    int16_t result = 0;
 
-    const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
-    unsigned int length_out_2;
+    const uint32_t length_2 = (uint32_t)std::strlen(emptystring_t);
+    uint32_t length_out_2;
 
     // Serialization.
     result += serializeChar(char_t);
@@ -1873,7 +1873,7 @@ extern "C" {
     result += serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness);//44
     result += serializeStringSequenceEndianness(string_seq_t, 5, endianness);
 
-    //unsigned int serialized = getSerializedDataLength();
+    //uint32_t serialized = getSerializedDataLength();
     //EXPECT_EQ(serialized, 357);
     EXPECT_EQ(result, 0);
 
@@ -1933,8 +1933,8 @@ extern "C" {
 
       if(result == 0)
       {
-        unsigned int comparative = (unsigned int)std::strcmp(string_out, string_t);
-        unsigned int comparative_2 = (unsigned int)std::strcmp(string_out_2, emptystring_t);
+        uint32_t comparative = (uint32_t)std::strcmp(string_out, string_t);
+        uint32_t comparative_2 = (uint32_t)std::strcmp(string_out_2, emptystring_t);
 
         EXPECT_EQ(char_out, char_t);
         EXPECT_EQ(octect_out, octet_t);
@@ -1997,9 +1997,9 @@ extern "C" {
         }
         for(i = 0; i < 5; i++)
         {
-          int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-          int length_out_aux = (unsigned int)std::strlen(string_array_out[i]);
-          int comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
+          int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+          int32_t length_out_aux = (uint32_t)std::strlen(string_array_out[i]);
+          int32_t comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
           EXPECT_EQ(length_in_aux, length_out_aux);
           EXPECT_EQ(comparative_aux, 0);
           free(string_array_out[i]);
@@ -2067,9 +2067,9 @@ extern "C" {
 
         for(i = 0; i < 5; i++)
         {
-          int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-          int length_out_aux = (unsigned int)std::strlen(string_seq_out[i]);
-          int comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
+          int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+          int32_t length_out_aux = (uint32_t)std::strlen(string_seq_out[i]);
+          int32_t comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
           EXPECT_EQ(length_in_aux, length_out_aux);
           EXPECT_EQ(comparative_aux, 0);
           free(string_seq_out[i]);
@@ -2113,7 +2113,7 @@ extern "C" {
 
   TEST(nanoCDRBasicEndiannessTests, Short)
   {
-      short short_out;
+      int16_t short_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2129,7 +2129,7 @@ extern "C" {
 
   TEST(nanoCDRBasicEndiannessTests, UnsignedShort)
   {
-      unsigned short ushort_out;
+      uint16_t ushort_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2146,7 +2146,7 @@ extern "C" {
 
   TEST(nanoCDRBasicEndiannessTests, Int)
   {
-      int long_out;
+      int32_t long_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2162,7 +2162,7 @@ extern "C" {
 
   TEST(nanoCDRBasicEndiannessTests, UnsignedInt)
   {
-      unsigned int ulong_out;
+      uint32_t ulong_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2178,7 +2178,7 @@ extern "C" {
 
   TEST(nanoCDRBasicEndiannessTests, Long)
   {
-      long long_out;
+      int64_t long_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2194,7 +2194,7 @@ extern "C" {
 
   TEST(nanoCDRBasicEndiannessTests, uLong)
   {
-      unsigned long ulong_out;
+      uint64_t ulong_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2295,8 +2295,8 @@ extern "C" {
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
 
-      const unsigned int length = (unsigned int)std::strlen(string_t);
-      unsigned int length_out;
+      const uint32_t length = (uint32_t)std::strlen(string_t);
+      uint32_t length_out;
 
       // Serialization.
       serializeStringEndianness(string_t, length, endianness);
@@ -2304,7 +2304,7 @@ extern "C" {
       // Deseriazliation.
       deserializeStringEndianness(&string_out, &length_out, endianness);
 
-      unsigned int comparative = std::strcmp(string_out, string_t);
+      uint32_t comparative = std::strcmp(string_out, string_t);
 
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
@@ -2318,8 +2318,8 @@ extern "C" {
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
 
-      const unsigned int length = (unsigned int)std::strlen(emptystring_t);
-      unsigned int length_out;
+      const uint32_t length = (uint32_t)std::strlen(emptystring_t);
+      uint32_t length_out;
 
       // Serialization.
       serializeStringEndianness(emptystring_t, length, endianness);
@@ -2327,7 +2327,7 @@ extern "C" {
       // Deseriazliation.
       deserializeStringEndianness(&string_out, &length_out, endianness);
 
-      unsigned int comparative = std::strcmp(string_out, emptystring_t);
+      uint32_t comparative = std::strcmp(string_out, emptystring_t);
 
       EXPECT_EQ(comparative, 0);
       EXPECT_EQ(length, length_out);
@@ -2336,7 +2336,7 @@ extern "C" {
 
   TEST(nanoCDRArrayEndiannessTests, ShortArray)
   {
-      short * short_out;
+      int16_t * short_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2347,7 +2347,7 @@ extern "C" {
       // Deseriazliation.
       deserializeShortArrayEndianness(&short_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(short_array_t[i], short_out[i]);
@@ -2357,7 +2357,7 @@ extern "C" {
 
   TEST(nanoCDRArrayEndiannessTests, UnsignedShortArray)
   {
-      unsigned short * ushort_out;
+      uint16_t * ushort_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2368,7 +2368,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ushort_array_t[i], ushort_out[i]);
@@ -2378,7 +2378,7 @@ extern "C" {
 
   TEST(nanoCDRArrayEndiannessTests, IntArray)
   {
-      int * int_out;
+      int32_t * int_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2389,7 +2389,7 @@ extern "C" {
       // Deseriazliation.
       deserializeIntArrayEndianness(&int_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(long_array_t[i], int_out[i]);
@@ -2399,7 +2399,7 @@ extern "C" {
 
   TEST(nanoCDRArrayEndiannessTests, UnsignedIntArray)
   {
-      unsigned int * uint_out;
+      uint32_t * uint_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2410,7 +2410,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulong_array_t[i], uint_out[i]);
@@ -2420,7 +2420,7 @@ extern "C" {
 
   TEST(nanoCDRArrayEndiannessTests, LongArray)
   {
-      long * long_out;
+      int64_t * long_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2431,7 +2431,7 @@ extern "C" {
       // Deseriazliation.
       deserializeLongArrayEndianness(&long_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlong_array_t[i], long_out[i]);
@@ -2441,7 +2441,7 @@ extern "C" {
 
   TEST(nanoCDRArrayEndiannessTests, ULongArray)
   {
-      unsigned long * ulong_out;
+      uint64_t * ulong_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2452,7 +2452,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglong_array_t[i], ulong_out[i]);
@@ -2473,7 +2473,7 @@ extern "C" {
       // Deseriazliation.
       deserializeLongLongArrayEndianness(&longlong_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlonglong_array_t[i], longlong_out[i]);
@@ -2494,7 +2494,7 @@ extern "C" {
       // Deseriazliation.
       deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglonglong_array_t[i], ulonglong_out[i]);
@@ -2515,7 +2515,7 @@ extern "C" {
       // Deseriazliation.
       deserializeFloatArrayEndianness(&float_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(float_array_t[i], float_out[i]);
@@ -2536,7 +2536,7 @@ extern "C" {
       // Deseriazliation.
       deserializeDoubleArrayEndianness(&double_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(double_array_t[i], double_out[i]);
@@ -2558,7 +2558,7 @@ extern "C" {
       // Deseriazliation.
       deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longdouble_array_t[i], longdouble_out[i]);
@@ -2579,12 +2579,12 @@ extern "C" {
       // Deseriazliation.
       deserializeStringArrayEndianness(&string_out, 5, endianness);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_out[i]);
@@ -2595,7 +2595,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, CharSequence)
   {
       char * char_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2608,7 +2608,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(char_seq_t[i], char_out[i]);
@@ -2620,7 +2620,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, UnsignedCharSequence)
   {
       unsigned char * char_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2633,7 +2633,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(octet_seq_t[i], char_out[i]);
@@ -2644,8 +2644,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesEndiannessTests, ShortSequence)
   {
-      short * short_out;
-      unsigned int size_out;
+      int16_t * short_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2658,7 +2658,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(short_seq_t[i], short_out[i]);
@@ -2669,8 +2669,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesEndiannessTests, UnsignedShortSequence)
   {
-      unsigned short * ushort_out;
-      unsigned int size_out;
+      uint16_t * ushort_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2683,7 +2683,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ushort_seq_t[i], ushort_out[i]);
@@ -2694,8 +2694,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesEndiannessTests, IntSequence)
   {
-      int * int_out;
-      unsigned int size_out;
+      int32_t * int_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2708,7 +2708,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(long_seq_t[i], int_out[i]);
@@ -2719,8 +2719,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesEndiannessTests, UnsignedIntSequence)
   {
-      unsigned int * uint_out;
-      unsigned int size_out;
+      uint32_t * uint_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2733,7 +2733,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulong_seq_t[i], uint_out[i]);
@@ -2744,8 +2744,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesEndiannessTests, LongSequence)
   {
-      long * long_out;
-      unsigned int size_out;
+      int64_t * long_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2758,7 +2758,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlong_seq_t[i], long_out[i]);
@@ -2769,8 +2769,8 @@ extern "C" {
 
   TEST(nanoCDRSequencesEndiannessTests, ULongSequence)
   {
-      unsigned long * ulong_out;
-      unsigned int size_out;
+      uint64_t * ulong_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2783,7 +2783,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglong_seq_t[i], ulong_out[i]);
@@ -2795,7 +2795,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, LongLongSequence)
   {
       long long * longlong_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2808,7 +2808,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longlonglong_seq_t[i], longlong_out[i]);
@@ -2820,7 +2820,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, ULongLongSequence)
   {
       unsigned long long * ulonglong_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2833,7 +2833,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(ulonglonglong_seq_t[i], ulonglong_out[i]);
@@ -2845,7 +2845,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, FloatSequence)
   {
       float * float_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2858,7 +2858,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(float_seq_t[i], float_out[i]);
@@ -2870,7 +2870,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, DoubleSequence)
   {
       double * double_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2883,7 +2883,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(double_seq_t[i], double_out[i]);
@@ -2895,7 +2895,7 @@ extern "C" {
   TEST(nanoCDRSequencesEndiannessTests, LongDoubleSequence)
   {
       long double * longdouble_out;
-      unsigned int size_out;
+      uint32_t size_out;
       char buffer[BUFFER_LENGTH];
       // Check good case.
       newStaticBuffer(buffer, BUFFER_LENGTH);
@@ -2908,7 +2908,7 @@ extern "C" {
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
         EXPECT_EQ(longdouble_seq_t[i], longdouble_out[i]);
@@ -2927,19 +2927,19 @@ extern "C" {
       // Serialization.
       serializeStringSequenceEndianness(string_seq_t, 5, endianness);
 
-      unsigned int size_out;
+      uint32_t size_out;
 
       // Deseriazliation.
       deserializeStringSequenceEndianness(&string_out, &size_out, endianness);
 
       EXPECT_EQ(size_out, 5);
 
-      int i;
+      int32_t i;
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_out[i]);
