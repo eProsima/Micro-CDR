@@ -46,6 +46,19 @@
 
   nanocdr_DllAPI void resetAlignment();
 
+  /*!
+   * @brief This function returns the extra bytes regarding the allignment.
+   * @param dataSize The size of the data that will be serialized.
+   * @return The size needed for the aligment.
+   */
+  nanocdr_DllAPI uint32_t alignment(uint32_t dataSize, struct nanoBuffer * m_cdrBuffer);
+
+  /*!
+   * @brief This function jumps the number of bytes of the alignment. These bytes should be calculated with the function alignment.
+   * @param align The number of bytes to be skipped.
+   */
+  nanocdr_DllAPI void makeAlign(uint32_t align, struct nanoBuffer * m_cdrBuffer);
+
   //char * getBufferPointer ();
 
   /*!

@@ -40,5 +40,8 @@
 		//! @brief This variable indicates if the library must swap the words.
 		Bool m_swapBytes;
 
+		//! @brief Stores the last datasize serialized/deserialized when the state was created.
+		uint32_t m_lastDataSize;
+
 	}nanoBuffer;
 #endif

@@ -44,6 +44,8 @@ void newStaticBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m
 	cdrBuffer.m_iterator = 0;
 	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = buffer;
+	cdrBuffer.m_currentPosition = buffer;
+	cdrBuffer.m_alignPosition = buffer;
 
 	int32_t local_i = 1;
 	char *local_c = (char*)&local_i;
@@ -87,6 +89,17 @@ void resetAlignment(struct nanoBuffer * m_cdrBuffer)
 		m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_currentPosition;
 }
 
+uint32_t alignment(uint32_t dataSize, struct nanoBuffer * m_cdrBuffer)
+{
+	return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
+}
+
+void makeAlign(uint32_t align, struct nanoBuffer * m_cdrBuffer)
+{
+	m_cdrBuffer->m_currentPosition += align;
+	m_cdrBuffer->m_serializedBuffer += align;
+}
+
 uint32_t getSerializedDataLength(struct nanoBuffer * m_cdrBuffer)
 {
 	return m_cdrBuffer->m_serializedBuffer;
@@ -120,6 +133,8 @@ int8_t resize(uint32_t  minSizeInc, struct nanoBuffer * m_cdrBuffer)
         {
            	m_cdrBuffer->m_bufferSize = minSizeInc;
 						m_cdrBuffer->m_buffer = (char*)malloc(m_cdrBuffer->m_bufferSize);
+						m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_buffer;
+						m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_buffer;
 						return 0;
         }
         else
@@ -163,14 +178,22 @@ int8_t serializeChar (const char char_t, struct nanoBuffer * m_cdrBuffer)
 {
 	int8_t result = 0;
 
+	size_t align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	uint32_t needed = sizeof(char);
+	uint32_t needed = sizeof(char) + align;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
 	{
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&char_t, needed);
-		m_cdrBuffer->m_serializedBuffer +=needed;
-		m_cdrBuffer->m_currentPosition += needed;
+		// Save last datasize.
+		m_cdrBuffer->m_lastDataSize = sizeof(char_t);
+
+		// Align.
+		makeAlign(align, m_cdrBuffer);
+
+		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&char_t, sizeof(char));
+		m_cdrBuffer->m_serializedBuffer += sizeof(char);
+		m_cdrBuffer->m_currentPosition += sizeof(char);
+
 	}
 	else
 	{
@@ -184,14 +207,21 @@ int8_t serializeUnsignedChar (const unsigned char uchar_t, struct nanoBuffer * m
 {
 	int8_t result = 0;
 
+	size_t align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	uint32_t needed = sizeof(unsigned char);
+	uint32_t needed = sizeof(char) + align;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
 	{
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&uchar_t, needed);
-		m_cdrBuffer->m_serializedBuffer +=needed;
-		m_cdrBuffer->m_currentPosition += needed;
+		// Save last datasize.
+		m_cdrBuffer->m_lastDataSize = sizeof(uchar_t);
+
+		// Align.
+		makeAlign(align, m_cdrBuffer);
+
+		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&uchar_t, sizeof(char));
+		m_cdrBuffer->m_serializedBuffer += sizeof(char);
+		m_cdrBuffer->m_currentPosition += sizeof(char);
 	}
 	else
 	{
@@ -206,14 +236,21 @@ int8_t serializeSignedChar (const signed char schar_t, struct nanoBuffer * m_cdr
 {
 	int8_t result = 0;
 
+	size_t align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
-	uint32_t needed = sizeof(signed char);
+	uint32_t needed = sizeof(char) + align;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
 	{
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&schar_t, needed);
-		m_cdrBuffer->m_serializedBuffer +=needed;
-		m_cdrBuffer->m_currentPosition += needed;
+		// Save last datasize.
+		m_cdrBuffer->m_lastDataSize = sizeof(schar_t);
+
+		// Align.
+		makeAlign(align, m_cdrBuffer);
+
+		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&schar_t, sizeof(char));
+		m_cdrBuffer->m_serializedBuffer += sizeof(char);
+		m_cdrBuffer->m_currentPosition += sizeof(char);
 	}
 	else
 	{
@@ -230,7 +267,11 @@ int8_t serializeString (const char * string_t, const uint32_t length, struct nan
 	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(length) + length + 1;
 
-	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
+	uint32_t align = alignment(sizeof(length), m_cdrBuffer);
+
+	//printf("Align %d\n", align);
+
+	if((resize(needed + align, m_cdrBuffer) == 0) || free >= (needed + align))
 	{
 		result = serializeUnsignedInt(length + 1, m_cdrBuffer);
 		if(result < 0) return result;
@@ -239,6 +280,7 @@ int8_t serializeString (const char * string_t, const uint32_t length, struct nan
 		m_cdrBuffer->m_serializedBuffer += (length + 1);
 		m_cdrBuffer->m_currentPosition += (length + 1);
 
+		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
 	{
@@ -264,6 +306,7 @@ int8_t serializeStringEndianness (const char * string_t, const uint32_t length, 
 		m_cdrBuffer->m_serializedBuffer += (length + 1);
 		m_cdrBuffer->m_currentPosition += (length + 1);
 
+		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
 	{
@@ -283,6 +326,7 @@ int8_t deserializeChar(char * char_t, struct nanoBuffer * m_cdrBuffer)
 	{
 		memcpy(char_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, 1);
 		m_cdrBuffer->m_iterator += 1;
+		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
 	{
@@ -302,6 +346,7 @@ int8_t deserializeUnsignedChar(unsigned char * uchar_t, struct nanoBuffer * m_cd
 	{
 		memcpy(uchar_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, 1);
 		m_cdrBuffer->m_iterator += 1;
+		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
 	{
@@ -321,6 +366,7 @@ int8_t deserializeSignedChar(signed char * schar_t, struct nanoBuffer * m_cdrBuf
 	{
 		memcpy(schar_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, 1);
 		m_cdrBuffer->m_iterator += 1;
+		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
 	{
@@ -347,11 +393,12 @@ int8_t deserializeString (char ** string, uint32_t * strlen, struct nanoBuffer *
 
 		if(unread >= *strlen)
 		{
-
 			*string = malloc(*strlen);
 			memcpy(*string, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, *strlen);
 			m_cdrBuffer->m_iterator += *strlen;
 			*strlen -= 1;
+
+			m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 		}
 		else
 		{
@@ -383,6 +430,8 @@ int8_t deserializeStringEndianness (char ** string, uint32_t * strlen, Endiannes
 			memcpy(*string, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, *strlen);
 			m_cdrBuffer->m_iterator += *strlen;
 			*strlen -= 1;
+
+			m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 		}
 		else
 		{
@@ -399,8 +448,15 @@ int8_t serializeShort (const int16_t short_t, struct nanoBuffer * m_cdrBuffer)
 	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(int16_t);
 
-	if((resize(sizeShort, m_cdrBuffer) == 0) || free >= sizeShort)
+	uint32_t align = alignment(sizeShort, m_cdrBuffer);
+
+	if((resize(sizeShort + align, m_cdrBuffer) == 0) || free >= (sizeShort + align))
 	{
+		// Save last datasize.
+		m_cdrBuffer->m_lastDataSize = sizeShort;
+		// Align.
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * short_c = (char *)&short_t;
@@ -452,8 +508,15 @@ int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoBuffer * m_cd
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint16_t i = 0;
 
-	if((resize(sizeShort, m_cdrBuffer) == 0) || free >= sizeShort)
+	uint32_t align = alignment(sizeShort, m_cdrBuffer);
+
+	if((resize(sizeShort + align, m_cdrBuffer) == 0) || free >= (sizeShort + align))
 	{
+		// Save last datasize.
+		m_cdrBuffer->m_lastDataSize = sizeShort;
+		// Align.
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * short_c = (char *)&ushort_t;
@@ -506,8 +569,13 @@ int8_t serializeInt (const int32_t int_t, struct nanoBuffer * m_cdrBuffer)
 	uint16_t sizeInt = sizeof(int32_t);
 	uint16_t i = 0;
 
-	if((resize(sizeInt, m_cdrBuffer) == 0) || free >= sizeInt)
+	uint32_t align = alignment(sizeInt, m_cdrBuffer);
+
+	if((resize(sizeInt + align, m_cdrBuffer) == 0) || free >= (sizeInt + align))
 	{
+		m_cdrBuffer->m_lastDataSize = sizeInt;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * int_c = (char *)&int_t;
@@ -560,8 +628,14 @@ int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoBuffer * m_cdrBuf
 	uint16_t sizeInt = sizeof(uint32_t);
 	uint16_t i = 0;
 
-	if((resize(sizeInt, m_cdrBuffer) == 0) || free >= sizeInt)
+	uint32_t align = alignment(sizeInt, m_cdrBuffer);
+
+	if((resize(sizeInt + align, m_cdrBuffer) == 0) || free >= (sizeInt + align))
 	{
+
+		m_cdrBuffer->m_lastDataSize = sizeInt;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * int_c = (char *)&uint_t;
@@ -614,8 +688,15 @@ int8_t serializeLong (const int64_t long_t, struct nanoBuffer * m_cdrBuffer)
 	uint16_t sizeLong = sizeof(int64_t);
 	uint16_t i = 0;
 
-	if((resize(sizeLong, m_cdrBuffer) == 0) || free >= sizeLong)
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
+
+	if((resize(sizeLong + align, m_cdrBuffer) == 0) || free >= (sizeLong + align))
 	{
+
+		m_cdrBuffer->m_lastDataSize = sizeLong;
+
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * long_c = (char *)&long_t;
@@ -668,8 +749,13 @@ int8_t serializeUnsignedLong (const uint64_t ulong_t, struct nanoBuffer * m_cdrB
 	uint16_t sizeLong = sizeof(int64_t);
 	uint16_t i = 0;
 
-	if((resize(sizeLong, m_cdrBuffer) == 0) || free >= sizeLong)
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
+
+	if((resize(sizeLong + align, m_cdrBuffer) == 0) || free >= (sizeLong + align))
 	{
+		m_cdrBuffer->m_lastDataSize = sizeLong;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * long_c = (char *)&ulong_t;
@@ -720,8 +806,14 @@ int8_t serializeLongLong (const long long longlong_t, struct nanoBuffer * m_cdrB
 	uint16_t sizeLong = sizeof(long long);
 	uint16_t i = 0;
 
-	if((resize(sizeLong, m_cdrBuffer) == 0) || free >= sizeLong)
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
+
+	if((resize(sizeLong + align, m_cdrBuffer) == 0) || free >= (sizeLong + align))
 	{
+
+		m_cdrBuffer->m_lastDataSize = sizeLong;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * long_c = (char *)&longlong_t;
@@ -772,8 +864,13 @@ int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t, struct n
 	uint16_t sizeLong = sizeof(unsigned long long);
 	uint16_t i = 0;
 
-	if((resize(sizeLong, m_cdrBuffer) == 0) || free >= sizeLong)
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
+
+	if((resize(sizeLong + align, m_cdrBuffer) == 0) || free >= (sizeLong + align))
 	{
+		m_cdrBuffer->m_lastDataSize = sizeLong;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * long_c = (char *)&ulonglong_t;
@@ -824,8 +921,13 @@ int8_t serializeFloat (const float float_t, struct nanoBuffer * m_cdrBuffer)
 	uint16_t sizeFloat = sizeof(float);
 	uint16_t i = 0;
 
-	if((resize(sizeFloat, m_cdrBuffer) == 0) || free >= sizeFloat)
+	uint32_t align = alignment(sizeFloat, m_cdrBuffer);
+
+	if((resize(sizeFloat + align, m_cdrBuffer) == 0) || free >= (sizeFloat + align))
 	{
+		m_cdrBuffer->m_lastDataSize = sizeFloat;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * float_c = (char *)&float_t;
@@ -879,8 +981,14 @@ int8_t serializeDouble (const double double_t, struct nanoBuffer * m_cdrBuffer)
 	uint16_t sizeDouble = sizeof(double);
 	uint16_t i = 0;
 
-	if((resize(sizeDouble, m_cdrBuffer) == 0) || free >= sizeDouble)
+	uint32_t align = alignment(sizeDouble, m_cdrBuffer);
+
+	if((resize(sizeDouble + align, m_cdrBuffer) == 0) || free >= (sizeDouble + align))
 	{
+
+		m_cdrBuffer->m_lastDataSize = sizeDouble;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * double_c = (char *)&double_t;
@@ -932,8 +1040,13 @@ int8_t serializeLongDouble (const long double longdouble_t, struct nanoBuffer * 
 	uint16_t sizeDouble = sizeof(long double);
 	uint16_t i = 0;
 
-	if((resize(sizeDouble, m_cdrBuffer) == 0) || free >= sizeDouble)
+	uint32_t align = alignment(sizeDouble, m_cdrBuffer);
+
+	if((resize(sizeDouble + align, m_cdrBuffer) == 0) || free >= (sizeDouble + align))
 	{
+		m_cdrBuffer->m_lastDataSize = sizeDouble;
+		makeAlign(align, m_cdrBuffer);
+
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * double_c = (char *)&longdouble_t;
