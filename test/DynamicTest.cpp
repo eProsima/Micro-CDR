@@ -13,16 +13,16 @@ extern "C" {
 const signed char octet_t = 32;
 const char char_t =  'Z';
 
-const unsigned short ushort_t = 65500;
-const short short_t = -32700;
-const unsigned int ulong_t = 4294967200;
-const int long_t = -2147483600;
+const uint16_t ushort_t = 65500;
+const int16_t short_t = -32700;
+const uint32_t ulong_t = 4294967200;
+const int32_t long_t = -2147483600;
 
-const unsigned long ulonglong_t = (unsigned long)18446744073709551600u;
-const long longlong_t = (long)-9223372036800;
+const uint64_t ulonglong_t = 18446744073709551600u;
+const int64_t longlong_t = -9223372036800;
 
-const unsigned long long ulonglonglong_t = 18446744073709551600u;
-const long long longlonglong_t = -9223372036800;
+const unsigned long long ulonglonglong_t = (uint64_t)18446744073709551600u;
+const long long longlonglong_t = (int64_t)-9223372036800;
 
 const float float_tt = FLT_MIN;
 const double double_tt = DBL_MIN;
@@ -37,15 +37,15 @@ const char * emptystring_t = "";
 const unsigned char octet_array_t[5] = {1, 2, 3, 4, 5};
 const char char_array_t[5] = {'A', 'B', 'C', 'D', 'E'};
 
-const unsigned short ushort_array_t [5] = {65500, 65501, 65502, 65503, 65504};
-const short short_array_t[5] = {-32700, -32701, -32702, -32703, -32704};
+const uint16_t ushort_array_t [5] = {65500, 65501, 65502, 65503, 65504};
+const int16_t short_array_t[5] = {-32700, -32701, -32702, -32703, -32704};
 
-const unsigned int ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 4294967203, 4294967204};
-const int long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
+const uint32_t ulong_array_t[5] = {4294967200, 4294967201, 4294967202, 4294967203, 4294967204};
+const int32_t long_array_t[5] = {-2147483600, -2147483601, -2147483602, -2147483603, -2147483604};
 
 
-const unsigned long ulonglong_array_t[5] = {(unsigned long)18446744073709551600u, (unsigned long)18446744073709551601u, (unsigned long)18446744073709551602u, (unsigned long)18446744073709551603u, (unsigned long)18446744073709551604u};
-const long  longlong_array_t[5] = {(long)-9223372036800, (long)-9223372036801, (long)-9223372036802, (long)-9223372036803, (long)-9223372036804};
+const uint64_t ulonglong_array_t[5] = {(uint64_t)18446744073709551600u, (uint64_t)18446744073709551601u, (uint64_t)18446744073709551602u, (uint64_t)18446744073709551603u, (uint64_t)18446744073709551604u};
+const int64_t  longlong_array_t[5] = {(int64_t)-9223372036800, (int64_t)-9223372036801, (int64_t)-9223372036802, (int64_t)-9223372036803, (int64_t)-9223372036804};
 
 const unsigned long long ulonglonglong_array_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
 const long long longlonglong_array_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
@@ -61,13 +61,13 @@ const long double longdouble_array_t[5] = {longdouble_t, longdouble_t + 1, longd
 // Added because error 336.
 const unsigned char octet_seq_t[5] = {5, 4, 3, 2, 1};
 const char char_seq_t[5] = {'E', 'D', 'C', 'B', 'A'};
-const unsigned short ushort_seq_t[5] = {65504, 65503, 65502, 65501, 65500};
-const short short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
-const unsigned int ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
-const int long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
+const uint16_t ushort_seq_t[5] = {65504, 65503, 65502, 65501, 65500};
+const int16_t short_seq_t[5] = {-32704, -32703, -32702, -32701, -32700};
+const uint32_t ulong_seq_t[5] = {4294967204, 4294967203, 4294967202, 4294967201, 4294967200};
+const int32_t long_seq_t[5] = {-2147483604, -2147483603, -2147483602, -2147483601, -2147483600};
 
-const unsigned long ulonglong_seq_t[5] = {(unsigned long)18446744073709551600u, (unsigned long)18446744073709551601u, (unsigned long)18446744073709551602u, (unsigned long)18446744073709551603u, (unsigned long)18446744073709551604u};
-const long  longlong_seq_t[5] = {(long)-9223372036800, (long)-9223372036801, (long)-9223372036802, (long)-9223372036803, (long)-9223372036804};
+const uint64_t ulonglong_seq_t[5] = {(uint64_t)18446744073709551604u, (uint64_t)18446744073709551603u, (uint64_t)18446744073709551602u, (uint64_t)18446744073709551601u, (uint64_t)18446744073709551600u};
+const int64_t longlong_seq_t[5] = {(int64_t)-9223372036804, (int64_t)-9223372036803, (int64_t)-9223372036802, (int64_t)-9223372036801, (int64_t)-9223372036800};
 
 const unsigned long long ulonglonglong_seq_t[5] = {18446744073709551600u, 18446744073709551601u, 18446744073709551602u, 18446744073709551603u, 18446744073709551604u};
 const long long longlonglong_seq_t[5] = {-9223372036800, -9223372036801, -9223372036802, -9223372036803, -9223372036804};
