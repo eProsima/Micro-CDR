@@ -8,6 +8,9 @@
 //const char NANO_DYNAMIC = '1';
 //const char NANO_STATIC = '0';
 
+	typedef enum {BIG_ENDIANNESS,LITTLE_ENDIANNESS}Endianness;
+	typedef enum {TRUE,FALSE}Bool;
+
 	struct nanoBuffer
 	{
 		//! @brief Pointer to the beginning of stream.
@@ -30,6 +33,12 @@
 
 		//! @brief
 		char * m_alignPosition;
+
+		//! @brief Endianness of the buffer
+		Endianness m_endianness;
+
+		//! @brief This variable indicates if the library must swap the words.
+		Bool m_swapBytes;
 
 	}nanoBuffer;
 #endif

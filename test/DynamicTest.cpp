@@ -85,1011 +85,969 @@ const char * c_string_t = "HOLA";
 
 Endianness endianness = LITTLE_ENDIANNESS;
 
-TEST(nanoCDRDynamicBasicTests, Char)
+TEST(nanoCDRBasicTests, Char)
 {
     char char_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeChar(char_t);
+    serializeChar(char_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeChar(&char_out);
+    deserializeChar(&char_out, nanoCDR);
 
     EXPECT_EQ(char_out, char_t);
 
-    destroyBuffer();
+    destroyBuffer(nanoCDR);
 }
 
-TEST(nanoCDRDynamicBasicTests, SignedChar)
+TEST(nanoCDRBasicTests, SignedChar)
 {
     signed char octect_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeSignedChar(octet_t);
+    serializeSignedChar(octet_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeSignedChar(&octect_out);
+    deserializeSignedChar(&octect_out, nanoCDR);
 
     EXPECT_EQ(octect_out, octet_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, Short)
+TEST(nanoCDRBasicTests, Short)
 {
-    short short_out;
-
+    int16_t short_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeShort(short_t);
+    serializeShort(short_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeShort(&short_out);
+    deserializeShort(&short_out, nanoCDR);
 
     EXPECT_EQ(short_out, short_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, UnsignedShort)
+TEST(nanoCDRBasicTests, UnsignedShort)
 {
-    unsigned short ushort_out;
-
+    uint16_t ushort_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedShort(ushort_t);
+    serializeUnsignedShort(ushort_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedShort(&ushort_out);
+    deserializeUnsignedShort(&ushort_out, nanoCDR);
 
     EXPECT_EQ(ushort_out, ushort_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, Int)
+TEST(nanoCDRBasicTests, Int)
 {
-    int long_out;
-
+    int32_t long_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeInt(long_t);
+    serializeInt(long_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeInt(&long_out);
+    deserializeInt(&long_out, nanoCDR);
 
     EXPECT_EQ(long_out, long_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, UnsignedInt)
+TEST(nanoCDRBasicTests, UnsignedInt)
 {
-    unsigned int ulong_out;
-
+    uint32_t ulong_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedInt(ulong_t);
+    serializeUnsignedInt(ulong_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedInt(&ulong_out);
+    deserializeUnsignedInt(&ulong_out, nanoCDR);
 
     EXPECT_EQ(ulong_out, ulong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, Long)
+TEST(nanoCDRBasicTests, Long)
 {
-    long long_out;
-
+    int64_t long_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLong(longlong_t);
+    serializeLong(longlong_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeLong(&long_out);
+    deserializeLong(&long_out, nanoCDR);
 
     EXPECT_EQ(long_out, longlong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, uLong)
+TEST(nanoCDRBasicTests, uLong)
 {
-    unsigned long ulong_out;
-
+    uint64_t ulong_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLong(ulonglong_t);
+    serializeUnsignedLong(ulonglong_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLong(&ulong_out);
+    deserializeUnsignedLong(&ulong_out, nanoCDR);
 
     EXPECT_EQ(ulong_out, ulonglong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, LongLong)
+TEST(nanoCDRBasicTests, LongLong)
 {
     long long longlong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongLong(longlonglong_t);
+    serializeLongLong(longlonglong_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongLong(&longlong_out);
+    deserializeLongLong(&longlong_out, nanoCDR);
 
     EXPECT_EQ(longlong_out, longlonglong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, uLongLong)
+TEST(nanoCDRBasicTests, uLongLong)
 {
     unsigned long long ulonglong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongLong(ulonglonglong_t);
+    serializeUnsignedLongLong(ulonglonglong_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongLong(&ulonglong_out);
+    deserializeUnsignedLongLong(&ulonglong_out, nanoCDR);
 
     EXPECT_EQ(ulonglong_out, ulonglonglong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, Float)
+TEST(nanoCDRBasicTests, Float)
 {
     float float_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeFloat(float_tt);
+    serializeFloat(float_tt, nanoCDR);
 
     // Deseriazliation.
-    deserializeFloat(&float_out);
+    deserializeFloat(&float_out, nanoCDR);
 
     EXPECT_EQ(float_out, float_tt);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, Double)
+TEST(nanoCDRBasicTests, Double)
 {
     double double_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeDouble(double_tt);
+    serializeDouble(double_tt, nanoCDR);
 
     // Deseriazliation.
-    deserializeDouble(&double_out);
+    deserializeDouble(&double_out, nanoCDR);
 
     EXPECT_EQ(double_out, double_tt);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, LongDouble)
+TEST(nanoCDRBasicTests, LongDouble)
 {
     long double longdouble_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongDouble(longdouble_t);
+    serializeLongDouble(longdouble_t, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongDouble(&longdouble_out);
+    deserializeLongDouble(&longdouble_out, nanoCDR);
 
     EXPECT_EQ(longdouble_out, longdouble_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, String)
+TEST(nanoCDRBasicTests, String)
 {
     char * string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
-    const unsigned int length = (unsigned int)std::strlen(string_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(string_t);
+    uint32_t length_out;
 
     // Serialization.
-    serializeString(string_t, length);
+    serializeString(string_t, length, nanoCDR);
 
     // Deseriazliation.
-    deserializeString(&string_out, &length_out);
+    deserializeString(&string_out, &length_out, nanoCDR);
 
-    unsigned int comparative = std::strcmp(string_out, string_t);
+    uint32_t comparative = std::strcmp(string_out, string_t);
 
     EXPECT_EQ(comparative, 0);
     EXPECT_EQ(length, length_out);
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicTests, EmptyString)
+TEST(nanoCDRBasicTests, EmptyString)
 {
     char * string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
-    const unsigned int length = (unsigned int)std::strlen(emptystring_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(emptystring_t);
+    uint32_t length_out;
 
     // Serialization.
-    serializeString(emptystring_t, length);
+    serializeString(emptystring_t, length, nanoCDR);
 
     // Deseriazliation.
-    deserializeString(&string_out, &length_out);
+    deserializeString(&string_out, &length_out, nanoCDR);
 
-    unsigned int comparative = std::strcmp(string_out, emptystring_t);
+    uint32_t comparative = std::strcmp(string_out, emptystring_t);
 
     EXPECT_EQ(comparative, 0);
     EXPECT_EQ(length, length_out);
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, CharArray)
+TEST(nanoCDRArrayTests, CharArray)
 {
     char * char_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeCharArray(char_array_t, 5);
+    serializeCharArray(char_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeCharArray(&char_out, 5);
+    deserializeCharArray(&char_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(char_array_t[i], char_out[i]);
     }
     free(char_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, UnsignedCharArray)
+TEST(nanoCDRArrayTests, UnsignedCharArray)
 {
     unsigned char * char_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedCharArray(octet_array_t, 5);
+    serializeUnsignedCharArray(octet_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedCharArray(&char_out, 5);
+    deserializeUnsignedCharArray(&char_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(octet_array_t[i], char_out[i]);
     }
     free(char_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, ShortArray)
+TEST(nanoCDRArrayTests, ShortArray)
 {
-    short * short_out;
-
+    int16_t * short_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeShortArray(short_array_t, 5);
+    serializeShortArray(short_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeShortArray(&short_out, 5);
+    deserializeShortArray(&short_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(short_array_t[i], short_out[i]);
     }
     free(short_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, UnsignedShortArray)
+TEST(nanoCDRArrayTests, UnsignedShortArray)
 {
-    unsigned short * ushort_out;
-
+    uint16_t * ushort_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedShortArray(ushort_array_t, 5);
+    serializeUnsignedShortArray(ushort_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedShortArray(&ushort_out, 5);
+    deserializeUnsignedShortArray(&ushort_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ushort_array_t[i], ushort_out[i]);
     }
     free(ushort_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, IntArray)
+TEST(nanoCDRArrayTests, IntArray)
 {
-    int * int_out;
-
+    int32_t * int_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeIntArray(long_array_t, 5);
+    serializeIntArray(long_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeIntArray(&int_out, 5);
+    deserializeIntArray(&int_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(long_array_t[i], int_out[i]);
     }
     free(int_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, UnsignedIntArray)
+TEST(nanoCDRArrayTests, UnsignedIntArray)
 {
-    unsigned int * uint_out;
-
+    uint32_t * uint_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedIntArray(ulong_array_t, 5);
+    serializeUnsignedIntArray(ulong_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedIntArray(&uint_out, 5);
+    deserializeUnsignedIntArray(&uint_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulong_array_t[i], uint_out[i]);
     }
     free(uint_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, LongArray)
+TEST(nanoCDRArrayTests, LongArray)
 {
-    long * long_out;
-
+    int64_t * long_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongArray(longlong_array_t, 5);
+    serializeLongArray(longlong_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongArray(&long_out, 5);
+    deserializeLongArray(&long_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlong_array_t[i], long_out[i]);
     }
     free(long_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, ULongArray)
+TEST(nanoCDRArrayTests, ULongArray)
 {
-    unsigned long * ulong_out;
-
+    uint64_t * ulong_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongArray(ulonglong_array_t, 5);
+    serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongArray(&ulong_out, 5);
+    deserializeUnsignedLongArray(&ulong_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglong_array_t[i], ulong_out[i]);
     }
     free(ulong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, LongLongArray)
+TEST(nanoCDRArrayTests, LongLongArray)
 {
     long long * longlong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongLongArray(longlonglong_array_t, 5);
+    serializeLongLongArray(longlonglong_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongLongArray(&longlong_out, 5);
+    deserializeLongLongArray(&longlong_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlonglong_array_t[i], longlong_out[i]);
     }
     free(longlong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, ULongLongArray)
+TEST(nanoCDRArrayTests, ULongLongArray)
 {
     unsigned long long * ulonglong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongLongArray(ulonglonglong_array_t, 5);
+    serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongLongArray(&ulonglong_out, 5);
+    deserializeUnsignedLongLongArray(&ulonglong_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglonglong_array_t[i], ulonglong_out[i]);
     }
     free(ulonglong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, FloatArray)
+TEST(nanoCDRArrayTests, FloatArray)
 {
     float * float_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeFloatArray(float_array_t, 5);
+    serializeFloatArray(float_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeFloatArray(&float_out, 5);
+    deserializeFloatArray(&float_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(float_array_t[i], float_out[i]);
     }
     free(float_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, DoubleArray)
+TEST(nanoCDRArrayTests, DoubleArray)
 {
     double * double_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeDoubleArray(double_array_t, 5);
+    serializeDoubleArray(double_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeDoubleArray(&double_out, 5);
+    deserializeDoubleArray(&double_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(double_array_t[i], double_out[i]);
     }
 
     free(double_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, LongDoubleArray)
+TEST(nanoCDRArrayTests, LongDoubleArray)
 {
     long double * longdouble_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongDoubleArray(longdouble_array_t, 5);
+    serializeLongDoubleArray(longdouble_array_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongDoubleArray(&longdouble_out, 5);
+    deserializeLongDoubleArray(&longdouble_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longdouble_array_t[i], longdouble_out[i]);
     }
     free(longdouble_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayTests, StringArray)
+TEST(nanoCDRArrayTests, StringArray)
 {
     char ** string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeStringArray(string_seq_t, 5);
+    serializeStringArray(string_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeStringArray(&string_out, 5);
+    deserializeStringArray(&string_out, 5, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
-      int length_in = (unsigned int)std::strlen(string_seq_t[i]);
-      int length_out = (unsigned int)std::strlen(string_out[i]);
-      int comparative = std::strcmp(string_seq_t[i], string_out[i]);
-      EXPECT_EQ(length_in, length_out);
-      EXPECT_EQ(comparative, 0);
+      int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+      int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+      int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+      EXPECT_EQ(length_in_aux, length_out_aux);
+      EXPECT_EQ(comparative_aux, 0);
       free(string_out[i]);
     }
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, CharSequence)
+TEST(nanoCDRSequencesTests, CharSequence)
 {
     char * char_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeCharSequence(char_seq_t, 5);
+    serializeCharSequence(char_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeCharSequence(&char_out, &size_out);
+    deserializeCharSequence(&char_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(char_seq_t[i], char_out[i]);
     }
 
     free(char_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, UnsignedCharSequence)
+TEST(nanoCDRSequencesTests, UnsignedCharSequence)
 {
     unsigned char * char_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedCharSequence(octet_seq_t, 5);
+    serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedCharSequence(&char_out, &size_out);
+    deserializeUnsignedCharSequence(&char_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(octet_seq_t[i], char_out[i]);
     }
 
     free(char_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, ShortSequence)
+TEST(nanoCDRSequencesTests, ShortSequence)
 {
-    short * short_out;
-    unsigned int size_out;
-
+    int16_t * short_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeShortSequence(short_seq_t, 5);
+    serializeShortSequence(short_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeShortSequence(&short_out, &size_out);
+    deserializeShortSequence(&short_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(short_seq_t[i], short_out[i]);
     }
 
     free(short_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, UnsignedShortSequence)
+TEST(nanoCDRSequencesTests, UnsignedShortSequence)
 {
-    unsigned short * ushort_out;
-    unsigned int size_out;
-
+    uint16_t * ushort_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedShortSequence(ushort_seq_t, 5);
+    serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedShortSequence(&ushort_out, &size_out);
+    deserializeUnsignedShortSequence(&ushort_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ushort_seq_t[i], ushort_out[i]);
     }
 
     free(ushort_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, IntSequence)
+TEST(nanoCDRSequencesTests, IntSequence)
 {
-    int * int_out;
-    unsigned int size_out;
-
+    int32_t * int_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeIntSequence(long_seq_t, 5);
+    serializeIntSequence(long_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeIntSequence(&int_out, &size_out);
+    deserializeIntSequence(&int_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(long_seq_t[i], int_out[i]);
     }
 
     free(int_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, UnsignedIntSequence)
+TEST(nanoCDRSequencesTests, UnsignedIntSequence)
 {
-    unsigned int * uint_out;
-    unsigned int size_out;
-
+    uint32_t * uint_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedIntSequence(ulong_seq_t, 5);
+    serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedIntSequence(&uint_out, &size_out);
+    deserializeUnsignedIntSequence(&uint_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulong_seq_t[i], uint_out[i]);
     }
 
     free(uint_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, LongSequence)
+TEST(nanoCDRSequencesTests, LongSequence)
 {
-    long * long_out;
-    unsigned int size_out;
-
+    int64_t * long_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongSequence(longlong_seq_t, 5);
+    serializeLongSequence(longlong_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongSequence(&long_out, &size_out);
+    deserializeLongSequence(&long_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlong_seq_t[i], long_out[i]);
     }
 
     free(long_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, ULongSequence)
+TEST(nanoCDRSequencesTests, ULongSequence)
 {
-    unsigned long * ulong_out;
-    unsigned int size_out;
-
+    uint64_t * ulong_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongSequence(ulonglong_seq_t, 5);
+    serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongSequence(&ulong_out, &size_out);
+    deserializeUnsignedLongSequence(&ulong_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglong_seq_t[i], ulong_out[i]);
     }
 
     free(ulong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, LongLongSequence)
+TEST(nanoCDRSequencesTests, LongLongSequence)
 {
     long long * longlong_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongLongSequence(longlonglong_seq_t, 5);
+    serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongLongSequence(&longlong_out, &size_out);
+    deserializeLongLongSequence(&longlong_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlonglong_seq_t[i], longlong_out[i]);
     }
 
     free(longlong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, ULongLongSequence)
+TEST(nanoCDRSequencesTests, ULongLongSequence)
 {
     unsigned long long * ulonglong_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5);
+    serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongLongSequence(&ulonglong_out, &size_out);
+    deserializeUnsignedLongLongSequence(&ulonglong_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglonglong_seq_t[i], ulonglong_out[i]);
     }
 
     free(ulonglong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, FloatSequence)
+TEST(nanoCDRSequencesTests, FloatSequence)
 {
     float * float_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeFloatSequence(float_seq_t, 5);
+    serializeFloatSequence(float_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeFloatSequence(&float_out, &size_out);
+    deserializeFloatSequence(&float_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(float_seq_t[i], float_out[i]);
     }
 
     free(float_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, DoubleSequence)
+TEST(nanoCDRSequencesTests, DoubleSequence)
 {
     double * double_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeDoubleSequence(double_seq_t, 5);
+    serializeDoubleSequence(double_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeDoubleSequence(&double_out, &size_out);
+    deserializeDoubleSequence(&double_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(double_seq_t[i], double_out[i]);
     }
 
     free(double_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, LongDoubleSequence)
+TEST(nanoCDRSequencesTests, LongDoubleSequence)
 {
     long double * longdouble_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
-
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
     // Serialization.
-    serializeLongDoubleSequence(longdouble_seq_t, 5);
+    serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongDoubleSequence(&longdouble_out, &size_out);
+    deserializeLongDoubleSequence(&longdouble_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longdouble_seq_t[i], longdouble_out[i]);
     }
 
     free(longdouble_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesTests, StringSequence)
+TEST(nanoCDRSequencesTests, StringSequence)
 {
     char ** string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeStringSequence(string_seq_t, 5);
+    serializeStringSequence(string_seq_t, 5, nanoCDR);
 
-    unsigned int size_out;
+    uint32_t size_out;
 
     // Deseriazliation.
-    deserializeStringSequence(&string_out, &size_out);
+    deserializeStringSequence(&string_out, &size_out, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
-      int length_in = (unsigned int)std::strlen(string_seq_t[i]);
-      int length_out = (unsigned int)std::strlen(string_out[i]);
-      int comparative = std::strcmp(string_seq_t[i], string_out[i]);
-      EXPECT_EQ(length_in, length_out);
-      EXPECT_EQ(comparative, 0);
+      int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+      int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+      int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+      EXPECT_EQ(length_in_aux, length_out_aux);
+      EXPECT_EQ(comparative_aux, 0);
       free(string_out[i]);
     }
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicTests, SimpleVar)
+TEST(nanoCDRTests, SimpleVar)
 {
   char char_out;
   signed char octect_out;
-  short short_out;
-  unsigned short ushort_out;
-  int long_out;
-  unsigned int ulong_out;
-  long longlong_out;
-  unsigned long ulonglong_out;
+  int16_t short_out;
+  uint16_t ushort_out;
+  int32_t long_out;
+  uint32_t ulong_out;
+  int64_t longlong_out;
+  uint64_t ulonglong_out;
   long long longlonglong_out;
   unsigned long long ulonglonglong_out;
   float float_out;
@@ -1098,52 +1056,53 @@ TEST(nanoCDRDynamicTests, SimpleVar)
   char * string_out;
   char * string_out_2;
 
-
   // Check good case.
-  newDynamicBuffer();
+  struct nanoBuffer * nanoCDR = NULL;
+  // Check good case.
+  newDynamicBuffer(&nanoCDR);
 
-  const unsigned int length = (unsigned int)std::strlen(string_t);
-  unsigned int length_out;
+  const uint32_t length = (uint32_t)std::strlen(string_t);
+  uint32_t length_out;
 
-  const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
-  unsigned int length_out_2;
+  const uint32_t length_2 = (uint32_t)std::strlen(emptystring_t);
+  uint32_t length_out_2;
 
   // Serialization.
-  serializeChar(char_t);
-  serializeSignedChar(octet_t);
-  serializeShort(short_t);
-  serializeUnsignedShort(ushort_t);
-  serializeInt(long_t);
-  serializeUnsignedInt(ulong_t);
-  serializeLong(longlong_t);
-  serializeUnsignedLong(ulonglong_t);
-  serializeLongLong(longlonglong_t);
-  serializeUnsignedLongLong(ulonglonglong_t);
-  serializeFloat(float_tt);
-  serializeDouble(double_tt);
-  serializeLongDouble(longdouble_t);
-  serializeString(string_t, length);
-  serializeString(emptystring_t, length_2);
+  serializeChar(char_t, nanoCDR);
+  serializeSignedChar(octet_t, nanoCDR);
+  serializeShort(short_t, nanoCDR);
+  serializeUnsignedShort(ushort_t, nanoCDR);
+  serializeInt(long_t, nanoCDR);
+  serializeUnsignedInt(ulong_t, nanoCDR);
+  serializeLong(longlong_t, nanoCDR);
+  serializeUnsignedLong(ulonglong_t, nanoCDR);
+  serializeLongLong(longlonglong_t, nanoCDR);
+  serializeUnsignedLongLong(ulonglonglong_t, nanoCDR);
+  serializeFloat(float_tt, nanoCDR);
+  serializeDouble(double_tt, nanoCDR);
+  serializeLongDouble(longdouble_t, nanoCDR);
+  serializeString(string_t, length, nanoCDR);
+  serializeString(emptystring_t, length_2, nanoCDR);
 
   // Deseriazliation.
-  deserializeChar(&char_out);
-  deserializeSignedChar(&octect_out);
-  deserializeShort(&short_out);
-  deserializeUnsignedShort(&ushort_out);
-  deserializeInt(&long_out);
-  deserializeUnsignedInt(&ulong_out);
-  deserializeLong(&longlong_out);
-  deserializeUnsignedLong(&ulonglong_out);
-  deserializeLongLong(&longlonglong_out);
-  deserializeUnsignedLongLong(&ulonglonglong_out);
-  deserializeFloat(&float_out);
-  deserializeDouble(&double_out);
-  deserializeLongDouble(&longdouble_out);
-  deserializeString(&string_out, &length_out);
-  deserializeString(&string_out_2, &length_out_2);
+  deserializeChar(&char_out, nanoCDR);
+  deserializeSignedChar(&octect_out, nanoCDR);
+  deserializeShort(&short_out, nanoCDR);
+  deserializeUnsignedShort(&ushort_out, nanoCDR);
+  deserializeInt(&long_out, nanoCDR);
+  deserializeUnsignedInt(&ulong_out, nanoCDR);
+  deserializeLong(&longlong_out, nanoCDR);
+  deserializeUnsignedLong(&ulonglong_out, nanoCDR);
+  deserializeLongLong(&longlonglong_out, nanoCDR);
+  deserializeUnsignedLongLong(&ulonglonglong_out, nanoCDR);
+  deserializeFloat(&float_out, nanoCDR);
+  deserializeDouble(&double_out, nanoCDR);
+  deserializeLongDouble(&longdouble_out, nanoCDR);
+  deserializeString(&string_out, &length_out, nanoCDR);
+  deserializeString(&string_out_2, &length_out_2, nanoCDR);
 
-  unsigned int comparative = std::strcmp(string_out, string_t);
-  unsigned int comparative_2 = std::strcmp(string_out_2, emptystring_t);
+  uint32_t comparative = std::strcmp(string_out, string_t);
+  uint32_t comparative_2 = std::strcmp(string_out_2, emptystring_t);
 
   EXPECT_EQ(char_out, char_t);
   EXPECT_EQ(octect_out, octet_t);
@@ -1162,21 +1121,19 @@ TEST(nanoCDRDynamicTests, SimpleVar)
   EXPECT_EQ(length, length_out);
   EXPECT_EQ(comparative_2, 0);
   EXPECT_EQ(length_2, length_out_2);
-
-  destroyBuffer();
 }
 
-TEST(nanoCDRDynamicTests, Arrays)
+TEST(nanoCDRTests, Arrays)
 {
-  int i;
+  int32_t i;
   char * char_out;
   unsigned char * uchar_out;
-  short * short_out;
-  unsigned short * ushort_out;
-  int * int_out;
-  unsigned int * uint_out;
-  long * long_out;
-  unsigned long * ulong_out;
+  int16_t * short_out;
+  uint16_t * ushort_out;
+  int32_t * int_out;
+  uint32_t * uint_out;
+  int64_t * long_out;
+  uint64_t * ulong_out;
   long long * longlong_out;
   unsigned long long * ulonglong_out;
   float * float_out;
@@ -1184,50 +1141,50 @@ TEST(nanoCDRDynamicTests, Arrays)
   long double * longdouble_out;
   char ** string_out;
 
-
-
   // Check good case.
-  newDynamicBuffer();
+  struct nanoBuffer * nanoCDR = NULL;
+  // Check good case.
+  newDynamicBuffer(&nanoCDR);
 
-  short result = 0;
+  int16_t result = 0;
 
   // Serialization.
-  result += serializeCharArray(char_array_t, 5); //5
-  result += serializeUnsignedCharArray(octet_array_t, 5); //5
-  result += serializeShortArray(short_array_t, 5); //10
-  result += serializeUnsignedShortArray(ushort_array_t, 5); //10
-  result += serializeIntArray(long_array_t, 5); //20
-  result += serializeUnsignedIntArray(ulong_array_t, 5); //20
-  result += serializeLongArray(longlong_array_t, 5); //20
-  result += serializeUnsignedLongArray(ulonglong_array_t, 5); //20
-  result += serializeLongLongArray(longlonglong_array_t, 5); //20
-  result += serializeUnsignedLongLongArray(ulonglonglong_array_t, 5); //20
-  result += serializeFloatArray(float_array_t, 5); //20
-  result += serializeDoubleArray(double_array_t, 5); //40
-  result += serializeLongDoubleArray(longdouble_array_t, 5); //40
-  result += serializeStringArray(string_seq_t, 5);
+  result += serializeCharArray(char_array_t, 5, nanoCDR); //5
+  result += serializeUnsignedCharArray(octet_array_t, 5, nanoCDR); //5
+  result += serializeShortArray(short_array_t, 5, nanoCDR); //10
+  result += serializeUnsignedShortArray(ushort_array_t, 5, nanoCDR); //10
+  result += serializeIntArray(long_array_t, 5, nanoCDR); //20
+  result += serializeUnsignedIntArray(ulong_array_t, 5, nanoCDR); //20
+  result += serializeLongArray(longlong_array_t, 5, nanoCDR); //20
+  result += serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDR); //20
+  result += serializeLongLongArray(longlonglong_array_t, 5, nanoCDR); //20
+  result += serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDR); //20
+  result += serializeFloatArray(float_array_t, 5, nanoCDR); //20
+  result += serializeDoubleArray(double_array_t, 5, nanoCDR); //40
+  result += serializeLongDoubleArray(longdouble_array_t, 5, nanoCDR); //40
+  result += serializeStringArray(string_seq_t, 5, nanoCDR);
 
-  //unsigned int serialized = getSerializedDataLength();
+  //uint32_t serialized = getSerializedDataLength();
 
   EXPECT_EQ(result, 0);
   //EXPECT_EQ(serialized, 130);
 
   if(result == 0){
     // Deseriazliation.
-    result += deserializeCharArray(&char_out, 5);
-    result += deserializeUnsignedCharArray(&uchar_out, 5);
-    result += deserializeShortArray(&short_out, 5);
-    result += deserializeUnsignedShortArray(&ushort_out, 5);
-    result += deserializeIntArray(&int_out, 5);
-    result += deserializeUnsignedIntArray(&uint_out, 5);
-    result += deserializeLongArray(&long_out, 5);
-    result += deserializeUnsignedLongArray(&ulong_out, 5);
-    result += deserializeLongLongArray(&longlong_out, 5);
-    result += deserializeUnsignedLongLongArray(&ulonglong_out, 5);
-    result += deserializeFloatArray(&float_out, 5);
-    result += deserializeDoubleArray(&double_out, 5);
-    result += deserializeLongDoubleArray(&longdouble_out, 5);
-    result += deserializeStringArray(&string_out, 5);
+    result += deserializeCharArray(&char_out, 5, nanoCDR);
+    result += deserializeUnsignedCharArray(&uchar_out, 5, nanoCDR);
+    result += deserializeShortArray(&short_out, 5, nanoCDR);
+    result += deserializeUnsignedShortArray(&ushort_out, 5, nanoCDR);
+    result += deserializeIntArray(&int_out, 5, nanoCDR);
+    result += deserializeUnsignedIntArray(&uint_out, 5, nanoCDR);
+    result += deserializeLongArray(&long_out, 5, nanoCDR);
+    result += deserializeUnsignedLongArray(&ulong_out, 5, nanoCDR);
+    result += deserializeLongLongArray(&longlong_out, 5, nanoCDR);
+    result += deserializeUnsignedLongLongArray(&ulonglong_out, 5, nanoCDR);
+    result += deserializeFloatArray(&float_out, 5, nanoCDR);
+    result += deserializeDoubleArray(&double_out, 5, nanoCDR);
+    result += deserializeLongDoubleArray(&longdouble_out, 5, nanoCDR);
+    result += deserializeStringArray(&string_out, 5, nanoCDR);
 
     EXPECT_EQ(result, 0);
 
@@ -1273,11 +1230,11 @@ TEST(nanoCDRDynamicTests, Arrays)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out = (unsigned int)std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
-        EXPECT_EQ(length_in, length_out);
-        EXPECT_EQ(comparative, 0);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+        EXPECT_EQ(length_in_aux, length_out_aux);
+        EXPECT_EQ(comparative_aux, 0);
         free(string_out[i]);
       }
 
@@ -1297,86 +1254,85 @@ TEST(nanoCDRDynamicTests, Arrays)
       free(string_out);
     }
   }
-
-  destroyBuffer();
 }
 
-TEST(nanoCDRDynamicTests, Sequences)
+TEST(nanoCDRTests, Sequences)
 {
-  int i;
+  int32_t i;
   char * char_out;
-  unsigned int char_out_size;
+  uint32_t char_out_size;
   unsigned char * uchar_out;
-  unsigned int uchar_out_size;
-  short * short_out;
-  unsigned int short_out_size;
-  unsigned short * ushort_out;
-  unsigned int ushort_out_size;
-  int * int_out;
-  unsigned int int_out_size;
-  unsigned int * uint_out;
-  unsigned int uint_out_size;
-  long * long_out;
-  unsigned int long_out_size;
-  unsigned long * ulong_out;
-  unsigned int ulong_out_size;
+  uint32_t uchar_out_size;
+  int16_t * short_out;
+  uint32_t short_out_size;
+  uint16_t * ushort_out;
+  uint32_t ushort_out_size;
+  int32_t * int_out;
+  uint32_t int_out_size;
+  uint32_t * uint_out;
+  uint32_t uint_out_size;
+  int64_t * long_out;
+  uint32_t long_out_size;
+  uint64_t * ulong_out;
+  uint32_t ulong_out_size;
   long long * longlong_out;
-  unsigned int longlong_out_size;
+  uint32_t longlong_out_size;
   unsigned long long * ulonglong_out;
-  unsigned int ulonglong_out_size;
+  uint32_t ulonglong_out_size;
   float * float_out;
-  unsigned int float_out_size;
+  uint32_t float_out_size;
   double * double_out;
-  unsigned int double_out_size;
+  uint32_t double_out_size;
   long double * longdouble_out;
-  unsigned int longdouble_out_size;
+  uint32_t longdouble_out_size;
   char ** string_out;
-  unsigned int string_out_size;
+  uint32_t string_out_size;
 
-  short result = 0;
-
+  int16_t result = 0;
 
 
   // Check good case.
-  newDynamicBuffer();
+  struct nanoBuffer * nanoCDR = NULL;
+  // Check good case.
+  newDynamicBuffer(&nanoCDR);
 
   // Serialization.
-  result += serializeCharSequence(char_seq_t, 5); //9
-  result += serializeUnsignedCharSequence(octet_seq_t, 5); //9
-  result += serializeShortSequence(short_seq_t, 5);//14
-  result += serializeUnsignedShortSequence(ushort_seq_t, 5);//14
-  result += serializeIntSequence(long_seq_t, 5);//24
-  result += serializeUnsignedIntSequence(ulong_seq_t, 5);//24
-  result += serializeLongSequence(longlong_seq_t, 5);//24
-  result += serializeUnsignedLongSequence(ulonglong_seq_t, 5);//24
-  result += serializeLongLongSequence(longlonglong_seq_t, 5);//24
-  result += serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5);//24
-  result += serializeFloatSequence(float_seq_t, 5);//24
-  result += serializeDoubleSequence(double_seq_t, 5);//44
-  result += serializeLongDoubleSequence(longdouble_seq_t, 5);//44
-  result += serializeStringSequence(string_seq_t, 5);
+  result += serializeCharSequence(char_seq_t, 5, nanoCDR); //9
+  result += serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDR); //9
+  result += serializeShortSequence(short_seq_t, 5, nanoCDR);//14
+  result += serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDR);//14
+  result += serializeIntSequence(long_seq_t, 5, nanoCDR);//24
+  result += serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDR);//24
+  result += serializeLongSequence(longlong_seq_t, 5, nanoCDR);//24
+  result += serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDR);//24
+  result += serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDR);//24
+  result += serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDR);//24
+  result += serializeFloatSequence(float_seq_t, 5, nanoCDR);//24
+  result += serializeDoubleSequence(double_seq_t, 5, nanoCDR);//44
+  result += serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDR);//44
+  result += serializeStringSequence(string_seq_t, 5, nanoCDR);
 
-  //unsigned int serialized = getSerializedDataLength();
+  //uint32_t serialized = getSerializedDataLength();
   //EXPECT_EQ(serialized, 162);
 
   EXPECT_EQ(result, 0);
 
   if(result == 0){
     // Deseriazliation.
-    result += deserializeCharSequence(&char_out, &char_out_size);
-    result += deserializeUnsignedCharSequence(&uchar_out, &uchar_out_size);
-    result += deserializeShortSequence(&short_out, &short_out_size);
-    result += deserializeUnsignedShortSequence(&ushort_out, &ushort_out_size);
-    result += deserializeIntSequence(&int_out, &int_out_size);
-    result += deserializeUnsignedIntSequence(&uint_out, &uint_out_size);
-    result += deserializeLongSequence(&long_out, &long_out_size);
-    result += deserializeUnsignedLongSequence(&ulong_out, &ulong_out_size);
-    result += deserializeLongLongSequence(&longlong_out, &longlong_out_size);
-    result += deserializeUnsignedLongLongSequence(&ulonglong_out, &ulonglong_out_size);
-    result += deserializeFloatSequence(&float_out, &float_out_size);
-    result += deserializeDoubleSequence(&double_out, &double_out_size);
-    result += deserializeLongDoubleSequence(&longdouble_out, &longdouble_out_size);
-    result += deserializeStringSequence(&string_out, &string_out_size);
+    result += deserializeCharSequence(&char_out, &char_out_size, nanoCDR);
+    result += deserializeUnsignedCharSequence(&uchar_out, &uchar_out_size, nanoCDR);
+    result += deserializeShortSequence(&short_out, &short_out_size, nanoCDR);
+    result += deserializeUnsignedShortSequence(&ushort_out, &ushort_out_size, nanoCDR);
+    result += deserializeIntSequence(&int_out, &int_out_size, nanoCDR);
+    result += deserializeUnsignedIntSequence(&uint_out, &uint_out_size, nanoCDR);
+    result += deserializeLongSequence(&long_out, &long_out_size, nanoCDR);
+    result += deserializeUnsignedLongSequence(&ulong_out, &ulong_out_size, nanoCDR);
+    result += deserializeLongLongSequence(&longlong_out, &longlong_out_size, nanoCDR);
+    result += deserializeUnsignedLongLongSequence(&ulonglong_out, &ulonglong_out_size, nanoCDR);
+    result += deserializeFloatSequence(&float_out, &float_out_size, nanoCDR);
+    result += deserializeDoubleSequence(&double_out, &double_out_size, nanoCDR);
+    result += deserializeLongDoubleSequence(&longdouble_out, &longdouble_out_size, nanoCDR);
+    result += deserializeStringSequence(&string_out, &string_out_size, nanoCDR);
 
     EXPECT_EQ(result, 0);
 
@@ -1437,11 +1393,11 @@ TEST(nanoCDRDynamicTests, Sequences)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out = (unsigned int)std::strlen(string_out[i]);
-        int comparative = std::strcmp(string_seq_t[i], string_out[i]);
-        EXPECT_EQ(length_in, length_out);
-        EXPECT_EQ(comparative, 0);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+        EXPECT_EQ(length_in_aux, length_out_aux);
+        EXPECT_EQ(comparative_aux, 0);
         free(string_out[i]);
       }
 
@@ -1461,21 +1417,19 @@ TEST(nanoCDRDynamicTests, Sequences)
       free(string_out);
     }
   }
-
-  destroyBuffer();
 }
 
-TEST(nanoCDRDynamicTests, All)
+TEST(nanoCDRTests, All)
 {
   //SIMPLE
   char char_out;
   signed char octect_out;
-  short short_out;
-  unsigned short ushort_out;
-  int long_out;
-  unsigned int ulong_out;
-  long longlong_out;
-  unsigned long ulonglong_out;
+  int16_t short_out;
+  uint16_t ushort_out;
+  int32_t long_out;
+  uint32_t ulong_out;
+  int64_t longlong_out;
+  uint64_t ulonglong_out;
   long long longlonglong_out;
   unsigned long long ulonglonglong_out;
   float float_out;
@@ -1485,15 +1439,15 @@ TEST(nanoCDRDynamicTests, All)
   char * string_out_2;
 
   //ARRAYS
-  int i;
+  int32_t i;
   char * char_array_out;
   unsigned char * uchar_array_out;
-  short * short_array_out;
-  unsigned short * ushort_array_out;
-  int * int_array_out;
-  unsigned int * uint_array_out;
-  long * long_array_out;
-  unsigned long * ulong_array_out;
+  int16_t * short_array_out;
+  uint16_t * ushort_array_out;
+  int32_t * int_array_out;
+  uint32_t * uint_array_out;
+  int64_t * long_array_out;
+  uint64_t * ulong_array_out;
   long long * longlong_array_out;
   unsigned long long * ulonglong_array_out;
   float * float_array_out;
@@ -1503,160 +1457,161 @@ TEST(nanoCDRDynamicTests, All)
 
   //SEQUENCES
   char * char_seq_out;
-  unsigned int char_out_size;
+  uint32_t char_out_size;
   unsigned char * uchar_seq_out;
-  unsigned int uchar_out_size;
-  short * short_seq_out;
-  unsigned int short_out_size;
-  unsigned short * ushort_seq_out;
-  unsigned int ushort_out_size;
-  int * int_seq_out;
-  unsigned int int_out_size;
-  unsigned int * uint_seq_out;
-  unsigned int uint_out_size;
-  long * long_seq_out;
-  unsigned int long_out_size;
-  unsigned long * ulong_seq_out;
-  unsigned int ulong_out_size;
+  uint32_t uchar_out_size;
+  int16_t * short_seq_out;
+  uint32_t short_out_size;
+  uint16_t * ushort_seq_out;
+  uint32_t ushort_out_size;
+  int32_t * int_seq_out;
+  uint32_t int_out_size;
+  uint32_t * uint_seq_out;
+  uint32_t uint_out_size;
+  int64_t * long_seq_out;
+  uint32_t long_out_size;
+  uint64_t * ulong_seq_out;
+  uint32_t ulong_out_size;
   long long * longlong_seq_out;
-  unsigned int longlong_out_size;
+  uint32_t longlong_out_size;
   unsigned long long * ulonglong_seq_out;
-  unsigned int ulonglong_out_size;
+  uint32_t ulonglong_out_size;
   float * float_seq_out;
-  unsigned int float_out_size;
+  uint32_t float_out_size;
   double * double_seq_out;
-  unsigned int double_out_size;
+  uint32_t double_out_size;
   long double * longdouble_seq_out;
-  unsigned int longdouble_out_size;
+  uint32_t longdouble_out_size;
   char ** string_seq_out;
-  unsigned int string_out_size;
-
+  uint32_t string_out_size;
 
 
   // Check good case.
-  newDynamicBuffer();
+  struct nanoBuffer * nanoCDR = NULL;
+  // Check good case.
+  newDynamicBuffer(&nanoCDR);
 
-  const unsigned int length = (unsigned int)std::strlen(string_t);
-  unsigned int length_out;
+  const uint32_t length = (uint32_t)std::strlen(string_t);
+  uint32_t length_out;
 
-  short result = 0;
+  int16_t result = 0;
 
-  const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
-  unsigned int length_out_2;
+  const uint32_t length_2 = (uint32_t)std::strlen(emptystring_t);
+  uint32_t length_out_2;
 
   // Serialization.
-  result += serializeChar(char_t);
-  result += serializeSignedChar(octet_t);
-  result += serializeShort(short_t);
-  result += serializeUnsignedShort(ushort_t);
-  result += serializeInt(long_t);
-  result += serializeUnsignedInt(ulong_t);
-  result += serializeLong(longlong_t);
-  result += serializeUnsignedLong(ulonglong_t);
-  result += serializeLongLong(longlonglong_t);
-  result += serializeUnsignedLongLong(ulonglonglong_t);
-  result += serializeFloat(float_tt);
-  result += serializeDouble(double_tt);
-  result += serializeLongDouble(longdouble_t);
-  result += serializeString(string_t, length);
-  result += serializeString(emptystring_t, length_2);
+  result += serializeChar(char_t, nanoCDR);
+  result += serializeSignedChar(octet_t, nanoCDR);
+  result += serializeShort(short_t, nanoCDR);
+  result += serializeUnsignedShort(ushort_t, nanoCDR);
+  result += serializeInt(long_t, nanoCDR);
+  result += serializeUnsignedInt(ulong_t, nanoCDR);
+  result += serializeLong(longlong_t, nanoCDR);
+  result += serializeUnsignedLong(ulonglong_t, nanoCDR);
+  result += serializeLongLong(longlonglong_t, nanoCDR);
+  result += serializeUnsignedLongLong(ulonglonglong_t, nanoCDR);
+  result += serializeFloat(float_tt, nanoCDR);
+  result += serializeDouble(double_tt, nanoCDR);
+  result += serializeLongDouble(longdouble_t, nanoCDR);
+  result += serializeString(string_t, length, nanoCDR);
+  result += serializeString(emptystring_t, length_2, nanoCDR);
 
-  result += serializeCharArray(char_array_t, 5); //5
-  result += serializeUnsignedCharArray(octet_array_t, 5); //5
-  result += serializeShortArray(short_array_t, 5); //10
-  result += serializeUnsignedShortArray(ushort_array_t, 5); //10
-  result += serializeIntArray(long_array_t, 5); //20
-  result += serializeUnsignedIntArray(ulong_array_t, 5); //20
+  result += serializeCharArray(char_array_t, 5, nanoCDR); //5
+  result += serializeUnsignedCharArray(octet_array_t, 5, nanoCDR); //5
+  result += serializeShortArray(short_array_t, 5, nanoCDR); //10
+  result += serializeUnsignedShortArray(ushort_array_t, 5, nanoCDR); //10
+  result += serializeIntArray(long_array_t, 5, nanoCDR); //20
+  result += serializeUnsignedIntArray(ulong_array_t, 5, nanoCDR); //20
 
-  result += serializeLongArray(longlong_array_t, 5);
-  result += serializeUnsignedLongArray(ulonglong_array_t, 5);
-  result += serializeLongLongArray(longlonglong_array_t, 5);
-  result += serializeUnsignedLongLongArray(ulonglonglong_array_t, 5);
+  result += serializeLongArray(longlong_array_t, 5, nanoCDR);
+  result += serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDR);
+  result += serializeLongLongArray(longlonglong_array_t, 5, nanoCDR);
+  result += serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDR);
 
-  result += serializeFloatArray(float_array_t, 5); //20
-  result += serializeDoubleArray(double_array_t, 5); //40
-  result += serializeLongDoubleArray(longdouble_array_t, 5);
-  result += serializeStringArray(string_seq_t, 5);
+  result += serializeFloatArray(float_array_t, 5, nanoCDR); //20
+  result += serializeDoubleArray(double_array_t, 5, nanoCDR); //40
+  result += serializeLongDoubleArray(longdouble_array_t, 5, nanoCDR);
+  result += serializeStringArray(string_seq_t, 5, nanoCDR);
 
-  result += serializeCharSequence(char_seq_t, 5); //9
-  result += serializeUnsignedCharSequence(octet_seq_t, 5); //9
-  result += serializeShortSequence(short_seq_t, 5);//14
-  result += serializeUnsignedShortSequence(ushort_seq_t, 5);//14
-  result += serializeIntSequence(long_seq_t, 5);//24
-  result += serializeUnsignedIntSequence(ulong_seq_t, 5);//24
+  result += serializeCharSequence(char_seq_t, 5, nanoCDR); //9
+  result += serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDR); //9
+  result += serializeShortSequence(short_seq_t, 5, nanoCDR);//14
+  result += serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDR);//14
+  result += serializeIntSequence(long_seq_t, 5, nanoCDR);//24
+  result += serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDR);//24
 
-  result += serializeLongSequence(longlong_seq_t, 5);
-  result += serializeUnsignedLongSequence(ulonglong_seq_t, 5);
-  result += serializeLongLongSequence(longlonglong_seq_t, 5);
-  result += serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5);
+  result += serializeLongSequence(longlong_seq_t, 5, nanoCDR);
+  result += serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDR);
+  result += serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDR);
+  result += serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDR);
 
-  result += serializeFloatSequence(float_seq_t, 5);//24
-  result += serializeDoubleSequence(double_seq_t, 5);//44
-  result += serializeLongDoubleSequence(longdouble_seq_t, 5);//44
-  result += serializeStringSequence(string_seq_t, 5);
+  result += serializeFloatSequence(float_seq_t, 5, nanoCDR);//24
+  result += serializeDoubleSequence(double_seq_t, 5, nanoCDR);//44
+  result += serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDR);//44
+  result += serializeStringSequence(string_seq_t, 5, nanoCDR);
 
-  //unsigned int serialized = getSerializedDataLength();
+  //uint32_t serialized = getSerializedDataLength();
   //EXPECT_EQ(serialized, 357);
   EXPECT_EQ(result, 0);
 
   if(result == 0){
   // Deseriazliation.
-    result += deserializeChar(&char_out);
-    result += deserializeSignedChar(&octect_out);
-    result += deserializeShort(&short_out);
-    result += deserializeUnsignedShort(&ushort_out);
-    result += deserializeInt(&long_out);
-    result += deserializeUnsignedInt(&ulong_out);
-    result += deserializeLong(&longlong_out);
-    result += deserializeUnsignedLong(&ulonglong_out);
-    result += deserializeLongLong(&longlonglong_out);
-    result += deserializeUnsignedLongLong(&ulonglonglong_out);
-    result += deserializeFloat(&float_out);
-    result += deserializeDouble(&double_out);
-    result += deserializeLongDouble(&longdouble_out);
-    result += deserializeString(&string_out, &length_out);
-    result += deserializeString(&string_out_2, &length_out_2);
+    result += deserializeChar(&char_out, nanoCDR);
+    result += deserializeSignedChar(&octect_out, nanoCDR);
+    result += deserializeShort(&short_out, nanoCDR);
+    result += deserializeUnsignedShort(&ushort_out, nanoCDR);
+    result += deserializeInt(&long_out, nanoCDR);
+    result += deserializeUnsignedInt(&ulong_out, nanoCDR);
+    result += deserializeLong(&longlong_out, nanoCDR);
+    result += deserializeUnsignedLong(&ulonglong_out, nanoCDR);
+    result += deserializeLongLong(&longlonglong_out, nanoCDR);
+    result += deserializeUnsignedLongLong(&ulonglonglong_out, nanoCDR);
+    result += deserializeFloat(&float_out, nanoCDR);
+    result += deserializeDouble(&double_out, nanoCDR);
+    result += deserializeLongDouble(&longdouble_out, nanoCDR);
+    result += deserializeString(&string_out, &length_out, nanoCDR);
+    result += deserializeString(&string_out_2, &length_out_2, nanoCDR);
 
-    result += deserializeCharArray(&char_array_out, 5);
-    result += deserializeUnsignedCharArray(&uchar_array_out, 5);
-    result += deserializeShortArray(&short_array_out, 5);
-    result += deserializeUnsignedShortArray(&ushort_array_out, 5);
-    result += deserializeIntArray(&int_array_out, 5);
-    result += deserializeUnsignedIntArray(&uint_array_out, 5);
+    result += deserializeCharArray(&char_array_out, 5, nanoCDR);
+    result += deserializeUnsignedCharArray(&uchar_array_out, 5, nanoCDR);
+    result += deserializeShortArray(&short_array_out, 5, nanoCDR);
+    result += deserializeUnsignedShortArray(&ushort_array_out, 5, nanoCDR);
+    result += deserializeIntArray(&int_array_out, 5, nanoCDR);
+    result += deserializeUnsignedIntArray(&uint_array_out, 5, nanoCDR);
 
-    result += deserializeLongArray(&long_array_out, 5);
-    result += deserializeUnsignedLongArray(&ulong_array_out, 5);
-    result += deserializeLongLongArray(&longlong_array_out, 5);
-    result += deserializeUnsignedLongLongArray(&ulonglong_array_out, 5);
+    result += deserializeLongArray(&long_array_out, 5, nanoCDR);
+    result += deserializeUnsignedLongArray(&ulong_array_out, 5, nanoCDR);
+    result += deserializeLongLongArray(&longlong_array_out, 5, nanoCDR);
+    result += deserializeUnsignedLongLongArray(&ulonglong_array_out, 5, nanoCDR);
 
-    result += deserializeFloatArray(&float_array_out, 5);
-    result += deserializeDoubleArray(&double_array_out, 5);
-    result += deserializeLongDoubleArray(&longdouble_array_out, 5);
-    result += deserializeStringArray(&string_array_out, 5);
+    result += deserializeFloatArray(&float_array_out, 5, nanoCDR);
+    result += deserializeDoubleArray(&double_array_out, 5, nanoCDR);
+    result += deserializeLongDoubleArray(&longdouble_array_out, 5, nanoCDR);
+    result += deserializeStringArray(&string_array_out, 5, nanoCDR);
 
-    result += deserializeCharSequence(&char_seq_out, &char_out_size);
-    result += deserializeUnsignedCharSequence(&uchar_seq_out, &uchar_out_size);
-    result += deserializeShortSequence(&short_seq_out, &short_out_size);
-    result += deserializeUnsignedShortSequence(&ushort_seq_out, &ushort_out_size);
-    result += deserializeIntSequence(&int_seq_out, &int_out_size);
-    result += deserializeUnsignedIntSequence(&uint_seq_out, &uint_out_size);
+    result += deserializeCharSequence(&char_seq_out, &char_out_size, nanoCDR);
+    result += deserializeUnsignedCharSequence(&uchar_seq_out, &uchar_out_size, nanoCDR);
+    result += deserializeShortSequence(&short_seq_out, &short_out_size, nanoCDR);
+    result += deserializeUnsignedShortSequence(&ushort_seq_out, &ushort_out_size, nanoCDR);
+    result += deserializeIntSequence(&int_seq_out, &int_out_size, nanoCDR);
+    result += deserializeUnsignedIntSequence(&uint_seq_out, &uint_out_size, nanoCDR);
 
-    result += deserializeLongSequence(&long_seq_out, &long_out_size);
-    result += deserializeUnsignedLongSequence(&ulong_seq_out, &ulong_out_size);
-    result += deserializeLongLongSequence(&longlong_seq_out, &longlong_out_size);
-    result += deserializeUnsignedLongLongSequence(&ulonglong_seq_out, &ulonglong_out_size);
+    result += deserializeLongSequence(&long_seq_out, &long_out_size, nanoCDR);
+    result += deserializeUnsignedLongSequence(&ulong_seq_out, &ulong_out_size, nanoCDR);
+    result += deserializeLongLongSequence(&longlong_seq_out, &longlong_out_size, nanoCDR);
+    result += deserializeUnsignedLongLongSequence(&ulonglong_seq_out, &ulonglong_out_size, nanoCDR);
 
-    result += deserializeFloatSequence(&float_seq_out, &float_out_size);
-    result += deserializeDoubleSequence(&double_seq_out, &double_out_size);
-    result += deserializeLongDoubleSequence(&longdouble_seq_out, &longdouble_out_size);
-    result += deserializeStringSequence(&string_seq_out, &string_out_size);
+    result += deserializeFloatSequence(&float_seq_out, &float_out_size, nanoCDR);
+    result += deserializeDoubleSequence(&double_seq_out, &double_out_size, nanoCDR);
+    result += deserializeLongDoubleSequence(&longdouble_seq_out, &longdouble_out_size, nanoCDR);
+    result += deserializeStringSequence(&string_seq_out, &string_out_size, nanoCDR);
 
     EXPECT_EQ(result, 0);
 
     if(result == 0)
     {
-      unsigned int comparative = std::strcmp(string_out, string_t);
-      unsigned int comparative_2 = std::strcmp(string_out_2, emptystring_t);
+      uint32_t comparative = (uint32_t)std::strcmp(string_out, string_t);
+      uint32_t comparative_2 = (uint32_t)std::strcmp(string_out_2, emptystring_t);
 
       EXPECT_EQ(char_out, char_t);
       EXPECT_EQ(octect_out, octet_t);
@@ -1719,9 +1674,9 @@ TEST(nanoCDRDynamicTests, All)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_array_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_array_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_array_out[i]);
@@ -1789,9 +1744,9 @@ TEST(nanoCDRDynamicTests, All)
 
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_seq_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_seq_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_seq_out[i]);
@@ -1831,21 +1786,19 @@ TEST(nanoCDRDynamicTests, All)
       free(longdouble_seq_out);
     }
   }
-
-  destroyBuffer();
 }
 
-TEST(nanoCDRDynamicTests, AllEndianness)
+TEST(nanoCDRTests, AllEndianness)
 {
   //SIMPLE
   char char_out;
   signed char octect_out;
-  short short_out;
-  unsigned short ushort_out;
-  int long_out;
-  unsigned int ulong_out;
-  long longlong_out;
-  unsigned long ulonglong_out;
+  int16_t short_out;
+  uint16_t ushort_out;
+  int32_t long_out;
+  uint32_t ulong_out;
+  int64_t longlong_out;
+  uint64_t ulonglong_out;
   long long longlonglong_out;
   unsigned long long ulonglonglong_out;
   float float_out;
@@ -1855,15 +1808,15 @@ TEST(nanoCDRDynamicTests, AllEndianness)
   char * string_out_2;
 
   //ARRAYS
-  int i;
+  int32_t i;
   char * char_array_out;
   unsigned char * uchar_array_out;
-  short * short_array_out;
-  unsigned short * ushort_array_out;
-  int * int_array_out;
-  unsigned int * uint_array_out;
-  long * long_array_out;
-  unsigned long * ulong_array_out;
+  int16_t * short_array_out;
+  uint16_t * ushort_array_out;
+  int32_t * int_array_out;
+  uint32_t * uint_array_out;
+  int64_t * long_array_out;
+  uint64_t * ulong_array_out;
   long long * longlong_array_out;
   unsigned long long * ulonglong_array_out;
   float * float_array_out;
@@ -1873,160 +1826,161 @@ TEST(nanoCDRDynamicTests, AllEndianness)
 
   //SEQUENCES
   char * char_seq_out;
-  unsigned int char_out_size;
+  uint32_t char_out_size;
   unsigned char * uchar_seq_out;
-  unsigned int uchar_out_size;
-  short * short_seq_out;
-  unsigned int short_out_size;
-  unsigned short * ushort_seq_out;
-  unsigned int ushort_out_size;
-  int * int_seq_out;
-  unsigned int int_out_size;
-  unsigned int * uint_seq_out;
-  unsigned int uint_out_size;
-  long * long_seq_out;
-  unsigned int long_out_size;
-  unsigned long * ulong_seq_out;
-  unsigned int ulong_out_size;
+  uint32_t uchar_out_size;
+  int16_t * short_seq_out;
+  uint32_t short_out_size;
+  uint16_t * ushort_seq_out;
+  uint32_t ushort_out_size;
+  int32_t * int_seq_out;
+  uint32_t int_out_size;
+  uint32_t * uint_seq_out;
+  uint32_t uint_out_size;
+  int64_t * long_seq_out;
+  uint32_t long_out_size;
+  uint64_t * ulong_seq_out;
+  uint32_t ulong_out_size;
   long long * longlong_seq_out;
-  unsigned int longlong_out_size;
+  uint32_t longlong_out_size;
   unsigned long long * ulonglong_seq_out;
-  unsigned int ulonglong_out_size;
+  uint32_t ulonglong_out_size;
   float * float_seq_out;
-  unsigned int float_out_size;
+  uint32_t float_out_size;
   double * double_seq_out;
-  unsigned int double_out_size;
+  uint32_t double_out_size;
   long double * longdouble_seq_out;
-  unsigned int longdouble_out_size;
+  uint32_t longdouble_out_size;
   char ** string_seq_out;
-  unsigned int string_out_size;
-
+  uint32_t string_out_size;
 
 
   // Check good case.
-  newDynamicBuffer();
+  struct nanoBuffer * nanoCDR = NULL;
+  // Check good case.
+  newDynamicBuffer(&nanoCDR);
 
-  const unsigned int length = (unsigned int)std::strlen(string_t);
-  unsigned int length_out;
+  const uint32_t length = (uint32_t)std::strlen(string_t);
+  uint32_t length_out;
 
-  short result = 0;
+  int16_t result = 0;
 
-  const unsigned int length_2 = (unsigned int)std::strlen(emptystring_t);
-  unsigned int length_out_2;
+  const uint32_t length_2 = (uint32_t)std::strlen(emptystring_t);
+  uint32_t length_out_2;
 
   // Serialization.
-  result += serializeChar(char_t);
-  result += serializeSignedChar(octet_t);
-  result += serializeShortEndianness(short_t, endianness);
-  result += serializeUnsignedShortEndianness(ushort_t, endianness);
-  result += serializeIntEndianness(long_t, endianness);
-  result += serializeUnsignedIntEndianness(ulong_t, endianness);
-  result += serializeLongEndianness(longlong_t, endianness);
-  result += serializeUnsignedLongEndianness(ulonglong_t, endianness);
-  result += serializeLongLongEndianness(longlonglong_t, endianness);
-  result += serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness);
-  result += serializeFloatEndianness(float_tt, endianness);
-  result += serializeDoubleEndianness(double_tt, endianness);
-  result += serializeLongDoubleEndianness(longdouble_t, endianness);
-  result += serializeStringEndianness(string_t, length, endianness);
-  result += serializeStringEndianness(emptystring_t, length_2, endianness);
+  result += serializeChar(char_t, nanoCDR);
+  result += serializeSignedChar(octet_t, nanoCDR);
+  result += serializeShortEndianness(short_t, endianness, nanoCDR);
+  result += serializeUnsignedShortEndianness(ushort_t, endianness, nanoCDR);
+  result += serializeIntEndianness(long_t, endianness, nanoCDR);
+  result += serializeUnsignedIntEndianness(ulong_t, endianness, nanoCDR);
+  result += serializeLongEndianness(longlong_t, endianness, nanoCDR);
+  result += serializeUnsignedLongEndianness(ulonglong_t, endianness, nanoCDR);
+  result += serializeLongLongEndianness(longlonglong_t, endianness, nanoCDR);
+  result += serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness, nanoCDR);
+  result += serializeFloatEndianness(float_tt, endianness, nanoCDR);
+  result += serializeDoubleEndianness(double_tt, endianness, nanoCDR);
+  result += serializeLongDoubleEndianness(longdouble_t, endianness, nanoCDR);
+  result += serializeStringEndianness(string_t, length, endianness, nanoCDR);
+  result += serializeStringEndianness(emptystring_t, length_2, endianness, nanoCDR);
 
-  result += serializeCharArray(char_array_t, 5); //5
-  result += serializeUnsignedCharArray(octet_array_t, 5); //5
-  result += serializeShortArrayEndianness(short_array_t, 5, endianness); //10
-  result += serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness); //10
-  result += serializeIntArrayEndianness(long_array_t, 5, endianness); //20
-  result += serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness); //20
+  result += serializeCharArray(char_array_t, 5, nanoCDR); //5
+  result += serializeUnsignedCharArray(octet_array_t, 5, nanoCDR); //5
+  result += serializeShortArrayEndianness(short_array_t, 5, endianness, nanoCDR); //10
+  result += serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness, nanoCDR); //10
+  result += serializeIntArrayEndianness(long_array_t, 5, endianness, nanoCDR); //20
+  result += serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness, nanoCDR); //20
 
-  result += serializeLongArrayEndianness(longlong_array_t, 5, endianness);
-  result += serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness);
-  result += serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness);
-  result += serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness);
+  result += serializeLongArrayEndianness(longlong_array_t, 5, endianness, nanoCDR);
+  result += serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness, nanoCDR);
+  result += serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness, nanoCDR);
+  result += serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness, nanoCDR);
 
-  result += serializeFloatArrayEndianness(float_array_t, 5, endianness); //20
-  result += serializeDoubleArrayEndianness(double_array_t, 5, endianness); //40
-  result += serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness);
-  result += serializeStringArrayEndianness(string_seq_t, 5, endianness);
+  result += serializeFloatArrayEndianness(float_array_t, 5, endianness, nanoCDR); //20
+  result += serializeDoubleArrayEndianness(double_array_t, 5, endianness, nanoCDR); //40
+  result += serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness, nanoCDR);
+  result += serializeStringArrayEndianness(string_seq_t, 5, endianness, nanoCDR);
 
-  result += serializeCharSequenceEndianness(char_seq_t, 5, endianness); //9
-  result += serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness); //9
-  result += serializeShortSequenceEndianness(short_seq_t, 5, endianness);//14
-  result += serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness);//14
-  result += serializeIntSequenceEndianness(long_seq_t, 5, endianness);//24
-  result += serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness);//24
+  result += serializeCharSequenceEndianness(char_seq_t, 5, endianness, nanoCDR); //9
+  result += serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness, nanoCDR); //9
+  result += serializeShortSequenceEndianness(short_seq_t, 5, endianness, nanoCDR);//14
+  result += serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness, nanoCDR);//14
+  result += serializeIntSequenceEndianness(long_seq_t, 5, endianness, nanoCDR);//24
+  result += serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness, nanoCDR);//24
 
-  result += serializeLongSequenceEndianness(longlong_seq_t, 5, endianness);
-  result += serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness);
-  result += serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness);
-  result += serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness);
+  result += serializeLongSequenceEndianness(longlong_seq_t, 5, endianness, nanoCDR);
+  result += serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness, nanoCDR);
+  result += serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness, nanoCDR);
+  result += serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness, nanoCDR);
 
-  result += serializeFloatSequenceEndianness(float_seq_t, 5, endianness);//24
-  result += serializeDoubleSequenceEndianness(double_seq_t, 5, endianness);//44
-  result += serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness);//44
-  result += serializeStringSequenceEndianness(string_seq_t, 5, endianness);
+  result += serializeFloatSequenceEndianness(float_seq_t, 5, endianness, nanoCDR);//24
+  result += serializeDoubleSequenceEndianness(double_seq_t, 5, endianness, nanoCDR);//44
+  result += serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness, nanoCDR);//44
+  result += serializeStringSequenceEndianness(string_seq_t, 5, endianness, nanoCDR);
 
-  //unsigned int serialized = getSerializedDataLength();
+  //uint32_t serialized = getSerializedDataLength();
   //EXPECT_EQ(serialized, 357);
   EXPECT_EQ(result, 0);
 
   if(result == 0){
   // Deseriazliation.
-    result += deserializeChar(&char_out);
-    result += deserializeSignedChar(&octect_out);
-    result += deserializeShortEndianness(&short_out, endianness);
-    result += deserializeUnsignedShortEndianness(&ushort_out, endianness);
-    result += deserializeIntEndianness(&long_out, endianness);
-    result += deserializeUnsignedIntEndianness(&ulong_out, endianness);
-    result += deserializeLongEndianness(&longlong_out, endianness);
-    result += deserializeUnsignedLongEndianness(&ulonglong_out, endianness);
-    result += deserializeLongLongEndianness(&longlonglong_out, endianness);
-    result += deserializeUnsignedLongLongEndianness(&ulonglonglong_out, endianness);
-    result += deserializeFloatEndianness(&float_out, endianness);
-    result += deserializeDoubleEndianness(&double_out, endianness);
-    result += deserializeLongDoubleEndianness(&longdouble_out, endianness);
-    result += deserializeStringEndianness(&string_out, &length_out, endianness);
-    result += deserializeStringEndianness(&string_out_2, &length_out_2, endianness);
+    result += deserializeChar(&char_out, nanoCDR);
+    result += deserializeSignedChar(&octect_out, nanoCDR);
+    result += deserializeShortEndianness(&short_out, endianness, nanoCDR);
+    result += deserializeUnsignedShortEndianness(&ushort_out, endianness, nanoCDR);
+    result += deserializeIntEndianness(&long_out, endianness, nanoCDR);
+    result += deserializeUnsignedIntEndianness(&ulong_out, endianness, nanoCDR);
+    result += deserializeLongEndianness(&longlong_out, endianness, nanoCDR);
+    result += deserializeUnsignedLongEndianness(&ulonglong_out, endianness, nanoCDR);
+    result += deserializeLongLongEndianness(&longlonglong_out, endianness, nanoCDR);
+    result += deserializeUnsignedLongLongEndianness(&ulonglonglong_out, endianness, nanoCDR);
+    result += deserializeFloatEndianness(&float_out, endianness, nanoCDR);
+    result += deserializeDoubleEndianness(&double_out, endianness, nanoCDR);
+    result += deserializeLongDoubleEndianness(&longdouble_out, endianness, nanoCDR);
+    result += deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDR);
+    result += deserializeStringEndianness(&string_out_2, &length_out_2, endianness, nanoCDR);
 
-    result += deserializeCharArray(&char_array_out, 5);
-    result += deserializeUnsignedCharArray(&uchar_array_out, 5);
-    result += deserializeShortArrayEndianness(&short_array_out, 5, endianness);
-    result += deserializeUnsignedShortArrayEndianness(&ushort_array_out, 5, endianness);
-    result += deserializeIntArrayEndianness(&int_array_out, 5, endianness);
-    result += deserializeUnsignedIntArrayEndianness(&uint_array_out, 5, endianness);
+    result += deserializeCharArray(&char_array_out, 5, nanoCDR);
+    result += deserializeUnsignedCharArray(&uchar_array_out, 5, nanoCDR);
+    result += deserializeShortArrayEndianness(&short_array_out, 5, endianness, nanoCDR);
+    result += deserializeUnsignedShortArrayEndianness(&ushort_array_out, 5, endianness, nanoCDR);
+    result += deserializeIntArrayEndianness(&int_array_out, 5, endianness, nanoCDR);
+    result += deserializeUnsignedIntArrayEndianness(&uint_array_out, 5, endianness, nanoCDR);
 
-    result += deserializeLongArrayEndianness(&long_array_out, 5, endianness);
-    result += deserializeUnsignedLongArrayEndianness(&ulong_array_out, 5, endianness);
-    result += deserializeLongLongArrayEndianness(&longlong_array_out, 5, endianness);
-    result += deserializeUnsignedLongLongArrayEndianness(&ulonglong_array_out, 5, endianness);
+    result += deserializeLongArrayEndianness(&long_array_out, 5, endianness, nanoCDR);
+    result += deserializeUnsignedLongArrayEndianness(&ulong_array_out, 5, endianness, nanoCDR);
+    result += deserializeLongLongArrayEndianness(&longlong_array_out, 5, endianness, nanoCDR);
+    result += deserializeUnsignedLongLongArrayEndianness(&ulonglong_array_out, 5, endianness, nanoCDR);
 
-    result += deserializeFloatArrayEndianness(&float_array_out, 5, endianness);
-    result += deserializeDoubleArrayEndianness(&double_array_out, 5, endianness);
-    result += deserializeLongDoubleArrayEndianness(&longdouble_array_out, 5, endianness);
-    result += deserializeStringArrayEndianness(&string_array_out, 5, endianness);
+    result += deserializeFloatArrayEndianness(&float_array_out, 5, endianness, nanoCDR);
+    result += deserializeDoubleArrayEndianness(&double_array_out, 5, endianness, nanoCDR);
+    result += deserializeLongDoubleArrayEndianness(&longdouble_array_out, 5, endianness, nanoCDR);
+    result += deserializeStringArrayEndianness(&string_array_out, 5, endianness, nanoCDR);
 
-    result += deserializeCharSequenceEndianness(&char_seq_out, &char_out_size, endianness);
-    result += deserializeUnsignedCharSequenceEndianness(&uchar_seq_out, &uchar_out_size, endianness);
-    result += deserializeShortSequenceEndianness(&short_seq_out, &short_out_size, endianness);
-    result += deserializeUnsignedShortSequenceEndianness(&ushort_seq_out, &ushort_out_size, endianness);
-    result += deserializeIntSequenceEndianness(&int_seq_out, &int_out_size, endianness);
-    result += deserializeUnsignedIntSequenceEndianness(&uint_seq_out, &uint_out_size, endianness);
+    result += deserializeCharSequenceEndianness(&char_seq_out, &char_out_size, endianness, nanoCDR);
+    result += deserializeUnsignedCharSequenceEndianness(&uchar_seq_out, &uchar_out_size, endianness, nanoCDR);
+    result += deserializeShortSequenceEndianness(&short_seq_out, &short_out_size, endianness, nanoCDR);
+    result += deserializeUnsignedShortSequenceEndianness(&ushort_seq_out, &ushort_out_size, endianness, nanoCDR);
+    result += deserializeIntSequenceEndianness(&int_seq_out, &int_out_size, endianness, nanoCDR);
+    result += deserializeUnsignedIntSequenceEndianness(&uint_seq_out, &uint_out_size, endianness, nanoCDR);
 
-    result += deserializeLongSequenceEndianness(&long_seq_out, &long_out_size, endianness);
-    result += deserializeUnsignedLongSequenceEndianness(&ulong_seq_out, &ulong_out_size, endianness);
-    result += deserializeLongLongSequenceEndianness(&longlong_seq_out, &longlong_out_size, endianness);
-    result += deserializeUnsignedLongLongSequenceEndianness(&ulonglong_seq_out, &ulonglong_out_size, endianness);
+    result += deserializeLongSequenceEndianness(&long_seq_out, &long_out_size, endianness, nanoCDR);
+    result += deserializeUnsignedLongSequenceEndianness(&ulong_seq_out, &ulong_out_size, endianness, nanoCDR);
+    result += deserializeLongLongSequenceEndianness(&longlong_seq_out, &longlong_out_size, endianness, nanoCDR);
+    result += deserializeUnsignedLongLongSequenceEndianness(&ulonglong_seq_out, &ulonglong_out_size, endianness, nanoCDR);
 
-    result += deserializeFloatSequenceEndianness(&float_seq_out, &float_out_size, endianness);
-    result += deserializeDoubleSequenceEndianness(&double_seq_out, &double_out_size, endianness);
-    result += deserializeLongDoubleSequenceEndianness(&longdouble_seq_out, &longdouble_out_size, endianness);
-    result += deserializeStringSequenceEndianness(&string_seq_out, &string_out_size, endianness);
+    result += deserializeFloatSequenceEndianness(&float_seq_out, &float_out_size, endianness, nanoCDR);
+    result += deserializeDoubleSequenceEndianness(&double_seq_out, &double_out_size, endianness, nanoCDR);
+    result += deserializeLongDoubleSequenceEndianness(&longdouble_seq_out, &longdouble_out_size, endianness, nanoCDR);
+    result += deserializeStringSequenceEndianness(&string_seq_out, &string_out_size, endianness, nanoCDR);
 
     EXPECT_EQ(result, 0);
 
     if(result == 0)
     {
-      unsigned int comparative = std::strcmp(string_out, string_t);
-      unsigned int comparative_2 = std::strcmp(string_out_2, emptystring_t);
+      uint32_t comparative = (uint32_t)std::strcmp(string_out, string_t);
+      uint32_t comparative_2 = (uint32_t)std::strcmp(string_out_2, emptystring_t);
 
       EXPECT_EQ(char_out, char_t);
       EXPECT_EQ(octect_out, octet_t);
@@ -2089,9 +2043,9 @@ TEST(nanoCDRDynamicTests, AllEndianness)
       }
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_array_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_array_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_array_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_array_out[i]);
@@ -2159,9 +2113,9 @@ TEST(nanoCDRDynamicTests, AllEndianness)
 
       for(i = 0; i < 5; i++)
       {
-        int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-        int length_out_aux = (unsigned int)std::strlen(string_seq_out[i]);
-        int comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
+        int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+        int32_t length_out_aux = (uint32_t)std::strlen(string_seq_out[i]);
+        int32_t comparative_aux = std::strcmp(string_seq_t[i], string_seq_out[i]);
         EXPECT_EQ(length_in_aux, length_out_aux);
         EXPECT_EQ(comparative_aux, 0);
         free(string_seq_out[i]);
@@ -2201,920 +2155,878 @@ TEST(nanoCDRDynamicTests, AllEndianness)
       free(longdouble_seq_out);
     }
   }
-
-  destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, Short)
+TEST(nanoCDRBasicEndiannessTests, Short)
 {
-    short short_out;
-
+    int16_t short_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeShortEndianness(short_t, endianness);
+    serializeShortEndianness(short_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeShortEndianness(&short_out, endianness);
+    deserializeShortEndianness(&short_out, endianness, nanoCDR);
 
     EXPECT_EQ(short_out, short_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, UnsignedShort)
+TEST(nanoCDRBasicEndiannessTests, UnsignedShort)
 {
-    unsigned short ushort_out;
-
+    uint16_t ushort_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedShortEndianness(ushort_t, endianness);
+    serializeUnsignedShortEndianness(ushort_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedShortEndianness(&ushort_out, endianness);
+    deserializeUnsignedShortEndianness(&ushort_out, endianness, nanoCDR);
 
     EXPECT_EQ(ushort_out, ushort_t);
-
-    destroyBuffer();
 }
 
 
-TEST(nanoCDRDynamicBasicEndiannessTests, Int)
+TEST(nanoCDRBasicEndiannessTests, Int)
 {
-    int long_out;
-
+    int32_t long_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeIntEndianness(long_t, endianness);
+    serializeIntEndianness(long_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeIntEndianness(&long_out, endianness);
+    deserializeIntEndianness(&long_out, endianness, nanoCDR);
 
     EXPECT_EQ(long_out, long_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, UnsignedInt)
+TEST(nanoCDRBasicEndiannessTests, UnsignedInt)
 {
-    unsigned int ulong_out;
-
+    uint32_t ulong_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedIntEndianness(ulong_t, endianness);
+    serializeUnsignedIntEndianness(ulong_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedIntEndianness(&ulong_out, endianness);
+    deserializeUnsignedIntEndianness(&ulong_out, endianness, nanoCDR);
 
     EXPECT_EQ(ulong_out, ulong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, Long)
+TEST(nanoCDRBasicEndiannessTests, Long)
 {
-    long long_out;
-
+    int64_t long_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongEndianness(longlong_t, endianness);
+    serializeLongEndianness(longlong_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongEndianness(&long_out, endianness);
+    deserializeLongEndianness(&long_out, endianness, nanoCDR);
 
     EXPECT_EQ(long_out, longlong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, uLong)
+TEST(nanoCDRBasicEndiannessTests, uLong)
 {
-    unsigned long ulong_out;
-
+    uint64_t ulong_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongEndianness(ulonglong_t, endianness);
+    serializeUnsignedLongEndianness(ulonglong_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongEndianness(&ulong_out, endianness);
+    deserializeUnsignedLongEndianness(&ulong_out, endianness, nanoCDR);
 
     EXPECT_EQ(ulong_out, ulonglong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, LongLong)
+TEST(nanoCDRBasicEndiannessTests, LongLong)
 {
     long long longlong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongLongEndianness(longlonglong_t, endianness);
+    serializeLongLongEndianness(longlonglong_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongLongEndianness(&longlong_out, endianness);
+    deserializeLongLongEndianness(&longlong_out, endianness, nanoCDR);
 
     EXPECT_EQ(longlong_out, longlonglong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, uLongLong)
+TEST(nanoCDRBasicEndiannessTests, uLongLong)
 {
     unsigned long long ulonglong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness);
+    serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongLongEndianness(&ulonglong_out, endianness);
+    deserializeUnsignedLongLongEndianness(&ulonglong_out, endianness, nanoCDR);
 
     EXPECT_EQ(ulonglong_out, ulonglonglong_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, Float)
+TEST(nanoCDRBasicEndiannessTests, Float)
 {
     float float_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeFloatEndianness(float_tt, endianness);
+    serializeFloatEndianness(float_tt, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeFloatEndianness(&float_out, endianness);
+    deserializeFloatEndianness(&float_out, endianness, nanoCDR);
 
     EXPECT_EQ(float_out, float_tt);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, Double)
+TEST(nanoCDRBasicEndiannessTests, Double)
 {
     double double_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeDoubleEndianness(double_tt, endianness);
+    serializeDoubleEndianness(double_tt, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeDoubleEndianness(&double_out, endianness);
+    deserializeDoubleEndianness(&double_out, endianness, nanoCDR);
 
     EXPECT_EQ(double_out, double_tt);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, LongDouble)
+TEST(nanoCDRBasicEndiannessTests, LongDouble)
 {
     long double longdouble_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongDoubleEndianness(longdouble_t, endianness);
+    serializeLongDoubleEndianness(longdouble_t, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongDoubleEndianness(&longdouble_out, endianness);
+    deserializeLongDoubleEndianness(&longdouble_out, endianness, nanoCDR);
 
     EXPECT_EQ(longdouble_out, longdouble_t);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, String)
+TEST(nanoCDRBasicEndiannessTests, String)
 {
     char * string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
-    const unsigned int length = (unsigned int)std::strlen(string_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(string_t);
+    uint32_t length_out;
 
     // Serialization.
-    serializeStringEndianness(string_t, length, endianness);
+    serializeStringEndianness(string_t, length, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeStringEndianness(&string_out, &length_out, endianness);
+    deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDR);
 
-    unsigned int comparative = std::strcmp(string_out, string_t);
+    uint32_t comparative = std::strcmp(string_out, string_t);
 
     EXPECT_EQ(comparative, 0);
     EXPECT_EQ(length, length_out);
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicBasicEndiannessTests, EmptyString)
+TEST(nanoCDRBasicEndiannessTests, EmptyString)
 {
     char * string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
-    const unsigned int length = (unsigned int)std::strlen(emptystring_t);
-    unsigned int length_out;
+    const uint32_t length = (uint32_t)std::strlen(emptystring_t);
+    uint32_t length_out;
 
     // Serialization.
-    serializeStringEndianness(emptystring_t, length, endianness);
+    serializeStringEndianness(emptystring_t, length, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeStringEndianness(&string_out, &length_out, endianness);
+    deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDR);
 
-    unsigned int comparative = std::strcmp(string_out, emptystring_t);
+    uint32_t comparative = std::strcmp(string_out, emptystring_t);
 
     EXPECT_EQ(comparative, 0);
     EXPECT_EQ(length, length_out);
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, ShortArray)
+TEST(nanoCDRArrayEndiannessTests, ShortArray)
 {
-    short * short_out;
-
+    int16_t * short_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeShortArrayEndianness(short_array_t, 5, endianness);
+    serializeShortArrayEndianness(short_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeShortArrayEndianness(&short_out, 5, endianness);
+    deserializeShortArrayEndianness(&short_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(short_array_t[i], short_out[i]);
     }
     free(short_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, UnsignedShortArray)
+TEST(nanoCDRArrayEndiannessTests, UnsignedShortArray)
 {
-    unsigned short * ushort_out;
-
+    uint16_t * ushort_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness);
+    serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness);
+    deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ushort_array_t[i], ushort_out[i]);
     }
     free(ushort_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, IntArray)
+TEST(nanoCDRArrayEndiannessTests, IntArray)
 {
-    int * int_out;
-
+    int32_t * int_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeIntArrayEndianness(long_array_t, 5, endianness);
+    serializeIntArrayEndianness(long_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeIntArrayEndianness(&int_out, 5, endianness);
+    deserializeIntArrayEndianness(&int_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(long_array_t[i], int_out[i]);
     }
     free(int_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, UnsignedIntArray)
+TEST(nanoCDRArrayEndiannessTests, UnsignedIntArray)
 {
-    unsigned int * uint_out;
-
+    uint32_t * uint_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness);
+    serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness);
+    deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulong_array_t[i], uint_out[i]);
     }
     free(uint_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, LongArray)
+TEST(nanoCDRArrayEndiannessTests, LongArray)
 {
-    long * long_out;
-
+    int64_t * long_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongArrayEndianness(longlong_array_t, 5, endianness);
+    serializeLongArrayEndianness(longlong_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongArrayEndianness(&long_out, 5, endianness);
+    deserializeLongArrayEndianness(&long_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlong_array_t[i], long_out[i]);
     }
     free(long_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, ULongArray)
+TEST(nanoCDRArrayEndiannessTests, ULongArray)
 {
-    unsigned long * ulong_out;
-
+    uint64_t * ulong_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness);
+    serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness);
+    deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglong_array_t[i], ulong_out[i]);
     }
     free(ulong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, LongLongArray)
+TEST(nanoCDRArrayEndiannessTests, LongLongArray)
 {
     long long * longlong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness);
+    serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongLongArrayEndianness(&longlong_out, 5, endianness);
+    deserializeLongLongArrayEndianness(&longlong_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlonglong_array_t[i], longlong_out[i]);
     }
     free(longlong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, ULongLongArray)
+TEST(nanoCDRArrayEndiannessTests, ULongLongArray)
 {
     unsigned long long * ulonglong_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness);
+    serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness);
+    deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglonglong_array_t[i], ulonglong_out[i]);
     }
     free(ulonglong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, FloatArray)
+TEST(nanoCDRArrayEndiannessTests, FloatArray)
 {
     float * float_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeFloatArrayEndianness(float_array_t, 5, endianness);
+    serializeFloatArrayEndianness(float_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeFloatArrayEndianness(&float_out, 5, endianness);
+    deserializeFloatArrayEndianness(&float_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(float_array_t[i], float_out[i]);
     }
     free(float_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, DoubleArray)
+TEST(nanoCDRArrayEndiannessTests, DoubleArray)
 {
     double * double_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeDoubleArrayEndianness(double_array_t, 5, endianness);
+    serializeDoubleArrayEndianness(double_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeDoubleArrayEndianness(&double_out, 5, endianness);
+    deserializeDoubleArrayEndianness(&double_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(double_array_t[i], double_out[i]);
     }
 
     free(double_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, LongDoubleArray)
+TEST(nanoCDRArrayEndiannessTests, LongDoubleArray)
 {
     long double * longdouble_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness);
+    serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness);
+    deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longdouble_array_t[i], longdouble_out[i]);
     }
     free(longdouble_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicArrayEndiannessTests, StringArray)
+TEST(nanoCDRArrayEndiannessTests, StringArray)
 {
     char ** string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeStringArrayEndianness(string_seq_t, 5, endianness);
+    serializeStringArrayEndianness(string_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeStringArrayEndianness(&string_out, 5, endianness);
+    deserializeStringArrayEndianness(&string_out, 5, endianness, nanoCDR);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
-      int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-      int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-      int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+      int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+      int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+      int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
       EXPECT_EQ(length_in_aux, length_out_aux);
       EXPECT_EQ(comparative_aux, 0);
       free(string_out[i]);
     }
     free(string_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, CharSequence)
+TEST(nanoCDRSequencesEndiannessTests, CharSequence)
 {
     char * char_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeCharSequenceEndianness(char_seq_t, 5, endianness);
+    serializeCharSequenceEndianness(char_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeCharSequenceEndianness(&char_out, &size_out, endianness);
+    deserializeCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(char_seq_t[i], char_out[i]);
     }
 
     free(char_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, UnsignedCharSequence)
+TEST(nanoCDRSequencesEndiannessTests, UnsignedCharSequence)
 {
     unsigned char * char_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness);
+    serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedCharSequenceEndianness(&char_out, &size_out, endianness);
+    deserializeUnsignedCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(octet_seq_t[i], char_out[i]);
     }
 
     free(char_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, ShortSequence)
+TEST(nanoCDRSequencesEndiannessTests, ShortSequence)
 {
-    short * short_out;
-    unsigned int size_out;
-
+    int16_t * short_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeShortSequenceEndianness(short_seq_t, 5, endianness);
+    serializeShortSequenceEndianness(short_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeShortSequenceEndianness(&short_out, &size_out, endianness);
+    deserializeShortSequenceEndianness(&short_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(short_seq_t[i], short_out[i]);
     }
 
     free(short_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, UnsignedShortSequence)
+TEST(nanoCDRSequencesEndiannessTests, UnsignedShortSequence)
 {
-    unsigned short * ushort_out;
-    unsigned int size_out;
-
+    uint16_t * ushort_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness);
+    serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedShortSequenceEndianness(&ushort_out, &size_out, endianness);
+    deserializeUnsignedShortSequenceEndianness(&ushort_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ushort_seq_t[i], ushort_out[i]);
     }
 
     free(ushort_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, IntSequence)
+TEST(nanoCDRSequencesEndiannessTests, IntSequence)
 {
-    int * int_out;
-    unsigned int size_out;
-
+    int32_t * int_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeIntSequenceEndianness(long_seq_t, 5, endianness);
+    serializeIntSequenceEndianness(long_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeIntSequenceEndianness(&int_out, &size_out, endianness);
+    deserializeIntSequenceEndianness(&int_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(long_seq_t[i], int_out[i]);
     }
 
     free(int_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, UnsignedIntSequence)
+TEST(nanoCDRSequencesEndiannessTests, UnsignedIntSequence)
 {
-    unsigned int * uint_out;
-    unsigned int size_out;
-
+    uint32_t * uint_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness);
+    serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedIntSequenceEndianness(&uint_out, &size_out, endianness);
+    deserializeUnsignedIntSequenceEndianness(&uint_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulong_seq_t[i], uint_out[i]);
     }
 
     free(uint_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, LongSequence)
+TEST(nanoCDRSequencesEndiannessTests, LongSequence)
 {
-    long * long_out;
-    unsigned int size_out;
-
+    int64_t * long_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongSequenceEndianness(longlong_seq_t, 5, endianness);
+    serializeLongSequenceEndianness(longlong_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongSequenceEndianness(&long_out, &size_out, endianness);
+    deserializeLongSequenceEndianness(&long_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlong_seq_t[i], long_out[i]);
     }
 
     free(long_out);
-
-    destroyBuffer();
 }
 
-TEST( nanoCDRDynamicDynamicSequencesEndiannessTests, ULongSequence)
+TEST(nanoCDRSequencesEndiannessTests, ULongSequence)
 {
-    unsigned long * ulong_out;
-    unsigned int size_out;
-
+    uint64_t * ulong_out;
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness);
+    serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongSequenceEndianness(&ulong_out, &size_out, endianness);
+    deserializeUnsignedLongSequenceEndianness(&ulong_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglong_seq_t[i], ulong_out[i]);
     }
 
     free(ulong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicDynamicSequencesEndiannessTests, LongLongSequence)
+TEST(nanoCDRSequencesEndiannessTests, LongLongSequence)
 {
     long long * longlong_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness);
+    serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongLongSequenceEndianness(&longlong_out, &size_out, endianness);
+    deserializeLongLongSequenceEndianness(&longlong_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longlonglong_seq_t[i], longlong_out[i]);
     }
 
     free(longlong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, ULongLongSequence)
+TEST(nanoCDRSequencesEndiannessTests, ULongLongSequence)
 {
     unsigned long long * ulonglong_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness);
+    serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeUnsignedLongLongSequenceEndianness(&ulonglong_out, &size_out, endianness);
+    deserializeUnsignedLongLongSequenceEndianness(&ulonglong_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(ulonglonglong_seq_t[i], ulonglong_out[i]);
     }
 
     free(ulonglong_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, FloatSequence)
+TEST(nanoCDRSequencesEndiannessTests, FloatSequence)
 {
     float * float_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeFloatSequenceEndianness(float_seq_t, 5, endianness);
+    serializeFloatSequenceEndianness(float_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeFloatSequenceEndianness(&float_out, &size_out, endianness);
+    deserializeFloatSequenceEndianness(&float_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(float_seq_t[i], float_out[i]);
     }
 
     free(float_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, DoubleSequence)
+TEST(nanoCDRSequencesEndiannessTests, DoubleSequence)
 {
     double * double_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeDoubleSequenceEndianness(double_seq_t, 5, endianness);
+    serializeDoubleSequenceEndianness(double_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeDoubleSequenceEndianness(&double_out, &size_out, endianness);
+    deserializeDoubleSequenceEndianness(&double_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(double_seq_t[i], double_out[i]);
     }
 
     free(double_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, LongDoubleSequence)
+TEST(nanoCDRSequencesEndiannessTests, LongDoubleSequence)
 {
     long double * longdouble_out;
-    unsigned int size_out;
-
+    uint32_t size_out;
     // Check good case.
-    newDynamicBuffer();
-
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
     // Serialization.
-    serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness);
+    serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness, nanoCDR);
 
     // Deseriazliation.
-    deserializeLongDoubleSequenceEndianness(&longdouble_out, &size_out, endianness);
+    deserializeLongDoubleSequenceEndianness(&longdouble_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
       EXPECT_EQ(longdouble_seq_t[i], longdouble_out[i]);
     }
 
     free(longdouble_out);
-
-    destroyBuffer();
 }
 
-TEST(nanoCDRDynamicSequencesEndiannessTests, StringSequence)
+TEST(nanoCDRSequencesEndiannessTests, StringSequence)
 {
     char ** string_out;
-
     // Check good case.
-    newDynamicBuffer();
+    struct nanoBuffer * nanoCDR = NULL;
+    // Check good case.
+    newDynamicBuffer(&nanoCDR);
 
     // Serialization.
-    serializeStringSequenceEndianness(string_seq_t, 5, endianness);
+    serializeStringSequenceEndianness(string_seq_t, 5, endianness, nanoCDR);
 
-    unsigned int size_out;
+    uint32_t size_out;
 
     // Deseriazliation.
-    deserializeStringSequenceEndianness(&string_out, &size_out, endianness);
+    deserializeStringSequenceEndianness(&string_out, &size_out, endianness, nanoCDR);
 
     EXPECT_EQ(size_out, 5);
 
-    int i;
+    int32_t i;
     for(i = 0; i < 5; i++)
     {
-      int length_in_aux = (unsigned int)std::strlen(string_seq_t[i]);
-      int length_out_aux = (unsigned int)std::strlen(string_out[i]);
-      int comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
+      int32_t length_in_aux = (uint32_t)std::strlen(string_seq_t[i]);
+      int32_t length_out_aux = (uint32_t)std::strlen(string_out[i]);
+      int32_t comparative_aux = std::strcmp(string_seq_t[i], string_out[i]);
       EXPECT_EQ(length_in_aux, length_out_aux);
       EXPECT_EQ(comparative_aux, 0);
       free(string_out[i]);
     }
     free(string_out);
-
-    destroyBuffer();
 }
