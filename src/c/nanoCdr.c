@@ -7,16 +7,15 @@
 
 #include <stdio.h>
 
-void newDynamicBuffer(struct nanoBuffer ** m_cdrBuffer)
-{
-	*m_cdrBuffer = malloc(sizeof(nanoBuffer));
+#define BUFFER_INITIAL_LENGTH 200
 
-	struct nanoBuffer cdrBuffer;
+void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer){
+	*m_cdrBuffer = malloc(sizeof(nanoCDR));
 
-	cdrBuffer.m_bufferSize = 0;
-	cdrBuffer.m_internalBuffer = '1';
+	struct nanoCDR cdrBuffer;
+
+	cdrBuffer.m_nanoBuffer = nanoBuffer;
 	cdrBuffer.m_iterator = 0;
- 	cdrBuffer.m_serializedBuffer = 0;
 
 	int32_t local_i = 1;
 	char *local_c = (char*)&local_i;
@@ -31,37 +30,39 @@ void newDynamicBuffer(struct nanoBuffer ** m_cdrBuffer)
 	}
 	cdrBuffer.m_swapBytes = FALSE;
 
-	memcpy(*m_cdrBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
+	cdrBuffer.m_currentPosition = nanoBuffer->m_buffer;
+	cdrBuffer.m_alignPosition = nanoBuffer->m_buffer;
+	cdrBuffer.m_buffer = nanoBuffer->m_buffer;
+
+	memcpy(*m_cdrBuffer, (char *)&cdrBuffer, sizeof(nanoCDR));
+}
+
+void newDynamicBuffer(struct nanoBuffer ** m_nanoBuffer)
+{
+	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
+
+	struct nanoBuffer cdrBuffer;
+
+	cdrBuffer.m_bufferSize = BUFFER_INITIAL_LENGTH;
+	cdrBuffer.m_internalBuffer = '1';
+ 	cdrBuffer.m_serializedBuffer = 0;
+	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
+
+	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
 }
 
 
-void newStaticBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_cdrBuffer)
+void newStaticBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer)
 {
 	struct nanoBuffer cdrBuffer;
 
 	cdrBuffer.m_bufferSize = bufferSize;
 	cdrBuffer.m_internalBuffer = '0';
-	cdrBuffer.m_iterator = 0;
 	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_currentPosition = buffer;
-	cdrBuffer.m_alignPosition = buffer;
 
-	int32_t local_i = 1;
-	char *local_c = (char*)&local_i;
-	char endia = (*local_c);
-	if(endia == '1')
-	{
-		cdrBuffer.m_endianness = LITTLE_ENDIANNESS;
-	}
-	else
-	{
-		cdrBuffer.m_endianness = BIG_ENDIANNESS;
-	}
-	cdrBuffer.m_swapBytes = FALSE;
-
-	*m_cdrBuffer = malloc(sizeof(nanoBuffer));
-	memcpy(*m_cdrBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
+	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
+	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
 }
 
 
@@ -84,38 +85,41 @@ void freeCdr (void ** point_t)
 	free(*point_t);
 }
 
-void resetAlignment(struct nanoBuffer * m_cdrBuffer)
+
+
+void resetAlignment(struct nanoCDR * m_cdrBuffer)
 {
 		m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_currentPosition;
 }
 
-uint32_t alignment(uint32_t dataSize, struct nanoBuffer * m_cdrBuffer)
+uint32_t alignment(uint32_t dataSize, struct nanoCDR * m_cdrBuffer)
 {
 	return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
 }
 
-void makeAlign(uint32_t align, struct nanoBuffer * m_cdrBuffer)
+void makeAlign(uint32_t align, struct nanoCDR * m_cdrBuffer)
 {
 	m_cdrBuffer->m_currentPosition += align;
-	m_cdrBuffer->m_serializedBuffer += align;
+	m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += align;
+	m_cdrBuffer->m_iterator += align;
 }
 
-uint32_t getSerializedDataLength(struct nanoBuffer * m_cdrBuffer)
+uint32_t getSerializedDataLength(struct nanoCDR * m_cdrBuffer)
 {
-	return m_cdrBuffer->m_serializedBuffer;
+	return m_cdrBuffer->m_nanoBuffer->m_serializedBuffer;
 }
 
-char * getBufferPointer(struct nanoBuffer * m_cdrBuffer)
+char * getBufferPointer(struct nanoCDR * m_cdrBuffer)
 {
-	return m_cdrBuffer->m_buffer;
+	return m_cdrBuffer->m_nanoBuffer->m_buffer;
 }
 
-char * getCurrentPosition(struct nanoBuffer * m_cdrBuffer)
+char * getCurrentPosition(struct nanoCDR * m_cdrBuffer)
 {
 		return m_cdrBuffer->m_currentPosition;
 }
 
-void changeEndianness (Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+void changeEndianness (Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
@@ -125,27 +129,53 @@ void changeEndianness (Endianness endianness, struct nanoBuffer * m_cdrBuffer)
 	}
 }
 
-int8_t resize(uint32_t  minSizeInc, struct nanoBuffer * m_cdrBuffer)
+void updateCurrentPosition(struct nanoCDR * m_cdrBuffer)
 {
-    if(m_cdrBuffer->m_internalBuffer == '1')
+	if(m_cdrBuffer->m_buffer != m_cdrBuffer->m_nanoBuffer->m_buffer)
+	{
+		m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+		m_cdrBuffer->m_buffer = m_cdrBuffer->m_nanoBuffer->m_buffer;
+		m_cdrBuffer->m_currentPosition += m_cdrBuffer->m_iterator;
+	}
+}
+
+int8_t resize(uint32_t  minSizeInc, struct nanoCDR * m_cdrBuffer)
+{
+    if(m_cdrBuffer->m_nanoBuffer->m_internalBuffer == '1')
     {
-        if(m_cdrBuffer->m_bufferSize == 0)
+        if(m_cdrBuffer->m_nanoBuffer->m_bufferSize == 0)
         {
-           	m_cdrBuffer->m_bufferSize = minSizeInc;
-						m_cdrBuffer->m_buffer = (char*)malloc(m_cdrBuffer->m_bufferSize);
-						m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_buffer;
-						m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_buffer;
+           	m_cdrBuffer->m_nanoBuffer->m_bufferSize = BUFFER_INITIAL_LENGTH;
+						m_cdrBuffer->m_nanoBuffer->m_buffer = (char*)malloc(m_cdrBuffer->m_nanoBuffer->m_bufferSize);
+						m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+						m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+						m_cdrBuffer->m_currentPosition += m_cdrBuffer->m_nanoBuffer->m_serializedBuffer;
 						return 0;
         }
         else
         {
-					uint32_t freeSpace = (uint32_t)(m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+					uint32_t freeSpace = (uint32_t)(m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 
 					if(freeSpace < minSizeInc)
 					{
-						int32_t sizeInc = minSizeInc - freeSpace;
-	          m_cdrBuffer->m_bufferSize += sizeInc;
-        	  m_cdrBuffer->m_buffer = (char*)realloc(m_cdrBuffer->m_buffer, m_cdrBuffer->m_bufferSize);
+						//int32_t sizeInc = minSizeInc - freeSpace;
+						if(minSizeInc < BUFFER_INITIAL_LENGTH)
+						{
+							m_cdrBuffer->m_nanoBuffer->m_bufferSize += BUFFER_INITIAL_LENGTH;
+							m_cdrBuffer->m_nanoBuffer->m_buffer = (char*)realloc(m_cdrBuffer->m_nanoBuffer->m_buffer, m_cdrBuffer->m_nanoBuffer->m_bufferSize);
+							m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+							m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+							m_cdrBuffer->m_currentPosition += m_cdrBuffer->m_nanoBuffer->m_serializedBuffer;
+						}
+						else
+						{
+							m_cdrBuffer->m_nanoBuffer->m_bufferSize += minSizeInc;
+							m_cdrBuffer->m_nanoBuffer->m_buffer = (char*)realloc(m_cdrBuffer->m_nanoBuffer->m_buffer, m_cdrBuffer->m_nanoBuffer->m_bufferSize);
+							m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+							m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+							m_cdrBuffer->m_currentPosition += m_cdrBuffer->m_nanoBuffer->m_serializedBuffer;
+						}
+
             return 0;
 					}
         }
@@ -153,18 +183,20 @@ int8_t resize(uint32_t  minSizeInc, struct nanoBuffer * m_cdrBuffer)
     return -1;
 }
 
-void reset (struct nanoBuffer * m_cdrBuffer)
+void reset (struct nanoCDR * m_cdrBuffer)
 {
-	m_cdrBuffer->m_serializedBuffer = 0;
+	m_cdrBuffer->m_nanoBuffer->m_serializedBuffer = 0;
+	m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
+	m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
 }
 
-int8_t jump (uint16_t bytes, struct nanoBuffer * m_cdrBuffer)
+int8_t jump (uint16_t bytes, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	if(freeSpace > bytes || resize(bytes, m_cdrBuffer) == 0)
 	{
-		m_cdrBuffer->m_serializedBuffer += bytes;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += bytes;
 	}
 	else
 	{
@@ -174,12 +206,12 @@ int8_t jump (uint16_t bytes, struct nanoBuffer * m_cdrBuffer)
 }
 
 
-int8_t serializeChar (const char char_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeChar (const char char_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
 	size_t align = alignment(sizeof(char), m_cdrBuffer);
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(char) + align;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
@@ -190,8 +222,8 @@ int8_t serializeChar (const char char_t, struct nanoBuffer * m_cdrBuffer)
 		// Align.
 		makeAlign(align, m_cdrBuffer);
 
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&char_t, sizeof(char));
-		m_cdrBuffer->m_serializedBuffer += sizeof(char);
+		memcpy(m_cdrBuffer->m_currentPosition, (char *)&char_t, sizeof(char));
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += sizeof(char);
 		m_cdrBuffer->m_currentPosition += sizeof(char);
 
 	}
@@ -203,12 +235,12 @@ int8_t serializeChar (const char char_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeUnsignedChar (const unsigned char uchar_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedChar (const unsigned char uchar_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
 	size_t align = alignment(sizeof(char), m_cdrBuffer);
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(char) + align;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
@@ -219,8 +251,8 @@ int8_t serializeUnsignedChar (const unsigned char uchar_t, struct nanoBuffer * m
 		// Align.
 		makeAlign(align, m_cdrBuffer);
 
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&uchar_t, sizeof(char));
-		m_cdrBuffer->m_serializedBuffer += sizeof(char);
+		memcpy(m_cdrBuffer->m_currentPosition, (char *)&uchar_t, sizeof(char));
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += sizeof(char);
 		m_cdrBuffer->m_currentPosition += sizeof(char);
 	}
 	else
@@ -232,12 +264,12 @@ int8_t serializeUnsignedChar (const unsigned char uchar_t, struct nanoBuffer * m
 }
 
 
-int8_t serializeSignedChar (const signed char schar_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeSignedChar (const signed char schar_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
 	size_t align = alignment(sizeof(char), m_cdrBuffer);
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(char) + align;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
@@ -248,8 +280,8 @@ int8_t serializeSignedChar (const signed char schar_t, struct nanoBuffer * m_cdr
 		// Align.
 		makeAlign(align, m_cdrBuffer);
 
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&schar_t, sizeof(char));
-		m_cdrBuffer->m_serializedBuffer += sizeof(char);
+		memcpy(m_cdrBuffer->m_currentPosition, (char *)&schar_t, sizeof(char));
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += sizeof(char);
 		m_cdrBuffer->m_currentPosition += sizeof(char);
 	}
 	else
@@ -260,26 +292,22 @@ int8_t serializeSignedChar (const signed char schar_t, struct nanoBuffer * m_cdr
 	return result;
 }
 
-int8_t serializeString (const char * string_t, const uint32_t length, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeString (const char * string_t, const uint32_t length, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(length) + length + 1;
 
 	uint32_t align = alignment(sizeof(length), m_cdrBuffer);
-
-	//printf("Align %d\n", align);
 
 	if((resize(needed + align, m_cdrBuffer) == 0) || free >= (needed + align))
 	{
 		result = serializeUnsignedInt(length + 1, m_cdrBuffer);
 		if(result < 0) return result;
-
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, string_t, length + 1);
-		m_cdrBuffer->m_serializedBuffer += (length + 1);
+		memcpy(m_cdrBuffer->m_currentPosition, string_t, length + 1);
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += (length + 1);
 		m_cdrBuffer->m_currentPosition += (length + 1);
-
 		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
@@ -290,11 +318,11 @@ int8_t serializeString (const char * string_t, const uint32_t length, struct nan
 	return result;
 }
 
-int8_t serializeStringEndianness (const char * string_t, const uint32_t length, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeStringEndianness (const char * string_t, const uint32_t length, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(length) + length + 1;
 
 	if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
@@ -302,8 +330,8 @@ int8_t serializeStringEndianness (const char * string_t, const uint32_t length, 
 		result = serializeUnsignedIntEndianness(length + 1, endianness, m_cdrBuffer);
 		if(result < 0) return result;
 
-		memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, string_t, length + 1);
-		m_cdrBuffer->m_serializedBuffer += (length + 1);
+		memcpy(m_cdrBuffer->m_currentPosition, string_t, length + 1);
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += (length + 1);
 		m_cdrBuffer->m_currentPosition += (length + 1);
 
 		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
@@ -316,15 +344,44 @@ int8_t serializeStringEndianness (const char * string_t, const uint32_t length, 
 	return result;
 }
 
-int8_t deserializeChar(char * char_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeChar(char * char_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	if(unread >= 1)
+	if((unread - align) >= 1)
 	{
-		memcpy(char_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, 1);
+		makeAlign(align, m_cdrBuffer);
+
+		memcpy(char_t, m_cdrBuffer->m_currentPosition, 1);
+		m_cdrBuffer->m_iterator += 1;
+		m_cdrBuffer->m_currentPosition += 1;
+		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
+	}
+	else
+	{
+		result = -1;
+	}
+
+	return result;
+}
+
+int8_t deserializeUnsignedChar(unsigned char * uchar_t, struct nanoCDR * m_cdrBuffer)
+{
+	int8_t result = 0;
+	updateCurrentPosition(m_cdrBuffer);
+	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+
+	if((unread - align) >= 1)
+	{
+		makeAlign(align, m_cdrBuffer);
+
+		memcpy(uchar_t, m_cdrBuffer->m_currentPosition, 1);
+		m_cdrBuffer->m_currentPosition += 1;
 		m_cdrBuffer->m_iterator += 1;
 		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
@@ -336,16 +393,20 @@ int8_t deserializeChar(char * char_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeUnsignedChar(unsigned char * uchar_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeSignedChar(signed char * schar_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
-	if(unread >= 1)
+	if((unread - align) >= 1)
 	{
-		memcpy(uchar_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, 1);
+		makeAlign(align, m_cdrBuffer);
+		memcpy(schar_t, m_cdrBuffer->m_currentPosition, 1);
 		m_cdrBuffer->m_iterator += 1;
+		m_cdrBuffer->m_currentPosition += 1;
 		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 	}
 	else
@@ -356,48 +417,29 @@ int8_t deserializeUnsignedChar(unsigned char * uchar_t, struct nanoBuffer * m_cd
 	return result;
 }
 
-int8_t deserializeSignedChar(signed char * schar_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeString (char ** string, uint32_t * strlen, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-
-	if(unread >= 1)
-	{
-		memcpy(schar_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, 1);
-		m_cdrBuffer->m_iterator += 1;
-		m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
-	}
-	else
-	{
-		result = -1;
-	}
-
-	return result;
-}
-
-int8_t deserializeString (char ** string, uint32_t * strlen, struct nanoBuffer * m_cdrBuffer)
-{
-	int8_t result = 0;
-
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	size_t align = alignment(sizeof(int32_t), m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeInt = sizeof(int32_t);
 
-	if(unread >= sizeInt)
+	if((unread - align) >= sizeInt)
 	{
 		result = deserializeUnsignedInt(strlen, m_cdrBuffer);
-
 		if(result < 0) return -1;
 
-		unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+		unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 		if(unread >= *strlen)
 		{
 			*string = malloc(*strlen);
-			memcpy(*string, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, *strlen);
+			memcpy(*string, m_cdrBuffer->m_currentPosition, *strlen);
+			m_cdrBuffer->m_currentPosition += *strlen;
 			m_cdrBuffer->m_iterator += *strlen;
 			*strlen -= 1;
-
 			m_cdrBuffer->m_lastDataSize = sizeof(uint8_t);
 		}
 		else
@@ -405,29 +447,36 @@ int8_t deserializeString (char ** string, uint32_t * strlen, struct nanoBuffer *
 			return -1;
 		}
 	}
+	else
+	{
+		return -1;
+	}
 	return result;
 }
 
-int8_t deserializeStringEndianness (char ** string, uint32_t * strlen, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeStringEndianness (char ** string, uint32_t * strlen, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	size_t align = alignment(sizeof(int32_t), m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeInt = sizeof(int32_t);
 
-	if(unread >= sizeInt)
+	if((unread - align) >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(strlen, endianness, m_cdrBuffer);
 
 		if(result < 0) return -1;
 
-		unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+		unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 		if(unread >= *strlen)
 		{
 
 			*string = malloc(*strlen);
-			memcpy(*string, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, *strlen);
+			memcpy(*string, m_cdrBuffer->m_currentPosition, *strlen);
+			m_cdrBuffer->m_currentPosition += *strlen;
 			m_cdrBuffer->m_iterator += *strlen;
 			*strlen -= 1;
 
@@ -441,11 +490,12 @@ int8_t deserializeStringEndianness (char ** string, uint32_t * strlen, Endiannes
 	return result;
 }
 
-int8_t serializeShort (const int16_t short_t, struct nanoBuffer * m_cdrBuffer)
+
+int8_t serializeShort (const int16_t short_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(int16_t);
 
 	uint32_t align = alignment(sizeShort, m_cdrBuffer);
@@ -460,15 +510,15 @@ int8_t serializeShort (const int16_t short_t, struct nanoBuffer * m_cdrBuffer)
 		if(m_cdrBuffer->m_swapBytes == TRUE)
 		{
 			char * short_c = (char *)&short_t;
-			m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer] = short_c[1];
-			m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + 1] = short_c[0];
+			m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer] = short_c[1];
+			m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + 1] = short_c[0];
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&short_t, sizeShort);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&short_t, sizeShort);
 		}
 
-		m_cdrBuffer->m_serializedBuffer +=sizeShort;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeShort;
 		m_cdrBuffer->m_currentPosition += sizeShort;
 	}
 	else
@@ -479,7 +529,7 @@ int8_t serializeShort (const int16_t short_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeShortEndianness (const int16_t short_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeShortEndianness (const int16_t short_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -500,11 +550,11 @@ int8_t serializeShortEndianness (const int16_t short_t, Endianness endianness, s
 	return result;
 }
 
-int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint16_t i = 0;
 
@@ -522,14 +572,14 @@ int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoBuffer * m_cd
 			char * short_c = (char *)&ushort_t;
 			for (i = 0; i < sizeShort; i++)
 			{
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = short_c[sizeShort - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = short_c[sizeShort - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&ushort_t, sizeShort);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&ushort_t, sizeShort);
 		}
-		m_cdrBuffer->m_serializedBuffer +=sizeShort;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeShort;
 		m_cdrBuffer->m_currentPosition += sizeShort;
 	}
 	else
@@ -540,7 +590,7 @@ int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoBuffer * m_cd
 	return result;
 }
 
-int8_t serializeUnsignedShortEndianness (const uint16_t ushort_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedShortEndianness (const uint16_t ushort_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -561,11 +611,11 @@ int8_t serializeUnsignedShortEndianness (const uint16_t ushort_t, Endianness end
 	return result;
 }
 
-int8_t serializeInt (const int32_t int_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeInt (const int32_t int_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(int32_t);
 	uint16_t i = 0;
 
@@ -580,15 +630,15 @@ int8_t serializeInt (const int32_t int_t, struct nanoBuffer * m_cdrBuffer)
 		{
 			char * int_c = (char *)&int_t;
 			for (i = 0; i < sizeInt; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = int_c[sizeInt - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = int_c[sizeInt - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&int_t, sizeInt);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&int_t, sizeInt);
 		}
 
-		m_cdrBuffer->m_serializedBuffer +=sizeInt;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeInt;
 		m_cdrBuffer->m_currentPosition += sizeInt;
 	}
 	else
@@ -599,7 +649,7 @@ int8_t serializeInt (const int32_t int_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeIntEndianness (const int32_t int_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeIntEndianness (const int32_t int_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -620,11 +670,11 @@ int8_t serializeIntEndianness (const int32_t int_t, Endianness endianness, struc
 	return result;
 }
 
-int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(uint32_t);
 	uint16_t i = 0;
 
@@ -632,7 +682,6 @@ int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoBuffer * m_cdrBuf
 
 	if((resize(sizeInt + align, m_cdrBuffer) == 0) || free >= (sizeInt + align))
 	{
-
 		m_cdrBuffer->m_lastDataSize = sizeInt;
 		makeAlign(align, m_cdrBuffer);
 
@@ -640,15 +689,15 @@ int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoBuffer * m_cdrBuf
 		{
 			char * int_c = (char *)&uint_t;
 			for (i = 0; i < sizeInt; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = int_c[sizeInt - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = int_c[sizeInt - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&uint_t, sizeInt);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&uint_t, sizeInt);
 		}
 
-		m_cdrBuffer->m_serializedBuffer +=sizeInt;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeInt;
 		m_cdrBuffer->m_currentPosition += sizeInt;
 	}
 	else
@@ -659,7 +708,7 @@ int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoBuffer * m_cdrBuf
 	return result;
 }
 
-int8_t serializeUnsignedIntEndianness (const uint32_t uint_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedIntEndianness (const uint32_t uint_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -680,11 +729,11 @@ int8_t serializeUnsignedIntEndianness (const uint32_t uint_t, Endianness endiann
 	return result;
 }
 
-int8_t serializeLong (const int64_t long_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLong (const int64_t long_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(int64_t);
 	uint16_t i = 0;
 
@@ -701,14 +750,14 @@ int8_t serializeLong (const int64_t long_t, struct nanoBuffer * m_cdrBuffer)
 		{
 			char * long_c = (char *)&long_t;
 			for (i = 0; i < sizeLong; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&long_t, sizeLong);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&long_t, sizeLong);
 		}
-		m_cdrBuffer->m_serializedBuffer +=sizeLong;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeLong;
 		m_cdrBuffer->m_currentPosition += sizeLong;
 
 	}
@@ -719,7 +768,7 @@ int8_t serializeLong (const int64_t long_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeLongEndianness (const int64_t long_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongEndianness (const int64_t long_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -741,11 +790,11 @@ int8_t serializeLongEndianness (const int64_t long_t, Endianness endianness, str
 }
 
 
-int8_t serializeUnsignedLong (const uint64_t ulong_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLong (const uint64_t ulong_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(int64_t);
 	uint16_t i = 0;
 
@@ -760,14 +809,14 @@ int8_t serializeUnsignedLong (const uint64_t ulong_t, struct nanoBuffer * m_cdrB
 		{
 			char * long_c = (char *)&ulong_t;
 			for (i = 0; i < sizeLong; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&ulong_t, sizeLong);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&ulong_t, sizeLong);
 		}
-		m_cdrBuffer->m_serializedBuffer +=sizeLong;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeLong;
 		m_cdrBuffer->m_currentPosition += sizeLong;
 	}
 	else
@@ -777,7 +826,7 @@ int8_t serializeUnsignedLong (const uint64_t ulong_t, struct nanoBuffer * m_cdrB
 	return result;
 }
 
-int8_t serializeUnsignedLongEndianness (const uint64_t ulong_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongEndianness (const uint64_t ulong_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -798,11 +847,11 @@ int8_t serializeUnsignedLongEndianness (const uint64_t ulong_t, Endianness endia
 	return result;
 }
 
-int8_t serializeLongLong (const long long longlong_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongLong (const long long longlong_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(long long);
 	uint16_t i = 0;
 
@@ -818,14 +867,14 @@ int8_t serializeLongLong (const long long longlong_t, struct nanoBuffer * m_cdrB
 		{
 			char * long_c = (char *)&longlong_t;
 			for (i = 0; i < sizeLong; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&longlong_t, sizeLong);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&longlong_t, sizeLong);
 		}
-		m_cdrBuffer->m_serializedBuffer +=sizeLong;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeLong;
 		m_cdrBuffer->m_currentPosition += sizeLong;
 	}
 	else
@@ -835,7 +884,7 @@ int8_t serializeLongLong (const long long longlong_t, struct nanoBuffer * m_cdrB
 	return result;
 }
 
-int8_t serializeLongLongEndianness (const long long longlong_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongLongEndianness (const long long longlong_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -856,11 +905,11 @@ int8_t serializeLongLongEndianness (const long long longlong_t, Endianness endia
 	return result;
 }
 
-int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(unsigned long long);
 	uint16_t i = 0;
 
@@ -875,14 +924,14 @@ int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t, struct n
 		{
 			char * long_c = (char *)&ulonglong_t;
 			for (i = 0; i < sizeLong; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = long_c[sizeLong - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&ulonglong_t, sizeLong);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&ulonglong_t, sizeLong);
 		}
-		m_cdrBuffer->m_serializedBuffer +=sizeLong;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeLong;
 		m_cdrBuffer->m_currentPosition += sizeLong;
 	}
 	else
@@ -892,7 +941,7 @@ int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t, struct n
 	return result;
 }
 
-int8_t serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -913,11 +962,11 @@ int8_t serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t
 	return result;
 }
 
-int8_t serializeFloat (const float float_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeFloat (const float float_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeFloat = sizeof(float);
 	uint16_t i = 0;
 
@@ -933,15 +982,15 @@ int8_t serializeFloat (const float float_t, struct nanoBuffer * m_cdrBuffer)
 			char * float_c = (char *)&float_t;
 
 			for (i = 0; i < sizeFloat; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = float_c[sizeFloat - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = float_c[sizeFloat - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&float_t, sizeFloat);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&float_t, sizeFloat);
 		}
 
-		m_cdrBuffer->m_serializedBuffer +=sizeFloat;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeFloat;
 		m_cdrBuffer->m_currentPosition += sizeFloat;
 	}
 	else
@@ -952,7 +1001,7 @@ int8_t serializeFloat (const float float_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeFloatEndianness (const float float_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeFloatEndianness (const float float_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -973,11 +1022,11 @@ int8_t serializeFloatEndianness (const float float_t, Endianness endianness, str
 	return result;
 }
 
-int8_t serializeDouble (const double double_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeDouble (const double double_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(double);
 	uint16_t i = 0;
 
@@ -993,15 +1042,15 @@ int8_t serializeDouble (const double double_t, struct nanoBuffer * m_cdrBuffer)
 		{
 			char * double_c = (char *)&double_t;
 			for (i = 0; i < sizeDouble; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = double_c[sizeDouble - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = double_c[sizeDouble - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&double_t, sizeDouble);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&double_t, sizeDouble);
 		}
 
-		m_cdrBuffer->m_serializedBuffer +=sizeDouble;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeDouble;
 		m_cdrBuffer->m_currentPosition += sizeDouble;
 	}
 	else
@@ -1011,7 +1060,7 @@ int8_t serializeDouble (const double double_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeDoubleEndianness (const double double_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeDoubleEndianness (const double double_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1032,11 +1081,11 @@ int8_t serializeDoubleEndianness (const double double_t, Endianness endianness, 
 	return result;
 }
 
-int8_t serializeLongDouble (const long double longdouble_t, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongDouble (const long double longdouble_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t free = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(long double);
 	uint16_t i = 0;
 
@@ -1051,15 +1100,15 @@ int8_t serializeLongDouble (const long double longdouble_t, struct nanoBuffer * 
 		{
 			char * double_c = (char *)&longdouble_t;
 			for (i = 0; i < sizeDouble; i++){
-				m_cdrBuffer->m_buffer[m_cdrBuffer->m_serializedBuffer + i] = double_c[sizeDouble - i - 1];
+				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = double_c[sizeDouble - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_buffer + m_cdrBuffer->m_serializedBuffer, (char *)&longdouble_t, sizeDouble);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&longdouble_t, sizeDouble);
 		}
 
-		m_cdrBuffer->m_serializedBuffer +=sizeDouble;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeDouble;
 		m_cdrBuffer->m_currentPosition += sizeDouble;
 	}
 	else
@@ -1069,7 +1118,7 @@ int8_t serializeLongDouble (const long double longdouble_t, struct nanoBuffer * 
 	return result;
 }
 
-int8_t serializeLongDoubleEndianness (const long double longdouble_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongDoubleEndianness (const long double longdouble_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1090,30 +1139,35 @@ int8_t serializeLongDoubleEndianness (const long double longdouble_t, Endianness
 	return result;
 }
 
-int8_t deserializeShort(int16_t * short_t, struct nanoBuffer * m_cdrBuffer)
+
+int8_t deserializeShort(int16_t * short_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeShort = sizeof(int16_t);
+	uint32_t align = alignment(sizeShort, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeShort)
+	if((unread-align) >= sizeShort)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(short_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeShort);
+			memcpy(short_t, m_cdrBuffer->m_currentPosition, sizeShort);
 		}
 		else
 		{
 			char * short_c = (char *)short_t;
 			for(i = 0; i < sizeShort; i++)
 			{
-				short_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeShort - 1 - i)];
+				short_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeShort - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeShort;
-		m_cdrBuffer->m_currentPosition -= sizeShort;
+		m_cdrBuffer->m_currentPosition += sizeShort;
+		m_cdrBuffer->m_lastDataSize = sizeShort;
 	}
 	else
 	{
@@ -1122,7 +1176,7 @@ int8_t deserializeShort(int16_t * short_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeShortEndianness (int16_t * short_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeShortEndianness (int16_t * short_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1143,30 +1197,34 @@ int8_t deserializeShortEndianness (int16_t * short_t, Endianness endianness, str
 	return result;
 }
 
-int8_t deserializeUnsignedShort(uint16_t * ushort_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedShort(uint16_t * ushort_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeShort = sizeof(uint16_t);
+	uint32_t align = alignment(sizeShort, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeShort)
+	if((unread - align) >= sizeShort)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(ushort_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeShort);
+			memcpy(ushort_t, m_cdrBuffer->m_currentPosition, sizeShort);
 		}
 		else
 		{
 			char * short_c = (char *)ushort_t;
 			for(i = 0; i < sizeShort; i++)
 			{
-				short_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeShort - 1 - i)];
+				short_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeShort - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeShort;
-		m_cdrBuffer->m_currentPosition -= sizeShort;
+		m_cdrBuffer->m_currentPosition += sizeShort;
+		m_cdrBuffer->m_lastDataSize = sizeShort;
 	}
 	else
 	{
@@ -1175,7 +1233,7 @@ int8_t deserializeUnsignedShort(uint16_t * ushort_t, struct nanoBuffer * m_cdrBu
 	return result;
 }
 
-int8_t deserializeUnsignedShortEndianness (uint16_t * ushort_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedShortEndianness (uint16_t * ushort_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1196,30 +1254,34 @@ int8_t deserializeUnsignedShortEndianness (uint16_t * ushort_t, Endianness endia
 	return result;
 }
 
-int8_t deserializeInt(int32_t * int_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeInt(int32_t * int_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeInt = sizeof(int32_t);
+	uint32_t align = alignment(sizeInt, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeInt)
+	if((unread - align) >= sizeInt)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(int_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeInt);
+			memcpy(int_t, m_cdrBuffer->m_currentPosition, sizeInt);
 		}
 		else
 		{
 			char * int_c = (char *)int_t;
 			for(i = 0; i < sizeInt; i++)
 			{
-				int_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeInt - 1 - i)];
+				int_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeInt - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeInt;
-		m_cdrBuffer->m_currentPosition -= sizeInt;
+		m_cdrBuffer->m_currentPosition += sizeInt;
+		m_cdrBuffer->m_lastDataSize = sizeInt;
 	}
 	else
 	{
@@ -1228,7 +1290,7 @@ int8_t deserializeInt(int32_t * int_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeIntEndianness (int32_t * int_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeIntEndianness (int32_t * int_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1249,30 +1311,34 @@ int8_t deserializeIntEndianness (int32_t * int_t, Endianness endianness, struct 
 	return result;
 }
 
-int8_t deserializeUnsignedInt(uint32_t * int_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedInt(uint32_t * int_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeInt = sizeof(uint32_t);
+	uint32_t align = alignment(sizeInt, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeInt)
+	if((unread - align) >= sizeInt)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(int_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeInt);
+			memcpy(int_t, m_cdrBuffer->m_currentPosition, sizeInt);
 		}
 		else
 		{
 			char * int_c = (char *)int_t;
 			for(i = 0; i < sizeInt; i++)
 			{
-				int_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeInt - 1 - i)];
+				int_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeInt - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeInt;
-		m_cdrBuffer->m_currentPosition -= sizeInt;
+		m_cdrBuffer->m_currentPosition += sizeInt;
+		m_cdrBuffer->m_lastDataSize = sizeInt;
 	}
 	else
 	{
@@ -1281,7 +1347,7 @@ int8_t deserializeUnsignedInt(uint32_t * int_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeUnsignedIntEndianness (uint32_t * uint_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedIntEndianness (uint32_t * uint_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1303,30 +1369,34 @@ int8_t deserializeUnsignedIntEndianness (uint32_t * uint_t, Endianness endiannes
 }
 
 
-int8_t deserializeLong(int64_t * long_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLong(int64_t * long_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeLong = sizeof(int64_t);
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeLong)
+	if((unread - align) >= sizeLong)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(long_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeLong);
+			memcpy(long_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
 		else
 		{
 			char * long_c = (char *)long_t;
 			for(i = 0; i < sizeLong; i++)
 			{
-				long_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
+				long_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeLong;
-		m_cdrBuffer->m_currentPosition -= sizeLong;
+		m_cdrBuffer->m_currentPosition += sizeLong;
+		m_cdrBuffer->m_lastDataSize = sizeLong;
 	}
 	else
 	{
@@ -1335,7 +1405,7 @@ int8_t deserializeLong(int64_t * long_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeLongEndianness (int64_t * long_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongEndianness (int64_t * long_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1356,30 +1426,34 @@ int8_t deserializeLongEndianness (int64_t * long_t, Endianness endianness, struc
 	return result;
 }
 
-int8_t deserializeUnsignedLong(uint64_t * ulong_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLong(uint64_t * ulong_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeLong = sizeof(uint64_t);
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeLong)
+	if((unread - align) >= sizeLong)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(ulong_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeLong);
+			memcpy(ulong_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
 		else
 		{
 			char * long_c = (char *)ulong_t;
 			for(i = 0; i < sizeLong; i++)
 			{
-				long_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
+				long_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeLong;
-		m_cdrBuffer->m_currentPosition -= sizeLong;
+		m_cdrBuffer->m_currentPosition += sizeLong;
+		m_cdrBuffer->m_lastDataSize = sizeLong;
 	}
 	else
 	{
@@ -1389,7 +1463,7 @@ int8_t deserializeUnsignedLong(uint64_t * ulong_t, struct nanoBuffer * m_cdrBuff
 	return result;
 }
 
-int8_t deserializeUnsignedLongEndianness (uint64_t * ulong_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongEndianness (uint64_t * ulong_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1410,30 +1484,34 @@ int8_t deserializeUnsignedLongEndianness (uint64_t * ulong_t, Endianness endiann
 	return result;
 }
 
-int8_t deserializeLongLong(long long * longlong_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongLong(long long * longlong_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeLong = sizeof(long long);
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeLong)
+	if((unread - align) >= sizeLong)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(longlong_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeLong);
+			memcpy(longlong_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
 		else
 		{
 			char * long_c = (char *)longlong_t;
 			for(i = 0; i < sizeLong; i++)
 			{
-				long_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
+				long_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeLong;
-		m_cdrBuffer->m_currentPosition -= sizeLong;
+		m_cdrBuffer->m_currentPosition += sizeLong;
+		m_cdrBuffer->m_lastDataSize = sizeLong;
 	}
 	else
 	{
@@ -1442,7 +1520,7 @@ int8_t deserializeLongLong(long long * longlong_t, struct nanoBuffer * m_cdrBuff
 	return result;
 }
 
-int8_t deserializeLongLongEndianness (long long * longlong_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongLongEndianness (long long * longlong_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1463,30 +1541,34 @@ int8_t deserializeLongLongEndianness (long long * longlong_t, Endianness endiann
 	return result;
 }
 
-int8_t deserializeUnsignedLongLong(unsigned long long * long_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongLong(unsigned long long * long_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeLong = sizeof(unsigned long long);
+	uint32_t align = alignment(sizeLong, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeLong)
+	if((unread - align) >= sizeLong)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(long_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeLong);
+			memcpy(long_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
 		else
 		{
 			char * long_c = (char *)long_t;
 			for(i = 0; i < sizeLong; i++)
 			{
-				long_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
+				long_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeLong - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeLong;
-		m_cdrBuffer->m_currentPosition -= sizeLong;
+		m_cdrBuffer->m_currentPosition += sizeLong;
+		m_cdrBuffer->m_lastDataSize = sizeLong;
 	}
 	else
 	{
@@ -1495,7 +1577,7 @@ int8_t deserializeUnsignedLongLong(unsigned long long * long_t, struct nanoBuffe
 	return result;
 }
 
-int8_t deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1516,30 +1598,34 @@ int8_t deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, 
 	return result;
 }
 
-int8_t deserializeFloat(float * float_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeFloat(float * float_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeFloat = sizeof(float);
+	uint32_t align = alignment(sizeFloat, m_cdrBuffer);
 	uint32_t i;
 
-	if(unread >= sizeFloat)
+	if((unread - align) >= sizeFloat)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(float_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeFloat);
+			memcpy(float_t, m_cdrBuffer->m_currentPosition, sizeFloat);
 		}
 		else
 		{
 			char * float_c = (char *)float_t;
 			for(i = 0; i < sizeFloat; i++)
 			{
-				float_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeFloat - 1 - i)];
+				float_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeFloat - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeFloat;
-		m_cdrBuffer->m_currentPosition -= sizeFloat;
+		m_cdrBuffer->m_currentPosition += sizeFloat;
+		m_cdrBuffer->m_lastDataSize = sizeFloat;
 	}
 	else
 	{
@@ -1548,7 +1634,7 @@ int8_t deserializeFloat(float * float_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeFloatEndianness (float * float_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeFloatEndianness (float * float_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1569,31 +1655,34 @@ int8_t deserializeFloatEndianness (float * float_t, Endianness endianness, struc
 	return result;
 }
 
-int8_t deserializeDouble(double * double_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeDouble(double * double_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeDouble = sizeof(double);
-
+	uint32_t align = alignment(sizeDouble, m_cdrBuffer);
 	uint16_t i;
 
-	if(unread >= sizeDouble)
+	if((unread - align) >= sizeDouble)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(double_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeDouble);
+			memcpy(double_t, m_cdrBuffer->m_currentPosition, sizeDouble);
 		}
 		else
 		{
 			char * double_c = (char *)double_t;
 			for(i = 0; i < sizeDouble; i++)
 			{
-				double_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeDouble - 1 - i)];
+				double_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeDouble - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeDouble;
-		m_cdrBuffer->m_currentPosition -= sizeDouble;
+		m_cdrBuffer->m_currentPosition += sizeDouble;
+		m_cdrBuffer->m_lastDataSize = sizeDouble;
 	}
 	else
 	{
@@ -1602,7 +1691,7 @@ int8_t deserializeDouble(double * double_t, struct nanoBuffer * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeDoubleEndianness (double * double_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeDoubleEndianness (double * double_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1623,31 +1712,34 @@ int8_t deserializeDoubleEndianness (double * double_t, Endianness endianness, st
 	return result;
 }
 
-int8_t deserializeLongDouble(long double * longdouble_t, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongDouble(long double * longdouble_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeDouble = sizeof(long double);
-
+	uint32_t align = alignment(sizeDouble, m_cdrBuffer);
 	uint16_t i;
 
-	if(unread >= sizeDouble)
+	if((unread - align) >= sizeDouble)
 	{
+		makeAlign(align, m_cdrBuffer);
 		if(m_cdrBuffer->m_swapBytes == FALSE)
 		{
-			memcpy(longdouble_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, sizeDouble);
+			memcpy(longdouble_t, m_cdrBuffer->m_currentPosition, sizeDouble);
 		}
 		else
 		{
 			char * double_c = (char *)longdouble_t;
 			for(i = 0; i < sizeDouble; i++)
 			{
-				double_c[i] = m_cdrBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeDouble - 1 - i)];
+				double_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeDouble - 1 - i)];
 			}
 		}
 		m_cdrBuffer->m_iterator += sizeDouble;
-		m_cdrBuffer->m_currentPosition -= sizeDouble;
+		m_cdrBuffer->m_currentPosition += sizeDouble;
+		m_cdrBuffer->m_lastDataSize = sizeDouble;
 	}
 	else
 	{
@@ -1656,7 +1748,7 @@ int8_t deserializeLongDouble(long double * longdouble_t, struct nanoBuffer * m_c
 	return result;
 }
 
-int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1677,10 +1769,10 @@ int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness e
 	return result;
 }
 
- int8_t serializeStringSequence (const char ** string_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+ int8_t serializeStringSequence (const char ** string_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
  {
  	int8_t result = 0;
- 	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+ 	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
  	uint32_t totalSpace = sizeof(uint32_t);
 
 	uint32_t i = 0;
@@ -1699,10 +1791,10 @@ int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness e
  	return result;
  }
 
- int8_t serializeStringSequenceEndianness (const char ** string_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+ int8_t serializeStringSequenceEndianness (const char ** string_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
  {
 	 int8_t result = 0;
-  	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
   	uint32_t totalSpace = sizeof(uint32_t);
 
  	uint32_t i = 0;
@@ -1721,10 +1813,10 @@ int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness e
   	return result;
  }
 
- int8_t serializeStringArray (const char ** string_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+ int8_t serializeStringArray (const char ** string_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
  {
  	int8_t result = 0;
- 	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+ 	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 
 	uint32_t i = 0;
 	uint32_t totalSpace = 0;
@@ -1745,10 +1837,10 @@ int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness e
  	return result;
  }
 
- int8_t serializeStringArrayEndianness (const char ** string_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+ int8_t serializeStringArrayEndianness (const char ** string_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
  {
 	 int8_t result = 0;
-  	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 
  	uint32_t i = 0;
  	uint32_t totalSpace = 0;
@@ -1769,10 +1861,10 @@ int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness e
   	return result;
  }
 
-int8_t serializeCharSequence (const char * char_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeCharSequence (const char * char_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
 	if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
@@ -1780,14 +1872,15 @@ int8_t serializeCharSequence (const char * char_t, const uint32_t numElements, s
 		result = serializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = serializeCharArray(char_t, numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	return result;
 }
 
-int8_t serializeCharSequenceEndianness (const char * char_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeCharSequenceEndianness (const char * char_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
   uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
   if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
@@ -1795,14 +1888,15 @@ int8_t serializeCharSequenceEndianness (const char * char_t, const uint32_t numE
  	 result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
  	 if(result < 0) return -1;
  	 result = serializeCharArray(char_t, numElements, m_cdrBuffer);
+	 m_cdrBuffer->m_lastDataSize = sizeof(char);
   }
   return result;
 }
 
-int8_t serializeCharArray (const char * char_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeCharArray (const char * char_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t totalSpace = numElements;
 	uint32_t i = 0;
 	if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
@@ -1811,15 +1905,16 @@ int8_t serializeCharArray (const char * char_t, const uint32_t numElements, stru
 		{
 			result = serializeChar(char_t[i], m_cdrBuffer);
 			if(result < 0) return -1;
+			m_cdrBuffer->m_lastDataSize = sizeof(char);
 		}
 	}
 	return result;
 }
 
-int8_t serializeUnsignedCharSequence (const unsigned char * uchar_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedCharSequence (const unsigned char * uchar_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
 	if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
@@ -1827,14 +1922,15 @@ int8_t serializeUnsignedCharSequence (const unsigned char * uchar_t, const uint3
 		result = serializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = serializeUnsignedCharArray(uchar_t, numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
 	}
 	return result;
 }
 
-int8_t serializeUnsignedCharSequenceEndianness (const unsigned char * uchar_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedCharSequenceEndianness (const unsigned char * uchar_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
   uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
   if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
@@ -1842,14 +1938,15 @@ int8_t serializeUnsignedCharSequenceEndianness (const unsigned char * uchar_t, c
  	 result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
  	 if(result < 0) return -1;
  	 result = serializeUnsignedCharArray(uchar_t, numElements, m_cdrBuffer);
+	 m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
   }
   return result;
 }
 
-int8_t serializeUnsignedCharArray (const unsigned char * uchar_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedCharArray (const unsigned char * uchar_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t totalSpace = numElements;
 	uint32_t i = 0;
 
@@ -1859,15 +1956,16 @@ int8_t serializeUnsignedCharArray (const unsigned char * uchar_t, const uint32_t
 		{
 			result = serializeUnsignedChar(uchar_t[i], m_cdrBuffer);
 			if(result < 0) return -1;
+			m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
 		}
 	}
 	return result;
 }
 
-int8_t serializeSignedCharSequence (const signed char * schar_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeSignedCharSequence (const signed char * schar_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t totalSpace = sizeof(uint32_t) + numElements;
 
 	if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
@@ -1875,11 +1973,12 @@ int8_t serializeSignedCharSequence (const signed char * schar_t, const uint32_t 
 		result = serializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = serializeSignedCharArray(schar_t, numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(signed char);
 	}
 	return result;
 }
 
-int8_t serializeSignedCharSequenceEndianness (const signed char * schar_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeSignedCharSequenceEndianness (const signed char * schar_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
  int8_t result = 0;
 
@@ -1900,10 +1999,10 @@ int8_t serializeSignedCharSequenceEndianness (const signed char * schar_t, const
  return result;
 }
 
-int8_t serializeSignedCharArray (const signed char * schar_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeSignedCharArray (const signed char * schar_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t totalSpace = numElements;
 	uint32_t i = 0;
 
@@ -1913,15 +2012,16 @@ int8_t serializeSignedCharArray (const signed char * schar_t, const uint32_t num
 		{
 			result = serializeSignedChar(schar_t[i], m_cdrBuffer);
 			if(result < 0) return -1;
+			m_cdrBuffer->m_lastDataSize = sizeof(signed char);
 		}
 	}
 	return result;
 }
 
-int8_t serializeShortSequence (const int16_t * short_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeShortSequence (const int16_t * short_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(int16_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
@@ -1934,10 +2034,10 @@ int8_t serializeShortSequence (const int16_t * short_t, const uint32_t numElemen
 	return result;
 }
 
-int8_t serializeShortSequenceEndianness (const int16_t * short_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeShortSequenceEndianness (const int16_t * short_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
   uint16_t sizeShort = sizeof(int16_t);
   uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
@@ -1950,10 +2050,10 @@ int8_t serializeShortSequenceEndianness (const int16_t * short_t, const uint32_t
   return result;
 }
 
-int8_t serializeShortArray (const int16_t * short_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeShortArray (const int16_t * short_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(int16_t);
 	uint32_t totalSpace = (numElements * sizeShort);
 	uint32_t i = 0;
@@ -1969,10 +2069,10 @@ int8_t serializeShortArray (const int16_t * short_t, const uint32_t numElements,
 	return result;
 }
 
-int8_t serializeShortArrayEndianness (const int16_t * short_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeShortArrayEndianness (const int16_t * short_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-  uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+  uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
   uint16_t sizeShort = sizeof(int16_t);
   uint32_t totalSpace = (numElements * sizeShort);
   uint32_t i = 0;
@@ -1988,10 +2088,10 @@ int8_t serializeShortArrayEndianness (const int16_t * short_t, const uint32_t nu
   return result;
 }
 
-int8_t serializeUnsignedShortSequence (const uint16_t * ushort_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedShortSequence (const uint16_t * ushort_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
@@ -2004,10 +2104,10 @@ int8_t serializeUnsignedShortSequence (const uint16_t * ushort_t, const uint32_t
 	return result;
 }
 
-int8_t serializeUnsignedShortSequenceEndianness (const uint16_t * ushort_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedShortSequenceEndianness (const uint16_t * ushort_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeShort);
 
@@ -2020,10 +2120,10 @@ int8_t serializeUnsignedShortSequenceEndianness (const uint16_t * ushort_t, cons
 	return result;
 }
 
-int8_t serializeUnsignedShortArray (const uint16_t * ushort_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedShortArray (const uint16_t * ushort_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint32_t totalSpace = (numElements * sizeShort);
 	uint32_t i = 0;
@@ -2039,10 +2139,10 @@ int8_t serializeUnsignedShortArray (const uint16_t * ushort_t, const uint32_t nu
 	return result;
 }
 
-int8_t serializeUnsignedShortArrayEndianness (const uint16_t * ushort_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedShortArrayEndianness (const uint16_t * ushort_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint32_t totalSpace = (numElements * sizeShort);
 	uint32_t i = 0;
@@ -2058,10 +2158,10 @@ int8_t serializeUnsignedShortArrayEndianness (const uint16_t * ushort_t, const u
 	return result;
 }
 
-int8_t serializeIntSequence (const int32_t * int_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeIntSequence (const int32_t * int_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(int32_t);
 	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
@@ -2074,10 +2174,10 @@ int8_t serializeIntSequence (const int32_t * int_t, const uint32_t numElements, 
 	return result;
 }
 
-int8_t serializeIntSequenceEndianness (const int32_t * int_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeIntSequenceEndianness (const int32_t * int_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(int32_t);
 	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
@@ -2090,10 +2190,10 @@ int8_t serializeIntSequenceEndianness (const int32_t * int_t, const uint32_t num
 	return result;
 }
 
-int8_t serializeIntArray (const int32_t * int_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeIntArray (const int32_t * int_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(int32_t);
 	uint32_t totalSpace = (numElements * sizeInt);
 	uint32_t i = 0;
@@ -2109,10 +2209,10 @@ int8_t serializeIntArray (const int32_t * int_t, const uint32_t numElements, str
 	return result;
 }
 
-int8_t serializeIntArrayEndianness (const int32_t * int_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeIntArrayEndianness (const int32_t * int_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(int32_t);
 	uint32_t totalSpace = (numElements * sizeInt);
 	uint32_t i = 0;
@@ -2128,10 +2228,10 @@ int8_t serializeIntArrayEndianness (const int32_t * int_t, const uint32_t numEle
 	return result;
 }
 
-int8_t serializeUnsignedIntSequence (const uint32_t * uint_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedIntSequence (const uint32_t * uint_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(uint32_t);
 	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
@@ -2144,10 +2244,10 @@ int8_t serializeUnsignedIntSequence (const uint32_t * uint_t, const uint32_t num
 	return result;
 }
 
-int8_t serializeUnsignedIntSequenceEndianness (const uint32_t * uint_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedIntSequenceEndianness (const uint32_t * uint_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(uint32_t);
 	uint32_t totalSpace = sizeInt + (numElements * sizeInt);
 
@@ -2160,10 +2260,10 @@ int8_t serializeUnsignedIntSequenceEndianness (const uint32_t * uint_t, const ui
 	return result;
 }
 
-int8_t serializeUnsignedIntArray (const uint32_t * uint_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedIntArray (const uint32_t * uint_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(uint32_t);
 	uint32_t totalSpace = (numElements * sizeInt);
 	uint32_t i = 0;
@@ -2179,10 +2279,10 @@ int8_t serializeUnsignedIntArray (const uint32_t * uint_t, const uint32_t numEle
 	return result;
 }
 
-int8_t serializeUnsignedIntArrayEndianness (const uint32_t * uint_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedIntArrayEndianness (const uint32_t * uint_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeInt = sizeof(uint32_t);
 	uint32_t totalSpace = (numElements * sizeInt);
 	uint32_t i = 0;
@@ -2198,10 +2298,10 @@ int8_t serializeUnsignedIntArrayEndianness (const uint32_t * uint_t, const uint3
 	return result;
 }
 
-int8_t serializeLongSequence (const int64_t * long_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongSequence (const int64_t * long_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(int64_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2214,10 +2314,10 @@ int8_t serializeLongSequence (const int64_t * long_t, const uint32_t numElements
 	return result;
 }
 
-int8_t serializeLongSequenceEndianness (const int64_t * long_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongSequenceEndianness (const int64_t * long_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(int64_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2230,10 +2330,10 @@ int8_t serializeLongSequenceEndianness (const int64_t * long_t, const uint32_t n
 	return result;
 }
 
-int8_t serializeLongArray (const int64_t * long_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongArray (const int64_t * long_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(int64_t);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2249,10 +2349,10 @@ int8_t serializeLongArray (const int64_t * long_t, const uint32_t numElements, s
 	return result;
 }
 
-int8_t serializeLongArrayEndianness (const int64_t * long_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongArrayEndianness (const int64_t * long_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(int64_t);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2268,10 +2368,10 @@ int8_t serializeLongArrayEndianness (const int64_t * long_t, const uint32_t numE
 	return result;
 }
 
-int8_t serializeUnsignedLongSequence (const uint64_t * ulong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongSequence (const uint64_t * ulong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(uint64_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2284,10 +2384,10 @@ int8_t serializeUnsignedLongSequence (const uint64_t * ulong_t, const uint32_t n
 	return result;
 }
 
-int8_t serializeUnsignedLongSequenceEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongSequenceEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(uint64_t);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2300,10 +2400,10 @@ int8_t serializeUnsignedLongSequenceEndianness (const uint64_t * ulong_t, const 
 	return result;
 }
 
-int8_t serializeUnsignedLongArray (const uint64_t * ulong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongArray (const uint64_t * ulong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(uint64_t);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2319,10 +2419,10 @@ int8_t serializeUnsignedLongArray (const uint64_t * ulong_t, const uint32_t numE
 	return result;
 }
 
-int8_t serializeUnsignedLongArrayEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongArrayEndianness (const uint64_t * ulong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(uint64_t);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2338,10 +2438,10 @@ int8_t serializeUnsignedLongArrayEndianness (const uint64_t * ulong_t, const uin
 	return result;
 }
 
-int8_t serializeLongLongSequence (const long long * longlong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongLongSequence (const long long * longlong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(long long);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2354,10 +2454,10 @@ int8_t serializeLongLongSequence (const long long * longlong_t, const uint32_t n
 	return result;
 }
 
-int8_t serializeLongLongSequenceEndianness (const long long * longlong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongLongSequenceEndianness (const long long * longlong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(long long);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2370,10 +2470,10 @@ int8_t serializeLongLongSequenceEndianness (const long long * longlong_t, const 
 	return result;
 }
 
-int8_t serializeLongLongArray (const long long * longlong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongLongArray (const long long * longlong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(long long);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2389,10 +2489,10 @@ int8_t serializeLongLongArray (const long long * longlong_t, const uint32_t numE
 	return result;
 }
 
-int8_t serializeLongLongArrayEndianness (const long long * longlong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongLongArrayEndianness (const long long * longlong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(long long);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2408,10 +2508,10 @@ int8_t serializeLongLongArrayEndianness (const long long * longlong_t, const uin
 	return result;
 }
 
-int8_t serializeUnsignedLongLongSequence (const unsigned long long * ulonglong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongLongSequence (const unsigned long long * ulonglong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(unsigned long long);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2424,10 +2524,10 @@ int8_t serializeUnsignedLongLongSequence (const unsigned long long * ulonglong_t
 	return result;
 }
 
-int8_t serializeUnsignedLongLongSequenceEndianness (const unsigned long long * ulonglong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongLongSequenceEndianness (const unsigned long long * ulonglong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(unsigned long long);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeLong);
 
@@ -2440,10 +2540,10 @@ int8_t serializeUnsignedLongLongSequenceEndianness (const unsigned long long * u
 	return result;
 }
 
-int8_t serializeUnsignedLongLongArray (const unsigned long long * ulonglong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongLongArray (const unsigned long long * ulonglong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(unsigned long long);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2459,10 +2559,10 @@ int8_t serializeUnsignedLongLongArray (const unsigned long long * ulonglong_t, c
 	return result;
 }
 
-int8_t serializeUnsignedLongLongArrayEndianness (const unsigned long long * ulonglong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeUnsignedLongLongArrayEndianness (const unsigned long long * ulonglong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeLong = sizeof(unsigned long long);
 	uint32_t totalSpace = (numElements * sizeLong);
 	uint32_t i = 0;
@@ -2478,10 +2578,10 @@ int8_t serializeUnsignedLongLongArrayEndianness (const unsigned long long * ulon
 	return result;
 }
 
-int8_t serializeFloatSequence (const float * float_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeFloatSequence (const float * float_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeFloat = sizeof(float);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeFloat);
 
@@ -2494,10 +2594,10 @@ int8_t serializeFloatSequence (const float * float_t, const uint32_t numElements
 	return result;
 }
 
-int8_t serializeFloatSequenceEndianness (const float * float_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeFloatSequenceEndianness (const float * float_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeFloat = sizeof(float);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeFloat);
 
@@ -2510,10 +2610,10 @@ int8_t serializeFloatSequenceEndianness (const float * float_t, const uint32_t n
 	return result;
 }
 
-int8_t serializeFloatArray (const float * float_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeFloatArray (const float * float_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeFloat = sizeof(float);
 	uint32_t totalSpace = (numElements * sizeFloat);
 	uint32_t i = 0;
@@ -2529,10 +2629,10 @@ int8_t serializeFloatArray (const float * float_t, const uint32_t numElements, s
 	return result;
 }
 
-int8_t serializeFloatArrayEndianness (const float * float_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeFloatArrayEndianness (const float * float_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeFloat = sizeof(float);
 	uint32_t totalSpace = (numElements * sizeFloat);
 	uint32_t i = 0;
@@ -2548,10 +2648,10 @@ int8_t serializeFloatArrayEndianness (const float * float_t, const uint32_t numE
 	return result;
 }
 
-int8_t serializeDoubleSequence (const double * double_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeDoubleSequence (const double * double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(double);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
@@ -2564,10 +2664,10 @@ int8_t serializeDoubleSequence (const double * double_t, const uint32_t numEleme
 	return result;
 }
 
-int8_t serializeDoubleSequenceEndianness (const double * double_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeDoubleSequenceEndianness (const double * double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(double);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
@@ -2580,10 +2680,10 @@ int8_t serializeDoubleSequenceEndianness (const double * double_t, const uint32_
 	return result;
 }
 
-int8_t serializeDoubleArray (const double * double_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeDoubleArray (const double * double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(double);
 	uint32_t totalSpace = (numElements * sizeDouble);
 	uint32_t i = 0;
@@ -2599,10 +2699,10 @@ int8_t serializeDoubleArray (const double * double_t, const uint32_t numElements
 	return result;
 }
 
-int8_t serializeDoubleArrayEndianness (const double * double_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeDoubleArrayEndianness (const double * double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(double);
 	uint32_t totalSpace = (numElements * sizeDouble);
 	uint32_t i = 0;
@@ -2618,10 +2718,10 @@ int8_t serializeDoubleArrayEndianness (const double * double_t, const uint32_t n
 	return result;
 }
 
-int8_t serializeLongDoubleSequence (const long double * longdouble_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongDoubleSequence (const long double * longdouble_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(long double);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
@@ -2634,10 +2734,10 @@ int8_t serializeLongDoubleSequence (const long double * longdouble_t, const uint
 	return result;
 }
 
-int8_t serializeLongDoubleSequenceEndianness (const long double * longdouble_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongDoubleSequenceEndianness (const long double * longdouble_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(long double);
 	uint32_t totalSpace = sizeof(uint32_t) + (numElements * sizeDouble);
 
@@ -2650,10 +2750,10 @@ int8_t serializeLongDoubleSequenceEndianness (const long double * longdouble_t, 
 	return result;
 }
 
-int8_t serializeLongDoubleArray (const long double * longdouble_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongDoubleArray (const long double * longdouble_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(long double);
 	uint32_t totalSpace = (numElements * sizeDouble);
 	uint32_t i = 0;
@@ -2669,10 +2769,10 @@ int8_t serializeLongDoubleArray (const long double * longdouble_t, const uint32_
 	return result;
 }
 
-int8_t serializeLongDoubleArrayEndianness (const long double * longdouble_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t serializeLongDoubleArrayEndianness (const long double * longdouble_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t freeSpace = (m_cdrBuffer->m_bufferSize - m_cdrBuffer->m_serializedBuffer);
+	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeDouble = sizeof(long double);
 	uint32_t totalSpace = (numElements * sizeDouble);
 	uint32_t i = 0;
@@ -2690,10 +2790,11 @@ int8_t serializeLongDoubleArrayEndianness (const long double * longdouble_t, con
 
 //DESERIALIZE CHAR
 
-int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
@@ -2704,6 +2805,7 @@ int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, stru
 		*string_t = malloc(*numElements * sizeof(char *));
 		memcpy(*string_t, swap, (*numElements * sizeof(char *)));
 		free(swap);
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	else
 	{
@@ -2712,10 +2814,11 @@ int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, stru
 	return result;
 }
 
-int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
@@ -2726,6 +2829,7 @@ int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElem
 		*string_t = malloc(*numElements * sizeof(char *));
 		memcpy(*string_t, swap, (*numElements * sizeof(char *)));
 		free(swap);
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	else
 	{
@@ -2734,10 +2838,11 @@ int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElem
 	return result;
 }
 
-int8_t deserializeStringArray (char *** string_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeStringArray (char *** string_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
+	updateCurrentPosition(m_cdrBuffer);
 	char ** swap = malloc(numElements * sizeof(char * ));
 	*string_t = malloc(numElements * sizeof(char *));
 
@@ -2747,16 +2852,18 @@ int8_t deserializeStringArray (char *** string_t, const uint32_t numElements, st
 	{
 		result = deserializeString(&swap[i], &length, m_cdrBuffer);
 		if(result < 0) return -1;
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	memcpy(*string_t, swap, (numElements * sizeof(char *)));
 	free(swap);
 	return result;
 }
 
-int8_t deserializeStringArrayEndianness (char *** string_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeStringArrayEndianness (char *** string_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
+	updateCurrentPosition(m_cdrBuffer);
 	char ** swap = malloc(numElements * sizeof(char * ));
 	*string_t = malloc(numElements * sizeof(char *));
 
@@ -2766,22 +2873,25 @@ int8_t deserializeStringArrayEndianness (char *** string_t, const uint32_t numEl
 	{
 		result = deserializeStringEndianness(&swap[i], &length, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	memcpy(*string_t, swap, (numElements * sizeof(char *)));
 	free(swap);
 	return result;
 }
 
-int8_t deserializeCharSequence (char ** char_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeCharSequence (char ** char_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeCharArray(char_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	else
 	{
@@ -2790,16 +2900,18 @@ int8_t deserializeCharSequence (char ** char_t, uint32_t * numElements, struct n
 	return result;
 }
 
-int8_t deserializeCharSequenceEndianness (char ** char_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeCharSequenceEndianness (char ** char_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeCharArray(char_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	else
 	{
@@ -2808,17 +2920,20 @@ int8_t deserializeCharSequenceEndianness (char ** char_t, uint32_t * numElements
 	return result;
 }
 
-int8_t deserializeCharArray (char ** char_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeCharArray (char ** char_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements;
 	if(unread >= totalSpace)
 	{
 		*char_t = malloc(totalSpace);
-		memcpy(*char_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, totalSpace);
+		memcpy(*char_t, m_cdrBuffer->m_currentPosition, totalSpace);
 		m_cdrBuffer->m_iterator += totalSpace;
+		m_cdrBuffer->m_currentPosition += totalSpace;
+		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	else
 	{
@@ -2827,16 +2942,18 @@ int8_t deserializeCharArray (char ** char_t, const uint32_t numElements, struct 
 	return result;
 }
 
-int8_t deserializeUnsignedCharSequence (unsigned char ** uchar_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedCharSequence (unsigned char ** uchar_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeUnsignedCharArray(uchar_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
 	}
 	else
 	{
@@ -2845,16 +2962,18 @@ int8_t deserializeUnsignedCharSequence (unsigned char ** uchar_t, uint32_t * num
 	return result;
 }
 
-int8_t deserializeUnsignedCharSequenceEndianness (unsigned char ** uchar_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedCharSequenceEndianness (unsigned char ** uchar_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeUnsignedCharArray(uchar_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
 	}
 	else
 	{
@@ -2863,17 +2982,20 @@ int8_t deserializeUnsignedCharSequenceEndianness (unsigned char ** uchar_t, uint
 	return result;
 }
 
-int8_t deserializeUnsignedCharArray (unsigned char ** uchar_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedCharArray (unsigned char ** uchar_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements;
 	if(unread >= totalSpace)
 	{
 		*uchar_t = malloc(totalSpace);
-		memcpy(*uchar_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, totalSpace);
+		memcpy(*uchar_t, m_cdrBuffer->m_currentPosition, totalSpace);
 		m_cdrBuffer->m_iterator += totalSpace;
+		m_cdrBuffer->m_currentPosition += totalSpace;
+		m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
 	}
 	else
 	{
@@ -2882,16 +3004,18 @@ int8_t deserializeUnsignedCharArray (unsigned char ** uchar_t, const uint32_t nu
 	return result;
 }
 
-int8_t deserializeSignedCharSequence (signed char ** schar_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeSignedCharSequence (signed char ** schar_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeSignedCharArray(schar_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(signed char);
 	}
 	else
 	{
@@ -2900,16 +3024,18 @@ int8_t deserializeSignedCharSequence (signed char ** schar_t, uint32_t * numElem
 	return result;
 }
 
-int8_t deserializeSignedCharSequenceEndianness (signed char ** schar_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeSignedCharSequenceEndianness (signed char ** schar_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeSignedCharArray(schar_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(signed char);
 	}
 	else
 	{
@@ -2918,17 +3044,20 @@ int8_t deserializeSignedCharSequenceEndianness (signed char ** schar_t, uint32_t
 	return result;
 }
 
-int8_t deserializeSignedCharArray (signed char ** char_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeSignedCharArray (signed char ** char_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements;
 	if(unread >= totalSpace)
 	{
 		*char_t = malloc(totalSpace);
-		memcpy(*char_t, m_cdrBuffer->m_buffer + m_cdrBuffer->m_iterator, totalSpace);
+		memcpy(*char_t, m_cdrBuffer->m_currentPosition, totalSpace);
 		m_cdrBuffer->m_iterator += totalSpace;
+		m_cdrBuffer->m_currentPosition += totalSpace;
+		m_cdrBuffer->m_lastDataSize = sizeof(signed char);
 	}
 	else
 	{
@@ -2939,11 +3068,12 @@ int8_t deserializeSignedCharArray (signed char ** char_t, const uint32_t numElem
 
 //DESERIALIZE SHORT
 
-int8_t deserializeShortSequence (int16_t ** short_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeShortSequence (int16_t ** short_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -2951,6 +3081,7 @@ int8_t deserializeShortSequence (int16_t ** short_t, uint32_t * numElements, str
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeShortArray(short_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(int16_t);
 	}
 	else
 	{
@@ -2959,11 +3090,12 @@ int8_t deserializeShortSequence (int16_t ** short_t, uint32_t * numElements, str
 	return result;
 }
 
-int8_t deserializeShortSequenceEndianness (int16_t ** short_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeShortSequenceEndianness (int16_t ** short_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -2971,6 +3103,7 @@ int8_t deserializeShortSequenceEndianness (int16_t ** short_t, uint32_t * numEle
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeShortArrayEndianness(short_t, *numElements, endianness, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(int16_t);
 	}
 	else
 	{
@@ -2979,14 +3112,15 @@ int8_t deserializeShortSequenceEndianness (int16_t ** short_t, uint32_t * numEle
 	return result;
 }
 
-int8_t deserializeShortArray (int16_t ** short_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeShortArray (int16_t ** short_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeShort = sizeof(int16_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
@@ -2999,6 +3133,7 @@ int8_t deserializeShortArray (int16_t ** short_t, const uint32_t numElements, st
 		}
 		memcpy(*short_t, swap, totalSpace);
 		free(swap);
+		m_cdrBuffer->m_lastDataSize = sizeof(int16_t);
 	}
 	else
 	{
@@ -3007,14 +3142,15 @@ int8_t deserializeShortArray (int16_t ** short_t, const uint32_t numElements, st
 	return result;
 }
 
-int8_t deserializeShortArrayEndianness (int16_t ** short_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeShortArrayEndianness (int16_t ** short_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeShort = sizeof(int16_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
@@ -3027,6 +3163,7 @@ int8_t deserializeShortArrayEndianness (int16_t ** short_t, const uint32_t numEl
 		}
 		memcpy(*short_t, swap, totalSpace);
 		free(swap);
+		m_cdrBuffer->m_lastDataSize = sizeof(int16_t);
 	}
 	else
 	{
@@ -3035,17 +3172,19 @@ int8_t deserializeShortArrayEndianness (int16_t ** short_t, const uint32_t numEl
 	return result;
 }
 
-int8_t deserializeUnsignedShortSequence (uint16_t ** ushort_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedShortSequence (uint16_t ** ushort_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeUnsignedShortArray(ushort_t, *numElements, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(uint16_t);
 	}
 	else
 	{
@@ -3054,17 +3193,19 @@ int8_t deserializeUnsignedShortSequence (uint16_t ** ushort_t, uint32_t * numEle
 	return result;
 }
 
-int8_t deserializeUnsignedShortSequenceEndianness (uint16_t ** ushort_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedShortSequenceEndianness (uint16_t ** ushort_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
 		result = deserializeUnsignedShortArrayEndianness(ushort_t, *numElements, endianness, m_cdrBuffer);
+		m_cdrBuffer->m_lastDataSize = sizeof(uint16_t);
 	}
 	else
 	{
@@ -3073,14 +3214,15 @@ int8_t deserializeUnsignedShortSequenceEndianness (uint16_t ** ushort_t, uint32_
 	return result;
 }
 
-int8_t deserializeUnsignedShortArray (uint16_t ** ushort_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedShortArray (uint16_t ** ushort_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeShort = sizeof(int16_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
@@ -3093,6 +3235,7 @@ int8_t deserializeUnsignedShortArray (uint16_t ** ushort_t, const uint32_t numEl
 		}
 		memcpy(*ushort_t, swap, totalSpace);
 		free(swap);
+		m_cdrBuffer->m_lastDataSize = sizeof(uint16_t);
 	}
 	else
 	{
@@ -3101,14 +3244,15 @@ int8_t deserializeUnsignedShortArray (uint16_t ** ushort_t, const uint32_t numEl
 	return result;
 }
 
-int8_t deserializeUnsignedShortArrayEndianness (uint16_t ** ushort_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedShortArrayEndianness (uint16_t ** ushort_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeShort = sizeof(int16_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t totalSpace = numElements * sizeShort;
 	if(unread >= totalSpace)
 	{
@@ -3121,6 +3265,7 @@ int8_t deserializeUnsignedShortArrayEndianness (uint16_t ** ushort_t, const uint
 		}
 		memcpy(*ushort_t, swap, totalSpace);
 		free(swap);
+		m_cdrBuffer->m_lastDataSize = sizeof(uint16_t);
 	}
 	else
 	{
@@ -3129,10 +3274,11 @@ int8_t deserializeUnsignedShortArrayEndianness (uint16_t ** ushort_t, const uint
 	return result;
 }
 
-int8_t deserializeIntSequence (int32_t ** int_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeIntSequence (int32_t ** int_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
@@ -3147,10 +3293,11 @@ int8_t deserializeIntSequence (int32_t ** int_t, uint32_t * numElements, struct 
 	return result;
 }
 
-int8_t deserializeIntSequenceEndianness (int32_t ** int_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeIntSequenceEndianness (int32_t ** int_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
@@ -3165,12 +3312,13 @@ int8_t deserializeIntSequenceEndianness (int32_t ** int_t, uint32_t * numElement
 	return result;
 }
 
-int8_t deserializeIntArray (int32_t ** int_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeIntArray (int32_t ** int_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
@@ -3192,12 +3340,13 @@ int8_t deserializeIntArray (int32_t ** int_t, const uint32_t numElements, struct
 	return result;
 }
 
-int8_t deserializeIntArrayEndianness (int32_t ** int_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeIntArrayEndianness (int32_t ** int_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
@@ -3219,10 +3368,11 @@ int8_t deserializeIntArrayEndianness (int32_t ** int_t, const uint32_t numElemen
 	return result;
 }
 
-int8_t deserializeUnsignedIntSequence (uint32_t ** uint_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedIntSequence (uint32_t ** uint_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
@@ -3237,10 +3387,11 @@ int8_t deserializeUnsignedIntSequence (uint32_t ** uint_t, uint32_t * numElement
 	return result;
 }
 
-int8_t deserializeUnsignedIntSequenceEndianness (uint32_t ** int_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedIntSequenceEndianness (uint32_t ** int_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 	if(unread >= sizeInt)
 	{
@@ -3255,12 +3406,13 @@ int8_t deserializeUnsignedIntSequenceEndianness (uint32_t ** int_t, uint32_t * n
 	return result;
 }
 
-int8_t deserializeUnsignedIntArray (uint32_t ** uint_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedIntArray (uint32_t ** uint_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
@@ -3282,12 +3434,13 @@ int8_t deserializeUnsignedIntArray (uint32_t ** uint_t, const uint32_t numElemen
 	return result;
 }
 
-int8_t deserializeUnsignedIntArrayEndianness (uint32_t ** uint_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedIntArrayEndianness (uint32_t ** uint_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeInt;
 	if(unread >= totalSpace)
@@ -3309,11 +3462,12 @@ int8_t deserializeUnsignedIntArrayEndianness (uint32_t ** uint_t, const uint32_t
 	return result;
 }
 
-int8_t deserializeLongSequence (int64_t ** long_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongSequence (int64_t ** long_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3329,11 +3483,12 @@ int8_t deserializeLongSequence (int64_t ** long_t, uint32_t * numElements, struc
 	return result;
 }
 
-int8_t deserializeLongSequenceEndianness (int64_t ** long_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongSequenceEndianness (int64_t ** long_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3349,14 +3504,15 @@ int8_t deserializeLongSequenceEndianness (int64_t ** long_t, uint32_t * numEleme
 	return result;
 }
 
-int8_t deserializeLongArray (int64_t ** long_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongArray (int64_t ** long_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(int64_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3378,14 +3534,15 @@ int8_t deserializeLongArray (int64_t ** long_t, const uint32_t numElements, stru
 	return result;
 }
 
-int8_t deserializeLongArrayEndianness (int64_t ** long_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongArrayEndianness (int64_t ** long_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(int64_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3407,11 +3564,12 @@ int8_t deserializeLongArrayEndianness (int64_t ** long_t, const uint32_t numElem
 	return result;
 }
 
-int8_t deserializeUnsignedLongSequence (uint64_t ** ulong_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongSequence (uint64_t ** ulong_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3427,11 +3585,12 @@ int8_t deserializeUnsignedLongSequence (uint64_t ** ulong_t, uint32_t * numEleme
 	return result;
 }
 
-int8_t deserializeUnsignedLongSequenceEndianness (uint64_t ** ulong_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongSequenceEndianness (uint64_t ** ulong_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3447,14 +3606,15 @@ int8_t deserializeUnsignedLongSequenceEndianness (uint64_t ** ulong_t, uint32_t 
 	return result;
 }
 
-int8_t deserializeUnsignedLongArray (uint64_t ** ulong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongArray (uint64_t ** ulong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(uint64_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3476,14 +3636,15 @@ int8_t deserializeUnsignedLongArray (uint64_t ** ulong_t, const uint32_t numElem
 	return result;
 }
 
-int8_t deserializeUnsignedLongArrayEndianness (uint64_t ** ulong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongArrayEndianness (uint64_t ** ulong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(uint64_t);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3505,11 +3666,12 @@ int8_t deserializeUnsignedLongArrayEndianness (uint64_t ** ulong_t, const uint32
 	return result;
 }
 
-int8_t deserializeLongLongSequence (long long ** longlong_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongLongSequence (long long ** longlong_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3525,11 +3687,12 @@ int8_t deserializeLongLongSequence (long long ** longlong_t, uint32_t * numEleme
 	return result;
 }
 
-int8_t deserializeLongLongSequenceEndianness (long long ** longlong_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongLongSequenceEndianness (long long ** longlong_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3545,14 +3708,14 @@ int8_t deserializeLongLongSequenceEndianness (long long ** longlong_t, uint32_t 
 	return result;
 }
 
-int8_t deserializeLongLongArray (long long ** longlong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongLongArray (long long ** longlong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
-	uint32_t sizeLong = sizeof(long long);
+	updateCurrentPosition(m_cdrBuffer);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	uint32_t sizeLong = sizeof(long long);
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3574,14 +3737,15 @@ int8_t deserializeLongLongArray (long long ** longlong_t, const uint32_t numElem
 	return result;
 }
 
-int8_t deserializeLongLongArrayEndianness (long long ** longlong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongLongArrayEndianness (long long ** longlong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(long long);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3603,11 +3767,12 @@ int8_t deserializeLongLongArrayEndianness (long long ** longlong_t, const uint32
 	return result;
 }
 
-int8_t deserializeUnsignedLongLongSequence (unsigned long long ** ulonglong_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongLongSequence (unsigned long long ** ulonglong_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3623,11 +3788,12 @@ int8_t deserializeUnsignedLongLongSequence (unsigned long long ** ulonglong_t, u
 	return result;
 }
 
-int8_t deserializeUnsignedLongLongSequenceEndianness (unsigned long long ** ulonglong_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongLongSequenceEndianness (unsigned long long ** ulonglong_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3643,14 +3809,15 @@ int8_t deserializeUnsignedLongLongSequenceEndianness (unsigned long long ** ulon
 	return result;
 }
 
-int8_t deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(unsigned long long);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3672,14 +3839,15 @@ int8_t deserializeUnsignedLongLongArray (unsigned long long ** ulonglong_t, cons
 	return result;
 }
 
-int8_t deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglong_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglong_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeLong = sizeof(unsigned long long);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeLong;
 	if(unread >= totalSpace)
@@ -3701,11 +3869,12 @@ int8_t deserializeUnsignedLongLongArrayEndianness (unsigned long long ** ulonglo
 	return result;
 }
 
-int8_t deserializeFloatSequence (float ** float_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeFloatSequence (float ** float_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3721,11 +3890,12 @@ int8_t deserializeFloatSequence (float ** float_t, uint32_t * numElements, struc
 	return result;
 }
 
-int8_t deserializeFloatSequenceEndianness (float ** float_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeFloatSequenceEndianness (float ** float_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3741,14 +3911,15 @@ int8_t deserializeFloatSequenceEndianness (float ** float_t, uint32_t * numEleme
 	return result;
 }
 
-int8_t deserializeFloatArray (float ** float_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeFloatArray (float ** float_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeFloat = sizeof(float);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeFloat;
 	if(unread >= totalSpace)
@@ -3770,14 +3941,15 @@ int8_t deserializeFloatArray (float ** float_t, const uint32_t numElements, stru
 	return result;
 }
 
-int8_t deserializeFloatArrayEndianness (float ** float_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeFloatArrayEndianness (float ** float_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeFloat = sizeof(float);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeFloat;
 	if(unread >= totalSpace)
@@ -3799,11 +3971,12 @@ int8_t deserializeFloatArrayEndianness (float ** float_t, const uint32_t numElem
 	return result;
 }
 
-int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3819,11 +3992,12 @@ int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements, st
 	return result;
 }
 
-int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3839,14 +4013,15 @@ int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numEl
 	return result;
 }
 
-int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeDouble = sizeof(double);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
@@ -3868,14 +4043,15 @@ int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements, s
 	return result;
 }
 
-int8_t deserializeDoubleArrayEndianness (double ** double_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeDoubleArrayEndianness (double ** double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeDouble = sizeof(double);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
@@ -3897,11 +4073,12 @@ int8_t deserializeDoubleArrayEndianness (double ** double_t, const uint32_t numE
 	return result;
 }
 
-int8_t deserializeLongDoubleSequence (long double ** longdouble_t, uint32_t * numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongDoubleSequence (long double ** longdouble_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3917,11 +4094,12 @@ int8_t deserializeLongDoubleSequence (long double ** longdouble_t, uint32_t * nu
 	return result;
 }
 
-int8_t deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, uint32_t * numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
 
 	if(unread >= sizeInt)
@@ -3937,14 +4115,15 @@ int8_t deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, uin
 	return result;
 }
 
-int8_t deserializeLongDoubleArray (long double ** longdouble_t, const uint32_t numElements, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongDoubleArray (long double ** longdouble_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeDouble = sizeof(long double);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
@@ -3966,14 +4145,15 @@ int8_t deserializeLongDoubleArray (long double ** longdouble_t, const uint32_t n
 	return result;
 }
 
-int8_t deserializeLongDoubleArrayEndianness (long double ** longdouble_t, const uint32_t numElements, Endianness endianness, struct nanoBuffer * m_cdrBuffer)
+int8_t deserializeLongDoubleArrayEndianness (long double ** longdouble_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
-	uint32_t unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	updateCurrentPosition(m_cdrBuffer);
+	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeDouble = sizeof(long double);
 
-	unread = m_cdrBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+	unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
