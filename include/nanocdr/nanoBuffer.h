@@ -8,6 +8,8 @@
 //const char NANO_DYNAMIC = '1';
 //const char NANO_STATIC = '0';
 
+typedef enum {TRUE,FALSE}Bool;
+
 	struct nanoBuffer
 	{
 		//! @brief Pointer to the beginning of stream.
@@ -21,6 +23,9 @@
 
 		//! @brief The size of the serialized/unserialized data in the stream.
 		uint32_t m_serializedBuffer;
+
+		//!@ brief
+    Bool m_alingData;
 
 	}nanoBuffer;
 #endif

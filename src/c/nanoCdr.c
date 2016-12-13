@@ -9,7 +9,8 @@
 
 #define BUFFER_INITIAL_LENGTH 200
 
-void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer){
+void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer)
+{
 	*m_cdrBuffer = malloc(sizeof(nanoCDR));
 
 	struct nanoCDR cdrBuffer;
@@ -37,7 +38,7 @@ void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer){
 	memcpy(*m_cdrBuffer, (char *)&cdrBuffer, sizeof(nanoCDR));
 }
 
-void newDynamicBuffer(struct nanoBuffer ** m_nanoBuffer)
+void newDynamicAlignedBuffer(struct nanoBuffer ** m_nanoBuffer)
 {
 	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
 
@@ -47,12 +48,13 @@ void newDynamicBuffer(struct nanoBuffer ** m_nanoBuffer)
 	cdrBuffer.m_internalBuffer = '1';
  	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
+	cdrBuffer.m_alingData = TRUE;
 
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
 }
 
 
-void newStaticBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer)
+void newStaticAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer)
 {
 	struct nanoBuffer cdrBuffer;
 
@@ -60,11 +62,41 @@ void newStaticBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m
 	cdrBuffer.m_internalBuffer = '0';
 	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = buffer;
+	cdrBuffer.m_alingData = TRUE;
 
 	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
 }
 
+void newDynamicNonAlignedBuffer(struct nanoBuffer ** m_nanoBuffer)
+{
+	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
+
+	struct nanoBuffer cdrBuffer;
+
+	cdrBuffer.m_bufferSize = BUFFER_INITIAL_LENGTH;
+	cdrBuffer.m_internalBuffer = '1';
+ 	cdrBuffer.m_serializedBuffer = 0;
+	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
+	cdrBuffer.m_alingData = FALSE;
+
+	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
+}
+
+
+void newStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer)
+{
+	struct nanoBuffer cdrBuffer;
+
+	cdrBuffer.m_bufferSize = bufferSize;
+	cdrBuffer.m_internalBuffer = '0';
+	cdrBuffer.m_serializedBuffer = 0;
+	cdrBuffer.m_buffer = buffer;
+	cdrBuffer.m_alingData = FALSE;
+
+	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
+	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
+}
 
 void destroyBuffer(struct nanoBuffer * m_cdrBuffer)
 {
@@ -94,14 +126,20 @@ void resetAlignment(struct nanoCDR * m_cdrBuffer)
 
 uint32_t alignment(uint32_t dataSize, struct nanoCDR * m_cdrBuffer)
 {
-	return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
+	if(m_cdrBuffer->m_nanoBuffer->m_alingData == TRUE)
+		return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
+	else
+		return 0;
 }
 
 void makeAlign(uint32_t align, struct nanoCDR * m_cdrBuffer)
 {
-	m_cdrBuffer->m_currentPosition += align;
-	m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += align;
-	m_cdrBuffer->m_iterator += align;
+	if(m_cdrBuffer->m_nanoBuffer->m_alingData == TRUE)
+	{
+		m_cdrBuffer->m_currentPosition += align;
+		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += align;
+		m_cdrBuffer->m_iterator += align;
+	}
 }
 
 uint32_t getSerializedDataLength(struct nanoCDR * m_cdrBuffer)

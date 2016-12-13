@@ -10,8 +10,6 @@
   //struct nanoBuffer * m_cdrBuffer;
 
   typedef enum {BIG_ENDIANNESS,LITTLE_ENDIANNESS}Endianness;
-  typedef enum {TRUE,FALSE}Bool;
-
 
   struct nanoCDR
   {
@@ -47,7 +45,7 @@
    * @brief This function creates a dynamic stream of bytes.
    * The stream will be used to serialize.
    */
-  nanocdr_DllAPI void newDynamicBuffer (struct nanoBuffer ** m_cdrBuffer);
+  nanocdr_DllAPI void newDynamicAlignedBuffer (struct nanoBuffer ** m_cdrBuffer);
 
 
   /*!
@@ -55,7 +53,21 @@
    * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
    * @param bufferSize The length of user's buffer.
    */
-  nanocdr_DllAPI void newStaticBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_cdrBuffer);
+  nanocdr_DllAPI void newStaticAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_cdrBuffer);
+
+  /*!
+   * @brief This function creates a dynamic stream of bytes.
+   * The stream will be used to serialize.
+   */
+  nanocdr_DllAPI void newDynamicNonAlignedBuffer (struct nanoBuffer ** m_cdrBuffer);
+
+
+  /*!
+   * @brief This function creates a static stream of bytes.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   */
+  nanocdr_DllAPI void newStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_cdrBuffer);
 
   /*!
    * @brief This function destroies the nanoBuffer

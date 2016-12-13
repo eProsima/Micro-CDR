@@ -96,7 +96,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -118,7 +118,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -140,7 +140,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -162,7 +162,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -184,7 +184,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -206,7 +206,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -228,7 +228,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -250,7 +250,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -272,7 +272,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -294,7 +294,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -316,7 +316,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -338,7 +338,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -360,7 +360,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -382,7 +382,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -411,7 +411,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -440,7 +440,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -467,7 +467,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -494,7 +494,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -521,7 +521,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -548,7 +548,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -575,7 +575,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -602,7 +602,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -629,7 +629,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -656,7 +656,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -683,7 +683,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -710,7 +710,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -737,7 +737,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -765,7 +765,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -792,7 +792,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -825,7 +825,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -856,7 +856,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -887,7 +887,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -918,7 +918,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -949,7 +949,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -980,7 +980,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1011,7 +1011,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1042,7 +1042,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1073,7 +1073,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1104,7 +1104,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1135,7 +1135,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1166,7 +1166,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1197,7 +1197,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1227,7 +1227,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1278,7 +1278,7 @@ extern "C" {
     struct nanoCDR * nanoCDRRead = NULL;
 
     // Check good case.
-    newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+    newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
     newNanoCDR(&nanoCDRWrite, nanoBuffer);
     newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1369,7 +1369,7 @@ extern "C" {
     struct nanoCDR * nanoCDRRead = NULL;
 
     // Check good case.
-    newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+    newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
     newNanoCDR(&nanoCDRWrite, nanoBuffer);
     newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1524,7 +1524,7 @@ extern "C" {
     struct nanoCDR * nanoCDRRead = NULL;
 
     // Check good case.
-    newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+    newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
     newNanoCDR(&nanoCDRWrite, nanoBuffer);
     newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -1724,7 +1724,7 @@ extern "C" {
     struct nanoCDR * nanoCDRRead = NULL;
 
     // Check good case.
-    newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+    newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
     newNanoCDR(&nanoCDRWrite, nanoBuffer);
     newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2098,7 +2098,7 @@ extern "C" {
     struct nanoCDR * nanoCDRRead = NULL;
 
     // Check good case.
-    newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+    newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
     newNanoCDR(&nanoCDRWrite, nanoBuffer);
     newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2406,7 +2406,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2428,7 +2428,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2451,7 +2451,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2473,7 +2473,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2495,7 +2495,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2517,7 +2517,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2539,7 +2539,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2561,7 +2561,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2583,7 +2583,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2605,7 +2605,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2627,7 +2627,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2649,7 +2649,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2678,7 +2678,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2707,7 +2707,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2734,7 +2734,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2761,7 +2761,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2788,7 +2788,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2815,7 +2815,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2842,7 +2842,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2869,7 +2869,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2896,7 +2896,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2923,7 +2923,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2950,7 +2950,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -2978,7 +2978,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3005,7 +3005,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3038,7 +3038,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3069,7 +3069,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3100,7 +3100,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3131,7 +3131,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3162,7 +3162,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3193,7 +3193,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3224,7 +3224,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3255,7 +3255,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3286,7 +3286,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3317,7 +3317,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3348,7 +3348,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3379,7 +3379,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3410,7 +3410,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
@@ -3440,7 +3440,7 @@ extern "C" {
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
-      newStaticBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
       newNanoCDR(&nanoCDRRead, nanoBuffer);
 
