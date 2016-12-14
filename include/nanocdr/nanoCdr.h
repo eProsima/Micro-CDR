@@ -42,6 +42,20 @@
   nanocdr_DllAPI void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer);
 
   /*!
+   * @brief This function creates a static stream of bytes.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   */
+  nanocdr_DllAPI void newDeserializedNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer);
+
+  /*!
+   * @brief This function creates a static stream of bytes.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   */
+  nanocdr_DllAPI void newDeserializedAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer);
+
+  /*!
    * @brief This function creates a dynamic stream of bytes.
    * The stream will be used to serialize.
    */

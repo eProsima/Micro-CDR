@@ -90,15 +90,17 @@ extern "C" {
   TEST(nanoCDRBasicTests, Char)
   {
       char char_out;
-      char buffer[BUFFER_LENGTH];
+      char buffer[200];
       struct nanoBuffer * nanoBuffer = NULL;
+      struct nanoBuffer * nanoBufferRead = NULL;
       struct nanoCDR * nanoCDRWrite = NULL;
       struct nanoCDR * nanoCDRRead = NULL;
 
       // Check good case.
       newStaticNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBuffer);
+      newDeserializedNonAlignedBuffer(buffer, BUFFER_LENGTH, &nanoBufferRead);
       newNanoCDR(&nanoCDRWrite, nanoBuffer);
-      newNanoCDR(&nanoCDRRead, nanoBuffer);
+      newNanoCDR(&nanoCDRRead, nanoBufferRead);
 
       // Serialization.
       serializeChar(char_t, nanoCDRWrite);
