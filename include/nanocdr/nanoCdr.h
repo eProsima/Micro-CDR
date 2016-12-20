@@ -11,6 +11,9 @@
 
   typedef enum {BIG_ENDIANNESS,LITTLE_ENDIANNESS}Endianness;
 
+  #define TRUE 0
+  #define FALSE 1
+
   struct nanoCDR
   {
 
@@ -29,7 +32,7 @@
     Endianness m_endianness;
 
     //! @brief This variable indicates if the library must swap the words.
-    Bool m_swapBytes;
+    uint8_t m_swapBytes;
 
     //! @brief Stores the last datasize serialized/deserialized when the state was created.
     uint32_t m_lastDataSize;

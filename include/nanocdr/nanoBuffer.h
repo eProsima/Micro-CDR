@@ -8,7 +8,7 @@
 //const char NANO_DYNAMIC = '1';
 //const char NANO_STATIC = '0';
 
-typedef enum {TRUE,FALSE}Bool;
+//typedef enum {TRUE,FALSE}Bool;
 
 	struct nanoBuffer
 	{
@@ -25,7 +25,7 @@ typedef enum {TRUE,FALSE}Bool;
 		uint32_t m_serializedBuffer;
 
 		//!@ brief
-    Bool m_alingData;
+    uint8_t m_alingData;
 
 	}nanoBuffer;
 #endif

@@ -37,6 +37,8 @@ void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer)
 	cdrBuffer.m_alignPosition = nanoBuffer->m_buffer;
 	cdrBuffer.m_buffer = nanoBuffer->m_buffer;
 
+	cdrBuffer.m_lastDataSize = 0;
+
 	memcpy(*m_cdrBuffer, (char *)&cdrBuffer, sizeof(nanoCDR));
 }
 
@@ -152,7 +154,8 @@ void resetAlignment(struct nanoCDR * m_cdrBuffer)
 
 uint32_t alignment(uint32_t dataSize, struct nanoCDR * m_cdrBuffer)
 {
-	if(m_cdrBuffer->m_nanoBuffer->m_alingData == TRUE)
+	uint8_t alingData = m_cdrBuffer->m_nanoBuffer->m_alingData;
+	if(alingData == TRUE)
 		return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
 	else
 		return 0;
@@ -272,8 +275,8 @@ int8_t jump (uint16_t bytes, struct nanoCDR * m_cdrBuffer)
 int8_t serializeChar (const char char_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-
-	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(char) + align;
 
@@ -302,7 +305,8 @@ int8_t serializeUnsignedChar (const unsigned char uchar_t, struct nanoCDR * m_cd
 {
 	int8_t result = 0;
 
-	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(char) + align;
 
@@ -330,7 +334,8 @@ int8_t serializeSignedChar (const signed char schar_t, struct nanoCDR * m_cdrBuf
 {
 	int8_t result = 0;
 
-	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(char) + align;
 
@@ -361,7 +366,8 @@ int8_t serializeString (const char * string_t, const uint32_t length, struct nan
 	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint32_t needed = sizeof(length) + length + 1;
 
-	uint32_t align = alignment(sizeof(length), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(length), m_cdrBuffer);
 
 	if((resize(needed + align, m_cdrBuffer) == 0) || free >= (needed + align))
 	{
@@ -409,7 +415,8 @@ int8_t serializeStringEndianness (const char * string_t, const uint32_t length, 
 int8_t deserializeChar(char * char_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(char), m_cdrBuffer);
 	updateCurrentPosition(m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
@@ -434,7 +441,8 @@ int8_t deserializeUnsignedChar(unsigned char * uchar_t, struct nanoCDR * m_cdrBu
 {
 	int8_t result = 0;
 	updateCurrentPosition(m_cdrBuffer);
-	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	if((unread - align) >= 1)
@@ -459,7 +467,8 @@ int8_t deserializeSignedChar(signed char * schar_t, struct nanoCDR * m_cdrBuffer
 	int8_t result = 0;
 
 	updateCurrentPosition(m_cdrBuffer);
-	size_t align = alignment(sizeof(char), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(char), m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 
 	if((unread - align) >= 1)
@@ -483,7 +492,8 @@ int8_t deserializeString (char ** string, uint32_t * strlen, struct nanoCDR * m_
 	int8_t result = 0;
 
 	updateCurrentPosition(m_cdrBuffer);
-	size_t align = alignment(sizeof(int32_t), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(int32_t), m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeInt = sizeof(int32_t);
 
@@ -520,7 +530,8 @@ int8_t deserializeStringEndianness (char ** string, uint32_t * strlen, Endiannes
 	int8_t result = 0;
 
 	updateCurrentPosition(m_cdrBuffer);
-	size_t align = alignment(sizeof(int32_t), m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeof(int32_t), m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint16_t sizeInt = sizeof(int32_t);
 
@@ -559,7 +570,8 @@ int8_t serializeShort (const int16_t short_t, struct nanoCDR * m_cdrBuffer)
 	uint32_t free = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
 	uint16_t sizeShort = sizeof(int16_t);
 
-	uint32_t align = alignment(sizeShort, m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeShort, m_cdrBuffer);
 
 	if((resize(sizeShort + align, m_cdrBuffer) == 0) || free >= (sizeShort + align))
 	{
@@ -619,7 +631,8 @@ int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoCDR * m_cdrBu
 	uint16_t sizeShort = sizeof(uint16_t);
 	uint16_t i = 0;
 
-	uint32_t align = alignment(sizeShort, m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeShort, m_cdrBuffer);
 
 	if((resize(sizeShort + align, m_cdrBuffer) == 0) || free >= (sizeShort + align))
 	{
@@ -680,7 +693,8 @@ int8_t serializeInt (const int32_t int_t, struct nanoCDR * m_cdrBuffer)
 	uint16_t sizeInt = sizeof(int32_t);
 	uint16_t i = 0;
 
-	uint32_t align = alignment(sizeInt, m_cdrBuffer);
+	size_t align = 0;
+	align = alignment(sizeInt, m_cdrBuffer);
 
 	if((resize(sizeInt + align, m_cdrBuffer) == 0) || free >= (sizeInt + align))
 	{
@@ -2854,6 +2868,7 @@ int8_t serializeLongDoubleArrayEndianness (const long double * longdouble_t, con
 int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
+	uint32_t i;
 	updateCurrentPosition(m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
@@ -2861,11 +2876,20 @@ int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, stru
 	{
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
-		char ** swap = malloc(*numElements * sizeof(char *));
+		char ** swap;// = malloc(*numElements * sizeof(char *));
+
 		result = deserializeStringArray(&swap, *numElements, m_cdrBuffer);
+
 		*string_t = malloc(*numElements * sizeof(char *));
 		memcpy(*string_t, swap, (*numElements * sizeof(char *)));
+
+		/*for(i = 0; i < *numElements;i++)
+		{
+			free(swap[i]);
+		}*/
+
 		free(swap);
+
 		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	else
@@ -2878,6 +2902,7 @@ int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, stru
 int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
+	uint32_t i;
 	updateCurrentPosition(m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
@@ -2885,10 +2910,17 @@ int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElem
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
-		char ** swap = malloc(*numElements * sizeof(char *));
+		char ** swap;// = malloc(*numElements * sizeof(char *));
 		result = deserializeStringArrayEndianness(&swap, *numElements, endianness, m_cdrBuffer);
+
 		*string_t = malloc(*numElements * sizeof(char *));
 		memcpy(*string_t, swap, (*numElements * sizeof(char *)));
+
+		/*for(i = 0; i < *numElements;i++)
+		{
+			free(swap[i]);
+		}*/
+
 		free(swap);
 		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
@@ -2902,7 +2934,6 @@ int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElem
 int8_t deserializeStringArray (char *** string_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-
 	updateCurrentPosition(m_cdrBuffer);
 	char ** swap = malloc(numElements * sizeof(char * ));
 	*string_t = malloc(numElements * sizeof(char *));
@@ -2916,6 +2947,12 @@ int8_t deserializeStringArray (char *** string_t, const uint32_t numElements, st
 		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	memcpy(*string_t, swap, (numElements * sizeof(char *)));
+
+	/*for(i = 0; i < numElements;i++)
+	{
+		free(swap[i]);
+	}*/
+
 	free(swap);
 	return result;
 }
@@ -2937,6 +2974,7 @@ int8_t deserializeStringArrayEndianness (char *** string_t, const uint32_t numEl
 		m_cdrBuffer->m_lastDataSize = sizeof(char);
 	}
 	memcpy(*string_t, swap, (numElements * sizeof(char *)));
+
 	free(swap);
 	return result;
 }
