@@ -97,7 +97,7 @@ TEST(nanoCDRDynamicBasicTests, Char)
 
     // Check good case.
     newDynamicNonAlignedBuffer(&nanoBuffer);
-    newNanoCDR(&nanoCDRWrite, nanoBuffer);
+    newNanoCDR(&nanoCDRWrite, nanoBuffer);    
     newNanoCDR(&nanoCDRRead, nanoBuffer);
 
     // Serialization.
