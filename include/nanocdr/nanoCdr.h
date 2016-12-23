@@ -25,7 +25,7 @@
     //! @brief This variable indicates the actual position in the stream.
     uint32_t m_iterator;
 
-    //! @brief
+    //! @brief Pointer to the align position.
     char * m_alignPosition;
 
     //! @brief Endianness of the buffer
@@ -37,30 +37,39 @@
     //! @brief Stores the last datasize serialized/deserialized when the state was created.
     uint32_t m_lastDataSize;
 
-    //! @brief
+    //! @brief Coppy of internal buffer.
     char * m_buffer;
 
   }nanoCDR;
 
+
+  /*!
+   * @brief This function creates a nanoCDR with the passed nanoBuffer.
+   * @param m_cdrBuffer Pointer to allocate the new nanoCDR.
+   * @param nanoBuffer Buffer to create nanoCDR.
+   */
+
   nanocdr_DllAPI void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer);
 
   /*!
-   * @brief This function creates a static stream of bytes.
+   * @brief This function creates a static non aligned stream of bytes to deserialize.
    * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
    * @param bufferSize The length of user's buffer.
+   * @param m_nanoBuffer Final nanoBuffer.
    */
   nanocdr_DllAPI void newDeserializedNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer);
 
   /*!
-   * @brief This function creates a static stream of bytes.
+   * @brief This function creates a static aligned stream of bytes.
    * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
    * @param bufferSize The length of user's buffer.
+   * @param m_nanoBuffer Final nanoBuffer.
    */
   nanocdr_DllAPI void newDeserializedAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_nanoBuffer);
 
   /*!
-   * @brief This function creates a dynamic stream of bytes.
-   * The stream will be used to serialize.
+   * @brief This function creates a dynamic aligned stream of bytes.
+   * @param m_nanoBuffer Final nanoBuffer.
    */
   nanocdr_DllAPI void newDynamicAlignedBuffer (struct nanoBuffer ** m_cdrBuffer);
 
@@ -73,8 +82,8 @@
   nanocdr_DllAPI void newStaticAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuffer ** m_cdrBuffer);
 
   /*!
-   * @brief This function creates a dynamic stream of bytes.
-   * The stream will be used to serialize.
+   * @brief This function creates a dynamic aligned stream of bytes.
+   * @param m_nanoBuffer Final nanoBuffer.
    */
   nanocdr_DllAPI void newDynamicNonAlignedBuffer (struct nanoBuffer ** m_cdrBuffer);
 
