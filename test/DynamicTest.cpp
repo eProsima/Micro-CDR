@@ -101,7 +101,7 @@ TEST(nanoCDRDynamicBasicTests, Char)
     // Serialization.
     serializeChar(char_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeChar(&char_out, nanoCDRRead);
 
     EXPECT_EQ(char_out, char_t);
@@ -127,7 +127,7 @@ TEST(nanoCDRDynamicBasicTests, SignedChar)
     // Serialization.
     serializeSignedChar(octet_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeSignedChar(&octect_out, nanoCDRRead);
 
     EXPECT_EQ(octect_out, octet_t);
@@ -153,7 +153,7 @@ TEST(nanoCDRDynamicBasicTests, Short)
     // Serialization.
     serializeShort(short_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShort(&short_out, nanoCDRRead);
 
     EXPECT_EQ(short_out, short_t);
@@ -179,7 +179,7 @@ TEST(nanoCDRDynamicBasicTests, UnsignedShort)
     // Serialization.
     serializeUnsignedShort(ushort_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShort(&ushort_out, nanoCDRRead);
 
     EXPECT_EQ(ushort_out, ushort_t);
@@ -205,7 +205,7 @@ TEST(nanoCDRDynamicBasicTests, Int)
     // Serialization.
     serializeInt(long_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeInt(&long_out, nanoCDRRead);
 
     EXPECT_EQ(long_out, long_t);
@@ -231,7 +231,7 @@ TEST(nanoCDRDynamicBasicTests, UnsignedInt)
     // Serialization.
     serializeUnsignedInt(ulong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedInt(&ulong_out, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulong_t);
@@ -257,7 +257,7 @@ TEST(nanoCDRDynamicBasicTests, Long)
     // Serialization.
     serializeLong(longlong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLong(&long_out, nanoCDRRead);
 
     EXPECT_EQ(long_out, longlong_t);
@@ -283,7 +283,7 @@ TEST(nanoCDRDynamicBasicTests, uLong)
     // Serialization.
     serializeUnsignedLong(ulonglong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLong(&ulong_out, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulonglong_t);
@@ -309,7 +309,7 @@ TEST(nanoCDRDynamicBasicTests, LongLong)
     // Serialization.
     serializeLongLong(longlonglong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLong(&longlong_out, nanoCDRRead);
 
     EXPECT_EQ(longlong_out, longlonglong_t);
@@ -335,7 +335,7 @@ TEST(nanoCDRDynamicBasicTests, uLongLong)
     // Serialization.
     serializeUnsignedLongLong(ulonglonglong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLong(&ulonglong_out, nanoCDRRead);
 
     EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -361,7 +361,7 @@ TEST(nanoCDRDynamicBasicTests, Float)
     // Serialization.
     serializeFloat(float_tt, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloat(&float_out, nanoCDRRead);
 
     EXPECT_EQ(float_out, float_tt);
@@ -387,7 +387,7 @@ TEST(nanoCDRDynamicBasicTests, Double)
     // Serialization.
     serializeDouble(double_tt, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDouble(&double_out, nanoCDRRead);
 
     EXPECT_EQ(double_out, double_tt);
@@ -413,7 +413,7 @@ TEST(nanoCDRDynamicBasicTests, LongDouble)
     // Serialization.
     serializeLongDouble(longdouble_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDouble(&longdouble_out, nanoCDRRead);
 
     EXPECT_EQ(longdouble_out, longdouble_t);
@@ -442,7 +442,7 @@ TEST(nanoCDRDynamicBasicTests, String)
     // Serialization.
     serializeString(string_t, length, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     int8_t result = deserializeString(&string_out, &length_out, nanoCDRRead);
 
     EXPECT_EQ(result, 0);
@@ -478,7 +478,7 @@ TEST(nanoCDRDynamicBasicTests, EmptyString)
     // Serialization.
     serializeString(emptystring_t, length, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeString(&string_out, &length_out, nanoCDRRead);
 
     uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -508,7 +508,7 @@ TEST(nanoCDRDynamicArrayTests, CharArray)
     // Serialization.
     serializeCharArray(char_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeCharArray(&char_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -539,7 +539,7 @@ TEST(nanoCDRDynamicArrayTests, UnsignedCharArray)
     // Serialization.
     serializeUnsignedCharArray(octet_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedCharArray(&char_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -570,7 +570,7 @@ TEST(nanoCDRDynamicArrayTests, ShortArray)
     // Serialization.
     serializeShortArray(short_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortArray(&short_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -601,7 +601,7 @@ TEST(nanoCDRDynamicArrayTests, UnsignedShortArray)
     // Serialization.
     serializeUnsignedShortArray(ushort_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortArray(&ushort_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -632,7 +632,7 @@ TEST(nanoCDRDynamicArrayTests, IntArray)
     // Serialization.
     serializeIntArray(long_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntArray(&int_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -663,7 +663,7 @@ TEST(nanoCDRDynamicArrayTests, UnsignedIntArray)
     // Serialization.
     serializeUnsignedIntArray(ulong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntArray(&uint_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -694,7 +694,7 @@ TEST(nanoCDRDynamicArrayTests, LongArray)
     // Serialization.
     serializeLongArray(longlong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongArray(&long_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -725,7 +725,7 @@ TEST(nanoCDRDynamicArrayTests, ULongArray)
     // Serialization.
     serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongArray(&ulong_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -756,7 +756,7 @@ TEST(nanoCDRDynamicArrayTests, LongLongArray)
     // Serialization.
     serializeLongLongArray(longlonglong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongArray(&longlong_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -787,7 +787,7 @@ TEST(nanoCDRDynamicArrayTests, ULongLongArray)
     // Serialization.
     serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongArray(&ulonglong_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -818,7 +818,7 @@ TEST(nanoCDRDynamicArrayTests, FloatArray)
     // Serialization.
     serializeFloatArray(float_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatArray(&float_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -849,7 +849,7 @@ TEST(nanoCDRDynamicArrayTests, DoubleArray)
     // Serialization.
     serializeDoubleArray(double_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleArray(&double_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -881,7 +881,7 @@ TEST(nanoCDRDynamicArrayTests, LongDoubleArray)
     // Serialization.
     serializeLongDoubleArray(longdouble_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleArray(&longdouble_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -912,7 +912,7 @@ TEST(nanoCDRDynamicArrayTests, StringArray)
     // Serialization.
     serializeStringArray(string_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringArray(&string_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -949,7 +949,7 @@ TEST(nanoCDRDynamicSequencesTests, CharSequence)
     // Serialization.
     serializeCharSequence(char_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeCharSequence(&char_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -984,7 +984,7 @@ TEST(nanoCDRDynamicSequencesTests, UnsignedCharSequence)
     // Serialization.
     serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedCharSequence(&char_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1019,7 +1019,7 @@ TEST(nanoCDRDynamicSequencesTests, ShortSequence)
     // Serialization.
     serializeShortSequence(short_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortSequence(&short_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1054,7 +1054,7 @@ TEST(nanoCDRDynamicSequencesTests, UnsignedShortSequence)
     // Serialization.
     serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortSequence(&ushort_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1089,7 +1089,7 @@ TEST(nanoCDRDynamicSequencesTests, IntSequence)
     // Serialization.
     serializeIntSequence(long_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntSequence(&int_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1124,7 +1124,7 @@ TEST(nanoCDRDynamicSequencesTests, UnsignedIntSequence)
     // Serialization.
     serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntSequence(&uint_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1159,7 +1159,7 @@ TEST(nanoCDRDynamicSequencesTests, LongSequence)
     // Serialization.
     serializeLongSequence(longlong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongSequence(&long_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1194,7 +1194,7 @@ TEST(nanoCDRDynamicSequencesTests, ULongSequence)
     // Serialization.
     serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongSequence(&ulong_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1229,7 +1229,7 @@ TEST(nanoCDRDynamicSequencesTests, LongLongSequence)
     // Serialization.
     serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongSequence(&longlong_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1264,7 +1264,7 @@ TEST(nanoCDRDynamicSequencesTests, ULongLongSequence)
     // Serialization.
     serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongSequence(&ulonglong_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1299,7 +1299,7 @@ TEST(nanoCDRDynamicSequencesTests, FloatSequence)
     // Serialization.
     serializeFloatSequence(float_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatSequence(&float_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1334,7 +1334,7 @@ TEST(nanoCDRDynamicSequencesTests, DoubleSequence)
     // Serialization.
     serializeDoubleSequence(double_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleSequence(&double_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1369,7 +1369,7 @@ TEST(nanoCDRDynamicSequencesTests, LongDoubleSequence)
     // Serialization.
     serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleSequence(&longdouble_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1405,7 +1405,7 @@ TEST(nanoCDRDynamicSequencesTests, StringSequence)
 
     uint32_t size_out;
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringSequence(&string_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -1478,7 +1478,7 @@ TEST(nanoCDRDynamicTests, SimpleVar)
   serializeString(string_t, length, nanoCDRWrite);
   serializeString(emptystring_t, length_2, nanoCDRWrite);
 
-  // Deseriazliation.
+  // Deserialization.
   deserializeChar(&char_out, nanoCDRRead);
   deserializeSignedChar(&octect_out, nanoCDRRead);
   deserializeShort(&short_out, nanoCDRRead);
@@ -1575,7 +1575,7 @@ TEST(nanoCDRDynamicTests, Arrays)
   //EXPECT_EQ(serialized, 130);
 
   if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
     result += deserializeCharArray(&char_out, 5, nanoCDRRead);
     result += deserializeUnsignedCharArray(&uchar_out, 5, nanoCDRRead);
     result += deserializeShortArray(&short_out, 5, nanoCDRRead);
@@ -1732,7 +1732,7 @@ TEST(nanoCDRDynamicTests, Sequences)
   EXPECT_EQ(result, 0);
 
   if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
     result += deserializeCharSequence(&char_out, &char_out_size, nanoCDRRead);
     result += deserializeUnsignedCharSequence(&uchar_out, &uchar_out_size, nanoCDRRead);
     result += deserializeShortSequence(&short_out, &short_out_size, nanoCDRRead);
@@ -1976,7 +1976,7 @@ TEST(nanoCDRDynamicTests, All)
   EXPECT_EQ(result, 0);
 
   if(result == 0){
-  // Deseriazliation.
+  // Deserialization.
     result += deserializeChar(&char_out, nanoCDRRead);
     result += deserializeSignedChar(&octect_out, nanoCDRRead);
     result += deserializeShort(&short_out, nanoCDRRead);
@@ -2355,7 +2355,7 @@ TEST(nanoCDRDynamicTests, AllEndianness)
   EXPECT_EQ(result, 0);
 
   if(result == 0){
-  // Deseriazliation.
+  // Deserialization.
     result += deserializeChar(&char_out, nanoCDRRead);
     result += deserializeSignedChar(&octect_out, nanoCDRRead);
     result += deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
@@ -2609,7 +2609,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, Short)
     // Serialization.
     serializeShortEndianness(short_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(short_out, short_t);
@@ -2635,7 +2635,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, UnsignedShort)
     // Serialization.
     serializeUnsignedShortEndianness(ushort_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortEndianness(&ushort_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ushort_out, ushort_t);
@@ -2662,7 +2662,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, Int)
     // Serialization.
     serializeIntEndianness(long_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntEndianness(&long_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(long_out, long_t);
@@ -2688,7 +2688,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, UnsignedInt)
     // Serialization.
     serializeUnsignedIntEndianness(ulong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntEndianness(&ulong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulong_t);
@@ -2714,7 +2714,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, Long)
     // Serialization.
     serializeLongEndianness(longlong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongEndianness(&long_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(long_out, longlong_t);
@@ -2740,7 +2740,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, uLong)
     // Serialization.
     serializeUnsignedLongEndianness(ulonglong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongEndianness(&ulong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulonglong_t);
@@ -2766,7 +2766,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, LongLong)
     // Serialization.
     serializeLongLongEndianness(longlonglong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongEndianness(&longlong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(longlong_out, longlonglong_t);
@@ -2792,7 +2792,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, uLongLong)
     // Serialization.
     serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongEndianness(&ulonglong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -2818,7 +2818,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, Float)
     // Serialization.
     serializeFloatEndianness(float_tt, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatEndianness(&float_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(float_out, float_tt);
@@ -2844,7 +2844,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, Double)
     // Serialization.
     serializeDoubleEndianness(double_tt, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleEndianness(&double_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(double_out, double_tt);
@@ -2870,7 +2870,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, LongDouble)
     // Serialization.
     serializeLongDoubleEndianness(longdouble_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleEndianness(&longdouble_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(longdouble_out, longdouble_t);
@@ -2899,7 +2899,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, String)
     // Serialization.
     serializeStringEndianness(string_t, length, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
     uint32_t comparative = std::strcmp(string_out, string_t);
@@ -2932,7 +2932,7 @@ TEST(nanoCDRDynamicBasicEndiannessTests, EmptyString)
     // Serialization.
     serializeStringEndianness(emptystring_t, length, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
     uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -2962,7 +2962,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, ShortArray)
     // Serialization.
     serializeShortArrayEndianness(short_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortArrayEndianness(&short_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -2993,7 +2993,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, UnsignedShortArray)
     // Serialization.
     serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3024,7 +3024,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, IntArray)
     // Serialization.
     serializeIntArrayEndianness(long_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntArrayEndianness(&int_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3055,7 +3055,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, UnsignedIntArray)
     // Serialization.
     serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3086,7 +3086,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, LongArray)
     // Serialization.
     serializeLongArrayEndianness(longlong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongArrayEndianness(&long_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3117,7 +3117,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, ULongArray)
     // Serialization.
     serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3148,7 +3148,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, LongLongArray)
     // Serialization.
     serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongArrayEndianness(&longlong_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3179,7 +3179,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, ULongLongArray)
     // Serialization.
     serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3210,7 +3210,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, FloatArray)
     // Serialization.
     serializeFloatArrayEndianness(float_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatArrayEndianness(&float_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3241,7 +3241,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, DoubleArray)
     // Serialization.
     serializeDoubleArrayEndianness(double_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleArrayEndianness(&double_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3273,7 +3273,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, LongDoubleArray)
     // Serialization.
     serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3304,7 +3304,7 @@ TEST(nanoCDRDynamicArrayEndiannessTests, StringArray)
     // Serialization.
     serializeStringArrayEndianness(string_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringArrayEndianness(&string_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -3341,7 +3341,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, CharSequence)
     // Serialization.
     serializeCharSequenceEndianness(char_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3376,7 +3376,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, UnsignedCharSequence)
     // Serialization.
     serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3411,7 +3411,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, ShortSequence)
     // Serialization.
     serializeShortSequenceEndianness(short_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortSequenceEndianness(&short_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3446,7 +3446,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, UnsignedShortSequence)
     // Serialization.
     serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortSequenceEndianness(&ushort_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3481,7 +3481,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, IntSequence)
     // Serialization.
     serializeIntSequenceEndianness(long_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntSequenceEndianness(&int_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3516,7 +3516,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, UnsignedIntSequence)
     // Serialization.
     serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntSequenceEndianness(&uint_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3551,7 +3551,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, LongSequence)
     // Serialization.
     serializeLongSequenceEndianness(longlong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongSequenceEndianness(&long_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3586,7 +3586,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, ULongSequence)
     // Serialization.
     serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongSequenceEndianness(&ulong_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3620,7 +3620,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, LongLongSequence)
     // Serialization.
     serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongSequenceEndianness(&longlong_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3654,7 +3654,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, ULongLongSequence)
     // Serialization.
     serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongSequenceEndianness(&ulonglong_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3688,7 +3688,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, FloatSequence)
     // Serialization.
     serializeFloatSequenceEndianness(float_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatSequenceEndianness(&float_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3722,7 +3722,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, DoubleSequence)
     // Serialization.
     serializeDoubleSequenceEndianness(double_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleSequenceEndianness(&double_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3756,7 +3756,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, LongDoubleSequence)
     // Serialization.
     serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleSequenceEndianness(&longdouble_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3791,7 +3791,7 @@ TEST(nanoCDRDynamicSequencesEndiannessTests, StringSequence)
 
     uint32_t size_out;
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringSequenceEndianness(&string_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -3833,7 +3833,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, Char)
     // Serialization.
     serializeChar(char_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeChar(&char_out, nanoCDRRead);
 
     EXPECT_EQ(char_out, char_t);
@@ -3859,7 +3859,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, SignedChar)
     // Serialization.
     serializeSignedChar(octet_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeSignedChar(&octect_out, nanoCDRRead);
 
     EXPECT_EQ(octect_out, octet_t);
@@ -3885,7 +3885,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, Short)
     // Serialization.
     serializeShort(short_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShort(&short_out, nanoCDRRead);
 
     EXPECT_EQ(short_out, short_t);
@@ -3911,7 +3911,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, UnsignedShort)
     // Serialization.
     serializeUnsignedShort(ushort_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShort(&ushort_out, nanoCDRRead);
 
     EXPECT_EQ(ushort_out, ushort_t);
@@ -3937,7 +3937,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, Int)
     // Serialization.
     serializeInt(long_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeInt(&long_out, nanoCDRRead);
 
     EXPECT_EQ(long_out, long_t);
@@ -3963,7 +3963,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, UnsignedInt)
     // Serialization.
     serializeUnsignedInt(ulong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedInt(&ulong_out, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulong_t);
@@ -3989,7 +3989,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, Long)
     // Serialization.
     serializeLong(longlong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLong(&long_out, nanoCDRRead);
 
     EXPECT_EQ(long_out, longlong_t);
@@ -4015,7 +4015,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, uLong)
     // Serialization.
     serializeUnsignedLong(ulonglong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLong(&ulong_out, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulonglong_t);
@@ -4041,7 +4041,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, LongLong)
     // Serialization.
     serializeLongLong(longlonglong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLong(&longlong_out, nanoCDRRead);
 
     EXPECT_EQ(longlong_out, longlonglong_t);
@@ -4067,7 +4067,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, uLongLong)
     // Serialization.
     serializeUnsignedLongLong(ulonglonglong_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLong(&ulonglong_out, nanoCDRRead);
 
     EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -4093,7 +4093,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, Float)
     // Serialization.
     serializeFloat(float_tt, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloat(&float_out, nanoCDRRead);
 
     EXPECT_EQ(float_out, float_tt);
@@ -4119,7 +4119,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, Double)
     // Serialization.
     serializeDouble(double_tt, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDouble(&double_out, nanoCDRRead);
 
     EXPECT_EQ(double_out, double_tt);
@@ -4145,7 +4145,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, LongDouble)
     // Serialization.
     serializeLongDouble(longdouble_t, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDouble(&longdouble_out, nanoCDRRead);
 
     EXPECT_EQ(longdouble_out, longdouble_t);
@@ -4174,7 +4174,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, String)
     // Serialization.
     serializeString(string_t, length, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     int8_t result = deserializeString(&string_out, &length_out, nanoCDRRead);
 
     EXPECT_EQ(result, 0);
@@ -4210,7 +4210,7 @@ TEST(nanoCDRDynamicAlignedBasicTests, EmptyString)
     // Serialization.
     serializeString(emptystring_t, length, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeString(&string_out, &length_out, nanoCDRRead);
 
     uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -4240,7 +4240,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, CharArray)
     // Serialization.
     serializeCharArray(char_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeCharArray(&char_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4271,7 +4271,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, UnsignedCharArray)
     // Serialization.
     serializeUnsignedCharArray(octet_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedCharArray(&char_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4302,7 +4302,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, ShortArray)
     // Serialization.
     serializeShortArray(short_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortArray(&short_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4333,7 +4333,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, UnsignedShortArray)
     // Serialization.
     serializeUnsignedShortArray(ushort_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortArray(&ushort_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4364,7 +4364,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, IntArray)
     // Serialization.
     serializeIntArray(long_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntArray(&int_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4395,7 +4395,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, UnsignedIntArray)
     // Serialization.
     serializeUnsignedIntArray(ulong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntArray(&uint_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4426,7 +4426,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, LongArray)
     // Serialization.
     serializeLongArray(longlong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongArray(&long_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4457,7 +4457,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, ULongArray)
     // Serialization.
     serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongArray(&ulong_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4488,7 +4488,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, LongLongArray)
     // Serialization.
     serializeLongLongArray(longlonglong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongArray(&longlong_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4519,7 +4519,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, ULongLongArray)
     // Serialization.
     serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongArray(&ulonglong_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4550,7 +4550,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, FloatArray)
     // Serialization.
     serializeFloatArray(float_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatArray(&float_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4581,7 +4581,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, DoubleArray)
     // Serialization.
     serializeDoubleArray(double_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleArray(&double_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4613,7 +4613,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, LongDoubleArray)
     // Serialization.
     serializeLongDoubleArray(longdouble_array_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleArray(&longdouble_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4644,7 +4644,7 @@ TEST(nanoCDRDynamicAlignedArrayTests, StringArray)
     // Serialization.
     serializeStringArray(string_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringArray(&string_out, 5, nanoCDRRead);
 
     int32_t i;
@@ -4681,7 +4681,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, CharSequence)
     // Serialization.
     serializeCharSequence(char_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeCharSequence(&char_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4716,7 +4716,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, UnsignedCharSequence)
     // Serialization.
     serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedCharSequence(&char_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4751,7 +4751,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, ShortSequence)
     // Serialization.
     serializeShortSequence(short_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortSequence(&short_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4786,7 +4786,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, UnsignedShortSequence)
     // Serialization.
     serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortSequence(&ushort_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4821,7 +4821,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, IntSequence)
     // Serialization.
     serializeIntSequence(long_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntSequence(&int_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4856,7 +4856,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, UnsignedIntSequence)
     // Serialization.
     serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntSequence(&uint_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4891,7 +4891,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, LongSequence)
     // Serialization.
     serializeLongSequence(longlong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongSequence(&long_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4926,7 +4926,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, ULongSequence)
     // Serialization.
     serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongSequence(&ulong_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4961,7 +4961,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, LongLongSequence)
     // Serialization.
     serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongSequence(&longlong_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -4996,7 +4996,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, ULongLongSequence)
     // Serialization.
     serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongSequence(&ulonglong_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -5031,7 +5031,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, FloatSequence)
     // Serialization.
     serializeFloatSequence(float_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatSequence(&float_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -5066,7 +5066,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, DoubleSequence)
     // Serialization.
     serializeDoubleSequence(double_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleSequence(&double_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -5101,7 +5101,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, LongDoubleSequence)
     // Serialization.
     serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleSequence(&longdouble_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -5137,7 +5137,7 @@ TEST(nanoCDRDynamicAlignedSequencesTests, StringSequence)
 
     uint32_t size_out;
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringSequence(&string_out, &size_out, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -5210,7 +5210,7 @@ TEST(nanoCDRDynamicAlignedTests, SimpleVar)
   serializeString(string_t, length, nanoCDRWrite);
   serializeString(emptystring_t, length_2, nanoCDRWrite);
 
-  // Deseriazliation.
+  // Deserialization.
   deserializeChar(&char_out, nanoCDRRead);
   deserializeSignedChar(&octect_out, nanoCDRRead);
   deserializeShort(&short_out, nanoCDRRead);
@@ -5307,7 +5307,7 @@ TEST(nanoCDRDynamicAlignedTests, Arrays)
   //EXPECT_EQ(serialized, 130);
 
   if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
     result += deserializeCharArray(&char_out, 5, nanoCDRRead);
     result += deserializeUnsignedCharArray(&uchar_out, 5, nanoCDRRead);
     result += deserializeShortArray(&short_out, 5, nanoCDRRead);
@@ -5464,7 +5464,7 @@ TEST(nanoCDRDynamicAlignedTests, Sequences)
   EXPECT_EQ(result, 0);
 
   if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
     result += deserializeCharSequence(&char_out, &char_out_size, nanoCDRRead);
     result += deserializeUnsignedCharSequence(&uchar_out, &uchar_out_size, nanoCDRRead);
     result += deserializeShortSequence(&short_out, &short_out_size, nanoCDRRead);
@@ -5708,7 +5708,7 @@ TEST(nanoCDRDynamicAlignedTests, All)
   EXPECT_EQ(result, 0);
 
   if(result == 0){
-  // Deseriazliation.
+  // Deserialization.
     result += deserializeChar(&char_out, nanoCDRRead);
     result += deserializeSignedChar(&octect_out, nanoCDRRead);
     result += deserializeShort(&short_out, nanoCDRRead);
@@ -6087,7 +6087,7 @@ TEST(nanoCDRDynamicAlignedTests, AllEndianness)
   EXPECT_EQ(result, 0);
 
   if(result == 0){
-  // Deseriazliation.
+  // Deserialization.
     result += deserializeChar(&char_out, nanoCDRRead);
     result += deserializeSignedChar(&octect_out, nanoCDRRead);
     result += deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
@@ -6341,7 +6341,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, Short)
     // Serialization.
     serializeShortEndianness(short_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(short_out, short_t);
@@ -6367,7 +6367,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, UnsignedShort)
     // Serialization.
     serializeUnsignedShortEndianness(ushort_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortEndianness(&ushort_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ushort_out, ushort_t);
@@ -6394,7 +6394,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, Int)
     // Serialization.
     serializeIntEndianness(long_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntEndianness(&long_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(long_out, long_t);
@@ -6420,7 +6420,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, UnsignedInt)
     // Serialization.
     serializeUnsignedIntEndianness(ulong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntEndianness(&ulong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulong_t);
@@ -6446,7 +6446,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, Long)
     // Serialization.
     serializeLongEndianness(longlong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongEndianness(&long_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(long_out, longlong_t);
@@ -6472,7 +6472,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, uLong)
     // Serialization.
     serializeUnsignedLongEndianness(ulonglong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongEndianness(&ulong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ulong_out, ulonglong_t);
@@ -6498,7 +6498,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, LongLong)
     // Serialization.
     serializeLongLongEndianness(longlonglong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongEndianness(&longlong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(longlong_out, longlonglong_t);
@@ -6524,7 +6524,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, uLongLong)
     // Serialization.
     serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongEndianness(&ulonglong_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -6550,7 +6550,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, Float)
     // Serialization.
     serializeFloatEndianness(float_tt, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatEndianness(&float_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(float_out, float_tt);
@@ -6576,7 +6576,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, Double)
     // Serialization.
     serializeDoubleEndianness(double_tt, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleEndianness(&double_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(double_out, double_tt);
@@ -6602,7 +6602,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, LongDouble)
     // Serialization.
     serializeLongDoubleEndianness(longdouble_t, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleEndianness(&longdouble_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(longdouble_out, longdouble_t);
@@ -6631,7 +6631,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, String)
     // Serialization.
     serializeStringEndianness(string_t, length, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
     uint32_t comparative = std::strcmp(string_out, string_t);
@@ -6664,7 +6664,7 @@ TEST(nanoCDRDynamicAlignedBasicEndiannessTests, EmptyString)
     // Serialization.
     serializeStringEndianness(emptystring_t, length, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
     uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -6694,7 +6694,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, ShortArray)
     // Serialization.
     serializeShortArrayEndianness(short_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortArrayEndianness(&short_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6725,7 +6725,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, UnsignedShortArray)
     // Serialization.
     serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6756,7 +6756,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, IntArray)
     // Serialization.
     serializeIntArrayEndianness(long_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntArrayEndianness(&int_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6787,7 +6787,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, UnsignedIntArray)
     // Serialization.
     serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6818,7 +6818,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, LongArray)
     // Serialization.
     serializeLongArrayEndianness(longlong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongArrayEndianness(&long_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6849,7 +6849,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, ULongArray)
     // Serialization.
     serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6880,7 +6880,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, LongLongArray)
     // Serialization.
     serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongArrayEndianness(&longlong_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6911,7 +6911,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, ULongLongArray)
     // Serialization.
     serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6942,7 +6942,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, FloatArray)
     // Serialization.
     serializeFloatArrayEndianness(float_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatArrayEndianness(&float_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -6973,7 +6973,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, DoubleArray)
     // Serialization.
     serializeDoubleArrayEndianness(double_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleArrayEndianness(&double_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -7005,7 +7005,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, LongDoubleArray)
     // Serialization.
     serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -7036,7 +7036,7 @@ TEST(nanoCDRDynamicAlignedArrayEndiannessTests, StringArray)
     // Serialization.
     serializeStringArrayEndianness(string_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringArrayEndianness(&string_out, 5, endianness, nanoCDRRead);
 
     int32_t i;
@@ -7073,7 +7073,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, CharSequence)
     // Serialization.
     serializeCharSequenceEndianness(char_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7108,7 +7108,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, UnsignedCharSequence)
     // Serialization.
     serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7143,7 +7143,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, ShortSequence)
     // Serialization.
     serializeShortSequenceEndianness(short_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeShortSequenceEndianness(&short_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7178,7 +7178,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, UnsignedShortSequence)
     // Serialization.
     serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedShortSequenceEndianness(&ushort_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7213,7 +7213,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, IntSequence)
     // Serialization.
     serializeIntSequenceEndianness(long_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeIntSequenceEndianness(&int_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7248,7 +7248,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, UnsignedIntSequence)
     // Serialization.
     serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedIntSequenceEndianness(&uint_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7283,7 +7283,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, LongSequence)
     // Serialization.
     serializeLongSequenceEndianness(longlong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongSequenceEndianness(&long_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7318,7 +7318,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, ULongSequence)
     // Serialization.
     serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongSequenceEndianness(&ulong_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7352,7 +7352,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, LongLongSequence)
     // Serialization.
     serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongLongSequenceEndianness(&longlong_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7386,7 +7386,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, ULongLongSequence)
     // Serialization.
     serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeUnsignedLongLongSequenceEndianness(&ulonglong_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7420,7 +7420,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, FloatSequence)
     // Serialization.
     serializeFloatSequenceEndianness(float_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeFloatSequenceEndianness(&float_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7454,7 +7454,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, DoubleSequence)
     // Serialization.
     serializeDoubleSequenceEndianness(double_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeDoubleSequenceEndianness(&double_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7488,7 +7488,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, LongDoubleSequence)
     // Serialization.
     serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeLongDoubleSequenceEndianness(&longdouble_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);
@@ -7523,7 +7523,7 @@ TEST(nanoCDRDynamicAlignedSequencesEndiannessTests, StringSequence)
 
     uint32_t size_out;
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeStringSequenceEndianness(&string_out, &size_out, endianness, nanoCDRRead);
 
     EXPECT_EQ(size_out, 5);

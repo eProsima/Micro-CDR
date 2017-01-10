@@ -105,7 +105,7 @@ extern "C" {
       // Serialization.
       serializeChar(char_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeChar(&char_out, nanoCDRRead);
 
       EXPECT_EQ(char_out, char_t);
@@ -132,7 +132,7 @@ extern "C" {
       // Serialization.
       serializeSignedChar(octet_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeSignedChar(&octect_out, nanoCDRRead);
 
       EXPECT_EQ(octect_out, octet_t);
@@ -158,7 +158,7 @@ extern "C" {
       // Serialization.
       serializeShort(short_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShort(&short_out, nanoCDRRead);
 
       EXPECT_EQ(short_out, short_t);
@@ -184,7 +184,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShort(ushort_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShort(&ushort_out, nanoCDRRead);
 
       EXPECT_EQ(ushort_out, ushort_t);
@@ -210,7 +210,7 @@ extern "C" {
       // Serialization.
       serializeInt(long_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeInt(&long_out, nanoCDRRead);
 
       EXPECT_EQ(long_out, long_t);
@@ -236,7 +236,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedInt(ulong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedInt(&ulong_out, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulong_t);
@@ -262,7 +262,7 @@ extern "C" {
       // Serialization.
       serializeLong(longlong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLong(&long_out, nanoCDRRead);
 
       EXPECT_EQ(long_out, longlong_t);
@@ -288,7 +288,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLong(ulonglong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLong(&ulong_out, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulonglong_t);
@@ -314,7 +314,7 @@ extern "C" {
       // Serialization.
       serializeLongLong(longlonglong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLong(&longlong_out, nanoCDRRead);
 
       EXPECT_EQ(longlong_out, longlonglong_t);
@@ -340,7 +340,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLong(ulonglonglong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLong(&ulonglong_out, nanoCDRRead);
 
       EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -366,7 +366,7 @@ extern "C" {
       // Serialization.
       serializeFloat(float_tt, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloat(&float_out, nanoCDRRead);
 
       EXPECT_EQ(float_out, float_tt);
@@ -392,7 +392,7 @@ extern "C" {
       // Serialization.
       serializeDouble(double_tt, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDouble(&double_out, nanoCDRRead);
 
       EXPECT_EQ(double_out, double_tt);
@@ -418,7 +418,7 @@ extern "C" {
       // Serialization.
       serializeLongDouble(longdouble_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDouble(&longdouble_out, nanoCDRRead);
 
       EXPECT_EQ(longdouble_out, longdouble_t);
@@ -447,7 +447,7 @@ extern "C" {
       // Serialization.
       serializeString(string_t, length, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeString(&string_out, &length_out, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, string_t);
@@ -480,7 +480,7 @@ extern "C" {
       // Serialization.
       serializeString(emptystring_t, length, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeString(&string_out, &length_out, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -510,7 +510,7 @@ extern "C" {
       // Serialization.
       serializeCharArray(char_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeCharArray(&char_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -541,7 +541,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedCharArray(octet_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedCharArray(&char_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -572,7 +572,7 @@ extern "C" {
       // Serialization.
       serializeShortArray(short_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortArray(&short_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -603,7 +603,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortArray(ushort_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortArray(&ushort_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -634,7 +634,7 @@ extern "C" {
       // Serialization.
       serializeIntArray(long_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntArray(&int_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -665,7 +665,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntArray(ulong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntArray(&uint_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -696,7 +696,7 @@ extern "C" {
       // Serialization.
       serializeLongArray(longlong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongArray(&long_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -727,7 +727,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongArray(&ulong_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -758,7 +758,7 @@ extern "C" {
       // Serialization.
       serializeLongLongArray(longlonglong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongArray(&longlong_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -789,7 +789,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongArray(&ulonglong_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -820,7 +820,7 @@ extern "C" {
       // Serialization.
       serializeFloatArray(float_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatArray(&float_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -851,7 +851,7 @@ extern "C" {
       // Serialization.
       serializeDoubleArray(double_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleArray(&double_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -883,7 +883,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleArray(longdouble_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleArray(&longdouble_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -914,7 +914,7 @@ extern "C" {
       // Serialization.
       serializeStringArray(string_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringArray(&string_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -951,7 +951,7 @@ extern "C" {
       // Serialization.
       serializeCharSequence(char_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeCharSequence(&char_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -986,7 +986,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedCharSequence(&char_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1021,7 +1021,7 @@ extern "C" {
       // Serialization.
       serializeShortSequence(short_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortSequence(&short_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1056,7 +1056,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortSequence(&ushort_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1091,7 +1091,7 @@ extern "C" {
       // Serialization.
       serializeIntSequence(long_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntSequence(&int_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1126,7 +1126,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntSequence(&uint_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1161,7 +1161,7 @@ extern "C" {
       // Serialization.
       serializeLongSequence(longlong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongSequence(&long_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1196,7 +1196,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongSequence(&ulong_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1231,7 +1231,7 @@ extern "C" {
       // Serialization.
       serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongSequence(&longlong_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1266,7 +1266,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongSequence(&ulonglong_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1301,7 +1301,7 @@ extern "C" {
       // Serialization.
       serializeFloatSequence(float_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatSequence(&float_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1336,7 +1336,7 @@ extern "C" {
       // Serialization.
       serializeDoubleSequence(double_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleSequence(&double_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1371,7 +1371,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleSequence(&longdouble_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1407,7 +1407,7 @@ extern "C" {
 
       uint32_t size_out;
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringSequence(&string_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -1480,7 +1480,7 @@ extern "C" {
     serializeString(string_t, length, nanoCDRWrite);
     serializeString(emptystring_t, length_2, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeChar(&char_out, nanoCDRRead);
     deserializeSignedChar(&octect_out, nanoCDRRead);
     deserializeShort(&short_out, nanoCDRRead);
@@ -1580,7 +1580,7 @@ extern "C" {
     //EXPECT_EQ(serialized, 130);
 
     if(result == 0){
-      // Deseriazliation.
+      // Deserialization.
       result += deserializeCharArray(&char_out, 5, nanoCDRRead);
       result += deserializeUnsignedCharArray(&uchar_out, 5, nanoCDRRead);
       result += deserializeShortArray(&short_out, 5, nanoCDRRead);
@@ -1737,7 +1737,7 @@ extern "C" {
     EXPECT_EQ(result, 0);
 
     if(result == 0){
-      // Deseriazliation.
+      // Deserialization.
       result += deserializeCharSequence(&char_out, &char_out_size, nanoCDRRead);
       result += deserializeUnsignedCharSequence(&uchar_out, &uchar_out_size, nanoCDRRead);
       result += deserializeShortSequence(&short_out, &short_out_size, nanoCDRRead);
@@ -1983,7 +1983,7 @@ extern "C" {
     EXPECT_EQ(result, 0);
 
     if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
       result += deserializeChar(&char_out, nanoCDRRead);
       result += deserializeSignedChar(&octect_out, nanoCDRRead);
       result += deserializeShort(&short_out, nanoCDRRead);
@@ -2364,7 +2364,7 @@ extern "C" {
     EXPECT_EQ(result, 0);
 
     if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
       result += deserializeChar(&char_out, nanoCDRRead);
       result += deserializeSignedChar(&octect_out, nanoCDRRead);
       result += deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
@@ -2618,7 +2618,7 @@ extern "C" {
       // Serialization.
       serializeShortEndianness(short_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(short_out, short_t);
@@ -2644,7 +2644,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortEndianness(ushort_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortEndianness(&ushort_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ushort_out, ushort_t);
@@ -2671,7 +2671,7 @@ extern "C" {
       // Serialization.
       serializeIntEndianness(long_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntEndianness(&long_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(long_out, long_t);
@@ -2697,7 +2697,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntEndianness(ulong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntEndianness(&ulong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulong_t);
@@ -2723,7 +2723,7 @@ extern "C" {
       // Serialization.
       serializeLongEndianness(longlong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongEndianness(&long_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(long_out, longlong_t);
@@ -2749,7 +2749,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongEndianness(ulonglong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongEndianness(&ulong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulonglong_t);
@@ -2775,7 +2775,7 @@ extern "C" {
       // Serialization.
       serializeLongLongEndianness(longlonglong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongEndianness(&longlong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(longlong_out, longlonglong_t);
@@ -2801,7 +2801,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongEndianness(&ulonglong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -2827,7 +2827,7 @@ extern "C" {
       // Serialization.
       serializeFloatEndianness(float_tt, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatEndianness(&float_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(float_out, float_tt);
@@ -2853,7 +2853,7 @@ extern "C" {
       // Serialization.
       serializeDoubleEndianness(double_tt, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleEndianness(&double_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(double_out, double_tt);
@@ -2879,7 +2879,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleEndianness(longdouble_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleEndianness(&longdouble_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(longdouble_out, longdouble_t);
@@ -2908,7 +2908,7 @@ extern "C" {
       // Serialization.
       serializeStringEndianness(string_t, length, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, string_t);
@@ -2941,7 +2941,7 @@ extern "C" {
       // Serialization.
       serializeStringEndianness(emptystring_t, length, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -2971,7 +2971,7 @@ extern "C" {
       // Serialization.
       serializeShortArrayEndianness(short_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortArrayEndianness(&short_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3002,7 +3002,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3033,7 +3033,7 @@ extern "C" {
       // Serialization.
       serializeIntArrayEndianness(long_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntArrayEndianness(&int_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3064,7 +3064,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3095,7 +3095,7 @@ extern "C" {
       // Serialization.
       serializeLongArrayEndianness(longlong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongArrayEndianness(&long_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3126,7 +3126,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3157,7 +3157,7 @@ extern "C" {
       // Serialization.
       serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongArrayEndianness(&longlong_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3188,7 +3188,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3219,7 +3219,7 @@ extern "C" {
       // Serialization.
       serializeFloatArrayEndianness(float_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatArrayEndianness(&float_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3250,7 +3250,7 @@ extern "C" {
       // Serialization.
       serializeDoubleArrayEndianness(double_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleArrayEndianness(&double_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3282,7 +3282,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3313,7 +3313,7 @@ extern "C" {
       // Serialization.
       serializeStringArrayEndianness(string_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringArrayEndianness(&string_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -3350,7 +3350,7 @@ extern "C" {
       // Serialization.
       serializeCharSequenceEndianness(char_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3385,7 +3385,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3420,7 +3420,7 @@ extern "C" {
       // Serialization.
       serializeShortSequenceEndianness(short_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortSequenceEndianness(&short_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3455,7 +3455,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortSequenceEndianness(&ushort_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3490,7 +3490,7 @@ extern "C" {
       // Serialization.
       serializeIntSequenceEndianness(long_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntSequenceEndianness(&int_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3525,7 +3525,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntSequenceEndianness(&uint_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3560,7 +3560,7 @@ extern "C" {
       // Serialization.
       serializeLongSequenceEndianness(longlong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongSequenceEndianness(&long_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3595,7 +3595,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongSequenceEndianness(&ulong_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3630,7 +3630,7 @@ extern "C" {
       // Serialization.
       serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongSequenceEndianness(&longlong_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3665,7 +3665,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongSequenceEndianness(&ulonglong_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3700,7 +3700,7 @@ extern "C" {
       // Serialization.
       serializeFloatSequenceEndianness(float_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatSequenceEndianness(&float_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3735,7 +3735,7 @@ extern "C" {
       // Serialization.
       serializeDoubleSequenceEndianness(double_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleSequenceEndianness(&double_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3770,7 +3770,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleSequenceEndianness(&longdouble_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3806,7 +3806,7 @@ extern "C" {
 
       uint32_t size_out;
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringSequenceEndianness(&string_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -3851,7 +3851,7 @@ extern "C" {
       // Serialization.
       serializeChar(char_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeChar(&char_out, nanoCDRRead);
 
       EXPECT_EQ(char_out, char_t);
@@ -3878,7 +3878,7 @@ extern "C" {
       // Serialization.
       serializeSignedChar(octet_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeSignedChar(&octect_out, nanoCDRRead);
 
       EXPECT_EQ(octect_out, octet_t);
@@ -3904,7 +3904,7 @@ extern "C" {
       // Serialization.
       serializeShort(short_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShort(&short_out, nanoCDRRead);
 
       EXPECT_EQ(short_out, short_t);
@@ -3930,7 +3930,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShort(ushort_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShort(&ushort_out, nanoCDRRead);
 
       EXPECT_EQ(ushort_out, ushort_t);
@@ -3956,7 +3956,7 @@ extern "C" {
       // Serialization.
       serializeInt(long_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeInt(&long_out, nanoCDRRead);
 
       EXPECT_EQ(long_out, long_t);
@@ -3982,7 +3982,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedInt(ulong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedInt(&ulong_out, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulong_t);
@@ -4008,7 +4008,7 @@ extern "C" {
       // Serialization.
       serializeLong(longlong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLong(&long_out, nanoCDRRead);
 
       EXPECT_EQ(long_out, longlong_t);
@@ -4034,7 +4034,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLong(ulonglong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLong(&ulong_out, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulonglong_t);
@@ -4060,7 +4060,7 @@ extern "C" {
       // Serialization.
       serializeLongLong(longlonglong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLong(&longlong_out, nanoCDRRead);
 
       EXPECT_EQ(longlong_out, longlonglong_t);
@@ -4086,7 +4086,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLong(ulonglonglong_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLong(&ulonglong_out, nanoCDRRead);
 
       EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -4112,7 +4112,7 @@ extern "C" {
       // Serialization.
       serializeFloat(float_tt, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloat(&float_out, nanoCDRRead);
 
       EXPECT_EQ(float_out, float_tt);
@@ -4138,7 +4138,7 @@ extern "C" {
       // Serialization.
       serializeDouble(double_tt, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDouble(&double_out, nanoCDRRead);
 
       EXPECT_EQ(double_out, double_tt);
@@ -4164,7 +4164,7 @@ extern "C" {
       // Serialization.
       serializeLongDouble(longdouble_t, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDouble(&longdouble_out, nanoCDRRead);
 
       EXPECT_EQ(longdouble_out, longdouble_t);
@@ -4193,7 +4193,7 @@ extern "C" {
       // Serialization.
       serializeString(string_t, length, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeString(&string_out, &length_out, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, string_t);
@@ -4226,7 +4226,7 @@ extern "C" {
       // Serialization.
       serializeString(emptystring_t, length, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeString(&string_out, &length_out, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -4256,7 +4256,7 @@ extern "C" {
       // Serialization.
       serializeCharArray(char_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeCharArray(&char_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4287,7 +4287,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedCharArray(octet_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedCharArray(&char_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4318,7 +4318,7 @@ extern "C" {
       // Serialization.
       serializeShortArray(short_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortArray(&short_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4349,7 +4349,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortArray(ushort_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortArray(&ushort_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4380,7 +4380,7 @@ extern "C" {
       // Serialization.
       serializeIntArray(long_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntArray(&int_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4411,7 +4411,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntArray(ulong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntArray(&uint_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4442,7 +4442,7 @@ extern "C" {
       // Serialization.
       serializeLongArray(longlong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongArray(&long_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4473,7 +4473,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongArray(ulonglong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongArray(&ulong_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4504,7 +4504,7 @@ extern "C" {
       // Serialization.
       serializeLongLongArray(longlonglong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongArray(&longlong_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4535,7 +4535,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongArray(ulonglonglong_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongArray(&ulonglong_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4566,7 +4566,7 @@ extern "C" {
       // Serialization.
       serializeFloatArray(float_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatArray(&float_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4597,7 +4597,7 @@ extern "C" {
       // Serialization.
       serializeDoubleArray(double_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleArray(&double_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4629,7 +4629,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleArray(longdouble_array_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleArray(&longdouble_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4660,7 +4660,7 @@ extern "C" {
       // Serialization.
       serializeStringArray(string_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringArray(&string_out, 5, nanoCDRRead);
 
       int32_t i;
@@ -4697,7 +4697,7 @@ extern "C" {
       // Serialization.
       serializeCharSequence(char_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeCharSequence(&char_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4732,7 +4732,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedCharSequence(octet_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedCharSequence(&char_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4767,7 +4767,7 @@ extern "C" {
       // Serialization.
       serializeShortSequence(short_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortSequence(&short_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4802,7 +4802,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortSequence(ushort_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortSequence(&ushort_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4837,7 +4837,7 @@ extern "C" {
       // Serialization.
       serializeIntSequence(long_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntSequence(&int_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4872,7 +4872,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntSequence(ulong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntSequence(&uint_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4907,7 +4907,7 @@ extern "C" {
       // Serialization.
       serializeLongSequence(longlong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongSequence(&long_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4942,7 +4942,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongSequence(ulonglong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongSequence(&ulong_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -4977,7 +4977,7 @@ extern "C" {
       // Serialization.
       serializeLongLongSequence(longlonglong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongSequence(&longlong_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -5012,7 +5012,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongSequence(ulonglonglong_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongSequence(&ulonglong_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -5047,7 +5047,7 @@ extern "C" {
       // Serialization.
       serializeFloatSequence(float_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatSequence(&float_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -5082,7 +5082,7 @@ extern "C" {
       // Serialization.
       serializeDoubleSequence(double_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleSequence(&double_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -5117,7 +5117,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleSequence(longdouble_seq_t, 5, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleSequence(&longdouble_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -5153,7 +5153,7 @@ extern "C" {
 
       uint32_t size_out;
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringSequence(&string_out, &size_out, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -5226,7 +5226,7 @@ extern "C" {
     serializeString(string_t, length, nanoCDRWrite);
     serializeString(emptystring_t, length_2, nanoCDRWrite);
 
-    // Deseriazliation.
+    // Deserialization.
     deserializeChar(&char_out, nanoCDRRead);
     deserializeSignedChar(&octect_out, nanoCDRRead);
     deserializeShort(&short_out, nanoCDRRead);
@@ -5326,7 +5326,7 @@ extern "C" {
     //EXPECT_EQ(serialized, 130);
 
     if(result == 0){
-      // Deseriazliation.
+      // Deserialization.
       result += deserializeCharArray(&char_out, 5, nanoCDRRead);
       result += deserializeUnsignedCharArray(&uchar_out, 5, nanoCDRRead);
       result += deserializeShortArray(&short_out, 5, nanoCDRRead);
@@ -5483,7 +5483,7 @@ extern "C" {
     EXPECT_EQ(result, 0);
 
     if(result == 0){
-      // Deseriazliation.
+      // Deserialization.
       result += deserializeCharSequence(&char_out, &char_out_size, nanoCDRRead);
       result += deserializeUnsignedCharSequence(&uchar_out, &uchar_out_size, nanoCDRRead);
       result += deserializeShortSequence(&short_out, &short_out_size, nanoCDRRead);
@@ -5729,7 +5729,7 @@ extern "C" {
     EXPECT_EQ(result, 0);
 
     if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
       result += deserializeChar(&char_out, nanoCDRRead);
       result += deserializeSignedChar(&octect_out, nanoCDRRead);
       result += deserializeShort(&short_out, nanoCDRRead);
@@ -6110,7 +6110,7 @@ extern "C" {
     EXPECT_EQ(result, 0);
 
     if(result == 0){
-    // Deseriazliation.
+    // Deserialization.
       result += deserializeChar(&char_out, nanoCDRRead);
       result += deserializeSignedChar(&octect_out, nanoCDRRead);
       result += deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
@@ -6364,7 +6364,7 @@ extern "C" {
       // Serialization.
       serializeShortEndianness(short_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortEndianness(&short_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(short_out, short_t);
@@ -6390,7 +6390,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortEndianness(ushort_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortEndianness(&ushort_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ushort_out, ushort_t);
@@ -6416,7 +6416,7 @@ extern "C" {
       // Serialization.
       serializeIntEndianness(long_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntEndianness(&long_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(long_out, long_t);
@@ -6442,7 +6442,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntEndianness(ulong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntEndianness(&ulong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulong_t);
@@ -6468,7 +6468,7 @@ extern "C" {
       // Serialization.
       serializeLongEndianness(longlong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongEndianness(&long_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(long_out, longlong_t);
@@ -6494,7 +6494,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongEndianness(ulonglong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongEndianness(&ulong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ulong_out, ulonglong_t);
@@ -6520,7 +6520,7 @@ extern "C" {
       // Serialization.
       serializeLongLongEndianness(longlonglong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongEndianness(&longlong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(longlong_out, longlonglong_t);
@@ -6546,7 +6546,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongEndianness(ulonglonglong_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongEndianness(&ulonglong_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(ulonglong_out, ulonglonglong_t);
@@ -6572,7 +6572,7 @@ extern "C" {
       // Serialization.
       serializeFloatEndianness(float_tt, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatEndianness(&float_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(float_out, float_tt);
@@ -6598,7 +6598,7 @@ extern "C" {
       // Serialization.
       serializeDoubleEndianness(double_tt, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleEndianness(&double_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(double_out, double_tt);
@@ -6624,7 +6624,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleEndianness(longdouble_t, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleEndianness(&longdouble_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(longdouble_out, longdouble_t);
@@ -6653,7 +6653,7 @@ extern "C" {
       // Serialization.
       serializeStringEndianness(string_t, length, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, string_t);
@@ -6686,7 +6686,7 @@ extern "C" {
       // Serialization.
       serializeStringEndianness(emptystring_t, length, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringEndianness(&string_out, &length_out, endianness, nanoCDRRead);
 
       uint32_t comparative = std::strcmp(string_out, emptystring_t);
@@ -6716,7 +6716,7 @@ extern "C" {
       // Serialization.
       serializeShortArrayEndianness(short_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortArrayEndianness(&short_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6747,7 +6747,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortArrayEndianness(ushort_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortArrayEndianness(&ushort_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6778,7 +6778,7 @@ extern "C" {
       // Serialization.
       serializeIntArrayEndianness(long_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntArrayEndianness(&int_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6809,7 +6809,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntArrayEndianness(ulong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntArrayEndianness(&uint_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6840,7 +6840,7 @@ extern "C" {
       // Serialization.
       serializeLongArrayEndianness(longlong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongArrayEndianness(&long_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6871,7 +6871,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongArrayEndianness(ulonglong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongArrayEndianness(&ulong_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6902,7 +6902,7 @@ extern "C" {
       // Serialization.
       serializeLongLongArrayEndianness(longlonglong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongArrayEndianness(&longlong_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6933,7 +6933,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongArrayEndianness(ulonglonglong_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongArrayEndianness(&ulonglong_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6964,7 +6964,7 @@ extern "C" {
       // Serialization.
       serializeFloatArrayEndianness(float_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatArrayEndianness(&float_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -6995,7 +6995,7 @@ extern "C" {
       // Serialization.
       serializeDoubleArrayEndianness(double_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleArrayEndianness(&double_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -7027,7 +7027,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleArrayEndianness(longdouble_array_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleArrayEndianness(&longdouble_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -7058,7 +7058,7 @@ extern "C" {
       // Serialization.
       serializeStringArrayEndianness(string_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringArrayEndianness(&string_out, 5, endianness, nanoCDRRead);
 
       int32_t i;
@@ -7095,7 +7095,7 @@ extern "C" {
       // Serialization.
       serializeCharSequenceEndianness(char_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7130,7 +7130,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedCharSequenceEndianness(octet_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedCharSequenceEndianness(&char_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7165,7 +7165,7 @@ extern "C" {
       // Serialization.
       serializeShortSequenceEndianness(short_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeShortSequenceEndianness(&short_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7200,7 +7200,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedShortSequenceEndianness(ushort_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedShortSequenceEndianness(&ushort_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7235,7 +7235,7 @@ extern "C" {
       // Serialization.
       serializeIntSequenceEndianness(long_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeIntSequenceEndianness(&int_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7270,7 +7270,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedIntSequenceEndianness(ulong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedIntSequenceEndianness(&uint_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7305,7 +7305,7 @@ extern "C" {
       // Serialization.
       serializeLongSequenceEndianness(longlong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongSequenceEndianness(&long_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7340,7 +7340,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongSequenceEndianness(ulonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongSequenceEndianness(&ulong_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7375,7 +7375,7 @@ extern "C" {
       // Serialization.
       serializeLongLongSequenceEndianness(longlonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongLongSequenceEndianness(&longlong_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7410,7 +7410,7 @@ extern "C" {
       // Serialization.
       serializeUnsignedLongLongSequenceEndianness(ulonglonglong_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeUnsignedLongLongSequenceEndianness(&ulonglong_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7445,7 +7445,7 @@ extern "C" {
       // Serialization.
       serializeFloatSequenceEndianness(float_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeFloatSequenceEndianness(&float_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7480,7 +7480,7 @@ extern "C" {
       // Serialization.
       serializeDoubleSequenceEndianness(double_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeDoubleSequenceEndianness(&double_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7515,7 +7515,7 @@ extern "C" {
       // Serialization.
       serializeLongDoubleSequenceEndianness(longdouble_seq_t, 5, endianness, nanoCDRWrite);
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeLongDoubleSequenceEndianness(&longdouble_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);
@@ -7551,7 +7551,7 @@ extern "C" {
 
       uint32_t size_out;
 
-      // Deseriazliation.
+      // Deserialization.
       deserializeStringSequenceEndianness(&string_out, &size_out, endianness, nanoCDRRead);
 
       EXPECT_EQ(size_out, 5);

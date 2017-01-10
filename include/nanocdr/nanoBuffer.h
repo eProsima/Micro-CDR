@@ -24,8 +24,8 @@
 		//! @brief The size of the serialized/unserialized data in the stream.
 		uint32_t m_serializedBuffer;
 
-		//!@ brief
-    uint8_t m_alingData;
+		//!@ brief This variable indicates if the managed buffer stream is aligned or not
+        uint8_t m_alingData;
 
 	}nanoBuffer;
 #endif
