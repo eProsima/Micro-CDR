@@ -10,7 +10,7 @@
 
 //typedef enum {TRUE,FALSE}Bool;
 
-	struct nanoBuffer
+	typedef struct nanoBuffer
 	{
 		//! @brief Pointer to the beginning of stream.
 		char * m_buffer;

@@ -11,10 +11,10 @@
 
   typedef enum {BIG_ENDIANNESS,LITTLE_ENDIANNESS}Endianness;
 
-  #define TRUE 0
-  #define FALSE 1
+  #define NCDR_TRUE 0
+  #define NCDR_FALSE 1
 
-  struct nanoCDR
+  typedef struct nanoCDR
   {
 
     struct nanoBuffer * m_nanoBuffer;
@@ -40,7 +40,7 @@
     //! @brief Coppy of internal buffer.
     char * m_buffer;
 
-  }nanoCDR;
+}nanoCDR;
 
 
   /*!
@@ -49,7 +49,7 @@
    * @param nanoBuffer Buffer to create nanoCDR.
    */
 
-  nanocdr_DllAPI void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer);
+  nanocdr_DllAPI void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * m_nanoBuffer);
 
   /*!
    * @brief This function creates a static non aligned stream of bytes to deserialize.
@@ -116,7 +116,7 @@
   nanocdr_DllAPI void freeCdr (void ** point_t);
 
 
-  nanocdr_DllAPI void resetAlignment();
+  nanocdr_DllAPI void resetAlignment(struct nanoCDR * m_cdrBuffer);
 
   /*!
    * @brief This function returns the extra bytes regarding the allignment.
@@ -138,6 +138,11 @@
   * @return The length of the serialized data.
   */
   nanocdr_DllAPI uint32_t getSerializedDataLength(struct nanoCDR * m_cdrBuffer);
+
+  /*!
+   * @brief TODO
+   */
+  nanocdr_DllAPI char * getBufferPointer(struct nanoCDR * m_cdrBuffer);
 
   /*!
   * @brief This function resets the current position in the buffer to the begining.

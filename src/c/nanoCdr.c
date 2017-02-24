@@ -11,13 +11,13 @@
 
 #define BUFFER_INITIAL_LENGTH 200
 
-void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer)
+void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * m_nanoBuffer)
 {
 	*m_cdrBuffer = malloc(sizeof(nanoCDR));
 
 	struct nanoCDR cdrBuffer;
 
-	cdrBuffer.m_nanoBuffer = nanoBuffer;
+	cdrBuffer.m_nanoBuffer = m_nanoBuffer;
 	cdrBuffer.m_iterator = 0;
 
 	int32_t local_i = 1;
@@ -31,11 +31,11 @@ void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * nanoBuffer)
 	{
 		cdrBuffer.m_endianness = BIG_ENDIANNESS;
 	}
-	cdrBuffer.m_swapBytes = FALSE;
+	cdrBuffer.m_swapBytes = NCDR_FALSE;
 
-	cdrBuffer.m_currentPosition = nanoBuffer->m_buffer;
-	cdrBuffer.m_alignPosition = nanoBuffer->m_buffer;
-	cdrBuffer.m_buffer = nanoBuffer->m_buffer;
+	cdrBuffer.m_currentPosition = m_nanoBuffer->m_buffer;
+	cdrBuffer.m_alignPosition = m_nanoBuffer->m_buffer;
+	cdrBuffer.m_buffer = m_nanoBuffer->m_buffer;
 
 	cdrBuffer.m_lastDataSize = 0;
 
@@ -50,7 +50,7 @@ void newDeserializedAlignedBuffer(char * buffer, uint32_t bufferSize, struct nan
 	cdrBuffer.m_internalBuffer = '0';
 	cdrBuffer.m_serializedBuffer = bufferSize;
 	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = TRUE;
+	cdrBuffer.m_alingData = NCDR_TRUE;
 
 	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
@@ -64,7 +64,7 @@ void newDeserializedNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct
 	cdrBuffer.m_internalBuffer = '0';
 	cdrBuffer.m_serializedBuffer = bufferSize;
 	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = FALSE;
+	cdrBuffer.m_alingData = NCDR_FALSE;
 
 	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
@@ -80,7 +80,7 @@ void newDynamicAlignedBuffer(struct nanoBuffer ** m_nanoBuffer)
 	cdrBuffer.m_internalBuffer = '1';
  	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
-	cdrBuffer.m_alingData = TRUE;
+	cdrBuffer.m_alingData = NCDR_TRUE;
 
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
 }
@@ -93,7 +93,7 @@ void newStaticAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoBuff
 	cdrBuffer.m_internalBuffer = '0';
 	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = TRUE;
+	cdrBuffer.m_alingData = NCDR_TRUE;
 
 	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
@@ -109,7 +109,7 @@ void newDynamicNonAlignedBuffer(struct nanoBuffer ** m_nanoBuffer)
 	cdrBuffer.m_internalBuffer = '1';
  	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
-	cdrBuffer.m_alingData = FALSE;
+	cdrBuffer.m_alingData = NCDR_FALSE;
 
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
 }
@@ -122,7 +122,7 @@ void newStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct nanoB
 	cdrBuffer.m_internalBuffer = '0';
 	cdrBuffer.m_serializedBuffer = 0;
 	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = FALSE;
+	cdrBuffer.m_alingData = NCDR_FALSE;
 
 	*m_nanoBuffer = malloc(sizeof(nanoBuffer));
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
@@ -155,7 +155,7 @@ void resetAlignment(struct nanoCDR * m_cdrBuffer)
 uint32_t alignment(uint32_t dataSize, struct nanoCDR * m_cdrBuffer)
 {
 	uint8_t alingData = m_cdrBuffer->m_nanoBuffer->m_alingData;
-	if(alingData == TRUE)
+	if(alingData == NCDR_TRUE)
 		return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
 	else
 		return 0;
@@ -163,7 +163,7 @@ uint32_t alignment(uint32_t dataSize, struct nanoCDR * m_cdrBuffer)
 
 void makeAlign(uint32_t align, struct nanoCDR * m_cdrBuffer)
 {
-	if(m_cdrBuffer->m_nanoBuffer->m_alingData == TRUE)
+	if(m_cdrBuffer->m_nanoBuffer->m_alingData == NCDR_TRUE)
 	{
 		m_cdrBuffer->m_currentPosition += align;
 		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer += align;
@@ -190,8 +190,8 @@ void changeEndianness (Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 		m_cdrBuffer->m_endianness = endianness;
 	}
 }
@@ -580,7 +580,7 @@ int8_t serializeShort (const int16_t short_t, struct nanoCDR * m_cdrBuffer)
 		// Align.
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * short_c = (char *)&short_t;
 			m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer] = short_c[1];
@@ -608,13 +608,13 @@ int8_t serializeShortEndianness (const int16_t short_t, Endianness endianness, s
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeShort (short_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -641,7 +641,7 @@ int8_t serializeUnsignedShort (const uint16_t ushort_t, struct nanoCDR * m_cdrBu
 		// Align.
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * short_c = (char *)&ushort_t;
 			for (i = 0; i < sizeShort; i++)
@@ -670,13 +670,13 @@ int8_t serializeUnsignedShortEndianness (const uint16_t ushort_t, Endianness end
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeUnsignedShort (ushort_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) {m_cdrBuffer->m_swapBytes = FALSE; }
-		else {m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) {m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else {m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -701,7 +701,7 @@ int8_t serializeInt (const int32_t int_t, struct nanoCDR * m_cdrBuffer)
 		m_cdrBuffer->m_lastDataSize = sizeInt;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * int_c = (char *)&int_t;
 			for (i = 0; i < sizeInt; i++){
@@ -730,13 +730,13 @@ int8_t serializeIntEndianness (const int32_t int_t, Endianness endianness, struc
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeInt (int_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -760,7 +760,7 @@ int8_t serializeUnsignedInt (const uint32_t uint_t, struct nanoCDR * m_cdrBuffer
 		m_cdrBuffer->m_lastDataSize = sizeInt;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * int_c = (char *)&uint_t;
 			for (i = 0; i < sizeInt; i++){
@@ -789,13 +789,13 @@ int8_t serializeUnsignedIntEndianness (const uint32_t uint_t, Endianness endiann
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeUnsignedInt (uint_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -821,7 +821,7 @@ int8_t serializeLong (const int64_t long_t, struct nanoCDR * m_cdrBuffer)
 
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * long_c = (char *)&long_t;
 			for (i = 0; i < sizeLong; i++){
@@ -849,13 +849,13 @@ int8_t serializeLongEndianness (const int64_t long_t, Endianness endianness, str
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeLong (long_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -880,7 +880,7 @@ int8_t serializeUnsignedLong (const uint64_t ulong_t, struct nanoCDR * m_cdrBuff
 		m_cdrBuffer->m_lastDataSize = sizeLong;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * long_c = (char *)&ulong_t;
 			for (i = 0; i < sizeLong; i++){
@@ -907,13 +907,13 @@ int8_t serializeUnsignedLongEndianness (const uint64_t ulong_t, Endianness endia
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeUnsignedLong (ulong_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -938,7 +938,7 @@ int8_t serializeLongLong (const long long longlong_t, struct nanoCDR * m_cdrBuff
 		m_cdrBuffer->m_lastDataSize = sizeLong;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * long_c = (char *)&longlong_t;
 			for (i = 0; i < sizeLong; i++){
@@ -965,13 +965,13 @@ int8_t serializeLongLongEndianness (const long long longlong_t, Endianness endia
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeLongLong (longlong_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -995,7 +995,7 @@ int8_t serializeUnsignedLongLong (const unsigned long long ulonglong_t, struct n
 		m_cdrBuffer->m_lastDataSize = sizeLong;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * long_c = (char *)&ulonglong_t;
 			for (i = 0; i < sizeLong; i++){
@@ -1022,13 +1022,13 @@ int8_t serializeUnsignedLongLongEndianness (const unsigned long long ulonglong_t
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeUnsignedLongLong(ulonglong_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1052,7 +1052,7 @@ int8_t serializeFloat (const float float_t, struct nanoCDR * m_cdrBuffer)
 		m_cdrBuffer->m_lastDataSize = sizeFloat;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * float_c = (char *)&float_t;
 
@@ -1082,13 +1082,13 @@ int8_t serializeFloatEndianness (const float float_t, Endianness endianness, str
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeFloat(float_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1097,7 +1097,7 @@ int8_t serializeFloatEndianness (const float float_t, Endianness endianness, str
 	return result;
 }
 
-int8_t serializeDouble (const double double_t, struct nanoCDR * m_cdrBuffer)
+int8_t serializeDouble (const double m_double_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1113,16 +1113,16 @@ int8_t serializeDouble (const double double_t, struct nanoCDR * m_cdrBuffer)
 		m_cdrBuffer->m_lastDataSize = sizeDouble;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
-			char * double_c = (char *)&double_t;
+			char * double_c = (char *)&m_double_t;
 			for (i = 0; i < sizeDouble; i++){
 				m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_nanoBuffer->m_serializedBuffer + i] = double_c[sizeDouble - i - 1];
 			}
 		}
 		else
 		{
-			memcpy(m_cdrBuffer->m_currentPosition, (char *)&double_t, sizeDouble);
+			memcpy(m_cdrBuffer->m_currentPosition, (char *)&m_double_t, sizeDouble);
 		}
 
 		m_cdrBuffer->m_nanoBuffer->m_serializedBuffer +=sizeDouble;
@@ -1135,23 +1135,23 @@ int8_t serializeDouble (const double double_t, struct nanoCDR * m_cdrBuffer)
 	return result;
 }
 
-int8_t serializeDoubleEndianness (const double double_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
+int8_t serializeDoubleEndianness (const double m_double_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
-		result = serializeDouble(double_t, m_cdrBuffer);
+		result = serializeDouble(m_double_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
-		result = serializeDouble(double_t, m_cdrBuffer);
+		result = serializeDouble(m_double_t, m_cdrBuffer);
 	}
 	return result;
 }
@@ -1171,7 +1171,7 @@ int8_t serializeLongDouble (const long double longdouble_t, struct nanoCDR * m_c
 		m_cdrBuffer->m_lastDataSize = sizeDouble;
 		makeAlign(align, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE)
 		{
 			char * double_c = (char *)&longdouble_t;
 			for (i = 0; i < sizeDouble; i++){
@@ -1199,13 +1199,13 @@ int8_t serializeLongDoubleEndianness (const long double longdouble_t, Endianness
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = serializeLongDouble(longdouble_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1228,7 +1228,7 @@ int8_t deserializeShort(int16_t * short_t, struct nanoCDR * m_cdrBuffer)
 	if((unread-align) >= sizeShort)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(short_t, m_cdrBuffer->m_currentPosition, sizeShort);
 		}
@@ -1257,13 +1257,13 @@ int8_t deserializeShortEndianness (int16_t * short_t, Endianness endianness, str
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeShort(short_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1285,7 +1285,7 @@ int8_t deserializeUnsignedShort(uint16_t * ushort_t, struct nanoCDR * m_cdrBuffe
 	if((unread - align) >= sizeShort)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(ushort_t, m_cdrBuffer->m_currentPosition, sizeShort);
 		}
@@ -1314,13 +1314,13 @@ int8_t deserializeUnsignedShortEndianness (uint16_t * ushort_t, Endianness endia
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeUnsignedShort(ushort_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1342,7 +1342,7 @@ int8_t deserializeInt(int32_t * int_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeInt)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(int_t, m_cdrBuffer->m_currentPosition, sizeInt);
 		}
@@ -1371,13 +1371,13 @@ int8_t deserializeIntEndianness (int32_t * int_t, Endianness endianness, struct 
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeInt(int_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1399,7 +1399,7 @@ int8_t deserializeUnsignedInt(uint32_t * int_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeInt)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(int_t, m_cdrBuffer->m_currentPosition, sizeInt);
 		}
@@ -1428,13 +1428,13 @@ int8_t deserializeUnsignedIntEndianness (uint32_t * uint_t, Endianness endiannes
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeUnsignedInt(uint_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) {m_cdrBuffer->m_swapBytes = FALSE; }
-		else {m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) {m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else {m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1457,7 +1457,7 @@ int8_t deserializeLong(int64_t * long_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeLong)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(long_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
@@ -1486,13 +1486,13 @@ int8_t deserializeLongEndianness (int64_t * long_t, Endianness endianness, struc
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeLong(long_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1514,7 +1514,7 @@ int8_t deserializeUnsignedLong(uint64_t * ulong_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeLong)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(ulong_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
@@ -1544,13 +1544,13 @@ int8_t deserializeUnsignedLongEndianness (uint64_t * ulong_t, Endianness endiann
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeUnsignedLong(ulong_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1572,7 +1572,7 @@ int8_t deserializeLongLong(long long * longlong_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeLong)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(longlong_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
@@ -1601,13 +1601,13 @@ int8_t deserializeLongLongEndianness (long long * longlong_t, Endianness endiann
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeLongLong(longlong_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1629,7 +1629,7 @@ int8_t deserializeUnsignedLongLong(unsigned long long * long_t, struct nanoCDR *
 	if((unread - align) >= sizeLong)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(long_t, m_cdrBuffer->m_currentPosition, sizeLong);
 		}
@@ -1658,13 +1658,13 @@ int8_t deserializeUnsignedLongLongEndianness (unsigned long long * ulonglong_t, 
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeUnsignedLongLong(ulonglong_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1686,7 +1686,7 @@ int8_t deserializeFloat(float * float_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeFloat)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(float_t, m_cdrBuffer->m_currentPosition, sizeFloat);
 		}
@@ -1715,13 +1715,13 @@ int8_t deserializeFloatEndianness (float * float_t, Endianness endianness, struc
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeFloat(float_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -1730,7 +1730,7 @@ int8_t deserializeFloatEndianness (float * float_t, Endianness endianness, struc
 	return result;
 }
 
-int8_t deserializeDouble(double * double_t, struct nanoCDR * m_cdrBuffer)
+int8_t deserializeDouble(double * m_double_t, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -1743,13 +1743,13 @@ int8_t deserializeDouble(double * double_t, struct nanoCDR * m_cdrBuffer)
 	if((unread - align) >= sizeDouble)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
-			memcpy(double_t, m_cdrBuffer->m_currentPosition, sizeDouble);
+			memcpy(m_double_t, m_cdrBuffer->m_currentPosition, sizeDouble);
 		}
 		else
 		{
-			char * double_c = (char *)double_t;
+			char * double_c = (char *)m_double_t;
 			for(i = 0; i < sizeDouble; i++)
 			{
 				double_c[i] = m_cdrBuffer->m_nanoBuffer->m_buffer[m_cdrBuffer->m_iterator + (sizeDouble - 1 - i)];
@@ -1766,23 +1766,23 @@ int8_t deserializeDouble(double * double_t, struct nanoCDR * m_cdrBuffer)
 	return result;
 }
 
-int8_t deserializeDoubleEndianness (double * double_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
+int8_t deserializeDoubleEndianness (double * m_double_t, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
-		result = deserializeDouble(double_t, m_cdrBuffer);
+		result = deserializeDouble(m_double_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
-		result = deserializeDouble(double_t, m_cdrBuffer);
+		result = deserializeDouble(m_double_t, m_cdrBuffer);
 	}
 	return result;
 }
@@ -1800,7 +1800,7 @@ int8_t deserializeLongDouble(long double * longdouble_t, struct nanoCDR * m_cdrB
 	if((unread - align) >= sizeDouble)
 	{
 		makeAlign(align, m_cdrBuffer);
-		if(m_cdrBuffer->m_swapBytes == FALSE)
+		if(m_cdrBuffer->m_swapBytes == NCDR_FALSE)
 		{
 			memcpy(longdouble_t, m_cdrBuffer->m_currentPosition, sizeDouble);
 		}
@@ -1829,13 +1829,13 @@ int8_t deserializeLongDoubleEndianness (long double * longdouble_t, Endianness e
 
 	if(endianness != m_cdrBuffer->m_endianness)
 	{
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 		result = deserializeLongDouble(longdouble_t, m_cdrBuffer);
 
-		if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-		else { m_cdrBuffer->m_swapBytes = TRUE; }
+		if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+		else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 	}
 	else
 	{
@@ -2059,13 +2059,13 @@ int8_t serializeSignedCharSequenceEndianness (const signed char * schar_t, const
 
  if(endianness != m_cdrBuffer->m_endianness)
  {
-	 if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-	 else { m_cdrBuffer->m_swapBytes = TRUE; }
+	 if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+	 else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
 
 	 result = serializeSignedCharSequence(schar_t, numElements, m_cdrBuffer);
 
-	 if(m_cdrBuffer->m_swapBytes == TRUE) { m_cdrBuffer->m_swapBytes = FALSE; }
-	 else { m_cdrBuffer->m_swapBytes = TRUE; }
+	 if(m_cdrBuffer->m_swapBytes == NCDR_TRUE) { m_cdrBuffer->m_swapBytes = NCDR_FALSE; }
+	 else { m_cdrBuffer->m_swapBytes = NCDR_TRUE; }
  }
  else
  {
@@ -2723,7 +2723,7 @@ int8_t serializeFloatArrayEndianness (const float * float_t, const uint32_t numE
 	return result;
 }
 
-int8_t serializeDoubleSequence (const double * double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
+int8_t serializeDoubleSequence (const double * m_double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
@@ -2734,12 +2734,12 @@ int8_t serializeDoubleSequence (const double * double_t, const uint32_t numEleme
 	{
 		result = serializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
-		result = serializeDoubleArray(double_t, numElements, m_cdrBuffer);
+		result = serializeDoubleArray(m_double_t, numElements, m_cdrBuffer);
 	}
 	return result;
 }
 
-int8_t serializeDoubleSequenceEndianness (const double * double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
+int8_t serializeDoubleSequenceEndianness (const double * m_double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
@@ -2750,12 +2750,12 @@ int8_t serializeDoubleSequenceEndianness (const double * double_t, const uint32_
 	{
 		result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
-		result = serializeDoubleArrayEndianness(double_t, numElements, endianness, m_cdrBuffer);
+		result = serializeDoubleArrayEndianness(m_double_t, numElements, endianness, m_cdrBuffer);
 	}
 	return result;
 }
 
-int8_t serializeDoubleArray (const double * double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
+int8_t serializeDoubleArray (const double * m_double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
@@ -2767,14 +2767,14 @@ int8_t serializeDoubleArray (const double * double_t, const uint32_t numElements
 	{
 		for(i = 0; i < numElements; i++)
 		{
-			result = serializeDouble(double_t[i], m_cdrBuffer);
+			result = serializeDouble(m_double_t[i], m_cdrBuffer);
 			if(result < 0) return -1;
 		}
 	}
 	return result;
 }
 
-int8_t serializeDoubleArrayEndianness (const double * double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
+int8_t serializeDoubleArrayEndianness (const double * m_double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 	uint32_t freeSpace = (m_cdrBuffer->m_nanoBuffer->m_bufferSize - m_cdrBuffer->m_nanoBuffer->m_serializedBuffer);
@@ -2786,7 +2786,7 @@ int8_t serializeDoubleArrayEndianness (const double * double_t, const uint32_t n
 	{
 		for(i = 0; i < numElements; i++)
 		{
-			result = serializeDoubleEndianness(double_t[i], endianness, m_cdrBuffer);
+			result = serializeDoubleEndianness(m_double_t[i], endianness, m_cdrBuffer);
 			if(result < 0) return -1;
 		}
 	}
@@ -2868,7 +2868,7 @@ int8_t serializeLongDoubleArrayEndianness (const long double * longdouble_t, con
 int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t i;
+	//uint32_t i;
 	updateCurrentPosition(m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
@@ -2902,7 +2902,7 @@ int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, stru
 int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
-	uint32_t i;
+	//uint32_t i;
 	updateCurrentPosition(m_cdrBuffer);
 	uint32_t unread = m_cdrBuffer->m_nanoBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
 	uint32_t sizeInt = sizeof(uint32_t);
@@ -4070,7 +4070,7 @@ int8_t deserializeFloatArrayEndianness (float ** float_t, const uint32_t numElem
 	return result;
 }
 
-int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
+int8_t deserializeDoubleSequence (double ** m_double_t, uint32_t * numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -4082,7 +4082,7 @@ int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements, st
 	{
 		result = deserializeUnsignedInt(numElements, m_cdrBuffer);
 		if(result < 0) return -1;
-		result = deserializeDoubleArray(double_t, *numElements, m_cdrBuffer);
+		result = deserializeDoubleArray(m_double_t, *numElements, m_cdrBuffer);
 	}
 	else
 	{
@@ -4091,7 +4091,7 @@ int8_t deserializeDoubleSequence (double ** double_t, uint32_t * numElements, st
 	return result;
 }
 
-int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
+int8_t deserializeDoubleSequenceEndianness (double ** m_double_t, uint32_t * numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -4103,7 +4103,7 @@ int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numEl
 	{
 		result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
 		if(result < 0) return -1;
-		result = deserializeDoubleArrayEndianness(double_t, *numElements, endianness, m_cdrBuffer);
+		result = deserializeDoubleArrayEndianness(m_double_t, *numElements, endianness, m_cdrBuffer);
 	}
 	else
 	{
@@ -4112,7 +4112,7 @@ int8_t deserializeDoubleSequenceEndianness (double ** double_t, uint32_t * numEl
 	return result;
 }
 
-int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
+int8_t deserializeDoubleArray (double ** m_double_t, const uint32_t numElements, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -4125,14 +4125,14 @@ int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements, s
 	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
 	{
-		*double_t = malloc(totalSpace);
+		*m_double_t = malloc(totalSpace);
 		double * swap = malloc(totalSpace);
 		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeDouble(&swap[i], m_cdrBuffer);
 		}
-		memcpy(*double_t, swap, totalSpace);
+		memcpy(*m_double_t, swap, totalSpace);
 		free(swap);
 	}
 	else
@@ -4142,7 +4142,7 @@ int8_t deserializeDoubleArray (double ** double_t, const uint32_t numElements, s
 	return result;
 }
 
-int8_t deserializeDoubleArrayEndianness (double ** double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
+int8_t deserializeDoubleArrayEndianness (double ** m_double_t, const uint32_t numElements, Endianness endianness, struct nanoCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
 
@@ -4155,14 +4155,14 @@ int8_t deserializeDoubleArrayEndianness (double ** double_t, const uint32_t numE
 	uint32_t totalSpace = numElements * sizeDouble;
 	if(unread >= totalSpace)
 	{
-		*double_t = malloc(totalSpace);
+		*m_double_t = malloc(totalSpace);
 		double * swap = malloc(totalSpace);
 		uint32_t i = 0;
 		for (i = 0; i < numElements; i++)
 		{
 			deserializeDoubleEndianness(&swap[i], endianness, m_cdrBuffer);
 		}
-		memcpy(*double_t, swap, totalSpace);
+		memcpy(*m_double_t, swap, totalSpace);
 		free(swap);
 	}
 	else
