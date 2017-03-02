@@ -122,7 +122,7 @@ option(CHECK_ENDIANNESS "Enable/disable endiannes checking" OFF)
 if(CHECK_ENDIANNESS)
     check_endianness()
 else()
-    message(STATUS "Without check endianness")
+    message(STATUS "micro-CDR without check endianness")
 endif()
 
 ###############################################################################
@@ -199,7 +199,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
 if(COMMAND px4_add_module)
     include_directories(${PROJECT_SOURCE_DIR}/include)
     px4_add_module(
-        MODULE lib__microcdr
+        MODULE lib__micro-CDR
         COMPILE_FLAGS
         SRCS
             src/c/microCdr.c
