@@ -17,7 +17,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/dev/generate_msvc_libraries.cmake)
 
 # Set source files
 set_sources(
-    nanoCdr.c
+    microCdr.c
 )
 
 # Set version

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ###############################################################################
-# CMake build rules for nanoCDR                                               #
+# CMake build rules for microCDR                                               #
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.11)
 
@@ -28,9 +28,9 @@ else()
         )
 endif()
 
-project("nanocdr")
-set(PROJECT_NAME_STYLED "nanoCDR")
-set(PROJECT_NAME_LARGE "nano CDR")
+project("microcdr")
+set(PROJECT_NAME_STYLED "microCDR")
+set(PROJECT_NAME_LARGE "micro CDR")
 string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
 set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "C library for serialize using CDR serialization")
 set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides a serialization mechanism.")
@@ -199,10 +199,10 @@ include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
 if(COMMAND px4_add_module)
     include_directories(${PROJECT_SOURCE_DIR}/include)
     px4_add_module(
-        MODULE lib__nanocdr
+        MODULE lib__microcdr
         COMPILE_FLAGS
         SRCS
-            src/c/nanoCdr.c
+            src/c/microCdr.c
         DEPENDS
             platforms__common
         )
