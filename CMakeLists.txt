@@ -117,10 +117,12 @@ endif()
 # Test system configuration
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
+
+option(CHECK_ENDIANNESS "Enable/disable endiannes checking" OFF)
 if(CHECK_ENDIANNESS)
     check_endianness()
-else
-    message("Without check endianness")
+else()
+    message(STATUS "Without check endianness")
 endif()
 
 ###############################################################################
@@ -151,6 +153,7 @@ add_subdirectory(src/c)
 ###############################################################################
 # Testing
 ###############################################################################
+option(EPROSIMA_BUILD_TESTS "Enable to compile tests." OFF)
 if(EPROSIMA_BUILD_TESTS AND NOT EPROSIMA_INSTALLER)
     include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
     check_gtest()
