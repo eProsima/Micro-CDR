@@ -19,7 +19,7 @@
 
         # If Windows, link against export dll functions
         if(WIN32)
-            add_definitions(-DNANOCDR_DYN_LINK)
+            add_definitions(-DMICROCDR_DYN_LINK)
         endif()
 
 
@@ -30,6 +30,6 @@
         add_executable(UnitTests ${UNITTESTS_SOURCE})
         add_gtest(UnitTests ${UNITTESTS_SOURCE})
         target_include_directories(UnitTests PRIVATE ${GTEST_INCLUDE_DIRS})
-        target_link_libraries(UnitTests nanocdr ${GTEST_BOTH_LIBRARIES})
+        target_link_libraries(UnitTests microcdr ${GTEST_BOTH_LIBRARIES})
 
     endif()

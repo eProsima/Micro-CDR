@@ -1,16 +1,16 @@
 
 
-#ifndef _NANOCDR_NANOBUFFER_H_
-#define _NANOCDR_NANOBUFFER_H_
+#ifndef _MICROCDR_MICROBUFFER_H_
+#define _MICROCDR_MICROBUFFER_H_
 
 #include <stdint.h>
 
-//const char NANO_DYNAMIC = '1';
-//const char NANO_STATIC = '0';
+//const char MICRO_DYNAMIC = '1';
+//const char MICRO_STATIC = '0';
 
 //typedef enum {TRUE,FALSE}Bool;
 
-	typedef struct nanoBuffer
+	typedef struct microBuffer
 	{
 		//! @brief Pointer to the beginning of stream.
 		char * m_buffer;
@@ -27,5 +27,5 @@
 		//!@ brief This variable indicates if the managed buffer stream is aligned or not
         uint8_t m_alingData;
 
-	}nanoBuffer;
+	}microBuffer;
 #endif

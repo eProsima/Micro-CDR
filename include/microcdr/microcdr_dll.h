@@ -12,57 +12,57 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _NANOCDR_NANOCDR_DLL_H_
-#define _NANOCDR_NANOCDR_DLL_H_
+#ifndef _MICROCDR_MICROCDR_DLL_H_
+#define _MICROCDR_MICROCDR_DLL_H_
 
 #include "config.h"
 
 // normalize macros
-#if !defined(NANOCDR_DYN_LINK) && !defined(NANOCDR_STATIC_LINK) \
+#if !defined(MICROCDR_DYN_LINK) && !defined(MICROCDR_STATIC_LINK) \
     && !defined(EPROSIMA_ALL_DYN_LINK) && !defined(EPROSIMA_ALL_STATIC_LINK)
-#define NANOCDR_STATIC_LINK
+#define MICROCDR_STATIC_LINK
 #endif
 
-#if defined(EPROSIMA_ALL_DYN_LINK) && !defined(NANOCDR_DYN_LINK)
-#define NANOCDR_DYN_LINK
+#if defined(EPROSIMA_ALL_DYN_LINK) && !defined(MICROCDR_DYN_LINK)
+#define MICROCDR_DYN_LINK
 #endif
 
-#if defined(NANOCDR_DYN_LINK) && defined(NANOCDR_STATIC_LINK)
-#error Must not define both NANOCDR_DYN_LINK and NANOCDR_STATIC_LINK
+#if defined(MICROCDR_DYN_LINK) && defined(MICROCDR_STATIC_LINK)
+#error Must not define both MICROCDR_DYN_LINK and MICROCDR_STATIC_LINK
 #endif
 
-#if defined(EPROSIMA_ALL_NO_LIB) && !defined(NANOCDR_NO_LIB)
-#define NANOCDR_NO_LIB
+#if defined(EPROSIMA_ALL_NO_LIB) && !defined(MICROCDR_NO_LIB)
+#define MICROCDR_NO_LIB
 #endif
 
 // enable dynamic linking
 #if defined(_WIN32)
-#if defined(EPROSIMA_ALL_DYN_LINK) || defined(NANOCDR_DYN_LINK)
-#if defined(NANOCDR_SOURCE)
-#define nanocdr_DllAPI __declspec( dllexport )
+#if defined(EPROSIMA_ALL_DYN_LINK) || defined(MICROCDR_DYN_LINK)
+#if defined(MICROCDR_SOURCE)
+#define microcdr_DllAPI __declspec( dllexport )
 #else
-#define nanocdr_DllAPI __declspec( dllimport )
-#endif // NANOCDR_SOURCE
+#define microcdr_DllAPI __declspec( dllimport )
+#endif // MICROCDR_SOURCE
 #else
-#define nanocdr_DllAPI
+#define microcdr_DllAPI
 #endif
 #else
-#define nanocdr_DllAPI
+#define microcdr_DllAPI
 #endif // _WIN32
 
 // Auto linking.
 
-#if !defined(NANOCDR_SOURCE) && !defined(EPROSIMA_ALL_NO_LIB) \
-    && !defined(NANOCDR_NO_LIB)
+#if !defined(MICROCDR_SOURCE) && !defined(EPROSIMA_ALL_NO_LIB) \
+    && !defined(MICROCDR_NO_LIB)
 
 // Set properties.
-#define EPROSIMA_LIB_NAME nanocdr
+#define EPROSIMA_LIB_NAME microcdr
 
-#if defined(EPROSIMA_ALL_DYN_LINK) || defined(NANOCDR_DYN_LINK)
+#if defined(EPROSIMA_ALL_DYN_LINK) || defined(MICROCDR_DYN_LINK)
 #define EPROSIMA_DYN_LINK
 #endif
 
 #include "eProsima_auto_link.h"
 #endif // auto-linking disabled
 
-#endif // _NANOCDR_NANOCDR_DLL_H_
+#endif // _MICROCDR_MICROCDR_DLL_H_

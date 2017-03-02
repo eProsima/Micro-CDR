@@ -12,20 +12,20 @@
     // See the License for the specific language governing permissions and
     // limitations under the License.
 
-    #ifndef _NANOCDR_CONFIG_H_
-    #define _NANOCDR_CONFIG_H_
+    #ifndef _MICROCDR_CONFIG_H_
+    #define _MICROCDR_CONFIG_H_
 
-    #ifndef NANOCDR_VERSION_MAJOR
-    #define NANOCDR_VERSION_MAJOR @NANOCDR_VERSION_MAJOR@
+    #ifndef MICROCDR_VERSION_MAJOR
+    #define MICROCDR_VERSION_MAJOR @MICROCDR_VERSION_MAJOR@
     #endif
-    #ifndef NANOCDR_VERSION_MINOR
-    #define NANOCDR_VERSION_MINOR @NANOCDR_VERSION_MINOR@
+    #ifndef MICROCDR_VERSION_MINOR
+    #define MICROCDR_VERSION_MINOR @MICROCDR_VERSION_MINOR@
     #endif
-    #ifndef NANOCDR_VERSION_MICRO
-    #define NANOCDR_VERSION_MICRO @NANOCDR_VERSION_MICRO@
+    #ifndef MICROCDR_VERSION_MICRO
+    #define MICROCDR_VERSION_MICRO @MICROCDR_VERSION_MICRO@
     #endif
-    #ifndef NANOCDR_VERSION_STR
-    #define NANOCDR_VERSION_STR "@NANOCDR_VERSION_STR@"
+    #ifndef MICROCDR_VERSION_STR
+    #define MICROCDR_VERSION_STR "@MICROCDR_VERSION_STR@"
     #endif
 
     // C++11 support defines
@@ -52,4 +52,4 @@
     #endif
     #endif
 
-    #endif // _NANOCDR_CONFIG_H_
+    #endif // _MICROCDR_CONFIG_H_

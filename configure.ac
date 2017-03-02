@@ -13,17 +13,17 @@
 # limitations under the License.
 
 #
-# Autoconf script nanoCDR
+# Autoconf script microCDR
 #
 
 #
-# Define variables for the nanoCDR version number.
+# Define variables for the microCDR version number.
 #
 m4_define([version_major],[1])
 m4_define([version_minor],[0])
 m4_define([version_micro],[6])
 
-AC_INIT([nanocdr], [version_major.version_minor.version_micro], [support@eprosima.com], [eProsima nanoCDR], [http://eprosima.com/])
+AC_INIT([microcdr], [version_major.version_minor.version_micro], [support@eprosima.com], [eProsima microCDR], [http://eprosima.com/])
 CONFIG_ARGS="$*"
 AC_SUBST(CONFIG_ARGS)
 
@@ -33,9 +33,9 @@ AC_PREREQ([2.59])
 AM_INIT_AUTOMAKE([1.10 no-define foreign subdir-objects])
 
 # Makes version available in config.h
-AC_DEFINE(NANOCDR_VERSION_MAJOR, version_major, [nanocdr version major])
-AC_DEFINE(NANOCDR_VERSION_MINOR, version_minor, [nanocdr version minor])
-AC_DEFINE(NANOCDR_VERSION_MICRO, version_micro, [nanocdr version micro])
+AC_DEFINE(MICROCDR_VERSION_MAJOR, version_major, [microcdr version major])
+AC_DEFINE(MICROCDR_VERSION_MINOR, version_minor, [microcdr version minor])
+AC_DEFINE(MICROCDR_VERSION_MICRO, version_micro, [microcdr version micro])
 
 # Check stdcxx
 AX_CXX_COMPILE_STDCXX_11(,optional)
@@ -60,7 +60,7 @@ AC_PROG_CPP
 AC_CONFIG_MACRO_DIR([m4])
 LT_INIT
 
-AC_CONFIG_HEADERS([include/nanocdr/config.h:include/nanocdr/config.h.in])
+AC_CONFIG_HEADERS([include/microcdr/config.h:include/microcdr/config.h.in])
 AC_CONFIG_FILES([Makefile
                  include/Makefile
                  src/c/Makefile])
