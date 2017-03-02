@@ -6,6 +6,7 @@
 #include "nanoBuffer.h"
 #include <stdint.h>
 
+#define NANOCDR_INIT_BUF_LENGTH 200
 
   //struct nanoBuffer * m_cdrBuffer;
 

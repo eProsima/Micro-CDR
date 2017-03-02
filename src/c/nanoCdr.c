@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include <setjmp.h>
 
-#define BUFFER_INITIAL_LENGTH 200
-
 void newNanoCDR(struct nanoCDR ** m_cdrBuffer, struct nanoBuffer * m_nanoBuffer)
 {
 	*m_cdrBuffer = malloc(sizeof(nanoCDR));
@@ -76,10 +74,10 @@ void newDynamicAlignedBuffer(struct nanoBuffer ** m_nanoBuffer)
 
 	struct nanoBuffer cdrBuffer;
 
-	cdrBuffer.m_bufferSize = BUFFER_INITIAL_LENGTH;
+	cdrBuffer.m_bufferSize = NANOCDR_INIT_BUF_LENGTH;
 	cdrBuffer.m_internalBuffer = '1';
  	cdrBuffer.m_serializedBuffer = 0;
-	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
+	cdrBuffer.m_buffer = malloc(NANOCDR_INIT_BUF_LENGTH);
 	cdrBuffer.m_alingData = NCDR_TRUE;
 
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
@@ -105,10 +103,10 @@ void newDynamicNonAlignedBuffer(struct nanoBuffer ** m_nanoBuffer)
 
 	struct nanoBuffer cdrBuffer;
 
-	cdrBuffer.m_bufferSize = BUFFER_INITIAL_LENGTH;
+	cdrBuffer.m_bufferSize = NANOCDR_INIT_BUF_LENGTH;
 	cdrBuffer.m_internalBuffer = '1';
  	cdrBuffer.m_serializedBuffer = 0;
-	cdrBuffer.m_buffer = malloc(BUFFER_INITIAL_LENGTH);
+	cdrBuffer.m_buffer = malloc(NANOCDR_INIT_BUF_LENGTH);
 	cdrBuffer.m_alingData = NCDR_FALSE;
 
 	memcpy(*m_nanoBuffer, (char *)&cdrBuffer, sizeof(nanoBuffer));
@@ -212,7 +210,7 @@ int8_t resize(uint32_t  minSizeInc, struct nanoCDR * m_cdrBuffer)
     {
         if(m_cdrBuffer->m_nanoBuffer->m_bufferSize == 0)
         {
-           	m_cdrBuffer->m_nanoBuffer->m_bufferSize = BUFFER_INITIAL_LENGTH;
+           	m_cdrBuffer->m_nanoBuffer->m_bufferSize = NANOCDR_INIT_BUF_LENGTH;
 						m_cdrBuffer->m_nanoBuffer->m_buffer = (char*)malloc(m_cdrBuffer->m_nanoBuffer->m_bufferSize);
 						m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
 						m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
@@ -226,9 +224,9 @@ int8_t resize(uint32_t  minSizeInc, struct nanoCDR * m_cdrBuffer)
 					if(freeSpace < minSizeInc)
 					{
 						//int32_t sizeInc = minSizeInc - freeSpace;
-						if(minSizeInc < BUFFER_INITIAL_LENGTH)
+						if(minSizeInc < NANOCDR_INIT_BUF_LENGTH)
 						{
-							m_cdrBuffer->m_nanoBuffer->m_bufferSize += BUFFER_INITIAL_LENGTH;
+							m_cdrBuffer->m_nanoBuffer->m_bufferSize += NANOCDR_INIT_BUF_LENGTH;
 							m_cdrBuffer->m_nanoBuffer->m_buffer = (char*)realloc(m_cdrBuffer->m_nanoBuffer->m_buffer, m_cdrBuffer->m_nanoBuffer->m_bufferSize);
 							m_cdrBuffer->m_currentPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;
 							m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_nanoBuffer->m_buffer;

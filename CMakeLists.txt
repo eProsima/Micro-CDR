@@ -117,7 +117,11 @@ endif()
 # Test system configuration
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
-check_endianness()
+if(CHECK_ENDIANNESS)
+    check_endianness()
+else
+    message("Without check endianness")
+endif()
 
 ###############################################################################
 # Check MSVC architecture
@@ -147,7 +151,7 @@ add_subdirectory(src/c)
 ###############################################################################
 # Testing
 ###############################################################################
-if(NOT EPROSIMA_INSTALLER)
+if(EPROSIMA_BUILD_TESTS AND NOT EPROSIMA_INSTALLER)
     include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
     check_gtest()
     if(GTEST_FOUND)
@@ -187,3 +191,16 @@ else()
 endif()
 
 include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
+
+# Use this directory as the PX4 module
+if(COMMAND px4_add_module)
+    include_directories(${PROJECT_SOURCE_DIR}/include)
+    px4_add_module(
+        MODULE lib__nanocdr
+        COMPILE_FLAGS
+        SRCS
+            src/c/nanoCdr.c
+        DEPENDS
+            platforms__common
+        )
+endif()
