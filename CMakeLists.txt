@@ -148,7 +148,20 @@ endif()
 ###############################################################################
 # Compile library.
 ###############################################################################
-add_subdirectory(src/c)
+# Use this directory as the PX4 module
+if(COMMAND px4_add_module)
+    include_directories(${PROJECT_SOURCE_DIR}/include)
+    px4_add_module(
+        MODULE lib__micro-CDR
+        COMPILE_FLAGS
+        SRCS
+            src/c/microCdr.c
+        DEPENDS
+            platforms__common
+        )
+else()
+    add_subdirectory(src/c)
+endif()
 
 ###############################################################################
 # Testing
@@ -194,16 +207,3 @@ else()
 endif()
 
 include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
-
-# Use this directory as the PX4 module
-if(COMMAND px4_add_module)
-    include_directories(${PROJECT_SOURCE_DIR}/include)
-    px4_add_module(
-        MODULE lib__micro-CDR
-        COMPILE_FLAGS
-        SRCS
-            src/c/microCdr.c
-        DEPENDS
-            platforms__common
-        )
-endif()
