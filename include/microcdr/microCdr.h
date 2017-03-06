@@ -596,7 +596,7 @@
   * @param numElements Number of the elements in the array.
   * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
   */
-  microcdr_DllAPI int8_t serializeCharArray (const char * char_t, const unsigned int numElements, struct microCDR * m_cdrBuffer);
+  microcdr_DllAPI int8_t serializeCharArray (const char * char_t, const uint32_t numElements, struct microCDR * m_cdrBuffer);
 
   /*!
   * @brief This function serializes an array of unsigned charts.

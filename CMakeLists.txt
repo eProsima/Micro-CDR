@@ -28,6 +28,13 @@ else()
         )
 endif()
 
+
+if(COMMAND px4_add_module)
+    set(MICRO_LIBRARY_NAME "lib__micro-CDR")
+else()
+    set(MICRO_LIBRARY_NAME "microcdr")
+endif()
+
 project("microcdr")
 set(PROJECT_NAME_STYLED "microCDR")
 set(PROJECT_NAME_LARGE "micro CDR")
@@ -77,7 +84,6 @@ if(NOT PROJECT_MAJOR_VERSION)
 endif()
 
 set(PROJECT_VERSION ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_MICRO_VERSION})
-
 message(STATUS "Version: ${PROJECT_VERSION}")
 message(STATUS "To change the version modify the file configure.ac")
 
@@ -131,7 +137,6 @@ endif()
 if(MSVC OR MSVC_IDE)
     check_msvc_arch()
 endif()
-
 ###############################################################################
 # Installation paths
 ###############################################################################
@@ -148,20 +153,7 @@ endif()
 ###############################################################################
 # Compile library.
 ###############################################################################
-# Use this directory as the PX4 module
-if(COMMAND px4_add_module)
-    include_directories(${PROJECT_SOURCE_DIR}/include)
-    px4_add_module(
-        MODULE lib__micro-CDR
-        COMPILE_FLAGS
-        SRCS
-            src/c/microCdr.c
-        DEPENDS
-            platforms__common
-        )
-else()
-    add_subdirectory(src/c)
-endif()
+add_subdirectory(src/c)
 
 ###############################################################################
 # Testing

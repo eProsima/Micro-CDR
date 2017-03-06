@@ -20,7 +20,9 @@ set_sources(
     microCdr.c
 )
 
+###############################################################################
 # Set version
+###############################################################################
 set(${PROJECT_NAME_UPPER}_VERSION_MAJOR ${PROJECT_MAJOR_VERSION})
 set(${PROJECT_NAME_UPPER}_VERSION_MINOR ${PROJECT_MINOR_VERSION})
 set(${PROJECT_NAME_UPPER}_VERSION_MICRO ${PROJECT_MICRO_VERSION})
@@ -70,10 +72,10 @@ if(MSVC OR MSVC_IDE)
     endif()
 else()
     #Create library
-    add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
+    add_library(${MICRO_LIBRARY_NAME} ${${PROJECT_NAME}_SOURCES})
 
     # Define public headers
-    target_include_directories(${PROJECT_NAME} PUBLIC
+    target_include_directories(${MICRO_LIBRARY_NAME} PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
         $<INSTALL_INTERFACE:include>
         )
@@ -164,17 +166,17 @@ if(MSVC OR MSVC_IDE)
 
     set(CPACK_COMPONENT_GROUP_LIBRARIES_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} libraries" PARENT_SCOPE)
 else()
-    install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}Targets
+    install(TARGETS ${MICRO_LIBRARY_NAME}
+        EXPORT ${MICRO_LIBRARY_NAME}Targets
         RUNTIME DESTINATION ${BIN_INSTALL_DIR}
         LIBRARY DESTINATION ${LIB_INSTALL_DIR}
         ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
         COMPONENT libraries
         )
 
-    export(TARGETS ${PROJECT_NAME} FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake)
-    install(EXPORT ${PROJECT_NAME}Targets
-        DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+    export(TARGETS ${MICRO_LIBRARY_NAME} FILE ${PROJECT_BINARY_DIR}/cmake/config/${MICRO_LIBRARY_NAME}Targets.cmake)
+    install(EXPORT ${MICRO_LIBRARY_NAME}Targets
+        DESTINATION ${LIB_INSTALL_DIR}/${MICRO_LIBRARY_NAME}/cmake
         COMPONENT cmake
         )
 
