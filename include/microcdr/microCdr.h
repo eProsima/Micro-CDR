@@ -6,6 +6,10 @@
 #include "microBuffer.h"
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MICROCDR_INIT_BUF_LENGTH 200
 
   //struct microBuffer * m_cdrBuffer;
@@ -1672,5 +1676,9 @@
   * @return 0 is returned when the deserialezed works successfully. Otherwise, -1 is returned.
   */
   microcdr_DllAPI int8_t deserializeLongDoubleSequenceEndianness (long double ** longdouble_t, uint32_t * numElements, Endianness endianness, struct microCDR * m_cdrBuffer);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

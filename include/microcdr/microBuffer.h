@@ -5,6 +5,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //const char MICRO_DYNAMIC = '1';
 //const char MICRO_STATIC = '0';
 
@@ -28,4 +32,9 @@
         uint8_t m_alingData;
 
 	}microBuffer;
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
