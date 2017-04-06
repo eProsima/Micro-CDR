@@ -5,6 +5,7 @@
 #include "microcdr_dll.h"
 #include "microBuffer.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -209,6 +210,13 @@ extern "C" {
   microcdr_DllAPI int8_t serializeUnsignedChar (const unsigned char uchar_t, struct microCDR * m_cdrBuffer);
 
   /*!
+  * @brief This function serializes a bool.
+  * @param bool_t The value of the bool that will be serialized in the buffer.
+  * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
+  */
+  microcdr_DllAPI int8_t serializeBool (const bool bool_t, struct microCDR * m_cdrBuffer);
+
+  /*!
   * @brief This function serializes a string.
   * @param string_t The pointer to the string that will be serialized in the buffer.
   * @param length_t Length of the string that will be serialized in the buffer.
@@ -245,6 +253,13 @@ extern "C" {
   * @return 0 is returned when the deserialized works successfully. Otherwise, -1 is returned.
   */
   microcdr_DllAPI int8_t deserializeUnsignedChar (unsigned char * uchar_t, struct microCDR * m_cdrBuffer);
+
+  /*!
+  * @brief This function deserializes a bool.
+  * @param bool_t The variable that will store the bool read from the buffer.
+  * @return 0 is returned when the deserialized works successfully. Otherwise, -1 is returned.
+  */
+  microcdr_DllAPI int8_t deserializeBool (bool * bool_t, struct microCDR * m_cdrBuffer);
 
   /*!
   * @brief This function deserializes a string.
@@ -619,6 +634,14 @@ extern "C" {
   microcdr_DllAPI int8_t serializeSignedCharArray (const signed char * schar_t, const uint32_t numElements, struct microCDR * m_cdrBuffer);
 
   /*!
+  * @brief This function serializes an array of bools.
+  * @param bool_t The array of bools that will be serialized in the buffer.
+  * @param numElements Number of the elements in the array.
+  * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
+  */
+  microcdr_DllAPI int8_t serializeBoolArray (const bool * bool_t, const uint32_t numElements, struct microCDR * m_cdrBuffer);
+
+  /*!
   * @brief This function serializes an array of strings.
   * @param string_t The array of strings that will be serialized in the buffer.
   * @param numElements Number of the elements in the array.
@@ -851,6 +874,16 @@ extern "C" {
   * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
   */
   microcdr_DllAPI int8_t deserializeSignedCharArray (signed char ** schar_t, const uint32_t numElements, struct microCDR * m_cdrBuffer);
+
+  /*!
+  * @brief This function deserializes an array of bools.
+  * This function allocates memory to store the array. The user pointer will be set to point this allocated memory.
+  * The user will have to free this allocated memory using free() or freeCdr()
+  * @param bool_t The variable that will store the array of bools read from the buffer.
+  * @param numElements Number of the elements in the array.
+  * @return 0 is returned when the serialezed works successfully. Otherwise, -1 is returned.
+  */
+  microcdr_DllAPI int8_t deserializeBoolArray (bool ** bool_t, const uint32_t numElements, struct microCDR * m_cdrBuffer);
 
   /*!
   * @brief This function deserializes an array of strings.

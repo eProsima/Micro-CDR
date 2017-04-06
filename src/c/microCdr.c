@@ -357,6 +357,38 @@ int8_t serializeSignedChar (const signed char schar_t, struct microCDR * m_cdrBu
 	return result;
 }
 
+int8_t serializeBool (const bool bool_t, struct microCDR * m_cdrBuffer)
+{
+    char value = 0;
+    int8_t result = 0;
+    size_t align = 0;
+    align = alignment(sizeof(char), m_cdrBuffer);
+    uint32_t free = (m_cdrBuffer->m_microBuffer->m_bufferSize - m_cdrBuffer->m_microBuffer->m_serializedBuffer);
+    uint32_t needed = sizeof(char) + align;
+
+    if((resize(needed, m_cdrBuffer) == 0) || free >= needed)
+    {
+        // Save last datasize.
+        m_cdrBuffer->m_lastDataSize = sizeof(char);
+
+        // Align.
+        makeAlign(align, m_cdrBuffer);
+
+        if (bool_t) value = 1;
+
+        memcpy(m_cdrBuffer->m_currentPosition, (char *)&value, sizeof(char));
+        m_cdrBuffer->m_microBuffer->m_serializedBuffer += sizeof(char);
+        m_cdrBuffer->m_currentPosition += sizeof(char);
+
+    }
+    else
+    {
+        result = -1;
+    }
+
+    return result;
+}
+
 int8_t serializeString (const char * string_t, const uint32_t length, struct microCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
@@ -483,6 +515,35 @@ int8_t deserializeSignedChar(signed char * schar_t, struct microCDR * m_cdrBuffe
 	}
 
 	return result;
+}
+
+int8_t deserializeBool(bool * bool_t, struct microCDR * m_cdrBuffer)
+{
+    char value = 0;
+    int8_t result = 0;
+    size_t align = 0;
+    align = alignment(sizeof(char), m_cdrBuffer);
+    updateCurrentPosition(m_cdrBuffer);
+    uint32_t unread = m_cdrBuffer->m_microBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+
+    if((unread - align) >= 1)
+    {
+            makeAlign(align, m_cdrBuffer);
+            memcpy(&value, m_cdrBuffer->m_currentPosition, 1);
+            m_cdrBuffer->m_iterator += 1;
+            m_cdrBuffer->m_currentPosition += 1;
+            m_cdrBuffer->m_lastDataSize = sizeof(char);
+
+                 if (0 == value) *bool_t = false;
+            else if (1 == value) *bool_t = true;
+            else                 result = -1;
+    }
+    else
+    {
+        result = -1;
+    }
+
+    return result;
 }
 
 int8_t deserializeString (char ** string, uint32_t * strlen, struct microCDR * m_cdrBuffer)
@@ -2091,6 +2152,24 @@ int8_t serializeSignedCharArray (const signed char * schar_t, const uint32_t num
 	return result;
 }
 
+int8_t serializeBoolArray (const bool * bool_t, const uint32_t numElements, struct microCDR * m_cdrBuffer)
+{
+    int8_t result = 0;
+    uint32_t freeSpace = (m_cdrBuffer->m_microBuffer->m_bufferSize - m_cdrBuffer->m_microBuffer->m_serializedBuffer);
+    uint32_t totalSpace = numElements;
+    uint32_t i = 0;
+    if( (resize(totalSpace, m_cdrBuffer) == 0) || totalSpace <= freeSpace)
+    {
+        for(i = 0; i < numElements; i++)
+        {
+            result = serializeBool(bool_t[i], m_cdrBuffer);
+            if(result < 0) return -1;
+            m_cdrBuffer->m_lastDataSize = sizeof(char);
+        }
+    }
+    return result;
+}
+
 int8_t serializeShortSequence (const int16_t * short_t, const uint32_t numElements, struct microCDR * m_cdrBuffer)
 {
 	int8_t result = 0;
@@ -3161,6 +3240,37 @@ int8_t deserializeSignedCharArray (signed char ** char_t, const uint32_t numElem
 		return -1;
 	}
 	return result;
+}
+
+int8_t deserializeBoolArray (bool ** bool_t, const uint32_t numElements, struct microCDR * m_cdrBuffer)
+{
+    int8_t result = 0;
+    updateCurrentPosition(m_cdrBuffer);
+    uint32_t unread = m_cdrBuffer->m_microBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+    uint32_t sizeBool = sizeof(bool);
+    unread = m_cdrBuffer->m_microBuffer->m_serializedBuffer - m_cdrBuffer->m_iterator;
+    uint32_t totalSpace = numElements;
+    uint32_t boolArraySpace = numElements * sizeBool;
+    if(unread >= totalSpace)
+    {
+        *bool_t = malloc(boolArraySpace);
+        bool * swap = malloc(boolArraySpace);
+        uint32_t i = 0;
+        for (i = 0; i < numElements; i++)
+        {
+            deserializeBool(&swap[i], m_cdrBuffer);
+        }
+        memcpy(*bool_t, swap, boolArraySpace);
+        free(swap);
+        m_cdrBuffer->m_iterator += totalSpace;
+        m_cdrBuffer->m_currentPosition += totalSpace;
+        m_cdrBuffer->m_lastDataSize = sizeof(char);
+    }
+    else
+    {
+        return -1;
+    }
+    return result;
 }
 
 //DESERIALIZE SHORT
