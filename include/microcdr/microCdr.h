@@ -46,16 +46,33 @@ extern "C" {
     //! @brief Coppy of internal buffer.
     char * m_buffer;
 
-}microCDR;
-
+  }microCDR;
 
   /*!
    * @brief This function creates a microCDR with the passed microBuffer.
    * @param m_cdrBuffer Pointer to allocate the new microCDR.
    * @param microBuffer Buffer to create microCDR.
    */
-
   microcdr_DllAPI void newMicroCDR(struct microCDR ** m_cdrBuffer, struct microBuffer * m_microBuffer);
+
+  /*!
+   * @brief This function initialize already created microCDR with the passed microBuffer.
+   * @param m_cdrBuffer Pointer to a microCDR object to be initialized.
+   * @param microBuffer Buffer to create microCDR.
+   */
+  microcdr_DllAPI void initMicroCDR(struct microCDR *m_microCDR, struct microBuffer *m_microBuffer);
+
+  /*!
+   * @brief Resets a microCDR object for serialization purposes.
+   * @param m_microCDR Pointer to an existing microCDR.
+   */
+  microcdr_DllAPI void resetStaticMicroCDRForSerialize(struct microCDR *m_microCDR);
+
+  /*!
+   * @brief Resets a microCDR object for deserialization purposes.
+   * @param m_microCDR Pointer to an existing microCDR.
+   */
+  microcdr_DllAPI void resetStaticMicroCDRForDeserialize(struct microCDR *m_microCDR);
 
   /*!
    * @brief This function creates a static non aligned stream of bytes to deserialize.
@@ -63,7 +80,15 @@ extern "C" {
    * @param bufferSize The length of user's buffer.
    * @param m_microBuffer Final microBuffer.
    */
-  microcdr_DllAPI void newDeserializedNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_microBuffer);
+  microcdr_DllAPI void newDeserializedNonAlignedBuffer (char *buffer, uint32_t bufferSize, struct microBuffer **m_microBuffer);
+
+  /*!
+   * @brief This function initialize a already created microBuffer as non aligned stream of bytes to deserialize.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   * @param m_microBuffer Pointer to already allocated microBuffer.
+   */
+  microcdr_DllAPI void initDeserializedNonAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer);
 
   /*!
    * @brief This function creates a static aligned stream of bytes.
@@ -74,11 +99,18 @@ extern "C" {
   microcdr_DllAPI void newDeserializedAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_microBuffer);
 
   /*!
+   * @brief This function initialize a already created microBuffer as a static aligned stream of bytes.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   * @param m_microBuffer Pointer to already allocated microBuffer.
+   */
+  microcdr_DllAPI void initDeserializedAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer);
+
+  /*!
    * @brief This function creates a dynamic aligned stream of bytes.
    * @param m_microBuffer Final microBuffer.
    */
   microcdr_DllAPI void newDynamicAlignedBuffer (struct microBuffer ** m_cdrBuffer);
-
 
   /*!
    * @brief This function creates a static stream of bytes.
@@ -86,6 +118,14 @@ extern "C" {
    * @param bufferSize The length of user's buffer.
    */
   microcdr_DllAPI void newStaticAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_cdrBuffer);
+
+  /*!
+   * @brief This function initialize a already created microBuffer as a static stream of bytes.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   * @param m_microBuffer Pointer to already allocated microBuffer.
+   */
+  microcdr_DllAPI void initStaticAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer);
 
   /*!
    * @brief This function creates a dynamic aligned stream of bytes.
@@ -100,6 +140,14 @@ extern "C" {
    * @param bufferSize The length of user's buffer.
    */
   microcdr_DllAPI void newStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_cdrBuffer);
+
+  /*!
+   * @brief This function initialize a already created microBuffer as a non aligned static stream of bytes.
+   * @param buffer The user's buffer that will be used. This buffer must be deallocated by the user. Cannot be NULL.
+   * @param bufferSize The length of user's buffer.
+   * @param m_microBuffer Pointer to already allocated microBuffer.
+   */
+  microcdr_DllAPI void initStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer);
 
   /*!
    * @brief This function destroies the microBuffer

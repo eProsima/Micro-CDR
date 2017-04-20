@@ -9,121 +9,133 @@
 #include <stdio.h>
 #include <setjmp.h>
 
-void newMicroCDR(struct microCDR ** m_cdrBuffer, struct microBuffer * m_microBuffer)
+void initMicroCDR(struct microCDR *m_microCDR, struct microBuffer *m_microBuffer)
 {
-	*m_cdrBuffer = malloc(sizeof(microCDR));
+    m_microCDR->m_microBuffer = m_microBuffer;
+    m_microCDR->m_iterator = 0;
 
-	struct microCDR cdrBuffer;
+    int32_t local_i = 1;
+    char *local_c = (char*)&local_i;
+    char endia = (*local_c);
+    if(endia == '1')
+    {
+        m_microCDR->m_endianness = LITTLE_ENDIANNESS;
+    }
+    else
+    {
+        m_microCDR->m_endianness = BIG_ENDIANNESS;
+    }
+    m_microCDR->m_swapBytes = NCDR_FALSE;
 
-	cdrBuffer.m_microBuffer = m_microBuffer;
-	cdrBuffer.m_iterator = 0;
+    m_microCDR->m_currentPosition = m_microBuffer->m_buffer;
+    m_microCDR->m_alignPosition = m_microBuffer->m_buffer;
+    m_microCDR->m_buffer = m_microBuffer->m_buffer;
 
-	int32_t local_i = 1;
-	char *local_c = (char*)&local_i;
-	char endia = (*local_c);
-	if(endia == '1')
-	{
-		cdrBuffer.m_endianness = LITTLE_ENDIANNESS;
-	}
-	else
-	{
-		cdrBuffer.m_endianness = BIG_ENDIANNESS;
-	}
-	cdrBuffer.m_swapBytes = NCDR_FALSE;
-
-	cdrBuffer.m_currentPosition = m_microBuffer->m_buffer;
-	cdrBuffer.m_alignPosition = m_microBuffer->m_buffer;
-	cdrBuffer.m_buffer = m_microBuffer->m_buffer;
-
-	cdrBuffer.m_lastDataSize = 0;
-
-	memcpy(*m_cdrBuffer, (char *)&cdrBuffer, sizeof(microCDR));
+    m_microCDR->m_lastDataSize = 0;
 }
 
-void newDeserializedAlignedBuffer(char * buffer, uint32_t bufferSize, struct microBuffer ** m_microBuffer)
+void resetStaticMicroCDRForSerialize(struct microCDR *m_microCDR)
 {
-	struct microBuffer cdrBuffer;
-
-	cdrBuffer.m_bufferSize = bufferSize;
-	cdrBuffer.m_internalBuffer = '0';
-	cdrBuffer.m_serializedBuffer = bufferSize;
-	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = NCDR_TRUE;
-
-	*m_microBuffer = malloc(sizeof(microBuffer));
-	memcpy(*m_microBuffer, (char *)&cdrBuffer, sizeof(microBuffer));
+    m_microCDR->m_iterator = 0;
+    m_microCDR->m_currentPosition = m_microCDR->m_buffer;
+    m_microCDR->m_alignPosition = m_microCDR->m_buffer;
+    m_microCDR->m_lastDataSize = 0;
+    m_microCDR->m_microBuffer->m_serializedBuffer = 0;
 }
 
-void newDeserializedNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_microBuffer)
+void resetStaticMicroCDRForDeserialize(struct microCDR *m_microCDR)
 {
-	struct microBuffer cdrBuffer;
-
-	cdrBuffer.m_bufferSize = bufferSize;
-	cdrBuffer.m_internalBuffer = '0';
-	cdrBuffer.m_serializedBuffer = bufferSize;
-	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = NCDR_FALSE;
-
-	*m_microBuffer = malloc(sizeof(microBuffer));
-	memcpy(*m_microBuffer, (char *)&cdrBuffer, sizeof(microBuffer));
+    m_microCDR->m_iterator = 0;
+    m_microCDR->m_currentPosition = m_microCDR->m_buffer;
+    m_microCDR->m_alignPosition = m_microCDR->m_buffer;
+    m_microCDR->m_lastDataSize = 0;
+    m_microCDR->m_microBuffer->m_serializedBuffer = m_microCDR->m_microBuffer->m_bufferSize;
 }
 
-void newDynamicAlignedBuffer(struct microBuffer ** m_microBuffer)
+void newMicroCDR(struct microCDR **m_cdrBuffer, struct microBuffer *m_microBuffer)
 {
-	*m_microBuffer = malloc(sizeof(microBuffer));
+    *m_cdrBuffer = malloc(sizeof(microCDR));
+    initMicroCDR(*m_cdrBuffer, m_microBuffer);
+}
 
-	struct microBuffer cdrBuffer;
+void initDeserializedAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer)
+{
+    m_microBuffer->m_bufferSize = bufferSize;
+    m_microBuffer->m_internalBuffer = '0';
+    m_microBuffer->m_serializedBuffer = bufferSize;
+    m_microBuffer->m_buffer = buffer;
+    m_microBuffer->m_alingData = NCDR_TRUE;
+}
 
-	cdrBuffer.m_bufferSize = MICROCDR_INIT_BUF_LENGTH;
-	cdrBuffer.m_internalBuffer = '1';
- 	cdrBuffer.m_serializedBuffer = 0;
-	cdrBuffer.m_buffer = malloc(MICROCDR_INIT_BUF_LENGTH);
-	cdrBuffer.m_alingData = NCDR_TRUE;
+void newDeserializedAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer **m_microBuffer)
+{
+    *m_microBuffer = malloc(sizeof(microBuffer));
+    initDeserializedAlignedBuffer(buffer, bufferSize, *m_microBuffer);
+}
 
-	memcpy(*m_microBuffer, (char *)&cdrBuffer, sizeof(microBuffer));
+void initDeserializedNonAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer)
+{
+    m_microBuffer->m_bufferSize = bufferSize;
+    m_microBuffer->m_internalBuffer = '0';
+    m_microBuffer->m_serializedBuffer = bufferSize;
+    m_microBuffer->m_buffer = buffer;
+    m_microBuffer->m_alingData = NCDR_FALSE;
+}
+
+void newDeserializedNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer **m_microBuffer)
+{
+    *m_microBuffer = malloc(sizeof(microBuffer));
+    initDeserializedNonAlignedBuffer(buffer, bufferSize, *m_microBuffer);
+}
+
+void newDynamicAlignedBuffer(struct microBuffer **m_microBuffer)
+{
+    *m_microBuffer = malloc(sizeof(microBuffer));
+    (*m_microBuffer)->m_buffer = malloc(MICROCDR_INIT_BUF_LENGTH);
+    (*m_microBuffer)->m_bufferSize = MICROCDR_INIT_BUF_LENGTH;
+    (*m_microBuffer)->m_internalBuffer = '1';
+    (*m_microBuffer)->m_serializedBuffer = 0;
+    (*m_microBuffer)->m_alingData = NCDR_TRUE;
+}
+
+void initStaticAlignedBuffer(char *buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer)
+{
+    m_microBuffer->m_bufferSize = bufferSize;
+    m_microBuffer->m_internalBuffer = '0';
+    m_microBuffer->m_serializedBuffer = 0;
+    m_microBuffer->m_buffer = buffer;
+    m_microBuffer->m_alingData = NCDR_TRUE;
 }
 
 void newStaticAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_microBuffer)
 {
-	struct microBuffer cdrBuffer;
-
-	cdrBuffer.m_bufferSize = bufferSize;
-	cdrBuffer.m_internalBuffer = '0';
-	cdrBuffer.m_serializedBuffer = 0;
-	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = NCDR_TRUE;
-
-	*m_microBuffer = malloc(sizeof(microBuffer));
-	memcpy(*m_microBuffer, (char *)&cdrBuffer, sizeof(microBuffer));
+    *m_microBuffer = malloc(sizeof(microBuffer));
+    initStaticAlignedBuffer(buffer, bufferSize, *m_microBuffer);
 }
 
-void newDynamicNonAlignedBuffer(struct microBuffer ** m_microBuffer)
+void newDynamicNonAlignedBuffer(struct microBuffer **m_microBuffer)
 {
-	*m_microBuffer = malloc(sizeof(microBuffer));
-
-	struct microBuffer cdrBuffer;
-
-	cdrBuffer.m_bufferSize = MICROCDR_INIT_BUF_LENGTH;
-	cdrBuffer.m_internalBuffer = '1';
- 	cdrBuffer.m_serializedBuffer = 0;
-	cdrBuffer.m_buffer = malloc(MICROCDR_INIT_BUF_LENGTH);
-	cdrBuffer.m_alingData = NCDR_FALSE;
-
-	memcpy(*m_microBuffer, (char *)&cdrBuffer, sizeof(microBuffer));
+    *m_microBuffer = malloc(sizeof(microBuffer));
+    (*m_microBuffer)->m_buffer = malloc(MICROCDR_INIT_BUF_LENGTH);
+    (*m_microBuffer)->m_bufferSize = MICROCDR_INIT_BUF_LENGTH;
+    (*m_microBuffer)->m_internalBuffer = '1';
+    (*m_microBuffer)->m_serializedBuffer = 0;
+    (*m_microBuffer)->m_alingData = NCDR_FALSE;
 }
 
-void newStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer ** m_microBuffer)
+void initStaticNonAlignedBuffer(char * buffer, uint32_t bufferSize, struct microBuffer *m_microBuffer)
 {
-	struct microBuffer cdrBuffer;
+    m_microBuffer->m_bufferSize = bufferSize;
+    m_microBuffer->m_internalBuffer = '0';
+    m_microBuffer->m_serializedBuffer = 0;
+    m_microBuffer->m_buffer = buffer;
+    m_microBuffer->m_alingData = NCDR_FALSE;
+}
 
-	cdrBuffer.m_bufferSize = bufferSize;
-	cdrBuffer.m_internalBuffer = '0';
-	cdrBuffer.m_serializedBuffer = 0;
-	cdrBuffer.m_buffer = buffer;
-	cdrBuffer.m_alingData = NCDR_FALSE;
-
-	*m_microBuffer = malloc(sizeof(microBuffer));
-	memcpy(*m_microBuffer, (char *)&cdrBuffer, sizeof(microBuffer));
+void newStaticNonAlignedBuffer (char * buffer, uint32_t bufferSize, struct microBuffer **m_microBuffer)
+{
+    *m_microBuffer = malloc(sizeof(microBuffer));
+    initStaticNonAlignedBuffer(buffer, bufferSize, *m_microBuffer);
 }
 
 void destroyBuffer(struct microBuffer * m_cdrBuffer)
@@ -147,7 +159,7 @@ void freeCdr (void ** point_t)
 
 void resetAlignment(struct microCDR * m_cdrBuffer)
 {
-		m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_currentPosition;
+	m_cdrBuffer->m_alignPosition = m_cdrBuffer->m_currentPosition;
 }
 
 uint32_t alignment(uint32_t dataSize, struct microCDR * m_cdrBuffer)
