@@ -14,24 +14,23 @@ extern "C" {
 
 //typedef enum {TRUE,FALSE}Bool;
 
-	typedef struct microBuffer
-	{
-		//! @brief Pointer to the beginning of stream.
-		char * m_buffer;
+typedef struct microBuffer {
+	//! @brief Pointer to the beginning of stream.
+	char *m_buffer;
 
-		//! @brief The total size of the user's buffer.
-		uint32_t m_bufferSize;
+	//! @brief The total size of the user's buffer.
+	uint32_t m_bufferSize;
 
-		//! @brief This variable indicates if the managed buffer is internal or is from the user.
-		char m_internalBuffer;
+	//! @brief This variable indicates if the managed buffer is internal or is from the user.
+	char m_internalBuffer;
 
-		//! @brief The size of the serialized/unserialized data in the stream.
-		uint32_t m_serializedBuffer;
+	//! @brief The size of the serialized/unserialized data in the stream.
+	uint32_t m_serializedBuffer;
 
-		//!@ brief This variable indicates if the managed buffer stream is aligned or not
-        uint8_t m_alingData;
+	//!@ brief This variable indicates if the managed buffer stream is aligned or not
+	uint8_t m_alingData;
 
-	}microBuffer;
+} microBuffer;
 
 #ifdef __cplusplus
 }
