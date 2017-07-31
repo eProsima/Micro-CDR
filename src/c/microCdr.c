@@ -166,9 +166,13 @@ uint32_t alignment(uint32_t dataSize, struct microCDR * m_cdrBuffer)
 {
 	uint8_t alingData = m_cdrBuffer->m_microBuffer->m_alingData;
 	if(alingData == NCDR_TRUE)
+	{
 		return dataSize > m_cdrBuffer->m_lastDataSize ? (dataSize - ((m_cdrBuffer->m_currentPosition - m_cdrBuffer->m_alignPosition) % dataSize)) & (dataSize-1) : 0;
+	}
 	else
+	{
 		return 0;
+	}
 }
 
 void makeAlign(uint32_t align, struct microCDR * m_cdrBuffer)
@@ -546,9 +550,18 @@ int8_t deserializeBool(bool * bool_t, struct microCDR * m_cdrBuffer)
             m_cdrBuffer->m_currentPosition += 1;
             m_cdrBuffer->m_lastDataSize = sizeof(char);
 
-                 if (0 == value) *bool_t = false;
-            else if (1 == value) *bool_t = true;
-            else                 result = -1;
+            if (0 == value)
+            {
+                *bool_t = false;
+            }
+            else if (1 == value)
+            {
+                *bool_t = true;
+            }
+            else
+            {
+                result = -1;
+            }
     }
     else
     {
