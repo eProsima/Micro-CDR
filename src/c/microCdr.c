@@ -2229,7 +2229,9 @@ int8_t serializeStringSequence(const char ** string_t, const uint32_t numElement
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeStringArray(string_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2254,7 +2256,9 @@ int8_t serializeStringSequenceEndianness(const char ** string_t, const uint32_t 
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeStringArrayEndianness(string_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2280,7 +2284,9 @@ int8_t serializeStringArray(const char ** string_t, const uint32_t numElements, 
         {
             result = serializeString(string_t[i], (uint32_t) strlen(string_t[i]), m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2307,7 +2313,9 @@ int8_t serializeStringArrayEndianness(const char ** string_t, const uint32_t num
         {
             result = serializeStringEndianness(string_t[i], (uint32_t) strlen(string_t[i]), endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2323,7 +2331,9 @@ int8_t serializeCharSequence(const char * char_t, const uint32_t numElements, st
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeCharArray(char_t, numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(char);
     }
@@ -2341,7 +2351,9 @@ int8_t serializeCharSequenceEndianness(const char * char_t, const uint32_t numEl
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeCharArray(char_t, numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(char);
     }
@@ -2360,7 +2372,9 @@ int8_t serializeCharArray(const char * char_t, const uint32_t numElements, struc
         {
             result = serializeChar(char_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
             m_cdrBuffer->m_lastDataSize = sizeof(char);
         }
     }
@@ -2378,7 +2392,9 @@ int8_t serializeUnsignedCharSequence(const unsigned char * uchar_t, const uint32
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedCharArray(uchar_t, numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
     }
@@ -2396,7 +2412,9 @@ int8_t serializeUnsignedCharSequenceEndianness(const unsigned char * uchar_t, co
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedCharArray(uchar_t, numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
     }
@@ -2417,7 +2435,9 @@ int8_t serializeUnsignedCharArray(const unsigned char * uchar_t, const uint32_t 
         {
             result = serializeUnsignedChar(uchar_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
             m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
         }
     }
@@ -2435,7 +2455,9 @@ int8_t serializeSignedCharSequence(const signed char * schar_t, const uint32_t n
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeSignedCharArray(schar_t, numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(signed char);
     }
@@ -2489,7 +2511,9 @@ int8_t serializeSignedCharArray(const signed char * schar_t, const uint32_t numE
         {
             result = serializeSignedChar(schar_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
             m_cdrBuffer->m_lastDataSize = sizeof(signed char);
         }
     }
@@ -2508,7 +2532,9 @@ int8_t serializeBoolArray(const bool * bool_t, const uint32_t numElements, struc
         {
             result = serializeBool(bool_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
             m_cdrBuffer->m_lastDataSize = sizeof(char);
         }
     }
@@ -2526,7 +2552,9 @@ int8_t serializeShortSequence(const int16_t * short_t, const uint32_t numElement
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeShortArray(short_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2544,7 +2572,9 @@ int8_t serializeShortSequenceEndianness(const int16_t * short_t, const uint32_t 
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeShortArrayEndianness(short_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2564,7 +2594,9 @@ int8_t serializeShortArray(const int16_t * short_t, const uint32_t numElements, 
         {
             result = serializeShort(short_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2585,7 +2617,9 @@ int8_t serializeShortArrayEndianness(const int16_t * short_t, const uint32_t num
         {
             result = serializeShortEndianness(short_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2603,7 +2637,9 @@ int8_t serializeUnsignedShortSequence(const uint16_t * ushort_t, const uint32_t 
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedShortArray(ushort_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2621,7 +2657,9 @@ int8_t serializeUnsignedShortSequenceEndianness(const uint16_t * ushort_t, const
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedShortArrayEndianness(ushort_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2641,7 +2679,9 @@ int8_t serializeUnsignedShortArray(const uint16_t * ushort_t, const uint32_t num
         {
             result = serializeUnsignedShort(ushort_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2662,7 +2702,9 @@ int8_t serializeUnsignedShortArrayEndianness(const uint16_t * ushort_t, const ui
         {
             result = serializeUnsignedShortEndianness(ushort_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2679,7 +2721,9 @@ int8_t serializeIntSequence(const int32_t * int_t, const uint32_t numElements, s
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeIntArray(int_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2697,7 +2741,9 @@ int8_t serializeIntSequenceEndianness(const int32_t * int_t, const uint32_t numE
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeIntArrayEndianness(int_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2717,7 +2763,9 @@ int8_t serializeIntArray(const int32_t * int_t, const uint32_t numElements, stru
         {
             result = serializeInt(int_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2738,7 +2786,9 @@ int8_t serializeIntArrayEndianness(const int32_t * int_t, const uint32_t numElem
         {
             result = serializeIntEndianness(int_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2755,7 +2805,9 @@ int8_t serializeUnsignedIntSequence(const uint32_t * uint_t, const uint32_t numE
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedIntArray(uint_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2773,7 +2825,9 @@ int8_t serializeUnsignedIntSequenceEndianness(const uint32_t * uint_t, const uin
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedIntArrayEndianness(uint_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2793,7 +2847,9 @@ int8_t serializeUnsignedIntArray(const uint32_t * uint_t, const uint32_t numElem
         {
             result = serializeUnsignedInt(uint_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2814,7 +2870,9 @@ int8_t serializeUnsignedIntArrayEndianness(const uint32_t * uint_t, const uint32
         {
             result = serializeUnsignedIntEndianness(uint_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2831,7 +2889,9 @@ int8_t serializeLongSequence(const int64_t * long_t, const uint32_t numElements,
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeLongArray(long_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2849,7 +2909,9 @@ int8_t serializeLongSequenceEndianness(const int64_t * long_t, const uint32_t nu
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeLongArrayEndianness(long_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2869,7 +2931,9 @@ int8_t serializeLongArray(const int64_t * long_t, const uint32_t numElements, st
         {
             result = serializeLong(long_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2890,7 +2954,9 @@ int8_t serializeLongArrayEndianness(const int64_t * long_t, const uint32_t numEl
         {
             result = serializeLongEndianness(long_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2908,7 +2974,9 @@ int8_t serializeUnsignedLongSequence(const uint64_t * ulong_t, const uint32_t nu
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedLongArray(ulong_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -2926,7 +2994,9 @@ int8_t serializeUnsignedLongSequenceEndianness(const uint64_t * ulong_t, const u
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedLongArrayEndianness(ulong_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -2946,7 +3016,9 @@ int8_t serializeUnsignedLongArray(const uint64_t * ulong_t, const uint32_t numEl
         {
             result = serializeUnsignedLong(ulong_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2967,7 +3039,9 @@ int8_t serializeUnsignedLongArrayEndianness(const uint64_t * ulong_t, const uint
         {
             result = serializeUnsignedLongEndianness(ulong_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -2985,7 +3059,9 @@ int8_t serializeLongLongSequence(const long long * longlong_t, const uint32_t nu
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeLongLongArray(longlong_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -3003,7 +3079,9 @@ int8_t serializeLongLongSequenceEndianness(const long long * longlong_t, const u
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeLongLongArrayEndianness(longlong_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -3023,7 +3101,9 @@ int8_t serializeLongLongArray(const long long * longlong_t, const uint32_t numEl
         {
             result = serializeLongLong(longlong_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3044,7 +3124,9 @@ int8_t serializeLongLongArrayEndianness(const long long * longlong_t, const uint
         {
             result = serializeLongLongEndianness(longlong_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3062,7 +3144,9 @@ int8_t serializeUnsignedLongLongSequence(const unsigned long long * ulonglong_t,
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedLongLongArray(ulonglong_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -3080,7 +3164,9 @@ int8_t serializeUnsignedLongLongSequenceEndianness(const unsigned long long * ul
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeUnsignedLongLongArrayEndianness(ulonglong_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -3101,7 +3187,9 @@ int8_t serializeUnsignedLongLongArray(const unsigned long long * ulonglong_t, co
         {
             result = serializeUnsignedLongLong(ulonglong_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3122,7 +3210,9 @@ int8_t serializeUnsignedLongLongArrayEndianness(const unsigned long long * ulong
         {
             result = serializeUnsignedLongLongEndianness(ulonglong_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3139,7 +3229,9 @@ int8_t serializeFloatSequence(const float * float_t, const uint32_t numElements,
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeFloatArray(float_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -3157,7 +3249,9 @@ int8_t serializeFloatSequenceEndianness(const float * float_t, const uint32_t nu
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeFloatArrayEndianness(float_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -3177,7 +3271,9 @@ int8_t serializeFloatArray(const float * float_t, const uint32_t numElements, st
         {
             result = serializeFloat(float_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3198,7 +3294,9 @@ int8_t serializeFloatArrayEndianness(const float * float_t, const uint32_t numEl
         {
             result = serializeFloatEndianness(float_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3215,7 +3313,9 @@ int8_t serializeDoubleSequence(const double * m_double_t, const uint32_t numElem
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeDoubleArray(m_double_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -3233,7 +3333,9 @@ int8_t serializeDoubleSequenceEndianness(const double * m_double_t, const uint32
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeDoubleArrayEndianness(m_double_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -3253,7 +3355,9 @@ int8_t serializeDoubleArray(const double * m_double_t, const uint32_t numElement
         {
             result = serializeDouble(m_double_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3274,7 +3378,9 @@ int8_t serializeDoubleArrayEndianness(const double * m_double_t, const uint32_t 
         {
             result = serializeDoubleEndianness(m_double_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3292,7 +3398,9 @@ int8_t serializeLongDoubleSequence(const long double * longdouble_t, const uint3
     {
         result = serializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeLongDoubleArray(longdouble_t, numElements, m_cdrBuffer);
     }
     return result;
@@ -3310,7 +3418,9 @@ int8_t serializeLongDoubleSequenceEndianness(const long double * longdouble_t, c
     {
         result = serializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = serializeLongDoubleArrayEndianness(longdouble_t, numElements, endianness, m_cdrBuffer);
     }
     return result;
@@ -3331,7 +3441,9 @@ int8_t serializeLongDoubleArray(const long double * longdouble_t, const uint32_t
         {
             result = serializeLongDouble(longdouble_t[i], m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3352,7 +3464,9 @@ int8_t serializeLongDoubleArrayEndianness(const long double * longdouble_t, cons
         {
             result = serializeLongDoubleEndianness(longdouble_t[i], endianness, m_cdrBuffer);
             if (result < 0)
+            {
                 return -1;
+            }
         }
     }
     return result;
@@ -3371,7 +3485,9 @@ int8_t deserializeStringSequence(char *** string_t, uint32_t * numElements, stru
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         char ** swap; // = malloc(*numElements * sizeof(char *));
 
         result = deserializeStringArray(&swap, *numElements, m_cdrBuffer);
@@ -3407,7 +3523,9 @@ int8_t deserializeStringSequenceEndianness(char *** string_t, uint32_t * numElem
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         char ** swap; // = malloc(*numElements * sizeof(char *));
         result = deserializeStringArrayEndianness(&swap, *numElements, endianness, m_cdrBuffer);
 
@@ -3442,7 +3560,9 @@ int8_t deserializeStringArray(char *** string_t, const uint32_t numElements, str
     {
         result = deserializeString(&swap[i], &length, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         m_cdrBuffer->m_lastDataSize = sizeof(char);
     }
     memcpy(*string_t, swap, (numElements * sizeof(char *)));
@@ -3471,7 +3591,9 @@ int8_t deserializeStringArrayEndianness(char *** string_t, const uint32_t numEle
     {
         result = deserializeStringEndianness(&swap[i], &length, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         m_cdrBuffer->m_lastDataSize = sizeof(char);
     }
     memcpy(*string_t, swap, (numElements * sizeof(char *)));
@@ -3490,7 +3612,9 @@ int8_t deserializeCharSequence(char ** char_t, uint32_t * numElements, struct mi
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeCharArray(char_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(char);
     }
@@ -3512,7 +3636,9 @@ int8_t deserializeCharSequenceEndianness(char ** char_t, uint32_t * numElements,
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeCharArray(char_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(char);
     }
@@ -3555,7 +3681,9 @@ int8_t deserializeUnsignedCharSequence(unsigned char ** uchar_t, uint32_t * numE
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedCharArray(uchar_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
     }
@@ -3577,7 +3705,9 @@ int8_t deserializeUnsignedCharSequenceEndianness(unsigned char ** uchar_t, uint3
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedCharArray(uchar_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(unsigned char);
     }
@@ -3620,7 +3750,9 @@ int8_t deserializeSignedCharSequence(signed char ** schar_t, uint32_t * numEleme
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeSignedCharArray(schar_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(signed char);
     }
@@ -3642,7 +3774,9 @@ int8_t deserializeSignedCharSequenceEndianness(signed char ** schar_t, uint32_t 
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeSignedCharArray(schar_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(signed char);
     }
@@ -3720,7 +3854,9 @@ int8_t deserializeShortSequence(int16_t ** short_t, uint32_t * numElements, stru
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeShortArray(short_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(int16_t);
     }
@@ -3744,7 +3880,9 @@ int8_t deserializeShortSequenceEndianness(int16_t ** short_t, uint32_t * numElem
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeShortArrayEndianness(short_t, *numElements, endianness, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(int16_t);
     }
@@ -3827,7 +3965,9 @@ int8_t deserializeUnsignedShortSequence(uint16_t ** ushort_t, uint32_t * numElem
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedShortArray(ushort_t, *numElements, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(uint16_t);
     }
@@ -3850,7 +3990,9 @@ int8_t deserializeUnsignedShortSequenceEndianness(uint16_t ** ushort_t, uint32_t
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedShortArrayEndianness(ushort_t, *numElements, endianness, m_cdrBuffer);
         m_cdrBuffer->m_lastDataSize = sizeof(uint16_t);
     }
@@ -3932,7 +4074,9 @@ int8_t deserializeIntSequence(int32_t ** int_t, uint32_t * numElements, struct m
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeIntArray(int_t, *numElements, m_cdrBuffer);
     }
     else
@@ -3953,7 +4097,9 @@ int8_t deserializeIntSequenceEndianness(int32_t ** int_t, uint32_t * numElements
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeIntArrayEndianness(int_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4030,7 +4176,9 @@ int8_t deserializeUnsignedIntSequence(uint32_t ** uint_t, uint32_t * numElements
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedIntArray(uint_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4051,7 +4199,9 @@ int8_t deserializeUnsignedIntSequenceEndianness(uint32_t ** int_t, uint32_t * nu
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedIntArrayEndianness(int_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4130,7 +4280,9 @@ int8_t deserializeLongSequence(int64_t ** long_t, uint32_t * numElements, struct
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeLongArray(long_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4153,7 +4305,9 @@ int8_t deserializeLongSequenceEndianness(int64_t ** long_t, uint32_t * numElemen
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeLongArrayEndianness(long_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4236,7 +4390,9 @@ int8_t deserializeUnsignedLongSequence(uint64_t ** ulong_t, uint32_t * numElemen
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedLongArray(ulong_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4259,7 +4415,9 @@ int8_t deserializeUnsignedLongSequenceEndianness(uint64_t ** ulong_t, uint32_t *
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedLongArrayEndianness(ulong_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4342,7 +4500,9 @@ int8_t deserializeLongLongSequence(long long ** longlong_t, uint32_t * numElemen
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeLongLongArray(longlong_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4365,7 +4525,9 @@ int8_t deserializeLongLongSequenceEndianness(long long ** longlong_t, uint32_t *
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeLongLongArrayEndianness(longlong_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4448,7 +4610,9 @@ int8_t deserializeUnsignedLongLongSequence(unsigned long long ** ulonglong_t, ui
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedLongLongArray(ulonglong_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4471,7 +4635,9 @@ int8_t deserializeUnsignedLongLongSequenceEndianness(unsigned long long ** ulong
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeUnsignedLongLongArrayEndianness(ulonglong_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4555,7 +4721,9 @@ int8_t deserializeFloatSequence(float ** float_t, uint32_t * numElements, struct
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeFloatArray(float_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4578,7 +4746,9 @@ int8_t deserializeFloatSequenceEndianness(float ** float_t, uint32_t * numElemen
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeFloatArrayEndianness(float_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4661,7 +4831,9 @@ int8_t deserializeDoubleSequence(double ** m_double_t, uint32_t * numElements, s
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeDoubleArray(m_double_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4684,7 +4856,9 @@ int8_t deserializeDoubleSequenceEndianness(double ** m_double_t, uint32_t * numE
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeDoubleArrayEndianness(m_double_t, *numElements, endianness, m_cdrBuffer);
     }
     else
@@ -4767,7 +4941,9 @@ int8_t deserializeLongDoubleSequence(long double ** longdouble_t, uint32_t * num
     {
         result = deserializeUnsignedInt(numElements, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeLongDoubleArray(longdouble_t, *numElements, m_cdrBuffer);
     }
     else
@@ -4790,7 +4966,9 @@ int8_t deserializeLongDoubleSequenceEndianness(long double ** longdouble_t, uint
     {
         result = deserializeUnsignedIntEndianness(numElements, endianness, m_cdrBuffer);
         if (result < 0)
+        {
             return -1;
+        }
         result = deserializeLongDoubleArrayEndianness(longdouble_t, *numElements, endianness, m_cdrBuffer);
     }
     else
