@@ -32,8 +32,8 @@ const long double longdouble_t = DBL_MIN;
 //TODO bool
 //static const bool bool_t = true;
 
-const char * string_t = "Hola a todos, esto es un test";
-const char * emptystring_t = "";
+const char* string_t = "Hola a todos, esto es un test";
+const char* emptystring_t = "";
 
 const unsigned char octet_array_t[5] = { 1, 2, 3, 4, 5 };
 const char char_array_t[5] = { 'A', 'B', 'C', 'D', 'E' };
@@ -78,9 +78,9 @@ const long double longdouble_seq_t[5] = { longdouble_t, longdouble_t + 1, longdo
 
 //static const bool bool_seq_t[5] = {true, true, false, false, true};
 
-const char * string_seq_t[5] = { "HELLO", "BYE", "GOODBYE", "HOLA", "ADIOS" };
+const char* string_seq_t[5] = { "HELLO", "BYE", "GOODBYE", "HOLA", "ADIOS" };
 // Added because error 337
-const char * c_string_t = "HOLA";
+const char* c_string_t = "HOLA";
 
 Endianness endianness = LITTLE_ENDIANNESS;
 
@@ -88,9 +88,9 @@ TEST(microCDRDynamicBasicTests, Char)
 {
     char char_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -114,9 +114,9 @@ TEST(microCDRDynamicBasicTests, SignedChar)
 {
     signed char octect_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -140,9 +140,9 @@ TEST(microCDRDynamicBasicTests, Short)
 {
     int16_t short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -166,9 +166,9 @@ TEST(microCDRDynamicBasicTests, UnsignedShort)
 {
     uint16_t ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -192,9 +192,9 @@ TEST(microCDRDynamicBasicTests, Int)
 {
     int32_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -218,9 +218,9 @@ TEST(microCDRDynamicBasicTests, UnsignedInt)
 {
     uint32_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -244,9 +244,9 @@ TEST(microCDRDynamicBasicTests, Long)
 {
     int64_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -270,9 +270,9 @@ TEST(microCDRDynamicBasicTests, uLong)
 {
     uint64_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -296,9 +296,9 @@ TEST(microCDRDynamicBasicTests, LongLong)
 {
     long long longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -322,9 +322,9 @@ TEST(microCDRDynamicBasicTests, uLongLong)
 {
     unsigned long long ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -348,9 +348,9 @@ TEST(microCDRDynamicBasicTests, Float)
 {
     float float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -374,9 +374,9 @@ TEST(microCDRDynamicBasicTests, Double)
 {
     double double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -400,9 +400,9 @@ TEST(microCDRDynamicBasicTests, LongDouble)
 {
     long double longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -424,11 +424,11 @@ TEST(microCDRDynamicBasicTests, LongDouble)
 
 TEST(microCDRDynamicBasicTests, String)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -460,11 +460,11 @@ TEST(microCDRDynamicBasicTests, String)
 
 TEST(microCDRDynamicBasicTests, EmptyString)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -493,11 +493,11 @@ TEST(microCDRDynamicBasicTests, EmptyString)
 
 TEST(microCDRDynamicArrayTests, CharArray)
 {
-    char * char_out;
+    char* char_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -524,11 +524,11 @@ TEST(microCDRDynamicArrayTests, CharArray)
 
 TEST(microCDRDynamicArrayTests, UnsignedCharArray)
 {
-    unsigned char * char_out;
+    unsigned char* char_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -555,11 +555,11 @@ TEST(microCDRDynamicArrayTests, UnsignedCharArray)
 
 TEST(microCDRDynamicArrayTests, ShortArray)
 {
-    int16_t * short_out;
+    int16_t* short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -586,11 +586,11 @@ TEST(microCDRDynamicArrayTests, ShortArray)
 
 TEST(microCDRDynamicArrayTests, UnsignedShortArray)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -617,11 +617,11 @@ TEST(microCDRDynamicArrayTests, UnsignedShortArray)
 
 TEST(microCDRDynamicArrayTests, IntArray)
 {
-    int32_t * int_out;
+    int32_t* int_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -648,11 +648,11 @@ TEST(microCDRDynamicArrayTests, IntArray)
 
 TEST(microCDRDynamicArrayTests, UnsignedIntArray)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -679,11 +679,11 @@ TEST(microCDRDynamicArrayTests, UnsignedIntArray)
 
 TEST(microCDRDynamicArrayTests, LongArray)
 {
-    int64_t * long_out;
+    int64_t* long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -710,11 +710,11 @@ TEST(microCDRDynamicArrayTests, LongArray)
 
 TEST(microCDRDynamicArrayTests, ULongArray)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -741,11 +741,11 @@ TEST(microCDRDynamicArrayTests, ULongArray)
 
 TEST(microCDRDynamicArrayTests, LongLongArray)
 {
-    long long * longlong_out;
+    long long* longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -772,11 +772,11 @@ TEST(microCDRDynamicArrayTests, LongLongArray)
 
 TEST(microCDRDynamicArrayTests, ULongLongArray)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -803,11 +803,11 @@ TEST(microCDRDynamicArrayTests, ULongLongArray)
 
 TEST(microCDRDynamicArrayTests, FloatArray)
 {
-    float * float_out;
+    float* float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -834,11 +834,11 @@ TEST(microCDRDynamicArrayTests, FloatArray)
 
 TEST(microCDRDynamicArrayTests, DoubleArray)
 {
-    double * double_out;
+    double* double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -866,11 +866,11 @@ TEST(microCDRDynamicArrayTests, DoubleArray)
 
 TEST(microCDRDynamicArrayTests, LongDoubleArray)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -897,11 +897,11 @@ TEST(microCDRDynamicArrayTests, LongDoubleArray)
 
 TEST(microCDRDynamicArrayTests, StringArray)
 {
-    char ** string_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -933,12 +933,12 @@ TEST(microCDRDynamicArrayTests, StringArray)
 
 TEST(microCDRDynamicSequencesTests, CharSequence)
 {
-    char * char_out;
+    char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -968,12 +968,12 @@ TEST(microCDRDynamicSequencesTests, CharSequence)
 
 TEST(microCDRDynamicSequencesTests, UnsignedCharSequence)
 {
-    unsigned char * char_out;
+    unsigned char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1003,12 +1003,12 @@ TEST(microCDRDynamicSequencesTests, UnsignedCharSequence)
 
 TEST(microCDRDynamicSequencesTests, ShortSequence)
 {
-    int16_t * short_out;
+    int16_t* short_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1038,12 +1038,12 @@ TEST(microCDRDynamicSequencesTests, ShortSequence)
 
 TEST(microCDRDynamicSequencesTests, UnsignedShortSequence)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1073,12 +1073,12 @@ TEST(microCDRDynamicSequencesTests, UnsignedShortSequence)
 
 TEST(microCDRDynamicSequencesTests, IntSequence)
 {
-    int32_t * int_out;
+    int32_t* int_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1108,12 +1108,12 @@ TEST(microCDRDynamicSequencesTests, IntSequence)
 
 TEST(microCDRDynamicSequencesTests, UnsignedIntSequence)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1143,12 +1143,12 @@ TEST(microCDRDynamicSequencesTests, UnsignedIntSequence)
 
 TEST(microCDRDynamicSequencesTests, LongSequence)
 {
-    int64_t * long_out;
+    int64_t* long_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1178,12 +1178,12 @@ TEST(microCDRDynamicSequencesTests, LongSequence)
 
 TEST(microCDRDynamicSequencesTests, ULongSequence)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1213,12 +1213,12 @@ TEST(microCDRDynamicSequencesTests, ULongSequence)
 
 TEST(microCDRDynamicSequencesTests, LongLongSequence)
 {
-    long long * longlong_out;
+    long long* longlong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1248,12 +1248,12 @@ TEST(microCDRDynamicSequencesTests, LongLongSequence)
 
 TEST(microCDRDynamicSequencesTests, ULongLongSequence)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1283,12 +1283,12 @@ TEST(microCDRDynamicSequencesTests, ULongLongSequence)
 
 TEST(microCDRDynamicSequencesTests, FloatSequence)
 {
-    float * float_out;
+    float* float_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1318,12 +1318,12 @@ TEST(microCDRDynamicSequencesTests, FloatSequence)
 
 TEST(microCDRDynamicSequencesTests, DoubleSequence)
 {
-    double * double_out;
+    double* double_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1353,12 +1353,12 @@ TEST(microCDRDynamicSequencesTests, DoubleSequence)
 
 TEST(microCDRDynamicSequencesTests, LongDoubleSequence)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1388,11 +1388,11 @@ TEST(microCDRDynamicSequencesTests, LongDoubleSequence)
 
 TEST(microCDRDynamicSequencesTests, StringSequence)
 {
-    char ** string_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1441,12 +1441,12 @@ TEST(microCDRDynamicTests, SimpleVar)
     float float_out;
     double double_out;
     long double longdouble_out;
-    char * string_out;
-    char * string_out_2;
+    char* string_out;
+    char* string_out_2;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1525,24 +1525,24 @@ TEST(microCDRDynamicTests, SimpleVar)
 TEST(microCDRDynamicTests, Arrays)
 {
     int32_t i;
-    char * char_out;
-    unsigned char * uchar_out;
-    int16_t * short_out;
-    uint16_t * ushort_out;
-    int32_t * int_out;
-    uint32_t * uint_out;
-    int64_t * long_out;
-    uint64_t * ulong_out;
-    long long * longlong_out;
-    unsigned long long * ulonglong_out;
-    float * float_out;
-    double * double_out;
-    long double * longdouble_out;
-    char ** string_out;
+    char* char_out;
+    unsigned char* uchar_out;
+    int16_t* short_out;
+    uint16_t* ushort_out;
+    int32_t* int_out;
+    uint32_t* uint_out;
+    int64_t* long_out;
+    uint64_t* ulong_out;
+    long long* longlong_out;
+    unsigned long long* ulonglong_out;
+    float* float_out;
+    double* double_out;
+    long double* longdouble_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1681,40 +1681,40 @@ TEST(microCDRDynamicTests, Arrays)
 TEST(microCDRDynamicTests, Sequences)
 {
     int32_t i;
-    char * char_out;
+    char* char_out;
     uint32_t char_out_size;
-    unsigned char * uchar_out;
+    unsigned char* uchar_out;
     uint32_t uchar_out_size;
-    int16_t * short_out;
+    int16_t* short_out;
     uint32_t short_out_size;
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
     uint32_t ushort_out_size;
-    int32_t * int_out;
+    int32_t* int_out;
     uint32_t int_out_size;
-    uint32_t * uint_out;
+    uint32_t* uint_out;
     uint32_t uint_out_size;
-    int64_t * long_out;
+    int64_t* long_out;
     uint32_t long_out_size;
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
     uint32_t ulong_out_size;
-    long long * longlong_out;
+    long long* longlong_out;
     uint32_t longlong_out_size;
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
     uint32_t ulonglong_out_size;
-    float * float_out;
+    float* float_out;
     uint32_t float_out_size;
-    double * double_out;
+    double* double_out;
     uint32_t double_out_size;
-    long double * longdouble_out;
+    long double* longdouble_out;
     uint32_t longdouble_out_size;
-    char ** string_out;
+    char** string_out;
     uint32_t string_out_size;
 
     int16_t result = 0;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -1879,59 +1879,59 @@ TEST(microCDRDynamicTests, All)
     float float_out;
     double double_out;
     long double longdouble_out;
-    char * string_out;
-    char * string_out_2;
+    char* string_out;
+    char* string_out_2;
 
     //ARRAYS
     int32_t i;
-    char * char_array_out;
-    unsigned char * uchar_array_out;
-    int16_t * short_array_out;
-    uint16_t * ushort_array_out;
-    int32_t * int_array_out;
-    uint32_t * uint_array_out;
-    int64_t * long_array_out;
-    uint64_t * ulong_array_out;
-    long long * longlong_array_out;
-    unsigned long long * ulonglong_array_out;
-    float * float_array_out;
-    double * double_array_out;
-    long double * longdouble_array_out;
-    char ** string_array_out;
+    char* char_array_out;
+    unsigned char* uchar_array_out;
+    int16_t* short_array_out;
+    uint16_t* ushort_array_out;
+    int32_t* int_array_out;
+    uint32_t* uint_array_out;
+    int64_t* long_array_out;
+    uint64_t* ulong_array_out;
+    long long* longlong_array_out;
+    unsigned long long* ulonglong_array_out;
+    float* float_array_out;
+    double* double_array_out;
+    long double* longdouble_array_out;
+    char** string_array_out;
 
     //SEQUENCES
-    char * char_seq_out;
+    char* char_seq_out;
     uint32_t char_out_size;
-    unsigned char * uchar_seq_out;
+    unsigned char* uchar_seq_out;
     uint32_t uchar_out_size;
-    int16_t * short_seq_out;
+    int16_t* short_seq_out;
     uint32_t short_out_size;
-    uint16_t * ushort_seq_out;
+    uint16_t* ushort_seq_out;
     uint32_t ushort_out_size;
-    int32_t * int_seq_out;
+    int32_t* int_seq_out;
     uint32_t int_out_size;
-    uint32_t * uint_seq_out;
+    uint32_t* uint_seq_out;
     uint32_t uint_out_size;
-    int64_t * long_seq_out;
+    int64_t* long_seq_out;
     uint32_t long_out_size;
-    uint64_t * ulong_seq_out;
+    uint64_t* ulong_seq_out;
     uint32_t ulong_out_size;
-    long long * longlong_seq_out;
+    long long* longlong_seq_out;
     uint32_t longlong_out_size;
-    unsigned long long * ulonglong_seq_out;
+    unsigned long long* ulonglong_seq_out;
     uint32_t ulonglong_out_size;
-    float * float_seq_out;
+    float* float_seq_out;
     uint32_t float_out_size;
-    double * double_seq_out;
+    double* double_seq_out;
     uint32_t double_out_size;
-    long double * longdouble_seq_out;
+    long double* longdouble_seq_out;
     uint32_t longdouble_out_size;
-    char ** string_seq_out;
+    char** string_seq_out;
     uint32_t string_out_size;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2285,59 +2285,59 @@ TEST(microCDRDynamicTests, AllEndianness)
     float float_out;
     double double_out;
     long double longdouble_out;
-    char * string_out;
-    char * string_out_2;
+    char* string_out;
+    char* string_out_2;
 
     //ARRAYS
     int32_t i;
-    char * char_array_out;
-    unsigned char * uchar_array_out;
-    int16_t * short_array_out;
-    uint16_t * ushort_array_out;
-    int32_t * int_array_out;
-    uint32_t * uint_array_out;
-    int64_t * long_array_out;
-    uint64_t * ulong_array_out;
-    long long * longlong_array_out;
-    unsigned long long * ulonglong_array_out;
-    float * float_array_out;
-    double * double_array_out;
-    long double * longdouble_array_out;
-    char ** string_array_out;
+    char* char_array_out;
+    unsigned char* uchar_array_out;
+    int16_t* short_array_out;
+    uint16_t* ushort_array_out;
+    int32_t* int_array_out;
+    uint32_t* uint_array_out;
+    int64_t* long_array_out;
+    uint64_t* ulong_array_out;
+    long long* longlong_array_out;
+    unsigned long long* ulonglong_array_out;
+    float* float_array_out;
+    double* double_array_out;
+    long double* longdouble_array_out;
+    char** string_array_out;
 
     //SEQUENCES
-    char * char_seq_out;
+    char* char_seq_out;
     uint32_t char_out_size;
-    unsigned char * uchar_seq_out;
+    unsigned char* uchar_seq_out;
     uint32_t uchar_out_size;
-    int16_t * short_seq_out;
+    int16_t* short_seq_out;
     uint32_t short_out_size;
-    uint16_t * ushort_seq_out;
+    uint16_t* ushort_seq_out;
     uint32_t ushort_out_size;
-    int32_t * int_seq_out;
+    int32_t* int_seq_out;
     uint32_t int_out_size;
-    uint32_t * uint_seq_out;
+    uint32_t* uint_seq_out;
     uint32_t uint_out_size;
-    int64_t * long_seq_out;
+    int64_t* long_seq_out;
     uint32_t long_out_size;
-    uint64_t * ulong_seq_out;
+    uint64_t* ulong_seq_out;
     uint32_t ulong_out_size;
-    long long * longlong_seq_out;
+    long long* longlong_seq_out;
     uint32_t longlong_out_size;
-    unsigned long long * ulonglong_seq_out;
+    unsigned long long* ulonglong_seq_out;
     uint32_t ulonglong_out_size;
-    float * float_seq_out;
+    float* float_seq_out;
     uint32_t float_out_size;
-    double * double_seq_out;
+    double* double_seq_out;
     uint32_t double_out_size;
-    long double * longdouble_seq_out;
+    long double* longdouble_seq_out;
     uint32_t longdouble_out_size;
-    char ** string_seq_out;
+    char** string_seq_out;
     uint32_t string_out_size;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2677,9 +2677,9 @@ TEST(microCDRDynamicBasicEndiannessTests, Short)
 {
     int16_t short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2703,9 +2703,9 @@ TEST(microCDRDynamicBasicEndiannessTests, UnsignedShort)
 {
     uint16_t ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2729,9 +2729,9 @@ TEST(microCDRDynamicBasicEndiannessTests, Int)
 {
     int32_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2755,9 +2755,9 @@ TEST(microCDRDynamicBasicEndiannessTests, UnsignedInt)
 {
     uint32_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2781,9 +2781,9 @@ TEST(microCDRDynamicBasicEndiannessTests, Long)
 {
     int64_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2807,9 +2807,9 @@ TEST(microCDRDynamicBasicEndiannessTests, uLong)
 {
     uint64_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2833,9 +2833,9 @@ TEST(microCDRDynamicBasicEndiannessTests, LongLong)
 {
     long long longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2859,9 +2859,9 @@ TEST(microCDRDynamicBasicEndiannessTests, uLongLong)
 {
     unsigned long long ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2885,9 +2885,9 @@ TEST(microCDRDynamicBasicEndiannessTests, Float)
 {
     float float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2911,9 +2911,9 @@ TEST(microCDRDynamicBasicEndiannessTests, Double)
 {
     double double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2937,9 +2937,9 @@ TEST(microCDRDynamicBasicEndiannessTests, LongDouble)
 {
     long double longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2961,11 +2961,11 @@ TEST(microCDRDynamicBasicEndiannessTests, LongDouble)
 
 TEST(microCDRDynamicBasicEndiannessTests, String)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -2994,11 +2994,11 @@ TEST(microCDRDynamicBasicEndiannessTests, String)
 
 TEST(microCDRDynamicBasicEndiannessTests, EmptyString)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3027,11 +3027,11 @@ TEST(microCDRDynamicBasicEndiannessTests, EmptyString)
 
 TEST(microCDRDynamicArrayEndiannessTests, ShortArray)
 {
-    int16_t * short_out;
+    int16_t* short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3058,11 +3058,11 @@ TEST(microCDRDynamicArrayEndiannessTests, ShortArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, UnsignedShortArray)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3089,11 +3089,11 @@ TEST(microCDRDynamicArrayEndiannessTests, UnsignedShortArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, IntArray)
 {
-    int32_t * int_out;
+    int32_t* int_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3120,11 +3120,11 @@ TEST(microCDRDynamicArrayEndiannessTests, IntArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, UnsignedIntArray)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3151,11 +3151,11 @@ TEST(microCDRDynamicArrayEndiannessTests, UnsignedIntArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, LongArray)
 {
-    int64_t * long_out;
+    int64_t* long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3182,11 +3182,11 @@ TEST(microCDRDynamicArrayEndiannessTests, LongArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, ULongArray)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3213,11 +3213,11 @@ TEST(microCDRDynamicArrayEndiannessTests, ULongArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, LongLongArray)
 {
-    long long * longlong_out;
+    long long* longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3244,11 +3244,11 @@ TEST(microCDRDynamicArrayEndiannessTests, LongLongArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, ULongLongArray)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3275,11 +3275,11 @@ TEST(microCDRDynamicArrayEndiannessTests, ULongLongArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, FloatArray)
 {
-    float * float_out;
+    float* float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3306,11 +3306,11 @@ TEST(microCDRDynamicArrayEndiannessTests, FloatArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, DoubleArray)
 {
-    double * double_out;
+    double* double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3338,11 +3338,11 @@ TEST(microCDRDynamicArrayEndiannessTests, DoubleArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, LongDoubleArray)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3369,11 +3369,11 @@ TEST(microCDRDynamicArrayEndiannessTests, LongDoubleArray)
 
 TEST(microCDRDynamicArrayEndiannessTests, StringArray)
 {
-    char ** string_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3405,12 +3405,12 @@ TEST(microCDRDynamicArrayEndiannessTests, StringArray)
 
 TEST(microCDRDynamicSequencesEndiannessTests, CharSequence)
 {
-    char * char_out;
+    char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3440,12 +3440,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, CharSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, UnsignedCharSequence)
 {
-    unsigned char * char_out;
+    unsigned char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3475,12 +3475,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, UnsignedCharSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, ShortSequence)
 {
-    int16_t * short_out;
+    int16_t* short_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3510,12 +3510,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, ShortSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, UnsignedShortSequence)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3545,12 +3545,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, UnsignedShortSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, IntSequence)
 {
-    int32_t * int_out;
+    int32_t* int_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3580,12 +3580,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, IntSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, UnsignedIntSequence)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3615,12 +3615,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, UnsignedIntSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, LongSequence)
 {
-    int64_t * long_out;
+    int64_t* long_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3650,12 +3650,12 @@ TEST(microCDRDynamicSequencesEndiannessTests, LongSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, ULongSequence)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3685,11 +3685,11 @@ TEST(microCDRDynamicSequencesEndiannessTests, ULongSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, LongLongSequence)
 {
-    long long * longlong_out;
+    long long* longlong_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3719,11 +3719,11 @@ TEST(microCDRDynamicSequencesEndiannessTests, LongLongSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, ULongLongSequence)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3753,11 +3753,11 @@ TEST(microCDRDynamicSequencesEndiannessTests, ULongLongSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, FloatSequence)
 {
-    float * float_out;
+    float* float_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3787,11 +3787,11 @@ TEST(microCDRDynamicSequencesEndiannessTests, FloatSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, DoubleSequence)
 {
-    double * double_out;
+    double* double_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3821,11 +3821,11 @@ TEST(microCDRDynamicSequencesEndiannessTests, DoubleSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, LongDoubleSequence)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3855,10 +3855,10 @@ TEST(microCDRDynamicSequencesEndiannessTests, LongDoubleSequence)
 
 TEST(microCDRDynamicSequencesEndiannessTests, StringSequence)
 {
-    char ** string_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    char** string_out;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicNonAlignedBuffer(&microBuffer);
@@ -3896,9 +3896,9 @@ TEST(microCDRDynamicAlignedBasicTests, Char)
 {
     char char_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -3922,9 +3922,9 @@ TEST(microCDRDynamicAlignedBasicTests, SignedChar)
 {
     signed char octect_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -3948,9 +3948,9 @@ TEST(microCDRDynamicAlignedBasicTests, Short)
 {
     int16_t short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -3974,9 +3974,9 @@ TEST(microCDRDynamicAlignedBasicTests, UnsignedShort)
 {
     uint16_t ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4000,9 +4000,9 @@ TEST(microCDRDynamicAlignedBasicTests, Int)
 {
     int32_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4026,9 +4026,9 @@ TEST(microCDRDynamicAlignedBasicTests, UnsignedInt)
 {
     uint32_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4052,9 +4052,9 @@ TEST(microCDRDynamicAlignedBasicTests, Long)
 {
     int64_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4078,9 +4078,9 @@ TEST(microCDRDynamicAlignedBasicTests, uLong)
 {
     uint64_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4104,9 +4104,9 @@ TEST(microCDRDynamicAlignedBasicTests, LongLong)
 {
     long long longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4130,9 +4130,9 @@ TEST(microCDRDynamicAlignedBasicTests, uLongLong)
 {
     unsigned long long ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4156,9 +4156,9 @@ TEST(microCDRDynamicAlignedBasicTests, Float)
 {
     float float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4182,9 +4182,9 @@ TEST(microCDRDynamicAlignedBasicTests, Double)
 {
     double double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4208,9 +4208,9 @@ TEST(microCDRDynamicAlignedBasicTests, LongDouble)
 {
     long double longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4232,11 +4232,11 @@ TEST(microCDRDynamicAlignedBasicTests, LongDouble)
 
 TEST(microCDRDynamicAlignedBasicTests, String)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4268,11 +4268,11 @@ TEST(microCDRDynamicAlignedBasicTests, String)
 
 TEST(microCDRDynamicAlignedBasicTests, EmptyString)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4301,11 +4301,11 @@ TEST(microCDRDynamicAlignedBasicTests, EmptyString)
 
 TEST(microCDRDynamicAlignedArrayTests, CharArray)
 {
-    char * char_out;
+    char* char_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4332,11 +4332,11 @@ TEST(microCDRDynamicAlignedArrayTests, CharArray)
 
 TEST(microCDRDynamicAlignedArrayTests, UnsignedCharArray)
 {
-    unsigned char * char_out;
+    unsigned char* char_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4363,11 +4363,11 @@ TEST(microCDRDynamicAlignedArrayTests, UnsignedCharArray)
 
 TEST(microCDRDynamicAlignedArrayTests, ShortArray)
 {
-    int16_t * short_out;
+    int16_t* short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4394,11 +4394,11 @@ TEST(microCDRDynamicAlignedArrayTests, ShortArray)
 
 TEST(microCDRDynamicAlignedArrayTests, UnsignedShortArray)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4425,11 +4425,11 @@ TEST(microCDRDynamicAlignedArrayTests, UnsignedShortArray)
 
 TEST(microCDRDynamicAlignedArrayTests, IntArray)
 {
-    int32_t * int_out;
+    int32_t* int_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4456,11 +4456,11 @@ TEST(microCDRDynamicAlignedArrayTests, IntArray)
 
 TEST(microCDRDynamicAlignedArrayTests, UnsignedIntArray)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4487,11 +4487,11 @@ TEST(microCDRDynamicAlignedArrayTests, UnsignedIntArray)
 
 TEST(microCDRDynamicAlignedArrayTests, LongArray)
 {
-    int64_t * long_out;
+    int64_t* long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4518,11 +4518,11 @@ TEST(microCDRDynamicAlignedArrayTests, LongArray)
 
 TEST(microCDRDynamicAlignedArrayTests, ULongArray)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4549,11 +4549,11 @@ TEST(microCDRDynamicAlignedArrayTests, ULongArray)
 
 TEST(microCDRDynamicAlignedArrayTests, LongLongArray)
 {
-    long long * longlong_out;
+    long long* longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4580,11 +4580,11 @@ TEST(microCDRDynamicAlignedArrayTests, LongLongArray)
 
 TEST(microCDRDynamicAlignedArrayTests, ULongLongArray)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4611,11 +4611,11 @@ TEST(microCDRDynamicAlignedArrayTests, ULongLongArray)
 
 TEST(microCDRDynamicAlignedArrayTests, FloatArray)
 {
-    float * float_out;
+    float* float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4642,11 +4642,11 @@ TEST(microCDRDynamicAlignedArrayTests, FloatArray)
 
 TEST(microCDRDynamicAlignedArrayTests, DoubleArray)
 {
-    double * double_out;
+    double* double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4674,11 +4674,11 @@ TEST(microCDRDynamicAlignedArrayTests, DoubleArray)
 
 TEST(microCDRDynamicAlignedArrayTests, LongDoubleArray)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4705,11 +4705,11 @@ TEST(microCDRDynamicAlignedArrayTests, LongDoubleArray)
 
 TEST(microCDRDynamicAlignedArrayTests, StringArray)
 {
-    char ** string_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4741,12 +4741,12 @@ TEST(microCDRDynamicAlignedArrayTests, StringArray)
 
 TEST(microCDRDynamicAlignedSequencesTests, CharSequence)
 {
-    char * char_out;
+    char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4776,12 +4776,12 @@ TEST(microCDRDynamicAlignedSequencesTests, CharSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, UnsignedCharSequence)
 {
-    unsigned char * char_out;
+    unsigned char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4811,12 +4811,12 @@ TEST(microCDRDynamicAlignedSequencesTests, UnsignedCharSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, ShortSequence)
 {
-    int16_t * short_out;
+    int16_t* short_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4846,12 +4846,12 @@ TEST(microCDRDynamicAlignedSequencesTests, ShortSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, UnsignedShortSequence)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4881,12 +4881,12 @@ TEST(microCDRDynamicAlignedSequencesTests, UnsignedShortSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, IntSequence)
 {
-    int32_t * int_out;
+    int32_t* int_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4916,12 +4916,12 @@ TEST(microCDRDynamicAlignedSequencesTests, IntSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, UnsignedIntSequence)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4951,12 +4951,12 @@ TEST(microCDRDynamicAlignedSequencesTests, UnsignedIntSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, LongSequence)
 {
-    int64_t * long_out;
+    int64_t* long_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -4986,12 +4986,12 @@ TEST(microCDRDynamicAlignedSequencesTests, LongSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, ULongSequence)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5021,12 +5021,12 @@ TEST(microCDRDynamicAlignedSequencesTests, ULongSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, LongLongSequence)
 {
-    long long * longlong_out;
+    long long* longlong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5056,12 +5056,12 @@ TEST(microCDRDynamicAlignedSequencesTests, LongLongSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, ULongLongSequence)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5091,12 +5091,12 @@ TEST(microCDRDynamicAlignedSequencesTests, ULongLongSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, FloatSequence)
 {
-    float * float_out;
+    float* float_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5126,12 +5126,12 @@ TEST(microCDRDynamicAlignedSequencesTests, FloatSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, DoubleSequence)
 {
-    double * double_out;
+    double* double_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5161,12 +5161,12 @@ TEST(microCDRDynamicAlignedSequencesTests, DoubleSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, LongDoubleSequence)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5196,11 +5196,11 @@ TEST(microCDRDynamicAlignedSequencesTests, LongDoubleSequence)
 
 TEST(microCDRDynamicAlignedSequencesTests, StringSequence)
 {
-    char ** string_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5249,12 +5249,12 @@ TEST(microCDRDynamicAlignedTests, SimpleVar)
     float float_out;
     double double_out;
     long double longdouble_out;
-    char * string_out;
-    char * string_out_2;
+    char* string_out;
+    char* string_out_2;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5333,24 +5333,24 @@ TEST(microCDRDynamicAlignedTests, SimpleVar)
 TEST(microCDRDynamicAlignedTests, Arrays)
 {
     int32_t i;
-    char * char_out;
-    unsigned char * uchar_out;
-    int16_t * short_out;
-    uint16_t * ushort_out;
-    int32_t * int_out;
-    uint32_t * uint_out;
-    int64_t * long_out;
-    uint64_t * ulong_out;
-    long long * longlong_out;
-    unsigned long long * ulonglong_out;
-    float * float_out;
-    double * double_out;
-    long double * longdouble_out;
-    char ** string_out;
+    char* char_out;
+    unsigned char* uchar_out;
+    int16_t* short_out;
+    uint16_t* ushort_out;
+    int32_t* int_out;
+    uint32_t* uint_out;
+    int64_t* long_out;
+    uint64_t* ulong_out;
+    long long* longlong_out;
+    unsigned long long* ulonglong_out;
+    float* float_out;
+    double* double_out;
+    long double* longdouble_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5489,40 +5489,40 @@ TEST(microCDRDynamicAlignedTests, Arrays)
 TEST(microCDRDynamicAlignedTests, Sequences)
 {
     int32_t i;
-    char * char_out;
+    char* char_out;
     uint32_t char_out_size;
-    unsigned char * uchar_out;
+    unsigned char* uchar_out;
     uint32_t uchar_out_size;
-    int16_t * short_out;
+    int16_t* short_out;
     uint32_t short_out_size;
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
     uint32_t ushort_out_size;
-    int32_t * int_out;
+    int32_t* int_out;
     uint32_t int_out_size;
-    uint32_t * uint_out;
+    uint32_t* uint_out;
     uint32_t uint_out_size;
-    int64_t * long_out;
+    int64_t* long_out;
     uint32_t long_out_size;
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
     uint32_t ulong_out_size;
-    long long * longlong_out;
+    long long* longlong_out;
     uint32_t longlong_out_size;
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
     uint32_t ulonglong_out_size;
-    float * float_out;
+    float* float_out;
     uint32_t float_out_size;
-    double * double_out;
+    double* double_out;
     uint32_t double_out_size;
-    long double * longdouble_out;
+    long double* longdouble_out;
     uint32_t longdouble_out_size;
-    char ** string_out;
+    char** string_out;
     uint32_t string_out_size;
 
     int16_t result = 0;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -5687,59 +5687,59 @@ TEST(microCDRDynamicAlignedTests, All)
     float float_out;
     double double_out;
     long double longdouble_out;
-    char * string_out;
-    char * string_out_2;
+    char* string_out;
+    char* string_out_2;
 
     //ARRAYS
     int32_t i;
-    char * char_array_out;
-    unsigned char * uchar_array_out;
-    int16_t * short_array_out;
-    uint16_t * ushort_array_out;
-    int32_t * int_array_out;
-    uint32_t * uint_array_out;
-    int64_t * long_array_out;
-    uint64_t * ulong_array_out;
-    long long * longlong_array_out;
-    unsigned long long * ulonglong_array_out;
-    float * float_array_out;
-    double * double_array_out;
-    long double * longdouble_array_out;
-    char ** string_array_out;
+    char* char_array_out;
+    unsigned char* uchar_array_out;
+    int16_t* short_array_out;
+    uint16_t* ushort_array_out;
+    int32_t* int_array_out;
+    uint32_t* uint_array_out;
+    int64_t* long_array_out;
+    uint64_t* ulong_array_out;
+    long long* longlong_array_out;
+    unsigned long long* ulonglong_array_out;
+    float* float_array_out;
+    double* double_array_out;
+    long double* longdouble_array_out;
+    char** string_array_out;
 
     //SEQUENCES
-    char * char_seq_out;
+    char* char_seq_out;
     uint32_t char_out_size;
-    unsigned char * uchar_seq_out;
+    unsigned char* uchar_seq_out;
     uint32_t uchar_out_size;
-    int16_t * short_seq_out;
+    int16_t* short_seq_out;
     uint32_t short_out_size;
-    uint16_t * ushort_seq_out;
+    uint16_t* ushort_seq_out;
     uint32_t ushort_out_size;
-    int32_t * int_seq_out;
+    int32_t* int_seq_out;
     uint32_t int_out_size;
-    uint32_t * uint_seq_out;
+    uint32_t* uint_seq_out;
     uint32_t uint_out_size;
-    int64_t * long_seq_out;
+    int64_t* long_seq_out;
     uint32_t long_out_size;
-    uint64_t * ulong_seq_out;
+    uint64_t* ulong_seq_out;
     uint32_t ulong_out_size;
-    long long * longlong_seq_out;
+    long long* longlong_seq_out;
     uint32_t longlong_out_size;
-    unsigned long long * ulonglong_seq_out;
+    unsigned long long* ulonglong_seq_out;
     uint32_t ulonglong_out_size;
-    float * float_seq_out;
+    float* float_seq_out;
     uint32_t float_out_size;
-    double * double_seq_out;
+    double* double_seq_out;
     uint32_t double_out_size;
-    long double * longdouble_seq_out;
+    long double* longdouble_seq_out;
     uint32_t longdouble_out_size;
-    char ** string_seq_out;
+    char** string_seq_out;
     uint32_t string_out_size;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6093,59 +6093,59 @@ TEST(microCDRDynamicAlignedTests, AllEndianness)
     float float_out;
     double double_out;
     long double longdouble_out;
-    char * string_out;
-    char * string_out_2;
+    char* string_out;
+    char* string_out_2;
 
     //ARRAYS
     int32_t i;
-    char * char_array_out;
-    unsigned char * uchar_array_out;
-    int16_t * short_array_out;
-    uint16_t * ushort_array_out;
-    int32_t * int_array_out;
-    uint32_t * uint_array_out;
-    int64_t * long_array_out;
-    uint64_t * ulong_array_out;
-    long long * longlong_array_out;
-    unsigned long long * ulonglong_array_out;
-    float * float_array_out;
-    double * double_array_out;
-    long double * longdouble_array_out;
-    char ** string_array_out;
+    char* char_array_out;
+    unsigned char* uchar_array_out;
+    int16_t* short_array_out;
+    uint16_t* ushort_array_out;
+    int32_t* int_array_out;
+    uint32_t* uint_array_out;
+    int64_t* long_array_out;
+    uint64_t* ulong_array_out;
+    long long* longlong_array_out;
+    unsigned long long* ulonglong_array_out;
+    float* float_array_out;
+    double* double_array_out;
+    long double* longdouble_array_out;
+    char** string_array_out;
 
     //SEQUENCES
-    char * char_seq_out;
+    char* char_seq_out;
     uint32_t char_out_size;
-    unsigned char * uchar_seq_out;
+    unsigned char* uchar_seq_out;
     uint32_t uchar_out_size;
-    int16_t * short_seq_out;
+    int16_t* short_seq_out;
     uint32_t short_out_size;
-    uint16_t * ushort_seq_out;
+    uint16_t* ushort_seq_out;
     uint32_t ushort_out_size;
-    int32_t * int_seq_out;
+    int32_t* int_seq_out;
     uint32_t int_out_size;
-    uint32_t * uint_seq_out;
+    uint32_t* uint_seq_out;
     uint32_t uint_out_size;
-    int64_t * long_seq_out;
+    int64_t* long_seq_out;
     uint32_t long_out_size;
-    uint64_t * ulong_seq_out;
+    uint64_t* ulong_seq_out;
     uint32_t ulong_out_size;
-    long long * longlong_seq_out;
+    long long* longlong_seq_out;
     uint32_t longlong_out_size;
-    unsigned long long * ulonglong_seq_out;
+    unsigned long long* ulonglong_seq_out;
     uint32_t ulonglong_out_size;
-    float * float_seq_out;
+    float* float_seq_out;
     uint32_t float_out_size;
-    double * double_seq_out;
+    double* double_seq_out;
     uint32_t double_out_size;
-    long double * longdouble_seq_out;
+    long double* longdouble_seq_out;
     uint32_t longdouble_out_size;
-    char ** string_seq_out;
+    char** string_seq_out;
     uint32_t string_out_size;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6485,9 +6485,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, Short)
 {
     int16_t short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6511,9 +6511,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, UnsignedShort)
 {
     uint16_t ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6537,9 +6537,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, Int)
 {
     int32_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6563,9 +6563,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, UnsignedInt)
 {
     uint32_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6589,9 +6589,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, Long)
 {
     int64_t long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6615,9 +6615,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, uLong)
 {
     uint64_t ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6641,9 +6641,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, LongLong)
 {
     long long longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6667,9 +6667,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, uLongLong)
 {
     unsigned long long ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6693,9 +6693,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, Float)
 {
     float float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6719,9 +6719,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, Double)
 {
     double double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6745,9 +6745,9 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, LongDouble)
 {
     long double longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6769,11 +6769,11 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, LongDouble)
 
 TEST(microCDRDynamicAlignedBasicEndiannessTests, String)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6802,11 +6802,11 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, String)
 
 TEST(microCDRDynamicAlignedBasicEndiannessTests, EmptyString)
 {
-    char * string_out;
+    char* string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6835,11 +6835,11 @@ TEST(microCDRDynamicAlignedBasicEndiannessTests, EmptyString)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, ShortArray)
 {
-    int16_t * short_out;
+    int16_t* short_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6866,11 +6866,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, ShortArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, UnsignedShortArray)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6897,11 +6897,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, UnsignedShortArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, IntArray)
 {
-    int32_t * int_out;
+    int32_t* int_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6928,11 +6928,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, IntArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, UnsignedIntArray)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6959,11 +6959,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, UnsignedIntArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, LongArray)
 {
-    int64_t * long_out;
+    int64_t* long_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -6990,11 +6990,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, LongArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, ULongArray)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7021,11 +7021,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, ULongArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, LongLongArray)
 {
-    long long * longlong_out;
+    long long* longlong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7052,11 +7052,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, LongLongArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, ULongLongArray)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7083,11 +7083,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, ULongLongArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, FloatArray)
 {
-    float * float_out;
+    float* float_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7114,11 +7114,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, FloatArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, DoubleArray)
 {
-    double * double_out;
+    double* double_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7146,11 +7146,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, DoubleArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, LongDoubleArray)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7177,11 +7177,11 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, LongDoubleArray)
 
 TEST(microCDRDynamicAlignedArrayEndiannessTests, StringArray)
 {
-    char ** string_out;
+    char** string_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7213,12 +7213,12 @@ TEST(microCDRDynamicAlignedArrayEndiannessTests, StringArray)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, CharSequence)
 {
-    char * char_out;
+    char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7248,12 +7248,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, CharSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, UnsignedCharSequence)
 {
-    unsigned char * char_out;
+    unsigned char* char_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7283,12 +7283,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, UnsignedCharSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, ShortSequence)
 {
-    int16_t * short_out;
+    int16_t* short_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7318,12 +7318,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, ShortSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, UnsignedShortSequence)
 {
-    uint16_t * ushort_out;
+    uint16_t* ushort_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7353,12 +7353,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, UnsignedShortSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, IntSequence)
 {
-    int32_t * int_out;
+    int32_t* int_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7388,12 +7388,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, IntSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, UnsignedIntSequence)
 {
-    uint32_t * uint_out;
+    uint32_t* uint_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7423,12 +7423,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, UnsignedIntSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, LongSequence)
 {
-    int64_t * long_out;
+    int64_t* long_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7458,12 +7458,12 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, LongSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, ULongSequence)
 {
-    uint64_t * ulong_out;
+    uint64_t* ulong_out;
     uint32_t size_out;
 
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7493,11 +7493,11 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, ULongSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, LongLongSequence)
 {
-    long long * longlong_out;
+    long long* longlong_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7527,11 +7527,11 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, LongLongSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, ULongLongSequence)
 {
-    unsigned long long * ulonglong_out;
+    unsigned long long* ulonglong_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7561,11 +7561,11 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, ULongLongSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, FloatSequence)
 {
-    float * float_out;
+    float* float_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7595,11 +7595,11 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, FloatSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, DoubleSequence)
 {
-    double * double_out;
+    double* double_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7629,11 +7629,11 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, DoubleSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, LongDoubleSequence)
 {
-    long double * longdouble_out;
+    long double* longdouble_out;
     uint32_t size_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
@@ -7663,10 +7663,10 @@ TEST(microCDRDynamicAlignedSequencesEndiannessTests, LongDoubleSequence)
 
 TEST(microCDRDynamicAlignedSequencesEndiannessTests, StringSequence)
 {
-    char ** string_out;
-    struct microBuffer * microBuffer = NULL;
-    struct microCDR * microCDRWrite = NULL;
-    struct microCDR * microCDRRead = NULL;
+    char** string_out;
+    struct microBuffer* microBuffer = NULL;
+    struct microCDR* microCDRWrite = NULL;
+    struct microCDR* microCDRRead = NULL;
 
     // Check good case.
     newDynamicAlignedBuffer(&microBuffer);
