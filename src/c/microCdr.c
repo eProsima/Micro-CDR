@@ -3561,6 +3561,7 @@ int8_t deserializeStringArray(char*** string_t, const uint32_t numElements, stru
         result = deserializeString(&swap[i], &length, m_cdrBuffer);
         if (result < 0)
         {
+            free(swap);
             return -1;
         }
         m_cdrBuffer->m_lastDataSize = sizeof(char);
@@ -3592,6 +3593,7 @@ int8_t deserializeStringArrayEndianness(char*** string_t, const uint32_t numElem
         result = deserializeStringEndianness(&swap[i], &length, endianness, m_cdrBuffer);
         if (result < 0)
         {
+            free(swap);
             return -1;
         }
         m_cdrBuffer->m_lastDataSize = sizeof(char);
