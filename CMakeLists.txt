@@ -42,7 +42,7 @@ string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
 set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "C library for serialize using CDR serialization")
 set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides a serialization mechanism.")
 
-message(STATUS "Configuring ${PROJECT_NAME_LAGE}")
+message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
 
 ###############################################################################
 # Version information                                                         #
