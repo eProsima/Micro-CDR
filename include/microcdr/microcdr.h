@@ -1,8 +1,6 @@
 #ifndef _MICROCDR_MICRO_CDR_H_
 #define _MICROCDR_MICRO_CDR_H_
 
-#define LITTLE_ENDIAN_MACHINE 1
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -23,11 +21,14 @@ typedef enum Endianness
 
 typedef struct MicroBuffer
 {
-    uint8_t* buffer;
+    uint8_t* init;
     uint8_t* final;
     uint8_t* iterator;
 
+    Endianness endianness;
     uint32_t last_data_size;
+
+    bool internal_buffer_management;
 
 } MicroBuffer;
 
@@ -36,90 +37,92 @@ typedef struct MicroBuffer
 //                         MICRO BUFFER FUNCTIONS
 // -------------------------------------------------------------------
 
-void init_micro_buffer(MicroBuffer* micro_buffer, uint8_t* buffer, uint32_t size);
-void reset_micro_buffer(MicroBuffer* micro_buffer);
+void init_external_buffer(MicroBuffer* buffer, uint8_t* data, uint32_t size);
+void init_internal_buffer(MicroBuffer* buffer, uint32_t initial_size);
+void free_internal_buffer(MicroBuffer* buffer);
+void reset_buffer(MicroBuffer* buffer);
 
-void make_alignment(MicroBuffer* micro_buffer, uint32_t aligment);
-
+inline uint32_t get_alignment_offset(MicroBuffer* buffer, uint32_t data_size);
+inline bool check_size(MicroBuffer* buffer, uint32_t bytes);
 
 // -------------------------------------------------------------------
 //                        SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
 
 // Basics
-int serialize_char         (MicroBuffer* micro_buffer, char     value);
-int serialize_bool         (MicroBuffer* micro_buffer, bool     value);
-int serialize_uint8        (MicroBuffer* micro_buffer, uint8_t  value);
-int serialize_uint16       (MicroBuffer* micro_buffer, uint16_t value);
-int serialize_uint32       (MicroBuffer* micro_buffer, uint32_t value);
-int serialize_uint64       (MicroBuffer* micro_buffer, uint64_t value);
-int serialize_int16        (MicroBuffer* micro_buffer, int16_t  value);
-int serialize_int32        (MicroBuffer* micro_buffer, int32_t  value);
-int serialize_int64        (MicroBuffer* micro_buffer, int64_t  value);
-int serialize_float        (MicroBuffer* micro_buffer, float    value);
-int serialize_double       (MicroBuffer* micro_buffer, double   value);
+void serialize_char         (MicroBuffer* buffer, char     value);
+void serialize_bool         (MicroBuffer* buffer, bool     value);
+void serialize_uint8        (MicroBuffer* buffer, uint8_t  value);
+void serialize_uint16       (MicroBuffer* buffer, uint16_t value);
+void serialize_uint32       (MicroBuffer* buffer, uint32_t value);
+void serialize_uint64       (MicroBuffer* buffer, uint64_t value);
+void serialize_int16        (MicroBuffer* buffer, int16_t  value);
+void serialize_int32        (MicroBuffer* buffer, int32_t  value);
+void serialize_int64        (MicroBuffer* buffer, int64_t  value);
+void serialize_float        (MicroBuffer* buffer, float    value);
+void serialize_double       (MicroBuffer* buffer, double   value);
 
-int deserialize_char       (MicroBuffer* micro_buffer, char*     value);
-int deserialize_bool       (MicroBuffer* micro_buffer, bool*     value);
-int deserialize_uint8      (MicroBuffer* micro_buffer, uint8_t*  value);
-int deserialize_uint16     (MicroBuffer* micro_buffer, uint16_t* value);
-int deserialize_uint32     (MicroBuffer* micro_buffer, uint32_t* value);
-int deserialize_uint64     (MicroBuffer* micro_buffer, uint64_t* value);
-int deserialize_int16      (MicroBuffer* micro_buffer, int16_t*  value);
-int deserialize_int32      (MicroBuffer* micro_buffer, int32_t*  value);
-int deserialize_int64      (MicroBuffer* micro_buffer, int64_t*  value);
-int deserialize_float      (MicroBuffer* micro_buffer, float*    value);
-int deserialize_double     (MicroBuffer* micro_buffer, double*   value);
+void deserialize_char       (MicroBuffer* buffer, char*     value);
+void deserialize_bool       (MicroBuffer* buffer, bool*     value);
+void deserialize_uint8      (MicroBuffer* buffer, uint8_t*  value);
+void deserialize_uint16     (MicroBuffer* buffer, uint16_t* value);
+void deserialize_uint32     (MicroBuffer* buffer, uint32_t* value);
+void deserialize_uint64     (MicroBuffer* buffer, uint64_t* value);
+void deserialize_int16      (MicroBuffer* buffer, int16_t*  value);
+void deserialize_int32      (MicroBuffer* buffer, int32_t*  value);
+void deserialize_int64      (MicroBuffer* buffer, int64_t*  value);
+void deserialize_float      (MicroBuffer* buffer, float*    value);
+void deserialize_double     (MicroBuffer* buffer, double*   value);
 
 // Arrays
-int serialize_array_char      (MicroBuffer* micro_buffer, char*     array, uint32_t size);
-int serialize_array_bool      (MicroBuffer* micro_buffer, bool*     array, uint32_t size);
-int serialize_array_uint8     (MicroBuffer* micro_buffer, uint8_t*  array, uint32_t size);
-int serialize_array_uint16    (MicroBuffer* micro_buffer, uint16_t* array, uint32_t size);
-int serialize_array_uint32    (MicroBuffer* micro_buffer, uint32_t* array, uint32_t size);
-int serialize_array_uint64    (MicroBuffer* micro_buffer, uint64_t* array, uint32_t size);
-int serialize_array_int16     (MicroBuffer* micro_buffer, int16_t*  array, uint32_t size);
-int serialize_array_int32     (MicroBuffer* micro_buffer, int32_t*  array, uint32_t size);
-int serialize_array_int64     (MicroBuffer* micro_buffer, int64_t*  array, uint32_t size);
-int serialize_array_float     (MicroBuffer* micro_buffer, float*    array, uint32_t size);
-int serialize_array_double    (MicroBuffer* micro_buffer, double*   array, uint32_t size);
+void serialize_array_char      (MicroBuffer* buffer, char*     array, uint32_t size);
+void serialize_array_bool      (MicroBuffer* buffer, bool*     array, uint32_t size);
+void serialize_array_uint8     (MicroBuffer* buffer, uint8_t*  array, uint32_t size);
+void serialize_array_uint16    (MicroBuffer* buffer, uint16_t* array, uint32_t size);
+void serialize_array_uint32    (MicroBuffer* buffer, uint32_t* array, uint32_t size);
+void serialize_array_uint64    (MicroBuffer* buffer, uint64_t* array, uint32_t size);
+void serialize_array_int16     (MicroBuffer* buffer, int16_t*  array, uint32_t size);
+void serialize_array_int32     (MicroBuffer* buffer, int32_t*  array, uint32_t size);
+void serialize_array_int64     (MicroBuffer* buffer, int64_t*  array, uint32_t size);
+void serialize_array_float     (MicroBuffer* buffer, float*    array, uint32_t size);
+void serialize_array_double    (MicroBuffer* buffer, double*   array, uint32_t size);
 
-int deserialize_array_char    (MicroBuffer* micro_buffer, char*     array, uint32_t size);
-int deserialize_array_bool    (MicroBuffer* micro_buffer, bool*     array, uint32_t size);
-int deserialize_array_uint8   (MicroBuffer* micro_buffer, uint8_t*  array, uint32_t size);
-int deserialize_array_uint16  (MicroBuffer* micro_buffer, uint16_t* array, uint32_t size);
-int deserialize_array_uint32  (MicroBuffer* micro_buffer, uint32_t* array, uint32_t size);
-int deserialize_array_uint64  (MicroBuffer* micro_buffer, uint64_t* array, uint32_t size);
-int deserialize_array_int16   (MicroBuffer* micro_buffer, int16_t*  array, uint32_t size);
-int deserialize_array_int32   (MicroBuffer* micro_buffer, int32_t*  array, uint32_t size);
-int deserialize_array_int64   (MicroBuffer* micro_buffer, int64_t*  array, uint32_t size);
-int deserialize_array_float   (MicroBuffer* micro_buffer, float*    array, uint32_t size);
-int deserialize_array_double  (MicroBuffer* micro_buffer, double*   array, uint32_t size);
+void deserialize_array_char    (MicroBuffer* buffer, char*     array, uint32_t size);
+void deserialize_array_bool    (MicroBuffer* buffer, bool*     array, uint32_t size);
+void deserialize_array_uint8   (MicroBuffer* buffer, uint8_t*  array, uint32_t size);
+void deserialize_array_uint16  (MicroBuffer* buffer, uint16_t* array, uint32_t size);
+void deserialize_array_uint32  (MicroBuffer* buffer, uint32_t* array, uint32_t size);
+void deserialize_array_uint64  (MicroBuffer* buffer, uint64_t* array, uint32_t size);
+void deserialize_array_int16   (MicroBuffer* buffer, int16_t*  array, uint32_t size);
+void deserialize_array_int32   (MicroBuffer* buffer, int32_t*  array, uint32_t size);
+void deserialize_array_int64   (MicroBuffer* buffer, int64_t*  array, uint32_t size);
+void deserialize_array_float   (MicroBuffer* buffer, float*    array, uint32_t size);
+void deserialize_array_double  (MicroBuffer* buffer, double*   array, uint32_t size);
 
 // Sequence
-int serialize_sequence_char     (MicroBuffer* micro_buffer, char*     sequence, uint32_t size);
-int serialize_sequence_bool     (MicroBuffer* micro_buffer, bool*     sequence, uint32_t size);
-int serialize_sequence_uint8    (MicroBuffer* micro_buffer, uint8_t*  sequence, uint32_t size);
-int serialize_sequence_uint16   (MicroBuffer* micro_buffer, uint16_t* sequence, uint32_t size);
-int serialize_sequence_uint32   (MicroBuffer* micro_buffer, uint32_t* sequence, uint32_t size);
-int serialize_sequence_uint64   (MicroBuffer* micro_buffer, uint64_t* sequence, uint32_t size);
-int serialize_sequence_int16    (MicroBuffer* micro_buffer, int16_t* sequence, uint32_t size);
-int serialize_sequence_int32    (MicroBuffer* micro_buffer, int32_t* sequence, uint32_t size);
-int serialize_sequence_int64    (MicroBuffer* micro_buffer, int64_t* sequence, uint32_t size);
-int serialize_sequence_float    (MicroBuffer* micro_buffer, float*    sequence, uint32_t size);
-int serialize_sequence_double   (MicroBuffer* micro_buffer, double*   sequence, uint32_t size);
+void serialize_sequence_char     (MicroBuffer* buffer, char*     sequence, uint32_t size);
+void serialize_sequence_bool     (MicroBuffer* buffer, bool*     sequence, uint32_t size);
+void serialize_sequence_uint8    (MicroBuffer* buffer, uint8_t*  sequence, uint32_t size);
+void serialize_sequence_uint16   (MicroBuffer* buffer, uint16_t* sequence, uint32_t size);
+void serialize_sequence_uint32   (MicroBuffer* buffer, uint32_t* sequence, uint32_t size);
+void serialize_sequence_uint64   (MicroBuffer* buffer, uint64_t* sequence, uint32_t size);
+void serialize_sequence_int16    (MicroBuffer* buffer, int16_t* sequence, uint32_t size);
+void serialize_sequence_int32    (MicroBuffer* buffer, int32_t* sequence, uint32_t size);
+void serialize_sequence_int64    (MicroBuffer* buffer, int64_t* sequence, uint32_t size);
+void serialize_sequence_float    (MicroBuffer* buffer, float*    sequence, uint32_t size);
+void serialize_sequence_double   (MicroBuffer* buffer, double*   sequence, uint32_t size);
 
-int deserialize_sequence_char   (MicroBuffer* micro_buffer, char*     sequence, uint32_t* size);
-int deserialize_sequence_bool   (MicroBuffer* micro_buffer, bool*     sequence, uint32_t* size);
-int deserialize_sequence_uint8  (MicroBuffer* micro_buffer, uint8_t*  sequence, uint32_t* size);
-int deserialize_sequence_uint16 (MicroBuffer* micro_buffer, uint16_t* sequence, uint32_t* size);
-int deserialize_sequence_uint32 (MicroBuffer* micro_buffer, uint32_t* sequence, uint32_t* size);
-int deserialize_sequence_uint64 (MicroBuffer* micro_buffer, uint64_t* sequence, uint32_t* size);
-int deserialize_sequence_int16  (MicroBuffer* micro_buffer, int16_t* sequence, uint32_t* size);
-int deserialize_sequence_int32  (MicroBuffer* micro_buffer, int32_t* sequence, uint32_t* size);
-int deserialize_sequence_int64  (MicroBuffer* micro_buffer, int64_t* sequence, uint32_t* size);
-int deserialize_sequence_float  (MicroBuffer* micro_buffer, float*    sequence, uint32_t* size);
-int deserialize_sequence_double (MicroBuffer* micro_buffer, double*   sequence, uint32_t* size);
+void deserialize_sequence_char   (MicroBuffer* buffer, char*     sequence, uint32_t* size);
+void deserialize_sequence_bool   (MicroBuffer* buffer, bool*     sequence, uint32_t* size);
+void deserialize_sequence_uint8  (MicroBuffer* buffer, uint8_t*  sequence, uint32_t* size);
+void deserialize_sequence_uint16 (MicroBuffer* buffer, uint16_t* sequence, uint32_t* size);
+void deserialize_sequence_uint32 (MicroBuffer* buffer, uint32_t* sequence, uint32_t* size);
+void deserialize_sequence_uint64 (MicroBuffer* buffer, uint64_t* sequence, uint32_t* size);
+void deserialize_sequence_int16  (MicroBuffer* buffer, int16_t* sequence, uint32_t* size);
+void deserialize_sequence_int32  (MicroBuffer* buffer, int32_t* sequence, uint32_t* size);
+void deserialize_sequence_int64  (MicroBuffer* buffer, int64_t* sequence, uint32_t* size);
+void deserialize_sequence_float  (MicroBuffer* buffer, float*    sequence, uint32_t* size);
+void deserialize_sequence_double (MicroBuffer* buffer, double*   sequence, uint32_t* size);
 
 
 // -------------------------------------------------------------------
@@ -127,61 +130,61 @@ int deserialize_sequence_double (MicroBuffer* micro_buffer, double*   sequence, 
 // -------------------------------------------------------------------
 
 // Basics
-int serialize_endian_uint16  (MicroBuffer* micro_buffer, Endianness endianness, uint16_t   value);
-int serialize_endian_uint32  (MicroBuffer* micro_buffer, Endianness endianness, uint32_t   value);
-int serialize_endian_uint64  (MicroBuffer* micro_buffer, Endianness endianness, uint64_t   value);
-int serialize_endian_int16   (MicroBuffer* micro_buffer, Endianness endianness, int16_t   value);
-int serialize_endian_int32   (MicroBuffer* micro_buffer, Endianness endianness, int32_t   value);
-int serialize_endian_int64   (MicroBuffer* micro_buffer, Endianness endianness, int64_t   value);
-int serialize_endian_float   (MicroBuffer* micro_buffer, Endianness endianness, float      value);
-int serialize_endian_double  (MicroBuffer* micro_buffer, Endianness endianness, double     value);
+void serialize_endian_uint16  (MicroBuffer* buffer, Endianness endianness, uint16_t   value);
+void serialize_endian_uint32  (MicroBuffer* buffer, Endianness endianness, uint32_t   value);
+void serialize_endian_uint64  (MicroBuffer* buffer, Endianness endianness, uint64_t   value);
+void serialize_endian_int16   (MicroBuffer* buffer, Endianness endianness, int16_t   value);
+void serialize_endian_int32   (MicroBuffer* buffer, Endianness endianness, int32_t   value);
+void serialize_endian_int64   (MicroBuffer* buffer, Endianness endianness, int64_t   value);
+void serialize_endian_float   (MicroBuffer* buffer, Endianness endianness, float      value);
+void serialize_endian_double  (MicroBuffer* buffer, Endianness endianness, double     value);
 
-int deserialize_endian_uint16  (MicroBuffer* micro_buffer, Endianness endianness, uint16_t* value);
-int deserialize_endian_uint32  (MicroBuffer* micro_buffer, Endianness endianness, uint32_t* value);
-int deserialize_endian_uint64  (MicroBuffer* micro_buffer, Endianness endianness, uint64_t* value);
-int deserialize_endian_int16   (MicroBuffer* micro_buffer, Endianness endianness, int16_t*  value);
-int deserialize_endian_int32   (MicroBuffer* micro_buffer, Endianness endianness, int32_t*  value);
-int deserialize_endian_int64   (MicroBuffer* micro_buffer, Endianness endianness, int64_t*  value);
-int deserialize_endian_float   (MicroBuffer* micro_buffer, Endianness endianness, float*    value);
-int deserialize_endian_double  (MicroBuffer* micro_buffer, Endianness endianness, double*   value);
+void deserialize_endian_uint16  (MicroBuffer* buffer, Endianness endianness, uint16_t* value);
+void deserialize_endian_uint32  (MicroBuffer* buffer, Endianness endianness, uint32_t* value);
+void deserialize_endian_uint64  (MicroBuffer* buffer, Endianness endianness, uint64_t* value);
+void deserialize_endian_int16   (MicroBuffer* buffer, Endianness endianness, int16_t*  value);
+void deserialize_endian_int32   (MicroBuffer* buffer, Endianness endianness, int32_t*  value);
+void deserialize_endian_int64   (MicroBuffer* buffer, Endianness endianness, int64_t*  value);
+void deserialize_endian_float   (MicroBuffer* buffer, Endianness endianness, float*    value);
+void deserialize_endian_double  (MicroBuffer* buffer, Endianness endianness, double*   value);
 
 // Array
-int serialize_array_endian_uint16 (MicroBuffer* micro_buffer, Endianness endianness, uint16_t* array, uint32_t size);
-int serialize_array_endian_uint32 (MicroBuffer* micro_buffer, Endianness endianness, uint32_t* array, uint32_t size);
-int serialize_array_endian_uint64 (MicroBuffer* micro_buffer, Endianness endianness, uint64_t* array, uint32_t size);
-int serialize_array_endian_int16  (MicroBuffer* micro_buffer, Endianness endianness, int16_t*  array, uint32_t size);
-int serialize_array_endian_int32  (MicroBuffer* micro_buffer, Endianness endianness, int32_t*  array, uint32_t size);
-int serialize_array_endian_int64  (MicroBuffer* micro_buffer, Endianness endianness, int64_t*  array, uint32_t size);
-int serialize_array_endian_float  (MicroBuffer* micro_buffer, Endianness endianness, float*    array, uint32_t size);
-int serialize_array_endian_double (MicroBuffer* micro_buffer, Endianness endianness, double*   array, uint32_t size);
+void serialize_array_endian_uint16 (MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
+void serialize_array_endian_uint32 (MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
+void serialize_array_endian_uint64 (MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
+void serialize_array_endian_int16  (MicroBuffer* buffer, Endianness endianness, int16_t*  array, uint32_t size);
+void serialize_array_endian_int32  (MicroBuffer* buffer, Endianness endianness, int32_t*  array, uint32_t size);
+void serialize_array_endian_int64  (MicroBuffer* buffer, Endianness endianness, int64_t*  array, uint32_t size);
+void serialize_array_endian_float  (MicroBuffer* buffer, Endianness endianness, float*    array, uint32_t size);
+void serialize_array_endian_double (MicroBuffer* buffer, Endianness endianness, double*   array, uint32_t size);
 
-int deserialize_array_endian_uint16 (MicroBuffer* micro_buffer, Endianness endianness, uint16_t* array, uint32_t size);
-int deserialize_array_endian_uint32 (MicroBuffer* micro_buffer, Endianness endianness, uint32_t* array, uint32_t size);
-int deserialize_array_endian_uint64 (MicroBuffer* micro_buffer, Endianness endianness, uint64_t* array, uint32_t size);
-int deserialize_array_endian_int16  (MicroBuffer* micro_buffer, Endianness endianness, int16_t* array, uint32_t size);
-int deserialize_array_endian_int32  (MicroBuffer* micro_buffer, Endianness endianness, int32_t* array, uint32_t size);
-int deserialize_array_endian_int64  (MicroBuffer* micro_buffer, Endianness endianness, int64_t* array, uint32_t size);
-int deserialize_array_endian_float  (MicroBuffer* micro_buffer, Endianness endianness, float*    array, uint32_t size);
-int deserialize_array_endian_double (MicroBuffer* micro_buffer, Endianness endianness, double*   array, uint32_t size);
+void deserialize_array_endian_uint16 (MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
+void deserialize_array_endian_uint32 (MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
+void deserialize_array_endian_uint64 (MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
+void deserialize_array_endian_int16  (MicroBuffer* buffer, Endianness endianness, int16_t* array, uint32_t size);
+void deserialize_array_endian_int32  (MicroBuffer* buffer, Endianness endianness, int32_t* array, uint32_t size);
+void deserialize_array_endian_int64  (MicroBuffer* buffer, Endianness endianness, int64_t* array, uint32_t size);
+void deserialize_array_endian_float  (MicroBuffer* buffer, Endianness endianness, float*    array, uint32_t size);
+void deserialize_array_endian_double (MicroBuffer* buffer, Endianness endianness, double*   array, uint32_t size);
 
 // Sequence
-int serialize_sequence_endian_uint16 (MicroBuffer* micro_buffer, Endianness endianness, uint16_t* sequence, uint32_t size);
-int serialize_sequence_endian_uint32 (MicroBuffer* micro_buffer, Endianness endianness, uint32_t* sequence, uint32_t size);
-int serialize_sequence_endian_uint64 (MicroBuffer* micro_buffer, Endianness endianness, uint64_t* sequence, uint32_t size);
-int serialize_sequence_endian_int16  (MicroBuffer* micro_buffer, Endianness endianness, int16_t*  sequence, uint32_t size);
-int serialize_sequence_endian_int32  (MicroBuffer* micro_buffer, Endianness endianness, int32_t*  sequence, uint32_t size);
-int serialize_sequence_endian_int64  (MicroBuffer* micro_buffer, Endianness endianness, int64_t*  sequence, uint32_t size);
-int serialize_sequence_endian_float  (MicroBuffer* micro_buffer, Endianness endianness, float*    sequence, uint32_t size);
-int serialize_sequence_endian_double (MicroBuffer* micro_buffer, Endianness endianness, double*   sequence, uint32_t size);
+void serialize_sequence_endian_uint16 (MicroBuffer* buffer, Endianness endianness, uint16_t* sequence, uint32_t size);
+void serialize_sequence_endian_uint32 (MicroBuffer* buffer, Endianness endianness, uint32_t* sequence, uint32_t size);
+void serialize_sequence_endian_uint64 (MicroBuffer* buffer, Endianness endianness, uint64_t* sequence, uint32_t size);
+void serialize_sequence_endian_int16  (MicroBuffer* buffer, Endianness endianness, int16_t*  sequence, uint32_t size);
+void serialize_sequence_endian_int32  (MicroBuffer* buffer, Endianness endianness, int32_t*  sequence, uint32_t size);
+void serialize_sequence_endian_int64  (MicroBuffer* buffer, Endianness endianness, int64_t*  sequence, uint32_t size);
+void serialize_sequence_endian_float  (MicroBuffer* buffer, Endianness endianness, float*    sequence, uint32_t size);
+void serialize_sequence_endian_double (MicroBuffer* buffer, Endianness endianness, double*   sequence, uint32_t size);
 
-int deserialize_sequence_endian_uint16 (MicroBuffer* micro_buffer, Endianness endianness, uint16_t* sequence, uint32_t* size);
-int deserialize_sequence_endian_uint32 (MicroBuffer* micro_buffer, Endianness endianness, uint32_t* sequence, uint32_t* size);
-int deserialize_sequence_endian_uint64 (MicroBuffer* micro_buffer, Endianness endianness, uint64_t* sequence, uint32_t* size);
-int deserialize_sequence_endian_int16  (MicroBuffer* micro_buffer, Endianness endianness, int16_t*  sequence, uint32_t* size);
-int deserialize_sequence_endian_int32  (MicroBuffer* micro_buffer, Endianness endianness, int32_t*  sequence, uint32_t* size);
-int deserialize_sequence_endian_int64  (MicroBuffer* micro_buffer, Endianness endianness, int64_t*  sequence, uint32_t* size);
-int deserialize_sequence_endian_float  (MicroBuffer* micro_buffer, Endianness endianness, float*    sequence, uint32_t* size);
-int deserialize_sequence_endian_double (MicroBuffer* micro_buffer, Endianness endianness, double*   sequence, uint32_t* size);
+void deserialize_sequence_endian_uint16 (MicroBuffer* buffer, Endianness endianness, uint16_t* sequence, uint32_t* size);
+void deserialize_sequence_endian_uint32 (MicroBuffer* buffer, Endianness endianness, uint32_t* sequence, uint32_t* size);
+void deserialize_sequence_endian_uint64 (MicroBuffer* buffer, Endianness endianness, uint64_t* sequence, uint32_t* size);
+void deserialize_sequence_endian_int16  (MicroBuffer* buffer, Endianness endianness, int16_t*  sequence, uint32_t* size);
+void deserialize_sequence_endian_int32  (MicroBuffer* buffer, Endianness endianness, int32_t*  sequence, uint32_t* size);
+void deserialize_sequence_endian_int64  (MicroBuffer* buffer, Endianness endianness, int64_t*  sequence, uint32_t* size);
+void deserialize_sequence_endian_float  (MicroBuffer* buffer, Endianness endianness, float*    sequence, uint32_t* size);
+void deserialize_sequence_endian_double (MicroBuffer* buffer, Endianness endianness, double*   sequence, uint32_t* size);
 
 #ifdef __cplusplus
 }
