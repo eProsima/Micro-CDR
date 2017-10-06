@@ -6,7 +6,7 @@ extern "C"
 {
 #endif
 
-#include "microcdr_dll.h"
+#define microcdr_DllAPI
 
 #include <stdint.h>
 #include <stdbool.h>

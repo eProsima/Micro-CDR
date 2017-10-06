@@ -16,30 +16,30 @@
 // NOTE: remove inline from byte's functions will reduce significally the size of the compiler data.
 //          put inline from byte's functions will increase the performance.
 
-inline void serialize_byte_1(MicroBuffer* buffer, uint8_t value);
-inline void serialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t value);
-inline void serialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t value);
-inline void serialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t value);
+inline static void serialize_byte_1(MicroBuffer* buffer, uint8_t value);
+inline static void serialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t value);
+inline static void serialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t value);
+inline static void serialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t value);
 
-inline void deserialize_byte_1(MicroBuffer* buffer, uint8_t* value);
-inline void deserialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* value);
-inline void deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* value);
-inline void deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* value);
+inline static void deserialize_byte_1(MicroBuffer* buffer, uint8_t* value);
+inline static void deserialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* value);
+inline static void deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* value);
+inline static void deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* value);
 
-inline void serialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, uint32_t size);
-inline void serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
-inline void serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
-inline void serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
+inline static void serialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, uint32_t size);
+inline static void serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
+inline static void serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
+inline static void serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
 
-inline void deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, uint32_t size);
-inline void deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
-inline void deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
-inline void deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
+inline static void deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, uint32_t size);
+inline static void deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
+inline static void deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
+inline static void deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
 
 // -------------------------------------------------------------------
 //                      INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
-inline bool resize(MicroBuffer* buffer, uint32_t byte);
+inline static bool resize(MicroBuffer* buffer, uint32_t byte);
 
 // -------------------------------------------------------------------
 //                 BUFFER MANAGEMENT IMPLEMENTATION
@@ -95,14 +95,16 @@ bool resize(MicroBuffer* buffer, uint32_t request)
 {
     if(buffer->internal_buffer_management)
     {
-        free(buffer->init);
-
         uint32_t current_position = buffer->iterator - buffer->init;
         uint32_t buffer_size = (current_position + request) * 2;
+        uint8_t* previous_alloc = buffer->init;
 
         buffer->init = malloc(buffer_size);
         buffer->final = buffer->init + buffer_size;
         buffer->iterator = buffer->init + current_position;
+
+        memcpy(buffer->init, previous_alloc, current_position);
+        free(previous_alloc);
 
         return true;
     }

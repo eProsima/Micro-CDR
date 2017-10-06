@@ -15,81 +15,84 @@ This library is based on *eProsima Fast CDR* and it is focused on embedded and r
 Usage examples
 --------------
 
-*microCDR* provides different buffer configurations for reading and writing data. This is a code example showing the serialization and deserialization of a variable. In this case it has been used static user-defined buffers. That means that the user has to provide a defined buffer and its size during the *microBuffer* creation. To write inside this buffer its needed an static *microBuffer*. For reading, it is needed a deserialized *microBuffer*. Each of them will need an associated *microCDR* instance for managing its content.
+*microCDR* provides different buffer configurations for reading and writing data. This is a code example showing the serialization and deserialization of a variable. In this case it has been used static user-defined buffers. That means that the user has to provide a defined buffer and its size during the *MicroBuffer* creation. To write inside this buffer its needed an static *MicroBuffer*. For reading, it is needed a deserialized *MicroBuffer*.
 
 .. code-block:: C
 
-    #include <stdlib.h>
-    #include <microcdr/microCdr.h>
+    #include <microcdr/microcdr.h>
+    #include <stdio.h>
 
-    #define BUFFER_LENGTH 200
+    #define BUFFER_LENGTH 256
 
-    int main(){
-        // A user defined buffer
-        char buffer[BUFFER_LENGTH];
+    uint8_t buffer[BUFFER_LENGTH];
 
-        // microBuffers using the user defined buffer
-        struct microBuffer * microBufferWriter = NULL;
-        struct microBuffer * microBufferReader = NULL;
-        newStaticAlignedBuffer(buffer, BUFFER_LENGTH, &microBufferWriter);
-        newDeserializedAlignedBuffer(buffer, BUFFER_LENGTH, &microBufferReader);
+    int main(int argc, char** args)
+    {
+        // Structs for handle the buffer.
+        MicroBuffer writer;
+        MicroBuffer reader;
 
-        // microCDR structs for managing the microBuffers
-        struct microCDR * microCDRWriter = NULL;
-        struct microCDR * microCDRReader = NULL;
-        newMicroCDR(&microCDRWriter, microBufferWriter);
-        newMicroCDR(&microCDRReader, microBufferReader);
+        // Initialize the MicroBuffers for working with an user-managed buffer.
+        init_external_buffer(&writer, buffer, BUFFER_LENGTH);
+        init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-        char input = 'X';
-        char output;
+        // Serialize data
+        char input[16] = "Hello microCDR!"; //16 characters
+        serialize_array_char(&writer, input, 16);
 
-        // Serialization of input data
-        serializeChar(input, microCDRWriter);
+        // Deserialize data
+        char output[16];
+        deserialize_array_char(&reader, output, 16);
 
-        //Deserialization of data in output
-        deserializeChar(&output, microCDRReader);
+        printf("Input: %s\n", input);
+        printf("Output: %s\n", output);
 
-        free(microBufferWriter);
-        free(microBufferReader);
-        free(microCDRWriter);
-        free(microCDRReader);
+        return 0;
     }
 
-Another option is using dynamic *microBuffers*, which will create their own internal buffer. Dynamic *microBuffers* have the capability of resizing its internal buffer to make the allocation of streams with different sizes.
+Another option is using a dynamic *MicroBuffer*, which will create their own internal buffer. Dynamic *MicroBuffers* have the capability of resizing its internal buffer to make the allocation of streams with different sizes.
 
 .. code-block:: C
 
-    #include <stdlib.h>
-    #include <microcdr/microCdr.h>
+    #include <microcdr/microcdr.h>
+    #include <stdio.h>
 
-    #define BUFFER_LENGTH 200
+    #define BUFFER_LENGTH 256
+    #define INITIAL_BUFFER_LENGTH 8
 
-    int main(){
-        // Empty microBuffer
-        struct microBuffer * microBufferRW = NULL;
-        newDynamicAlignedBuffer(&microBufferRW);
+    uint8_t buffer[BUFFER_LENGTH];
 
-        // microCDR structs for managing the microBuffer
-        struct microCDR * microCDRWriter = NULL;
-        struct microCDR * microCDRReader = NULL;
-        newMicroCDR(&microCDRWriter, microBufferRW);
-        newMicroCDR(&microCDRReader, microBufferRW);
+    int main(int argc, char** args)
+    {
+        // Structs for handle the buffer.
+        MicroBuffer writer;
+        MicroBuffer reader;
 
-        char input = 'X';
-        char output;
+        // The writer will be managed dynamically by the library.
+        init_internal_buffer(&writer, INITIAL_BUFFER_LENGTH);
 
-        // Serialization
-        serializeChar(input, microCDRWriter);
+        // Serialize data
+        char input[16] = "Hello microCDR!"; //16 characters
+        serialize_array_char(&writer, input, 16);
 
-        // Deserialization
-        deserializeChar(&output, microCDRReader);
 
-        free(microBufferRW);
-        free(microCDRWriter);
-        free(microCDRReader);
+        // The reader will read from the writer-managed buffer.
+        init_external_buffer(&reader, writer.init, BUFFER_LENGTH);
+
+        // Deserialize data
+        char output[16];
+        deserialize_array_char(&reader, output, 16);
+
+        // Free internal buffer of the writer.
+        free_internal_buffer(writer);
+
+        printf("Input: %s\n", input);
+        printf("Output: %s\n", output);
+
+        return 0;
     }
 
-In both code examples, *microBuffers* can be created as aligned or non-aligned buffers. For example, the function **newDynamicAlignedBuffer** (as well as the other *microBuffer* creation functions) has a paralell function named **newDynamicNonAlignedBuffer** for this purpouse. For more information about the API of *microCDR* check ...?
+In both code examples, *microBuffers* can be created as aligned. For more information about the API of *microCDR* check ...?
 
 Supported types
 ---------------
@@ -97,169 +100,120 @@ Supported types
 The types supported in *microCDR* are presented in the following table. For each of them exists a serialization and a deserialization function.
 
 
-
-+----------+----------------------+------------+
-| Sign     | Type                 | Endianness |
-+==========+======================+============+
-|          | char                 |            |
-+----------+----------------------+------------+
-| signed   | char                 |            |
-+----------+----------------------+------------+
-| unsigned | char                 |            |
-+----------+----------------------+------------+
-|          | string               |            |
-+----------+----------------------+------------+
-|          | string               | endianness |
-+----------+----------------------+------------+
-|          | short                |            |
-+----------+----------------------+------------+
-|          | short                | endianness |
-+----------+----------------------+------------+
-| unsigned | short                |            |
-+----------+----------------------+------------+
-| unsigned | short                | endianness |
-+----------+----------------------+------------+
-|          | int                  |            |
-+----------+----------------------+------------+
-|          | int                  | endianness |
-+----------+----------------------+------------+
-| unsigned | int                  |            |
-+----------+----------------------+------------+
-| unsigned | int                  | endianness |
-+----------+----------------------+------------+
-|          | long                 |            |
-+----------+----------------------+------------+
-|          | long                 | endianness |
-+----------+----------------------+------------+
-| unsigned | long                 |            |
-+----------+----------------------+------------+
-| unsigned | long                 | endianness |
-+----------+----------------------+------------+
-|          | long long            |            |
-+----------+----------------------+------------+
-|          | long long            | endianness |
-+----------+----------------------+------------+
-| unsigned | long long            |            |
-+----------+----------------------+------------+
-| unsigned | long long            | endianness |
-+----------+----------------------+------------+
-|          | float                |            |
-+----------+----------------------+------------+
-|          | float                | endianness |
-+----------+----------------------+------------+
-|          | double               |            |
-+----------+----------------------+------------+
-|          | double               | endiannes  |
-+----------+----------------------+------------+
-|          | long double          |            |
-+----------+----------------------+------------+
-|          | long double          | endiannes  |
-+----------+----------------------+------------+
-|          | char array           |            |
-+----------+----------------------+------------+
-| signed   | char array           |            |
-+----------+----------------------+------------+
-| unsigned | char array           |            |
-+----------+----------------------+------------+
-|          | string array         |            |
-+----------+----------------------+------------+
-|          | string array         | endianness |
-+----------+----------------------+------------+
-|          | short array          |            |
-+----------+----------------------+------------+
-|          | short array          | endianness |
-+----------+----------------------+------------+
-| unsigned | short array          |            |
-+----------+----------------------+------------+
-| unsigned | short array          | endianness |
-+----------+----------------------+------------+
-|          | int array            |            |
-+----------+----------------------+------------+
-|          | int array            | endianness |
-+----------+----------------------+------------+
-| unsigned | int array            |            |
-+----------+----------------------+------------+
-| unsigned | int array            | endianness |
-+----------+----------------------+------------+
-|          | long array           |            |
-+----------+----------------------+------------+
-|          | long array           | endianness |
-+----------+----------------------+------------+
-| unsigned | long array           |            |
-+----------+----------------------+------------+
-| unsigned | long array           | endianness |
-+----------+----------------------+------------+
-|          | long long array      |            |
-+----------+----------------------+------------+
-|          | long long array      | endianness |
-+----------+----------------------+------------+
-| unsigned | long long array      |            |
-+----------+----------------------+------------+
-| unsigned | long long array      | endianness |
-+----------+----------------------+------------+
-|          | float array          |            |
-+----------+----------------------+------------+
-|          | float array          | endianness |
-+----------+----------------------+------------+
-|          | double array         |            |
-+----------+----------------------+------------+
-|          | double array         | endiannes  |
-+----------+----------------------+------------+
-|          | long double array    |            |
-+----------+----------------------+------------+
-|          | long double array    | endiannes  |
-+----------+----------------------+------------+
-|          | char sequence        |            |
-+----------+----------------------+------------+
-| signed   | char sequence        |            |
-+----------+----------------------+------------+
-| unsigned | char sequence        |            |
-+----------+----------------------+------------+
-|          | string sequence      |            |
-+----------+----------------------+------------+
-|          | string sequence      | endianness |
-+----------+----------------------+------------+
-|          | short sequence       |            |
-+----------+----------------------+------------+
-|          | short sequence       | endianness |
-+----------+----------------------+------------+
-| unsigned | short sequence       |            |
-+----------+----------------------+------------+
-| unsigned | short sequence       | endianness |
-+----------+----------------------+------------+
-|          | int sequence         |            |
-+----------+----------------------+------------+
-|          | int sequence         | endianness |
-+----------+----------------------+------------+
-| unsigned | int sequence         |            |
-+----------+----------------------+------------+
-| unsigned | int sequence         | endianness |
-+----------+----------------------+------------+
-|          | long sequence        |            |
-+----------+----------------------+------------+
-|          | long sequence        | endianness |
-+----------+----------------------+------------+
-| unsigned | long sequence        |            |
-+----------+----------------------+------------+
-| unsigned | long sequence        | endianness |
-+----------+----------------------+------------+
-|          | long long sequence   |            |
-+----------+----------------------+------------+
-|          | long long sequence   | endianness |
-+----------+----------------------+------------+
-| unsigned | long long sequence   |            |
-+----------+----------------------+------------+
-| unsigned | long long sequence   | endianness |
-+----------+----------------------+------------+
-|          | float sequence       |            |
-+----------+----------------------+------------+
-|          | float sequence       | endianness |
-+----------+----------------------+------------+
-|          | double sequence      |            |
-+----------+----------------------+------------+
-|          | double sequence      | endiannes  |
-+----------+----------------------+------------+
-|          | long double sequence |            |
-+----------+----------------------+------------+
-|          | long double sequence | endiannes  |
-+----------+----------------------+------------+
++----------------------+------------+
+| Type                 | Endianness |
++======================+============+
+| bool                 |            |
++----------------------+------------+
+| char                 |            |
++----------------------+------------+
+| uint8_t              |            |
++----------------------+------------+
+| int16                |            |
++----------------------+------------+
+| int16                | endianness |
++----------------------+------------+
+| uint16               |            |
++----------------------+------------+
+| uint16               | endianness |
++----------------------+------------+
+| int32                |            |
++----------------------+------------+
+| int32                | endianness |
++----------------------+------------+
+| uint32               |            |
++----------------------+------------+
+| uint32               | endianness |
++----------------------+------------+
+| int64                |            |
++----------------------+------------+
+| int64                | endianness |
++----------------------+------------+
+| uint64               |            |
++----------------------+------------+
+| uint64               | endianness |
++----------------------+------------+
+| float                |            |
++----------------------+------------+
+| float                | endianness |
++----------------------+------------+
+| double               |            |
++----------------------+------------+
+| double               | endianness |
++----------------------+------------+
+| bool array           |            |
++----------------------+------------+
+| char array           |            |
++----------------------+------------+
+| uint8_t array        |            |
++----------------------+------------+
+| int16 array          |            |
++----------------------+------------+
+| int16 array          | endianness |
++----------------------+------------+
+| uint16 array         |            |
++----------------------+------------+
+| uint16 array         | endianness |
++----------------------+------------+
+| int32 array          |            |
++----------------------+------------+
+| int32 array          | endianness |
++----------------------+------------+
+| uint32 array         |            |
++----------------------+------------+
+| uint32 array         | endianness |
++----------------------+------------+
+| int64 array          |            |
++----------------------+------------+
+| int64 array          | endianness |
++----------------------+------------+
+| uint64 array         |            |
++----------------------+------------+
+| uint64 array         | endianness |
++----------------------+------------+
+| float array          |            |
++----------------------+------------+
+| float array          | endianness |
++----------------------+------------+
+| double array         |            |
++----------------------+------------+
+| double array         | endianness |
++----------------------+------------+
+| bool sequence        |            |
++----------------------+------------+
+| char sequence        |            |
++----------------------+------------+
+| uint8_t sequence     |            |
++----------------------+------------+
+| int16 sequence       |            |
++----------------------+------------+
+| int16 sequence       | endianness |
++----------------------+------------+
+| uint16 sequence      |            |
++----------------------+------------+
+| uint16 sequence      | endianness |
++----------------------+------------+
+| int32 sequence       |            |
++----------------------+------------+
+| int32 sequence       | endianness |
++----------------------+------------+
+| uint32 sequence      |            |
++----------------------+------------+
+| uint32 sequence      | endianness |
++----------------------+------------+
+| int64 sequence       |            |
++----------------------+------------+
+| int64 sequence       | endianness |
++----------------------+------------+
+| uint64 sequence      |            |
++----------------------+------------+
+| uint64 sequence      | endianness |
++----------------------+------------+
+| float sequence       |            |
++----------------------+------------+
+| float sequence       | endianness |
++----------------------+------------+
+| double sequence      |            |
++----------------------+------------+
+| double sequence      | endianness |
++----------------------+------------+
