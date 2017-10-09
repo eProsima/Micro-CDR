@@ -21,14 +21,14 @@ int main(int argc, char** args)
 
 
     // The reader will read from the writer-managed buffer.
-    init_external_buffer(&reader, writer.init, BUFFER_LENGTH);
+    init_external_buffer(&reader, writer.init, writer.final - writer.init);
 
     // Deserialize data
     char output[16];
     deserialize_array_char(&reader, output, 16);
 
     // Free internal buffer of the writer.
-    free_internal_buffer(writer);
+    free_internal_buffer(&writer);
 
     printf("Input: %s\n", input);
     printf("Output: %s\n", output);
