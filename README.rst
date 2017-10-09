@@ -15,7 +15,7 @@ This library is based on *eProsima Fast CDR* and it is focused on embedded and r
 Usage examples
 --------------
 
-*microCDR* provides different buffer configurations for reading and writing data. This is a code example showing the serialization and deserialization of a variable. In this case it has been used static user-defined buffers. That means that the user has to provide a defined buffer and its size during the *MicroBuffer* creation. To write inside this buffer its needed an static *MicroBuffer*. For reading, it is needed a deserialized *MicroBuffer*.
+*microCDR* provides different buffer configurations for reading and writing data. This is a code example showing the serialization and deserialization of a variable. In this case it has been used static buffer. That means that the user has to provide a defined buffer and its size during the *MicroBuffer* creation.
 
 .. code-block:: C
 
@@ -92,7 +92,9 @@ Another option is using a dynamic *MicroBuffer*, which will create their own int
         return 0;
     }
 
-In both code examples, *microBuffers* can be created as aligned. For more information about the API of *microCDR* check ...?
+Note: to change the default endianness of funcions without the *endian* tag, use the *endianness* member of the *Microbuffer* structure.
+
+*microCDR* is always aligned. For more information about the API of *microCDR* check ...?
 
 Supported types
 ---------------
