@@ -49,7 +49,7 @@ TEST(resize_dynamic_buffer, Uint8)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_uint8(&writer, input);
+        serialize_uint8_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -66,7 +66,7 @@ TEST(resize_dynamic_buffer, Int16)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_int16(&writer, input);
+        serialize_int16_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -83,7 +83,7 @@ TEST(resize_dynamic_buffer, Uint16)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_uint16(&writer, input);
+        serialize_uint16_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -100,7 +100,7 @@ TEST(resize_dynamic_buffer, Int32)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_int32(&writer, input);
+        serialize_int32_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -117,7 +117,7 @@ TEST(resize_dynamic_buffer, Uint32)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_uint32(&writer, input);
+        serialize_uint32_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -134,7 +134,7 @@ TEST(resize_dynamic_buffer, Int64)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_int64(&writer, input);
+        serialize_int64_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -151,7 +151,7 @@ TEST(resize_dynamic_buffer, Uint64)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_uint64(&writer, input);
+        serialize_uint64_t(&writer, input);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -236,7 +236,7 @@ TEST(resize_dynamic_buffer, ArrayUint8)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_uint8(&writer, input, ARRAY_LENGTH);
+        serialize_array_uint8_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -253,7 +253,7 @@ TEST(resize_dynamic_buffer, Arrayint16)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_int16(&writer, input, ARRAY_LENGTH);
+        serialize_array_int16_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -270,7 +270,7 @@ TEST(resize_dynamic_buffer, ArrayUint16)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_uint16(&writer, input, ARRAY_LENGTH);
+        serialize_array_uint16_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -287,7 +287,7 @@ TEST(resize_dynamic_buffer, Arrayint32)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_int32(&writer, input, ARRAY_LENGTH);
+        serialize_array_int32_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -304,7 +304,7 @@ TEST(resize_dynamic_buffer, ArrayUint32)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_uint32(&writer, input, ARRAY_LENGTH);
+        serialize_array_uint32_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -321,7 +321,7 @@ TEST(resize_dynamic_buffer, Arrayint64)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_int64(&writer, input, ARRAY_LENGTH);
+        serialize_array_int64_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -338,7 +338,7 @@ TEST(resize_dynamic_buffer, ArrayUint64)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_array_uint64(&writer, input, ARRAY_LENGTH);
+        serialize_array_uint64_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -424,7 +424,7 @@ TEST(resize_dynamic_buffer, SequenceUint8)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_uint8(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_uint8_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -441,7 +441,7 @@ TEST(resize_dynamic_buffer, Sequenceint16)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_int16(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_int16_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -458,7 +458,7 @@ TEST(resize_dynamic_buffer, SequenceUint16)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_uint16(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_uint16_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -475,7 +475,7 @@ TEST(resize_dynamic_buffer, Sequenceint32)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_int32(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_int32_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -492,7 +492,7 @@ TEST(resize_dynamic_buffer, SequenceUint32)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_uint32(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_uint32_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -509,7 +509,7 @@ TEST(resize_dynamic_buffer, Sequenceint64)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_int64(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_int64_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -526,7 +526,7 @@ TEST(resize_dynamic_buffer, SequenceUint64)
 
     for(uint32_t i = 0; i < ELEMENTS; i++)
     {
-        serialize_sequence_uint64(&writer, input, ARRAY_LENGTH);
+        serialize_sequence_uint64_t(&writer, input, ARRAY_LENGTH);
         ASSERT_LE(i * sizeof(input), writer.iterator - writer.init);
     }
 
@@ -574,7 +574,7 @@ TEST(dynamic_buffer_integrity, Test)
     init_internal_buffer(&writer, INITIAL_BUFFER_LENGTH);
 
     for(uint32_t i = 0; i < 256; i++)
-        serialize_uint8(&writer, i);
+        serialize_uint8_t(&writer, i);
 
 
     MicroBuffer reader;
@@ -583,7 +583,7 @@ TEST(dynamic_buffer_integrity, Test)
     uint8_t output;
     for(uint32_t i = 0; i < 256; i++)
     {
-        deserialize_uint8(&reader, &output);
+        deserialize_uint8_t(&reader, &output);
         EXPECT_EQ(i, output);
     }
 

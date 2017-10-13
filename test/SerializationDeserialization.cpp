@@ -56,8 +56,8 @@ TEST(serialization_deserialization, Uint8)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, input);
-    deserialize_uint8(&reader, &output);
+    serialize_uint8_t(&writer, input);
+    deserialize_uint8_t(&reader, &output);
 
     EXPECT_EQ(input, output);
 }
@@ -74,8 +74,8 @@ TEST(serialization_deserialization, Int16)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_endian_int16(&writer, endianness, input);
-    deserialize_endian_int16(&reader, endianness, &output);
+    serialize_endian_int16_t(&writer, endianness, input);
+    deserialize_endian_int16_t(&reader, endianness, &output);
 
     EXPECT_EQ(input, output);
 }
@@ -92,8 +92,8 @@ TEST(serialization_deserialization, Uint16)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_endian_uint16(&writer, endianness, input);
-    deserialize_endian_uint16(&reader, endianness, &output);
+    serialize_endian_uint16_t(&writer, endianness, input);
+    deserialize_endian_uint16_t(&reader, endianness, &output);
 
     EXPECT_EQ(input, output);
 }
@@ -110,8 +110,8 @@ TEST(serialization_deserialization, Int32)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_endian_int32(&writer, endianness, input);
-    deserialize_endian_int32(&reader, endianness, &output);
+    serialize_endian_int32_t(&writer, endianness, input);
+    deserialize_endian_int32_t(&reader, endianness, &output);
 
     EXPECT_EQ(input, output);
 }
@@ -128,15 +128,15 @@ TEST(serialization_deserialization, Uint32)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_endian_uint32(&writer, endianness, input);
-    deserialize_endian_uint32(&reader, endianness, &output);
+    serialize_endian_uint32_t(&writer, endianness, input);
+    deserialize_endian_uint32_t(&reader, endianness, &output);
 
     EXPECT_EQ(input, output);
 }
 
 TEST(serialization_deserialization, Int64)
 {
-    int64_t int64 = 0x0102030405060708;
+    int64_t input = 0x0102030405060708;
     int64_t output;
     uint8_t buffer[BUFFER_LENGTH] = {0};
 
@@ -146,10 +146,10 @@ TEST(serialization_deserialization, Int64)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_endian_int64(&writer, endianness, int64);
-    deserialize_endian_int64(&reader, endianness, &output);
+    serialize_endian_int64_t(&writer, endianness, input);
+    deserialize_endian_int64_t(&reader, endianness, &output);
 
-    EXPECT_EQ(int64, output);
+    EXPECT_EQ(input, output);
 }
 
 TEST(serialization_deserialization, Uint64)
@@ -164,8 +164,8 @@ TEST(serialization_deserialization, Uint64)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_endian_uint64(&writer, endianness, input);
-    deserialize_endian_uint64(&reader, endianness, &output);
+    serialize_endian_uint64_t(&writer, endianness, input);
+    deserialize_endian_uint64_t(&reader, endianness, &output);
 
     EXPECT_EQ(input, output);
 }
@@ -260,8 +260,8 @@ TEST(serialization_deserialization, ArrayUint8)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_uint8(&writer, input, ARRAY_LENGTH);
-    deserialize_array_uint8(&reader, output, ARRAY_LENGTH);
+    serialize_array_uint8_t(&writer, input, ARRAY_LENGTH);
+    deserialize_array_uint8_t(&reader, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -281,8 +281,8 @@ TEST(serialization_deserialization, ArrayInt16)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_int16(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_int16(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_int16_t(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_int16_t(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -302,8 +302,8 @@ TEST(serialization_deserialization, ArrayUint16)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_uint16(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_uint16(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_uint16_t(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_uint16_t(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -323,8 +323,8 @@ TEST(serialization_deserialization, ArrayInt32)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_int32(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_int32(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_int32_t(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_int32_t(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -344,8 +344,8 @@ TEST(serialization_deserialization, ArrayUint32)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_uint32(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_uint32(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_uint32_t(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_uint32_t(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -365,8 +365,8 @@ TEST(serialization_deserialization, ArrayInt64)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_int64(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_int64(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_int64_t(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_int64_t(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -386,8 +386,8 @@ TEST(serialization_deserialization, ArrayUint64)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_uint64(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_uint64(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_uint64_t(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_uint64_t(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -407,8 +407,8 @@ TEST(serialization_deserialization, ArrayFloat)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_float(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_float(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_float(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_float(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -428,8 +428,8 @@ TEST(serialization_deserialization, ArrayDouble)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_array_endian_double(&writer, endianness, input, ARRAY_LENGTH);
-    deserialize_array_endian_double(&reader, endianness, output, ARRAY_LENGTH);
+    serialize_endian_array_double(&writer, endianness, input, ARRAY_LENGTH);
+    deserialize_endian_array_double(&reader, endianness, output, ARRAY_LENGTH);
 
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
     {
@@ -502,8 +502,8 @@ TEST(serialization_deserialization, SequenceUint8)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_uint8(&writer, input, input_size);
-    deserialize_sequence_uint8(&reader, output, &output_size);
+    serialize_sequence_uint8_t(&writer, input, input_size);
+    deserialize_sequence_uint8_t(&reader, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -527,8 +527,8 @@ TEST(serialization_deserialization, SequenceInt16)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_int16(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_int16(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_int16_t(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_int16_t(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -552,8 +552,8 @@ TEST(serialization_deserialization, SequenceUint16)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_uint16(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_uint16(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_uint16_t(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_uint16_t(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -577,8 +577,8 @@ TEST(serialization_deserialization, SequenceInt32)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_int32(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_int32(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_int32_t(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_int32_t(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -602,8 +602,8 @@ TEST(serialization_deserialization, SequenceUint32)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_uint32(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_uint32(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_uint32_t(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_uint32_t(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -627,8 +627,8 @@ TEST(serialization_deserialization, SequenceInt64)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_int64(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_int64(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_int64_t(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_int64_t(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -652,8 +652,8 @@ TEST(serialization_deserialization, SequenceUint64)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_uint64(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_uint64(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_uint64_t(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_uint64_t(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -677,8 +677,8 @@ TEST(serialization_deserialization, SequenceFloat)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_float(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_float(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_float(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_float(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)
@@ -702,8 +702,8 @@ TEST(serialization_deserialization, SequenceDouble)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_sequence_endian_double(&writer, endianness, input, input_size);
-    deserialize_sequence_endian_double(&reader, endianness, output, &output_size);
+    serialize_endian_sequence_double(&writer, endianness, input, input_size);
+    deserialize_endian_sequence_double(&reader, endianness, output, &output_size);
 
     EXPECT_EQ(input_size, output_size);
     for(uint32_t i = 0; i < ARRAY_LENGTH; i++)

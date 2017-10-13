@@ -14,9 +14,9 @@ TEST(alignment_2, Offset_0)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint16(&writer, 0);
+    serialize_uint16_t(&writer, 0);
 
-    deserialize_uint16(&reader, &data);
+    deserialize_uint16_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 2);
     EXPECT_EQ(reader.iterator - reader.init, 2);
@@ -34,11 +34,11 @@ TEST(alignment_2, Offset_1)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint16(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint16_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint16(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint16_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 4);
     EXPECT_EQ(reader.iterator - reader.init, 4);
@@ -56,13 +56,13 @@ TEST(alignment_2, Offset_2)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint16(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint16_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint16(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint16_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 4);
     EXPECT_EQ(reader.iterator - reader.init, 4);
@@ -80,15 +80,15 @@ TEST(alignment_2, Offset_3)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint16(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint16_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint16(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint16_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 6);
     EXPECT_EQ(reader.iterator - reader.init, 6);
@@ -105,9 +105,9 @@ TEST(alignment_4, Offset_0)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint32(&writer, 0);
+    serialize_uint32_t(&writer, 0);
 
-    deserialize_uint32(&reader, &data);
+    deserialize_uint32_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 4);
     EXPECT_EQ(reader.iterator - reader.init, 4);
@@ -125,11 +125,11 @@ TEST(alignment_4, Offset_1)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint32(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint32_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint32(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint32_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 8);
     EXPECT_EQ(reader.iterator - reader.init, 8);
@@ -147,13 +147,13 @@ TEST(alignment_4, Offset_2)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint32(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint32_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint32(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint32_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 8);
     EXPECT_EQ(reader.iterator - reader.init, 8);
@@ -171,15 +171,15 @@ TEST(alignment_4, Offset_3)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint32(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint32_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint32(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint32_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 8);
     EXPECT_EQ(reader.iterator - reader.init, 8);
@@ -197,17 +197,17 @@ TEST(alignment_4, Offset_4)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint32(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint32_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint32(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint32_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 8);
     EXPECT_EQ(reader.iterator - reader.init, 8);
@@ -225,19 +225,19 @@ TEST(alignment_4, Offset_5)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint32(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint32_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint32(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint32_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 12);
     EXPECT_EQ(reader.iterator - reader.init, 12);
@@ -254,9 +254,9 @@ TEST(alignment_8, Offset_0)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint64(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint64(&reader, &data);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 8);
     EXPECT_EQ(reader.iterator - reader.init, 8);
@@ -274,11 +274,11 @@ TEST(alignment_8, Offset_1)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -296,13 +296,13 @@ TEST(alignment_8, Offset_2)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -320,15 +320,15 @@ TEST(alignment_8, Offset_3)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -346,17 +346,17 @@ TEST(alignment_8, Offset_4)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -374,19 +374,19 @@ TEST(alignment_8, Offset_5)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -404,21 +404,21 @@ TEST(alignment_8, Offset_6)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -436,23 +436,23 @@ TEST(alignment_8, Offset_7)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -470,25 +470,25 @@ TEST(alignment_8, Offset_8)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 16);
     EXPECT_EQ(reader.iterator - reader.init, 16);
@@ -506,27 +506,27 @@ TEST(alignment_8, Offset_9)
     init_external_buffer(&writer, buffer, BUFFER_LENGTH);
     init_external_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint8(&writer, 0);
-    serialize_uint64(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint8_t(&writer, 0);
+    serialize_uint64_t(&writer, 0);
 
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint8(&reader, &offset);
-    deserialize_uint64(&reader, &data);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint8_t(&reader, &offset);
+    deserialize_uint64_t(&reader, &data);
 
     EXPECT_EQ(writer.iterator - writer.init, 24);
     EXPECT_EQ(reader.iterator - reader.init, 24);
