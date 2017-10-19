@@ -21,6 +21,13 @@ typedef enum Endianness
 
 } Endianness;
 
+typedef struct MicroState
+{
+    uint8_t* position;
+    uint32_t last_data_size;
+
+} MicroState;
+
 typedef struct MicroBuffer
 {
     uint8_t* init;
@@ -43,6 +50,10 @@ microcdr_DllAPI void init_external_buffer(MicroBuffer* buffer, uint8_t* data, ui
 microcdr_DllAPI void init_internal_buffer(MicroBuffer* buffer, uint32_t initial_size);
 microcdr_DllAPI void free_internal_buffer(MicroBuffer* buffer);
 microcdr_DllAPI void reset_buffer(MicroBuffer* buffer);
+
+microcdr_DllAPI MicroState get_micro_state(MicroBuffer* buffer);
+microcdr_DllAPI void restore_micro_state(MicroBuffer* buffer, MicroState state);
+microcdr_DllAPI uint32_t align_to(MicroBuffer* buffer, uint32_t size);
 
 // -------------------------------------------------------------------
 //                        SERIALIZATION FUNCTIONS

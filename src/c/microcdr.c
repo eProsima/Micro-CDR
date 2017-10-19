@@ -80,6 +80,29 @@ void reset_buffer(MicroBuffer* buffer)
     buffer->last_data_size = 0;
 }
 
+MicroState get_micro_state(MicroBuffer* buffer)
+{
+    return (MicroState)
+    {
+        .position = buffer->iterator,
+        .last_data_size = buffer->last_data_size
+    };
+}
+
+void restore_micro_state(MicroBuffer* buffer, MicroState state)
+{
+    buffer->iterator = state.position;
+    buffer->last_data_size = state.last_data_size;
+}
+
+uint32_t align_to(MicroBuffer* buffer, uint32_t size)
+{
+    uint32_t offset = get_alignment_offset(buffer, size);
+    buffer->iterator += offset;
+    buffer->last_data_size = size;
+    return offset;
+}
+
 uint32_t get_alignment_offset(MicroBuffer* buffer, uint32_t data_size)
 {
     if(data_size > buffer->last_data_size)
