@@ -122,14 +122,10 @@ bool resize(MicroBuffer* buffer, uint32_t request)
     {
         uint32_t current_position = buffer->iterator - buffer->init;
         uint32_t buffer_size = (current_position + request) * 2;
-        //uint8_t* previous_alloc = buffer->init;
 
         buffer->init = realloc(buffer->init, buffer_size);
         buffer->final = buffer->init + buffer_size;
         buffer->iterator = buffer->init + current_position;
-
-        //memcpy(buffer->init, previous_alloc, current_position);
-        //free(previous_alloc);
 
         return true;
     }
