@@ -48,6 +48,11 @@ macro(check_endianness)
     # Test endianness
     include(TestBigEndian)
     test_big_endian(BIG_ENDIAN)
+    if(BIG_ENDIAN)
+        message(STATUS "Machine: big endian")
+    else()
+        message(STATUS "Machine: little endian")
+    endif()
     set(__BIG_ENDIAN__ ${BIG_ENDIAN})
 endmacro()
 

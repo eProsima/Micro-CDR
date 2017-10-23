@@ -3,11 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef __BIG_ENDIAN__
-#define MACHINE_ENDIANNESS BIG_ENDIANNESS
-#else
-#define MACHINE_ENDIANNESS LITTLE_ENDIANNESS
-#endif
+#define MACHINE_ENDIANNESS !__BIG_ENDIAN__
 
 // -------------------------------------------------------------------
 //                  INTERNAL SERIALIZATION FUNCTIONS

@@ -124,7 +124,7 @@ endif()
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
 
-option(CHECK_ENDIANNESS "Enable/disable endiannes checking" OFF)
+option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
 if(CHECK_ENDIANNESS)
     check_endianness()
 else()

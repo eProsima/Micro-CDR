@@ -17,7 +17,8 @@ extern "C"
 
 typedef enum Endianness
 {
-    BIG_ENDIANNESS, LITTLE_ENDIANNESS
+    BIG_ENDIANNESS,
+    LITTLE_ENDIANNESS
 
 } Endianness;
 
