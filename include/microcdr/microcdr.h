@@ -110,32 +110,6 @@ microcdr_DllAPI void deserialize_array_int64_t   (MicroBuffer* buffer, int64_t* 
 microcdr_DllAPI void deserialize_array_float   (MicroBuffer* buffer, float*    array, uint32_t size);
 microcdr_DllAPI void deserialize_array_double  (MicroBuffer* buffer, double*   array, uint32_t size);
 
-// Sequence
-microcdr_DllAPI void serialize_sequence_char     (MicroBuffer* buffer, const char*     sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_bool     (MicroBuffer* buffer, const bool*     sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_uint8_t    (MicroBuffer* buffer, const uint8_t*  sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_uint16_t   (MicroBuffer* buffer, const uint16_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_uint32_t   (MicroBuffer* buffer, const uint32_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_uint64_t   (MicroBuffer* buffer, const uint64_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_int16_t    (MicroBuffer* buffer, const int16_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_int32_t    (MicroBuffer* buffer, const int32_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_int64_t    (MicroBuffer* buffer, const int64_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_float    (MicroBuffer* buffer, const float*    sequence, uint32_t size);
-microcdr_DllAPI void serialize_sequence_double   (MicroBuffer* buffer, const double*   sequence, uint32_t size);
-
-microcdr_DllAPI void deserialize_sequence_char   (MicroBuffer* buffer, char*     sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_bool   (MicroBuffer* buffer, bool*     sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_uint8_t  (MicroBuffer* buffer, uint8_t*  sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_uint16_t (MicroBuffer* buffer, uint16_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_uint32_t (MicroBuffer* buffer, uint32_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_uint64_t (MicroBuffer* buffer, uint64_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_int16_t  (MicroBuffer* buffer, int16_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_int32_t  (MicroBuffer* buffer, int32_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_int64_t  (MicroBuffer* buffer, int64_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_float  (MicroBuffer* buffer, float*    sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_sequence_double (MicroBuffer* buffer, double*   sequence, uint32_t* size);
-
-
 // -------------------------------------------------------------------
 //                  SERIALIZATION FUNCTIONS - ENDIAN
 // -------------------------------------------------------------------
@@ -177,25 +151,6 @@ microcdr_DllAPI void deserialize_endian_array_int32_t  (MicroBuffer* buffer, End
 microcdr_DllAPI void deserialize_endian_array_int64_t  (MicroBuffer* buffer, Endianness endianness, int64_t* array, uint32_t size);
 microcdr_DllAPI void deserialize_endian_array_float  (MicroBuffer* buffer, Endianness endianness, float*    array, uint32_t size);
 microcdr_DllAPI void deserialize_endian_array_double (MicroBuffer* buffer, Endianness endianness, double*   array, uint32_t size);
-
-// Sequence
-microcdr_DllAPI void serialize_endian_sequence_uint16_t (MicroBuffer* buffer, Endianness endianness, const uint16_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_uint32_t (MicroBuffer* buffer, Endianness endianness, const uint32_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_uint64_t (MicroBuffer* buffer, Endianness endianness, const uint64_t* sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_int16_t  (MicroBuffer* buffer, Endianness endianness, const int16_t*  sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_int32_t  (MicroBuffer* buffer, Endianness endianness, const int32_t*  sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_int64_t  (MicroBuffer* buffer, Endianness endianness, const int64_t*  sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_float  (MicroBuffer* buffer, Endianness endianness, const float*    sequence, uint32_t size);
-microcdr_DllAPI void serialize_endian_sequence_double (MicroBuffer* buffer, Endianness endianness, const double*   sequence, uint32_t size);
-
-microcdr_DllAPI void deserialize_endian_sequence_uint16_t (MicroBuffer* buffer, Endianness endianness, uint16_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_uint32_t (MicroBuffer* buffer, Endianness endianness, uint32_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_uint64_t (MicroBuffer* buffer, Endianness endianness, uint64_t* sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_int16_t  (MicroBuffer* buffer, Endianness endianness, int16_t*  sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_int32_t  (MicroBuffer* buffer, Endianness endianness, int32_t*  sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_int64_t  (MicroBuffer* buffer, Endianness endianness, int64_t*  sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_float  (MicroBuffer* buffer, Endianness endianness, float*    sequence, uint32_t* size);
-microcdr_DllAPI void deserialize_endian_sequence_double (MicroBuffer* buffer, Endianness endianness, double*   sequence, uint32_t* size);
 
 #ifdef __cplusplus
 }
