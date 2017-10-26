@@ -95,12 +95,10 @@ void restore_micro_state(MicroBuffer* buffer, MicroState state)
     buffer->last_data_size = state.last_data_size;
 }
 
-uint32_t align_to(MicroBuffer* buffer, uint32_t size)
+void align_to(MicroBuffer* buffer, uint32_t size)
 {
-    uint32_t offset = get_alignment_offset(buffer, size);
-    buffer->iterator += offset;
+    buffer->iterator += get_alignment_offset(buffer, size);
     buffer->last_data_size = size;
-    return offset;
 }
 
 uint32_t get_alignment_offset(MicroBuffer* buffer, uint32_t data_size)
@@ -338,7 +336,7 @@ void serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const ui
         else
         {
             for(uint32_t i = 0; i < size; i++)
-                serialize_byte_2(buffer, !MACHINE_ENDIANNESS, array + i);
+                serialize_byte_2(buffer, endianness, array + i);
         }
 
         buffer->iterator += data_size;
@@ -359,7 +357,7 @@ void serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const ui
         else
         {
             for(uint32_t i = 0; i < size; i++)
-                serialize_byte_4(buffer, !MACHINE_ENDIANNESS, array + i);
+                serialize_byte_4(buffer, endianness, array + i);
         }
 
         buffer->iterator += data_size;
@@ -380,7 +378,7 @@ void serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const ui
         else
         {
             for(uint32_t i = 0; i < size; i++)
-                serialize_byte_8(buffer, !MACHINE_ENDIANNESS, array + i);
+                serialize_byte_8(buffer, endianness, array + i);
         }
 
         buffer->iterator += data_size;
@@ -411,7 +409,7 @@ void deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16
         else
         {
             for(uint32_t i = 0; i < size; i++)
-                serialize_byte_2(buffer, !MACHINE_ENDIANNESS, array + i);
+                deserialize_byte_2(buffer, endianness, array + i);
         }
 
         buffer->iterator += data_size;
@@ -432,7 +430,7 @@ void deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32
         else
         {
             for(uint32_t i = 0; i < size; i++)
-                serialize_byte_4(buffer, !MACHINE_ENDIANNESS, array + i);
+                deserialize_byte_4(buffer, endianness, array + i);
         }
 
         buffer->iterator += data_size;
@@ -453,7 +451,7 @@ void deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64
         else
         {
             for(uint32_t i = 0; i < size; i++)
-                serialize_byte_8(buffer, !MACHINE_ENDIANNESS, array + i);
+                deserialize_byte_8(buffer, endianness, array + i);
         }
 
         buffer->iterator += data_size;
