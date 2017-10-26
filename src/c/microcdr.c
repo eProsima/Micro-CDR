@@ -111,7 +111,7 @@ uint32_t get_alignment_offset(MicroBuffer* buffer, uint32_t data_size)
 
 bool check_size(MicroBuffer* buffer, uint32_t bytes)
 {
-    return buffer->iterator + bytes < buffer->final;
+    return buffer->iterator + bytes <= buffer->final;
 }
 
 bool resize(MicroBuffer* buffer, uint32_t request)
