@@ -18,9 +18,17 @@ extern "C"
 typedef enum Endianness
 {
     BIG_ENDIANNESS,
-    LITTLE_ENDIANNESS
+    LITTLE_ENDIANNESS,
+
+    #ifndef __BIG_ENDIAN__
+    MACHINE_ENDIANNESS = LITTLE_ENDIANNESS
+    #else
+    MACHINE_ENDIANNESS = !__BIG_ENDIAN__
+    #endif
 
 } Endianness;
+
+
 
 typedef struct MicroState
 {
