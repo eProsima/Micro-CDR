@@ -313,69 +313,76 @@ void serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, uint32_t 
         memcpy(buffer->iterator, array, size);
 
         buffer->iterator += size;
+        buffer->last_data_size = sizeof(uint8_t);
     }
 }
 
 void serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, uint32_t size)
 {
-    uint32_t data_size = size * sizeof(uint16_t);
+    uint32_t data_size = sizeof(uint16_t);
+    uint32_t array_size = size * data_size;
     uint32_t alignment = get_alignment_offset(buffer, sizeof(uint16_t));
 
-    if(check_size(buffer, alignment + data_size) || resize(buffer, alignment + data_size))
+    if(check_size(buffer, alignment + array_size) || resize(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
-            memcpy(buffer->iterator, array, data_size);
+            memcpy(buffer->iterator, array, array_size);
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 serialize_byte_2(buffer, endianness, array + i);
         }
 
-        buffer->iterator += data_size;
+        buffer->iterator += array_size;
+        buffer->last_data_size = data_size;
     }
 }
 
 void serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, uint32_t size)
 {
-    uint32_t data_size = size * sizeof(uint32_t);
+    uint32_t data_size = sizeof(uint32_t);
+    uint32_t array_size = size * data_size;
     uint32_t alignment = get_alignment_offset(buffer, sizeof(uint32_t));
 
-    if(check_size(buffer, alignment + data_size) || resize(buffer, alignment + data_size))
+    if(check_size(buffer, alignment + array_size) || resize(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
-            memcpy(buffer->iterator, array, data_size);
+            memcpy(buffer->iterator, array, array_size);
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 serialize_byte_4(buffer, endianness, array + i);
         }
 
-        buffer->iterator += data_size;
+        buffer->iterator += array_size;
+        buffer->last_data_size = data_size;
     }
 }
 
 void serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, uint32_t size)
 {
     uint32_t data_size = size * sizeof(uint64_t);
+    uint32_t array_size = size * data_size;
     uint32_t alignment = get_alignment_offset(buffer, sizeof(uint64_t));
 
-    if(check_size(buffer, alignment + data_size) || resize(buffer, alignment + data_size))
+    if(check_size(buffer, alignment + array_size) || resize(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
-            memcpy(buffer->iterator, array, data_size);
+            memcpy(buffer->iterator, array, array_size);
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 serialize_byte_8(buffer, endianness, array + i);
         }
 
-        buffer->iterator += data_size;
+        buffer->iterator += array_size;
+        buffer->last_data_size = data_size;
     }
 }
 
@@ -386,69 +393,76 @@ void deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, uint32_t size
         memcpy(array, buffer->iterator, size);
 
         buffer->iterator += size;
+        buffer->last_data_size = sizeof(uint8_t);
     }
 }
 
 void deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size)
 {
     uint32_t data_size = size * sizeof(uint16_t);
+    uint32_t array_size = size * data_size;
     uint32_t alignment = get_alignment_offset(buffer, sizeof(uint16_t));
 
-    if(check_size(buffer, alignment + data_size) || resize(buffer, alignment + data_size))
+    if(check_size(buffer, alignment + array_size) || resize(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
-            memcpy(array, buffer->iterator, data_size);
+            memcpy(array, buffer->iterator, array_size);
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 deserialize_byte_2(buffer, endianness, array + i);
         }
 
-        buffer->iterator += data_size;
+        buffer->iterator += array_size;
+        buffer->last_data_size = data_size;
     }
 }
 
 void deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size)
 {
     uint32_t data_size = size * sizeof(uint32_t);
+    uint32_t array_size = size * data_size;
     uint32_t alignment = get_alignment_offset(buffer, sizeof(uint32_t));
 
-    if(check_size(buffer, alignment + data_size) || resize(buffer, alignment + data_size))
+    if(check_size(buffer, alignment + array_size) || resize(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
-            memcpy(array, buffer->iterator, data_size);
+            memcpy(array, buffer->iterator, array_size);
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 deserialize_byte_4(buffer, endianness, array + i);
         }
 
-        buffer->iterator += data_size;
+        buffer->iterator += array_size;
+        buffer->last_data_size = data_size;
     }
 }
 
 void deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size)
 {
     uint32_t data_size = size * sizeof(uint64_t);
+    uint32_t array_size = size * data_size;
     uint32_t alignment = get_alignment_offset(buffer, sizeof(uint64_t));
 
-    if(check_size(buffer, alignment + data_size) || resize(buffer, alignment + data_size))
+    if(check_size(buffer, alignment + array_size) || resize(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
-            memcpy(array, buffer->iterator, data_size);
+            memcpy(array, buffer->iterator, array_size);
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 deserialize_byte_8(buffer, endianness, array + i);
         }
 
-        buffer->iterator += data_size;
+        buffer->iterator += array_size;
+        buffer->last_data_size = data_size;
     }
 }
 
