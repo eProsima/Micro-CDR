@@ -28,7 +28,6 @@ else()
         )
 endif()
 
-
 if(COMMAND px4_add_module)
     set(MICRO_LIBRARY_NAME "lib__micro-CDR")
 else()

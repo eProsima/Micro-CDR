@@ -3,6 +3,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+#if __BIG_ENDIAN__
+    static const Endianness MACHINE_ENDIANNESS = BIG_ENDIANNESS;
+#else
+    static const Endianness MACHINE_ENDIANNESS = LITTLE_ENDIANNESS;
+#endif
+
 // -------------------------------------------------------------------
 //                  INTERNAL SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
@@ -470,7 +476,7 @@ void deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64
 
 void serialize_char(MicroBuffer* buffer, char value)
 {
-    serialize_byte_1(buffer, &value);
+    serialize_byte_1(buffer, (uint8_t*)&value);
 }
 
 void serialize_bool(MicroBuffer* buffer, bool value)
@@ -500,17 +506,17 @@ void serialize_uint64_t(MicroBuffer* buffer, uint64_t value)
 
 void serialize_int16_t(MicroBuffer* buffer, int16_t value)
 {
-    serialize_byte_2(buffer, buffer->endianness, &value);
+    serialize_byte_2(buffer, buffer->endianness, (uint16_t*)&value);
 }
 
 void serialize_int32_t(MicroBuffer* buffer, int32_t value)
 {
-    serialize_byte_4(buffer, buffer->endianness, &value);
+    serialize_byte_4(buffer, buffer->endianness, (uint32_t*)&value);
 }
 
 void serialize_int64_t(MicroBuffer* buffer, int64_t value)
 {
-    serialize_byte_8(buffer, buffer->endianness, &value);
+    serialize_byte_8(buffer, buffer->endianness, (uint64_t*)&value);
 }
 
 void serialize_float(MicroBuffer* buffer, float value)
@@ -525,7 +531,7 @@ void serialize_double(MicroBuffer* buffer, double value)
 
 void deserialize_char(MicroBuffer* buffer, char* value)
 {
-    deserialize_byte_1(buffer, value);
+    deserialize_byte_1(buffer, (uint8_t*)value);
 }
 
 void deserialize_bool(MicroBuffer* buffer, bool* value)
@@ -555,32 +561,32 @@ void deserialize_uint64_t(MicroBuffer* buffer, uint64_t* value)
 
 void deserialize_int16_t(MicroBuffer* buffer, int16_t* value)
 {
-    deserialize_byte_2(buffer, buffer->endianness, value);
+    deserialize_byte_2(buffer, buffer->endianness, (uint16_t*)value);
 }
 
 void deserialize_int32_t(MicroBuffer* buffer, int32_t* value)
 {
-    deserialize_byte_4(buffer, buffer->endianness, value);
+    deserialize_byte_4(buffer, buffer->endianness, (uint32_t*)value);
 }
 
 void deserialize_int64_t(MicroBuffer* buffer, int64_t* value)
 {
-    deserialize_byte_8(buffer, buffer->endianness, value);
+    deserialize_byte_8(buffer, buffer->endianness, (uint64_t*)value);
 }
 
 void deserialize_float(MicroBuffer* buffer, float* value)
 {
-    deserialize_byte_4(buffer, buffer->endianness, (int32_t*) value);
+    deserialize_byte_4(buffer, buffer->endianness, (uint32_t*)value);
 }
 
 void deserialize_double(MicroBuffer* buffer, double* value)
 {
-    deserialize_byte_8(buffer, buffer->endianness, (int64_t*) value);
+    deserialize_byte_8(buffer, buffer->endianness, (uint64_t*)value);
 }
 
 void serialize_array_char(MicroBuffer* buffer, const char* array, uint32_t size)
 {
-    serialize_array_byte_1(buffer, array, size);
+    serialize_array_byte_1(buffer, (uint8_t*)array, size);
 }
 
 void serialize_array_bool(MicroBuffer* buffer, const bool* array, uint32_t size)
@@ -610,17 +616,17 @@ void serialize_array_uint64_t(MicroBuffer* buffer, const uint64_t* array, uint32
 
 void serialize_array_int16_t(MicroBuffer* buffer, const int16_t* array, uint32_t size)
 {
-    serialize_array_byte_2(buffer, buffer->endianness, array, size);
+    serialize_array_byte_2(buffer, buffer->endianness, (uint16_t*)array, size);
 }
 
 void serialize_array_int32_t(MicroBuffer* buffer, const int32_t* array, uint32_t size)
 {
-    serialize_array_byte_4(buffer, buffer->endianness, array, size);
+    serialize_array_byte_4(buffer, buffer->endianness, (uint32_t*)array, size);
 }
 
 void serialize_array_int64_t(MicroBuffer* buffer, const int64_t* array, uint32_t size)
 {
-    serialize_array_byte_8(buffer, buffer->endianness, array, size);
+    serialize_array_byte_8(buffer, buffer->endianness, (uint64_t*)array, size);
 }
 
 void serialize_array_float(MicroBuffer* buffer, const float* array, uint32_t size)
@@ -635,7 +641,7 @@ void serialize_array_double(MicroBuffer* buffer, const double* array, uint32_t s
 
 void deserialize_array_char(MicroBuffer* buffer, char* array, uint32_t size)
 {
-    deserialize_array_byte_1(buffer, array, size);
+    deserialize_array_byte_1(buffer, (uint8_t*)array, size);
 }
 
 void deserialize_array_bool(MicroBuffer* buffer, bool* array, uint32_t size)
@@ -665,17 +671,17 @@ void deserialize_array_uint64_t(MicroBuffer* buffer, uint64_t* array, uint32_t s
 
 void deserialize_array_int16_t(MicroBuffer* buffer, int16_t* array, uint32_t size)
 {
-    deserialize_array_byte_2(buffer, buffer->endianness, array, size);
+    deserialize_array_byte_2(buffer, buffer->endianness, (uint16_t*)array, size);
 }
 
 void deserialize_array_int32_t(MicroBuffer* buffer, int32_t* array, uint32_t size)
 {
-    deserialize_array_byte_4(buffer, buffer->endianness, array, size);
+    deserialize_array_byte_4(buffer, buffer->endianness, (uint32_t*)array, size);
 }
 
 void deserialize_array_int64_t(MicroBuffer* buffer, int64_t* array, uint32_t size)
 {
-    deserialize_array_byte_8(buffer, buffer->endianness, array, size);
+    deserialize_array_byte_8(buffer, buffer->endianness, (uint64_t*)array, size);
 }
 
 void deserialize_array_float(MicroBuffer* buffer, float* array, uint32_t size)
@@ -705,17 +711,17 @@ void serialize_endian_uint64_t(MicroBuffer* buffer, Endianness endianness, uint6
 
 void serialize_endian_int16_t(MicroBuffer* buffer, Endianness endianness, int16_t value)
 {
-    serialize_byte_2(buffer, endianness, &value);
+    serialize_byte_2(buffer, endianness, (uint16_t*)&value);
 }
 
 void serialize_endian_int32_t(MicroBuffer* buffer, Endianness endianness, int32_t value)
 {
-    serialize_byte_4(buffer, endianness, &value);
+    serialize_byte_4(buffer, endianness, (uint32_t*)&value);
 }
 
 void serialize_endian_int64_t(MicroBuffer* buffer, Endianness endianness, int64_t value)
 {
-    serialize_byte_8(buffer, endianness, &value);
+    serialize_byte_8(buffer, endianness, (uint64_t*)&value);
 }
 
 void serialize_endian_float(MicroBuffer* buffer, Endianness endianness, float value)
@@ -745,17 +751,17 @@ void deserialize_endian_uint64_t(MicroBuffer* buffer, Endianness endianness, uin
 
 void deserialize_endian_int16_t(MicroBuffer* buffer, Endianness endianness, int16_t* value)
 {
-    deserialize_byte_2(buffer, endianness, value);
+    deserialize_byte_2(buffer, endianness, (uint16_t*)value);
 }
 
 void deserialize_endian_int32_t(MicroBuffer* buffer, Endianness endianness, int32_t* value)
 {
-    deserialize_byte_4(buffer, endianness, value);
+    deserialize_byte_4(buffer, endianness, (uint32_t*)value);
 }
 
 void deserialize_endian_int64_t(MicroBuffer* buffer, Endianness endianness, int64_t* value)
 {
-    deserialize_byte_8(buffer, endianness, value);
+    deserialize_byte_8(buffer, endianness, (uint64_t*)value);
 }
 
 void deserialize_endian_float(MicroBuffer* buffer, Endianness endianness, float* value)
@@ -785,17 +791,17 @@ void serialize_endian_array_uint64_t(MicroBuffer* buffer, Endianness endianness,
 
 void serialize_endian_array_int16_t(MicroBuffer* buffer, Endianness endianness, const int16_t* array, uint32_t size)
 {
-    serialize_array_byte_2(buffer, endianness, array, size);
+    serialize_array_byte_2(buffer, endianness, (uint16_t*)array, size);
 }
 
 void serialize_endian_array_int32_t(MicroBuffer* buffer, Endianness endianness, const int32_t* array, uint32_t size)
 {
-    serialize_array_byte_4(buffer, endianness, array, size);
+    serialize_array_byte_4(buffer, endianness, (uint32_t*)array, size);
 }
 
 void serialize_endian_array_int64_t(MicroBuffer* buffer, Endianness endianness, const int64_t* array, uint32_t size)
 {
-    serialize_array_byte_8(buffer, endianness, array, size);
+    serialize_array_byte_8(buffer, endianness, (uint64_t*)array, size);
 }
 
 void serialize_endian_array_float(MicroBuffer* buffer, Endianness endianness, const float* array, uint32_t size)
@@ -825,17 +831,17 @@ void deserialize_endian_array_uint64_t(MicroBuffer* buffer, Endianness endiannes
 
 void deserialize_endian_array_int16_t(MicroBuffer* buffer, Endianness endianness, int16_t* array, uint32_t size)
 {
-    deserialize_array_byte_2(buffer, endianness, array, size);
+    deserialize_array_byte_2(buffer, endianness, (uint16_t*)array, size);
 }
 
 void deserialize_endian_array_int32_t(MicroBuffer* buffer, Endianness endianness, int32_t* array, uint32_t size)
 {
-    deserialize_array_byte_4(buffer, endianness, array, size);
+    deserialize_array_byte_4(buffer, endianness, (uint32_t*)array, size);
 }
 
 void deserialize_endian_array_int64_t(MicroBuffer* buffer, Endianness endianness, int64_t* array, uint32_t size)
 {
-    deserialize_array_byte_8(buffer, endianness, array, size);
+    deserialize_array_byte_8(buffer, endianness, (uint64_t*)array, size);
 }
 
 void deserialize_endian_array_float(MicroBuffer* buffer, Endianness endianness, float* array, uint32_t size)
