@@ -21,7 +21,7 @@ typedef enum Endianness
     LITTLE_ENDIANNESS,
 } Endianness;
 
-static const Endianness MACHINE_ENDIANNESS;
+extern const Endianness MACHINE_ENDIANNESS;
 
 typedef struct MicroState
 {

@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 #if __BIG_ENDIAN__
-    static const Endianness MACHINE_ENDIANNESS = BIG_ENDIANNESS;
+    extern const Endianness MACHINE_ENDIANNESS = BIG_ENDIANNESS;
 #else
-    static const Endianness MACHINE_ENDIANNESS = LITTLE_ENDIANNESS;
+    extern const Endianness MACHINE_ENDIANNESS = LITTLE_ENDIANNESS;
 #endif
 
 // -------------------------------------------------------------------
