@@ -43,11 +43,22 @@ $if(params)$$separatorInicial$$endif$$params : {param | /*$param.comment$*/ $par
 >>
 
 object_serialization(ctx, object, preffix) ::= <<
-scdr << $serializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+$if(object.typecode.primitive)$serialize_$object.typecode.cppTypename$(writer, topic->$preffix$$object.name$);
+$elseif(object.typecode.isType_d)$
+serialize_uint32_t(writer, strlen(topic->$preffix$$object.name$) + 1);
+serialize_array_char(writer, topic->$preffix$$object.name$, strlen(topic->$preffix$$object.name$) + 1);
+$endif$
 >>
 
 object_deserialization(ctx, object, preffix) ::= <<
-dcdr \>> $deserializeCasting(typecode=object.typecode)$$preffix$$object.name$;
+$if(object.typecode.primitive)$
+deserialize_$object.typecode.cppTypename$(reader, &topic->$preffix$$object.name$);
+$elseif(object.typecode.isType_d)$
+uint32_t size = 0;
+deserialize_uint32_t(reader, &size);
+topic->$preffix$$object.name$ = malloc(size);
+deserialize_array_char(reader, topic->$preffix$$object.name$, size);
+$endif$
 >>
 
 // TODO Todos los tipos. MEJORAR. size of 1 no deberia generar alignment.
