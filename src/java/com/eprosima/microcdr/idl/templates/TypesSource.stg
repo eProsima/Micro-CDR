@@ -161,14 +161,14 @@ struct_type(ctx, parent, struct, extensions) ::= <<
 bool serialize_$ctx.filename;format="toUpper"$_topic(MicroBuffer* writer, const AbstractTopic* topic_structure)
 {
     $ctx.filename$Topic* topic = ($ctx.filename$Topic*) topic_structure->topic;
-    $struct.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
+    $struct.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator=""$
     return true;
 }
 
 bool deserialize_$ctx.filename$_topic(MicroBuffer* reader, AbstractTopic* topic_structure)
 {
     $ctx.filename$Topic* topic = malloc(sizeof($ctx.filename$Topic));
-    $struct.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
+    $struct.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator=""$
     return true;
 }
 >>
