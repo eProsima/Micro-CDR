@@ -17,27 +17,7 @@ group TypesSource;
 main(ctx, definitions) ::= <<
 $fileHeader(file=[ctx.filename, ".cpp"], description=["This source file contains the definition of the described types in the IDL file."])$
 
-#ifdef _WIN32
-// Remove linker warning LNK4221 on Visual Studio
-namespace { char dummy; }
-#endif
-
-#include "$ctx.filename$.h"
-
-$if(ctx.cdr)$
-#include <fastcdr/Cdr.h>
-
-$endif$
-
-$if(ctx.fastcdr)$
-#include <fastcdr/FastCdr.h>
-
-$endif$
-
-#include <fastcdr/exceptions/BadParamException.h>
-using namespace eprosima::fastcdr::exception;
-
-#include <utility>
+#include "$ctx.filename;format="upper"$.h"
 
 $definitions; separator="\n"$
 >>
@@ -175,87 +155,19 @@ $endif$
 typedef_decl(ctx, parent, typedefs) ::= <<>>
 
 struct_type(ctx, parent, struct, extensions) ::= <<
-$struct.scopedname$::$struct.name$()
+bool serialize_$ctx.filename;format="toUpper"$_topic(MicroBuffer* writer, const AbstractTopic* topic_structure)
 {
-    $struct.members:{ member |$member_default_init(member=member)$}; separator="\n"$
+    $ctx.filename$Topic* topic = ($ctx.filename$Topic*) topic_structure->topic;
+
+    return true;
 }
 
-$struct.scopedname$::~$struct.name$()
+bool deserialize_$ctx.filename$_topic(MicroBuffer* reader, AbstractTopic* topic_structure)
 {
+    $ctx.filename$Topic* topic = mallo(sizeof($ctx.filename$Topic));
+
+    return true;
 }
-
-$struct.scopedname$::$struct.name$(const $struct.name$ &x)
-{
-    $struct.members:{m_$it.name$ = x.m_$it.name$;}; separator="\n"$
-}
-
-$struct.scopedname$::$struct.name$($struct.name$ &&x)
-{
-    $struct.members:{$member_move(it)$}; separator="\n"$
-}
-
-$struct.scopedname$& $struct.scopedname$::operator=(const $struct.name$ &x)
-{
-    $struct.members:{m_$it.name$ = x.m_$it.name$;}; separator="\n"$
-    
-    return *this;
-}
-
-$struct.scopedname$& $struct.scopedname$::operator=($struct.name$ &&x)
-{
-    $struct.members:{$member_move(it)$}; separator="\n"$
-    
-    return *this;
-}
-
-$if(ctx.anyCdr)$
-size_t $struct.scopedname$::getMaxCdrSerializedSize(size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-            
-    $struct.members : { member |$max_serialized_size(ctx=ctx, typecode=member.typecode, var="current_alignment")$}; separator="\n"$
-
-    return current_alignment - initial_alignment;
-}
-
-size_t $struct.scopedname$::getCdrSerializedSize(const $struct.scopedname$& data, size_t current_alignment)
-{
-    size_t initial_alignment = current_alignment;
-            
-    $struct.members : { member |$serialized_size(ctx=ctx, object=member, data="data", var="current_alignment")$}; separator="\n"$
-
-    return current_alignment - initial_alignment;
-}
-
-$endif$
-
-$if(ctx.cdr)$
-void $struct.scopedname$::serialize(eprosima::fastcdr::Cdr &scdr) const
-{
-    $struct.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
-}
-
-void $struct.scopedname$::deserialize(eprosima::fastcdr::Cdr &dcdr)
-{
-    $struct.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
-}
-
-$endif$
-
-$if(ctx.fastcdr)$
-void $struct.scopedname$::serialize(eprosima::fastcdr::FastCdr &scdr) const
-{
-    $struct.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
-}
-
-void $struct.scopedname$::deserialize(eprosima::fastcdr::FastCdr &dcdr)
-{
-    $struct.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator="\n"$
-}
-
-$endif$
-
-$extensions : {$it$}; separator="\n"$
 >>
 
 union_type(ctx, parent, union) ::= <<
