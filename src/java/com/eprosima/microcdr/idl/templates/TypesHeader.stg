@@ -26,6 +26,7 @@ $endif$
 
 #include <string.h>
 #include <stdlib.h>
+#include <micrortps/client/client.h>
 #include <microcdr/microcdr.h>
 $ctx.directIncludeDependencies : {include | #include "$include$.h"}; separator="\n"$
 
@@ -58,7 +59,7 @@ struct_type(ctx, parent, struct, extensions) ::= <<
 typedef struct $struct.name$
 {
     $struct.members:{$private_member_declaration(it)$}; separator="\n"$
-}$struct.name$;
+} $struct.name$;
 
 bool serialize_$ctx.filename;format="toUpper"$_topic(MicroBuffer* writer, const AbstractTopic* topic_structure)
 {
