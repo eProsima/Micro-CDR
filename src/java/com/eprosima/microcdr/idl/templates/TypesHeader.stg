@@ -61,18 +61,24 @@ typedef struct $struct.name$
     $struct.members:{$private_member_declaration(it)$}; separator="\n"$
 } $struct.name$;
 
-bool serialize_$ctx.filename;format="toUpper"$_topic(MicroBuffer* writer, const AbstractTopic* topic_structure)
+bool serialize_$struct.name$_topic(MicroBuffer* writer, const AbstractTopic* topic_structure)
 {
     $struct.name$* topic = ($struct.name$*) topic_structure->topic;
-    $struct.members : { member |$object_serialization(ctx=ctx, object=member, preffix="m_")$}; separator=""$
+    $struct.members : { member |$object_serialization(ctx=ctx, object=member)$}; separator=""$
     return true;
 }
 
-bool deserialize_$ctx.filename$_topic(MicroBuffer* reader, AbstractTopic* topic_structure)
+$struct.name$ *deserialize_$struct.name$_message(MicroBuffer *message)
 {
     $struct.name$* topic = malloc(sizeof($struct.name$));
-    $struct.members : { member |$object_deserialization(ctx=ctx, object=member, preffix="m_")$}; separator=""$
-    return true;
+    $struct.members : { member |$object_deserialization(ctx=ctx, object=member)$}; separator=""$
+    return topic;
+}
+
+void deallocate_$struct.name$_topic($struct.name$ *topic)
+{
+    $struct.members : { member | $object_deallocation(ctx=ctx, object=member)$}; separator=""$
+    free(topic);
 }
 >>
 
@@ -89,7 +95,7 @@ $private_declaration(typecode=member.typecode, name=member.name)$>>
 public_unionmember_declaration(member) ::= <<>>
 
 private_declaration(typecode, name) ::= <<
-$typecode.cTypename$ m_$name$;
+$typecode.cTypename$ $name$;
 >>
 
 size_functions(type) ::= <<>>
