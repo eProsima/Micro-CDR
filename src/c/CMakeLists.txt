@@ -29,7 +29,8 @@ set(${PROJECT_NAME_UPPER}_VERSION_MICRO ${PROJECT_MICRO_VERSION})
 set(${PROJECT_NAME_UPPER}_VERSION_STR ${PROJECT_VERSION})
 
 configure_file(${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/config.h.in
-    ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h)
+    ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
+)
 
 # Definitions
 # If Windows, set define for export dll functions
@@ -46,29 +47,39 @@ if(MSVC OR MSVC_IDE)
         generate_msvc_libraries(x64Win64VS2015)
     else()
         add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
-
         add_library(${PROJECT_NAME}_static STATIC ${${PROJECT_NAME}_SOURCES})
-        # Rename the library to have a "lib" before.
-        set_target_properties(${PROJECT_NAME}_static PROPERTIES OUTPUT_NAME lib${PROJECT_NAME})
 
-        set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static PROPERTIES RELEASE_POSTFIX -${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION})
-        set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static PROPERTIES RELWITHDEBINFO_POSTFIX -${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION})
-        set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static PROPERTIES DEBUG_POSTFIX d-${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION})
+        # Rename the library to have a "lib" before.
+        set_target_properties(${PROJECT_NAME}_static
+            PROPERTIES OUTPUT_NAME lib${PROJECT_NAME}
+        )
+
+        set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static 
+            PROPERTIES RELEASE_POSTFIX -${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}
+        )
+        set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static
+            PROPERTIES RELWITHDEBINFO_POSTFIX -${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}
+        )
+        set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}_static 
+            PROPERTIES DEBUG_POSTFIX d-${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}
+        )
 
         # Export symbols in DLL libraries
         target_compile_definitions(${PROJECT_NAME} PUBLIC ${PROJECT_NAME_UPPER}_DYN_LINK)
 
         # Define public headers
         target_include_directories(${PROJECT_NAME} PUBLIC
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
             $<INSTALL_INTERFACE:include>
-            )
+        )
 
         # Define public headers for static library
         target_include_directories(${PROJECT_NAME}_static PUBLIC
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
             $<INSTALL_INTERFACE:include>
-            )
+        )
     endif()
 else()
     #Create library
@@ -76,9 +87,10 @@ else()
 
     # Define public headers
     target_include_directories(${MICRO_LIBRARY_NAME} PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> 
+	$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
         $<INSTALL_INTERFACE:include>
-        )
+    )
 endif()
 
 ###############################################################################
@@ -143,7 +155,10 @@ if(MSVC OR MSVC_IDE)
             COMPONENT libraries_${MSVC_ARCH}
             )
 
-        export(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake)
+        export(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_static
+            FILE ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Targets.cmake
+        )
+
         install(EXPORT ${PROJECT_NAME}Targets
             DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
             COMPONENT cmake

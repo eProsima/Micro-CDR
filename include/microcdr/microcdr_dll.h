@@ -16,7 +16,7 @@
 #ifndef _MICROCDR_MICROCDR_DLL_H_
 #define _MICROCDR_MICROCDR_DLL_H_
 
-#include "config.h"
+#include <microcdr/config.h>
 
 // normalize macros
 #if !defined(MICROCDR_DYN_LINK) && !defined(MICROCDR_STATIC_LINK) \
