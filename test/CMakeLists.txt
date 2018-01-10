@@ -26,4 +26,11 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
     target_include_directories(MicroCDRUnitTests PRIVATE ${GTEST_INCLUDE_DIRS})
     target_link_libraries(MicroCDRUnitTests microcdr ${GTEST_BOTH_LIBRARIES})
 
+    if(WIN32)
+        string(REPLACE ";" "\\;" WIN_PATH "$ENV{PATH}")
+        set_property(TEST MicroCDRUnitTests APPEND PROPERTY ENVIRONMENT
+            "PATH=$<SHELL_PATH:$<TARGET_FILE_DIR:microcdr>>\\;${WIN_PATH}"
+	)
+    endif()
+
 endif()
