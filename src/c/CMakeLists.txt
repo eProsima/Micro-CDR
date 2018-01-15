@@ -88,7 +88,7 @@ else()
     # Define public headers
     target_include_directories(${MICRO_LIBRARY_NAME} PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> 
-	$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}>
+	    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:include>
     )
 endif()
