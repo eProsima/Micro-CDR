@@ -55,8 +55,6 @@ typedef struct MicroBuffer
     Endianness endianness;
     uint32_t last_data_size;
 
-    bool internal_buffer_management;
-
     BufferError error;
 
 } MicroBuffer;
@@ -67,10 +65,8 @@ microcdr_DllAPI extern const Endianness MACHINE_ENDIANNESS;
 //                         MICRO BUFFER FUNCTIONS
 // -------------------------------------------------------------------
 
-microcdr_DllAPI void init_external_buffer(MicroBuffer *buffer, uint8_t *data, uint32_t size);
-microcdr_DllAPI void init_internal_buffer(MicroBuffer *buffer, uint32_t initial_size);
-microcdr_DllAPI void free_internal_buffer(MicroBuffer *buffer);
-microcdr_DllAPI void reset_buffer(MicroBuffer *buffer);
+microcdr_DllAPI void init_micro_buffer(MicroBuffer *buffer, uint8_t *data, uint32_t size);
+microcdr_DllAPI void reset_micro_buffer(MicroBuffer *buffer);
 
 microcdr_DllAPI MicroState get_micro_state(MicroBuffer *buffer);
 microcdr_DllAPI void restore_micro_state(MicroBuffer *buffer, MicroState state);
