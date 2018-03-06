@@ -25,8 +25,8 @@ TEST(alignment_2, Offset_0)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint16_t(&writer, 0);
 
@@ -45,8 +45,8 @@ TEST(alignment_2, Offset_1)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint16_t(&writer, 0);
@@ -67,8 +67,8 @@ TEST(alignment_2, Offset_2)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -91,8 +91,8 @@ TEST(alignment_2, Offset_3)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -116,8 +116,8 @@ TEST(alignment_4, Offset_0)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint32_t(&writer, 0);
 
@@ -136,8 +136,8 @@ TEST(alignment_4, Offset_1)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint32_t(&writer, 0);
@@ -158,8 +158,8 @@ TEST(alignment_4, Offset_2)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -182,8 +182,8 @@ TEST(alignment_4, Offset_3)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -208,8 +208,8 @@ TEST(alignment_4, Offset_4)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -236,8 +236,8 @@ TEST(alignment_4, Offset_5)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -265,8 +265,8 @@ TEST(alignment_8, Offset_0)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint64_t(&writer, 0);
 
@@ -285,8 +285,8 @@ TEST(alignment_8, Offset_1)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint64_t(&writer, 0);
@@ -307,8 +307,8 @@ TEST(alignment_8, Offset_2)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -331,8 +331,8 @@ TEST(alignment_8, Offset_3)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -357,8 +357,8 @@ TEST(alignment_8, Offset_4)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -385,8 +385,8 @@ TEST(alignment_8, Offset_5)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -415,8 +415,8 @@ TEST(alignment_8, Offset_6)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -447,8 +447,8 @@ TEST(alignment_8, Offset_7)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -481,8 +481,8 @@ TEST(alignment_8, Offset_8)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);
@@ -517,8 +517,8 @@ TEST(alignment_8, Offset_9)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     serialize_uint8_t(&writer, 0);
     serialize_uint8_t(&writer, 0);

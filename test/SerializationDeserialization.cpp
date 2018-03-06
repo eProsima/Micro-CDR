@@ -31,8 +31,8 @@ TEST(serialization_deserialization, Bool)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_bool(&writer, input));
     EXPECT_TRUE(deserialize_bool(&reader, &output));
@@ -52,8 +52,8 @@ TEST(serialization_deserialization, Char)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_char(&writer, input));
     EXPECT_TRUE(deserialize_char(&reader, &output));
@@ -73,8 +73,8 @@ TEST(serialization_deserialization, Uint8)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_uint8_t(&writer, input));
     EXPECT_TRUE(deserialize_uint8_t(&reader, &output));
@@ -94,8 +94,8 @@ TEST(serialization_deserialization, Int16)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_int16_t(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_int16_t(&reader, endianness, &output));
@@ -115,8 +115,8 @@ TEST(serialization_deserialization, Uint16)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_uint16_t(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_uint16_t(&reader, endianness, &output));
@@ -136,8 +136,8 @@ TEST(serialization_deserialization, Int32)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_int32_t(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_int32_t(&reader, endianness, &output));
@@ -157,8 +157,8 @@ TEST(serialization_deserialization, Uint32)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_uint32_t(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_uint32_t(&reader, endianness, &output));
@@ -178,8 +178,8 @@ TEST(serialization_deserialization, Int64)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_int64_t(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_int64_t(&reader, endianness, &output));
@@ -199,8 +199,8 @@ TEST(serialization_deserialization, Uint64)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_uint64_t(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_uint64_t(&reader, endianness, &output));
@@ -220,8 +220,8 @@ TEST(serialization_deserialization, Float)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_float(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_float(&reader, endianness, &output));
@@ -241,8 +241,8 @@ TEST(serialization_deserialization, Double)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_double(&writer, endianness, input));
     EXPECT_TRUE(deserialize_endian_double(&reader, endianness, &output));
@@ -262,8 +262,8 @@ TEST(serialization_deserialization, ArrayBool)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_array_bool(&writer, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_array_bool(&reader, output, ARRAY_LENGTH));
@@ -286,8 +286,8 @@ TEST(serialization_deserialization, ArrayChar)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_array_char(&writer, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_array_char(&reader, output, ARRAY_LENGTH));
@@ -310,8 +310,8 @@ TEST(serialization_deserialization, ArrayUint8)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_array_uint8_t(&writer, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_array_uint8_t(&reader, output, ARRAY_LENGTH));
@@ -334,8 +334,8 @@ TEST(serialization_deserialization, ArrayInt16)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_int16_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_int16_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -358,8 +358,8 @@ TEST(serialization_deserialization, ArrayUint16)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_uint16_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_uint16_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -382,8 +382,8 @@ TEST(serialization_deserialization, ArrayInt32)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_int32_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_int32_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -406,8 +406,8 @@ TEST(serialization_deserialization, ArrayUint32)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_uint32_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_uint32_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -430,8 +430,8 @@ TEST(serialization_deserialization, ArrayInt64)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_int64_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_int64_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -454,8 +454,8 @@ TEST(serialization_deserialization, ArrayUint64)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_uint64_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_uint64_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -478,8 +478,8 @@ TEST(serialization_deserialization, ArrayFloat)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_float(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_float(&reader, endianness, output, ARRAY_LENGTH));
@@ -502,8 +502,8 @@ TEST(serialization_deserialization, ArrayDouble)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     EXPECT_TRUE(serialize_endian_array_double(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_endian_array_double(&reader, endianness, output, ARRAY_LENGTH));
@@ -526,8 +526,8 @@ TEST(serialization_deserialization, BoolKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH_KO);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH_KO);
 
     EXPECT_FALSE(serialize_bool(&writer, input));
     EXPECT_FALSE(deserialize_bool(&reader, &output));
@@ -545,8 +545,8 @@ TEST(serialization_deserialization, CharKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH_KO);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH_KO);
 
     EXPECT_FALSE(serialize_char(&writer, input));
     EXPECT_FALSE(deserialize_char(&reader, &output));
@@ -564,8 +564,8 @@ TEST(serialization_deserialization, Uint8KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH_KO);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH_KO);
 
     EXPECT_FALSE(serialize_uint8_t(&writer, input));
     EXPECT_FALSE(deserialize_uint8_t(&reader, &output));
@@ -583,8 +583,8 @@ TEST(serialization_deserialization, Int16KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_int16_t(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_int16_t(&reader, endianness, &output));
@@ -602,8 +602,8 @@ TEST(serialization_deserialization, Uint16KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_uint16_t(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_uint16_t(&reader, endianness, &output));
@@ -621,8 +621,8 @@ TEST(serialization_deserialization, Int32KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_int32_t(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_int32_t(&reader, endianness, &output));
@@ -640,8 +640,8 @@ TEST(serialization_deserialization, Uint32KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_uint32_t(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_uint32_t(&reader, endianness, &output));
@@ -659,8 +659,8 @@ TEST(serialization_deserialization, Int64KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_int64_t(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_int64_t(&reader, endianness, &output));
@@ -678,8 +678,8 @@ TEST(serialization_deserialization, Uint64KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_uint64_t(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_uint64_t(&reader, endianness, &output));
@@ -697,8 +697,8 @@ TEST(serialization_deserialization, FloatKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_float(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_float(&reader, endianness, &output));
@@ -716,8 +716,8 @@ TEST(serialization_deserialization, DoubleKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_double(&writer, endianness, input));
     EXPECT_FALSE(deserialize_endian_double(&reader, endianness, &output));
@@ -735,8 +735,8 @@ TEST(serialization_deserialization, ArrayBoolKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_array_bool(&writer, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_array_bool(&reader, output, ARRAY_LENGTH));
@@ -754,8 +754,8 @@ TEST(serialization_deserialization, ArrayCharKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_array_char(&writer, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_array_char(&reader, output, ARRAY_LENGTH));
@@ -773,8 +773,8 @@ TEST(serialization_deserialization, ArrayUint8KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_array_uint8_t(&writer, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_array_uint8_t(&reader, output, ARRAY_LENGTH));
@@ -792,8 +792,8 @@ TEST(serialization_deserialization, ArrayInt16KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_int16_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_int16_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -811,8 +811,8 @@ TEST(serialization_deserialization, ArrayUint16KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_uint16_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_uint16_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -830,8 +830,8 @@ TEST(serialization_deserialization, ArrayInt32KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_int32_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_int32_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -849,8 +849,8 @@ TEST(serialization_deserialization, ArrayUint32KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_uint32_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_uint32_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -868,8 +868,8 @@ TEST(serialization_deserialization, ArrayInt64KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_int64_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_int64_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -887,8 +887,8 @@ TEST(serialization_deserialization, ArrayUint64KO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_uint64_t(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_uint64_t(&reader, endianness, output, ARRAY_LENGTH));
@@ -906,8 +906,8 @@ TEST(serialization_deserialization, ArrayFloatKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_float(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_float(&reader, endianness, output, ARRAY_LENGTH));
@@ -925,8 +925,8 @@ TEST(serialization_deserialization, ArrayDoubleKO)
     MicroBuffer writer;
     MicroBuffer reader;
 
-    init_external_buffer(&writer, buffer, sizeof(output) / 2);
-    init_external_buffer(&reader, buffer, sizeof(output) / 2);
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
 
     EXPECT_FALSE(serialize_endian_array_double(&writer, endianness, input, ARRAY_LENGTH));
     EXPECT_FALSE(deserialize_endian_array_double(&reader, endianness, output, ARRAY_LENGTH));
