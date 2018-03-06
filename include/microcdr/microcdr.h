@@ -33,8 +33,6 @@ typedef enum Endianness {
     LITTLE_ENDIANNESS,
 } Endianness;
 
-extern const Endianness MACHINE_ENDIANNESS;
-
 typedef enum BufferError {
     BUFFER_OK,
     BUFFER_NOK
@@ -62,6 +60,8 @@ typedef struct MicroBuffer
     BufferError error;
 
 } MicroBuffer;
+
+microcdr_DllAPI extern const Endianness MACHINE_ENDIANNESS;
 
 // -------------------------------------------------------------------
 //                         MICRO BUFFER FUNCTIONS

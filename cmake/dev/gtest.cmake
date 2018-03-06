@@ -41,19 +41,9 @@ macro(add_gtest test)
                 add_test(NAME ${GTEST_GROUP_NAME}.${GTEST_NAME}
                     COMMAND ${test}
                     --gtest_filter=${GTEST_GROUP_NAME}.${GTEST_NAME})
-                # Add environment
-                if(WIN32)
-                    set_tests_properties(${GTEST_GROUP_NAME}.${GTEST_NAME} PROPERTIES ENVIRONMENT
-                        "PATH=$<TARGET_FILE_DIR:${PROJECT_NAME}>\\;$ENV{PATH}")
-                endif()
             endforeach()
         endforeach()
     else()
         add_test(NAME ${test} COMMAND ${test})
-        # Add environment
-        if(WIN32)
-            set_tests_properties(${test} PROPERTIES ENVIRONMENT
-                "PATH=$<TARGET_FILE_DIR:${PROJECT_NAME}>\\;$ENV{PATH}")
-        endif()
     endif()
 endmacro()
