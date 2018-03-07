@@ -347,17 +347,18 @@ bool serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const ui
     if(check_size(buffer, alignment + array_size))
     {
         buffer->iterator += alignment;
-
         if(MACHINE_ENDIANNESS == endianness)
+        {
             memcpy(buffer->iterator, array, array_size);
+
+            buffer->iterator += array_size;
+            buffer->last_data_size = data_size;
+        }
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 serialize_byte_2(buffer, endianness, array + i);
         }
-
-        buffer->iterator += array_size;
-        buffer->last_data_size = data_size;
         return true;
     }
     buffer->error = BUFFER_NOK;
@@ -375,15 +376,16 @@ bool serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const ui
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
+        {
             memcpy(buffer->iterator, array, array_size);
+            buffer->iterator += array_size;
+            buffer->last_data_size = data_size;
+        }
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 serialize_byte_4(buffer, endianness, array + i);
         }
-
-        buffer->iterator += array_size;
-        buffer->last_data_size = data_size;
         return true;
     }
     buffer->error = BUFFER_NOK;
@@ -401,15 +403,16 @@ bool serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const ui
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
+        {
             memcpy(buffer->iterator, array, array_size);
+            buffer->iterator += array_size;
+            buffer->last_data_size = data_size;
+        }
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 serialize_byte_8(buffer, endianness, array + i);
         }
-
-        buffer->iterator += array_size;
-        buffer->last_data_size = data_size;
         return true;
     }
     buffer->error = BUFFER_NOK;
@@ -442,15 +445,16 @@ bool deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
+        {
             memcpy(array, buffer->iterator, array_size);
+            buffer->iterator += array_size;
+            buffer->last_data_size = data_size;
+        }
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 deserialize_byte_2(buffer, endianness, array + i);
         }
-
-        buffer->iterator += array_size;
-        buffer->last_data_size = data_size;
         return true;
     }
     buffer->error = BUFFER_NOK;
@@ -468,15 +472,16 @@ bool deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
+        {
             memcpy(array, buffer->iterator, array_size);
+            buffer->iterator += array_size;
+            buffer->last_data_size = data_size;
+        }
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 deserialize_byte_4(buffer, endianness, array + i);
         }
-
-        buffer->iterator += array_size;
-        buffer->last_data_size = data_size;
         return true;
     }
     buffer->error = BUFFER_NOK;
@@ -494,15 +499,16 @@ bool deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64
         buffer->iterator += alignment;
 
         if(MACHINE_ENDIANNESS == endianness)
+        {
             memcpy(array, buffer->iterator, array_size);
+            buffer->iterator += array_size;
+            buffer->last_data_size = data_size;
+        }
         else
         {
             for(uint32_t i = 0; i < size; i++)
                 deserialize_byte_8(buffer, endianness, array + i);
         }
-
-        buffer->iterator += array_size;
-        buffer->last_data_size = data_size;
         return true;
     }
     buffer->error = BUFFER_NOK;
@@ -535,7 +541,7 @@ bool deserialize_inline_array_byte_2(MicroBuffer* buffer, Endianness endianness,
         *array = (uint16_t*) buffer->iterator;
         if(MACHINE_ENDIANNESS != endianness)
         {
-            for(uint32_t i = 0; i < array_size; i++)
+            for(uint32_t i = 0; i < array_size; i += data_size)
             {
                 uint8_t aux = buffer->iterator[i];
                 buffer->iterator[i] = buffer->iterator[i + 1];
@@ -563,7 +569,7 @@ bool deserialize_inline_array_byte_4(MicroBuffer* buffer, Endianness endianness,
         *array = (uint32_t*) buffer->iterator;
         if(MACHINE_ENDIANNESS != endianness)
         {
-            for(uint32_t i = 0; i < array_size; i++)
+            for(uint32_t i = 0; i < array_size; i += data_size)
             {
                 uint8_t aux1 = buffer->iterator[i];
                 uint8_t aux2 = buffer->iterator[i + 1];
@@ -594,16 +600,16 @@ bool deserialize_inline_array_byte_8(MicroBuffer* buffer, Endianness endianness,
         *array = (uint64_t*) buffer->iterator;
         if(MACHINE_ENDIANNESS != endianness)
         {
-            for(uint32_t i = 0; i < array_size; i++)
+            for(uint32_t i = 0; i < array_size; i += data_size)
             {
                 uint8_t aux1 = buffer->iterator[i];
                 uint8_t aux2 = buffer->iterator[i + 1];
                 uint8_t aux3 = buffer->iterator[i + 2];
                 uint8_t aux4 = buffer->iterator[i + 3];
-                buffer->iterator[i] = buffer->iterator[i + 8];
-                buffer->iterator[i + 1] = buffer->iterator[i + 7];
-                buffer->iterator[i + 2] = buffer->iterator[i + 6];
-                buffer->iterator[i + 3] = buffer->iterator[i + 5];
+                buffer->iterator[i] = buffer->iterator[i + 7];
+                buffer->iterator[i + 1] = buffer->iterator[i + 6];
+                buffer->iterator[i + 2] = buffer->iterator[i + 5];
+                buffer->iterator[i + 3] = buffer->iterator[i + 4];
                 buffer->iterator[i + 4] = aux4;
                 buffer->iterator[i + 5] = aux3;
                 buffer->iterator[i + 6] = aux2;

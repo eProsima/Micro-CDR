@@ -20,7 +20,7 @@ if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
         add_definitions(-DMICROCDR_DYN_LINK)
     endif()
 
-    set(MICROCDR_UNITTESTS_SOURCE SerializationDeserialization.cpp Alignment.cpp)
+    set(MICROCDR_UNITTESTS_SOURCE SerializationDeserialization.cpp Alignment.cpp BufferError.cpp)
     add_executable(MicroCDRUnitTests ${MICROCDR_UNITTESTS_SOURCE})
     add_gtest(MicroCDRUnitTests ${MICROCDR_UNITTESTS_SOURCE})
     target_include_directories(MicroCDRUnitTests PRIVATE ${GTEST_INCLUDE_DIRS})
