@@ -894,6 +894,138 @@ bool deserialize_inline_array_double(MicroBuffer* buffer, double** array, uint32
     return deserialize_inline_array_byte_8(buffer, buffer->endianness, (uint64_t**) array, size);
 }
 
+bool serialize_sequence_char(MicroBuffer* buffer, const char* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_char(buffer, array, size);
+}
+
+bool serialize_sequence_bool(MicroBuffer* buffer, const bool* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_bool(buffer, array, size);
+}
+
+bool serialize_sequence_uint8_t(MicroBuffer* buffer, const uint8_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_uint8_t(buffer, array, size);
+}
+
+bool serialize_sequence_uint16_t(MicroBuffer* buffer, const uint16_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_uint16_t(buffer, array, size);
+}
+
+bool serialize_sequence_uint32_t(MicroBuffer* buffer, const uint32_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_uint32_t(buffer, array, size);
+}
+
+bool serialize_sequence_uint64_t(MicroBuffer* buffer, const uint64_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_uint64_t(buffer, array, size);
+}
+
+bool serialize_sequence_int16_t(MicroBuffer* buffer, const int16_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_int16_t(buffer, array, size);
+}
+
+bool serialize_sequence_int32_t(MicroBuffer* buffer, const int32_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_int32_t(buffer, array, size);
+}
+
+bool serialize_sequence_int64_t(MicroBuffer* buffer, const int64_t* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_int64_t(buffer, array, size);
+}
+
+bool serialize_sequence_float(MicroBuffer* buffer, const float* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_float(buffer, array, size);
+}
+
+bool serialize_sequence_double(MicroBuffer* buffer, const double* array, uint32_t size)
+{
+    serialize_uint32_t(buffer, size);
+    return serialize_array_double(buffer, array, size);
+}
+
+bool deserialize_sequence_char(MicroBuffer* buffer, char** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_char(buffer, array, *size);
+}
+
+bool deserialize_sequence_bool(MicroBuffer* buffer, bool** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_bool(buffer, array, *size);
+}
+
+bool deserialize_sequence_uint8_t(MicroBuffer* buffer, uint8_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_uint8_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_uint16_t(MicroBuffer* buffer, uint16_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_uint16_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_uint32_t(MicroBuffer* buffer, uint32_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_uint32_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_uint64_t(MicroBuffer* buffer, uint64_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_uint64_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_int16_t(MicroBuffer* buffer, int16_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_int16_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_int32_t(MicroBuffer* buffer, int32_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_int32_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_int64_t(MicroBuffer* buffer, int64_t** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_int64_t(buffer, array, *size);
+}
+
+bool deserialize_sequence_float(MicroBuffer* buffer, float** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_float(buffer, array, *size);
+}
+
+bool deserialize_sequence_double(MicroBuffer* buffer, double** array, uint32_t* size)
+{
+    deserialize_uint32_t(buffer, size);
+    return deserialize_inline_array_double(buffer, array, *size);
+}
+
 bool serialize_endian_uint16_t(MicroBuffer* buffer, Endianness endianness, uint16_t value)
 {
     return serialize_byte_2(buffer, endianness, &value);
@@ -1092,5 +1224,101 @@ bool deserialize_endian_inline_array_float(MicroBuffer* buffer, Endianness endia
 bool deserialize_endian_inline_array_double(MicroBuffer* buffer, Endianness endianness, double** array, uint32_t size)
 {
     return deserialize_inline_array_byte_8(buffer, endianness, (uint64_t**) array, size);
+}
+
+bool serialize_endian_sequence_uint16_t(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_uint16_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_uint32_t(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_uint32_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_uint64_t(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_uint64_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_int16_t(MicroBuffer* buffer, Endianness endianness, const int16_t* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_int16_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_int32_t(MicroBuffer* buffer, Endianness endianness, const int32_t* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_int32_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_int64_t(MicroBuffer* buffer, Endianness endianness, const int64_t* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_int64_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_float(MicroBuffer* buffer, Endianness endianness, const float* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_float(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_double(MicroBuffer* buffer, Endianness endianness, const double* array, uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_endian_array_double(buffer, endianness, array, size);
+}
+
+bool deserialize_endian_sequence_uint16_t(MicroBuffer* buffer, Endianness endianness, uint16_t** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_uint16_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_uint32_t(MicroBuffer* buffer, Endianness endianness, uint32_t** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_uint32_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_uint64_t(MicroBuffer* buffer, Endianness endianness, uint64_t** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_uint64_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_int16_t(MicroBuffer* buffer, Endianness endianness, int16_t** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_int16_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_int32_t(MicroBuffer* buffer, Endianness endianness, int32_t** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_int32_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_int64_t(MicroBuffer* buffer, Endianness endianness, int64_t** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_int64_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_float(MicroBuffer* buffer, Endianness endianness, float** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_float(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_double(MicroBuffer* buffer, Endianness endianness, double** array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_endian_inline_array_double(buffer, endianness, array, *size);
 }
 
