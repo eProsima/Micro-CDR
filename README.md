@@ -5,12 +5,12 @@
 *eProsima microCDR* is a C library implementing the CDR standard serialization methods.
 This library is focused on embedded and resource-limited systems.
 
-*microCDR* is always aligned. For more information about the API of *microCDR* check ...?
+*microCDR* uses a static buffer, is always aligned, and allow to serialize and deserialize in both, big endianness and little endianness.
+For more information about the API of *microCDR* check ...?
 
 ## Usage examples
-*microCDR* provides different buffer configurations for reading and writing data.
-This is a code example showing the serialization and deserialization of a variable.
-*microCDR* use a static buffer, that means that the user has to provide a defined buffer and its size during the *MicroBuffer* creation.
+This is a code example showing the serialization and deserialization of a string.
+As *microCDR* uses a static buffer, that means the user has to provide a defined buffer and its size during the *MicroBuffer* creation.
 
 ```c
     #include <microcdr/microcdr.h>
@@ -46,7 +46,7 @@ This is a code example showing the serialization and deserialization of a variab
     }
 ```
 
-Note: to change the default endianness of funcions without the *endian* tag, use the *endianness* member of the *Microbuffer* structure.
+Note: to change the default endianness of functions without the *endian* tag, use the *endianness* member of the *Microbuffer* structure.
 
 
 ## Supported types

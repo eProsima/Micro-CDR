@@ -176,14 +176,14 @@ microcdr_DllAPI bool serialize_endian_int64_t(MicroBuffer* buffer, Endianness en
 microcdr_DllAPI bool serialize_endian_float(MicroBuffer* buffer, Endianness endianness, float value);
 microcdr_DllAPI bool serialize_endian_double(MicroBuffer* buffer, Endianness endianness, double value);
 
-microcdr_DllAPI bool deserialize_endian_uint16_t(MicroBuffer* buffer, Endianness endianness, uint16_t *value);
+microcdr_DllAPI bool deserialize_endian_uint16_t(MicroBuffer* buffer, Endianness endianness, uint16_t* value);
 microcdr_DllAPI bool deserialize_endian_uint32_t(MicroBuffer* buffer, Endianness endianness, uint32_t *value);
-microcdr_DllAPI bool deserialize_endian_uint64_t(MicroBuffer* buffer, Endianness endianness, uint64_t *value);
-microcdr_DllAPI bool deserialize_endian_int16_t(MicroBuffer* buffer, Endianness endianness, int16_t *value);
-microcdr_DllAPI bool deserialize_endian_int32_t(MicroBuffer* buffer, Endianness endianness, int32_t *value);
-microcdr_DllAPI bool deserialize_endian_int64_t(MicroBuffer* buffer, Endianness endianness, int64_t *value);
-microcdr_DllAPI bool deserialize_endian_float(MicroBuffer* buffer, Endianness endianness, float *value);
-microcdr_DllAPI bool deserialize_endian_double(MicroBuffer* buffer, Endianness endianness, double *value);
+microcdr_DllAPI bool deserialize_endian_uint64_t(MicroBuffer* buffer, Endianness endianness, uint64_t* value);
+microcdr_DllAPI bool deserialize_endian_int16_t(MicroBuffer* buffer, Endianness endianness, int16_t* value);
+microcdr_DllAPI bool deserialize_endian_int32_t(MicroBuffer* buffer, Endianness endianness, int32_t* value);
+microcdr_DllAPI bool deserialize_endian_int64_t(MicroBuffer* buffer, Endianness endianness, int64_t* value);
+microcdr_DllAPI bool deserialize_endian_float(MicroBuffer* buffer, Endianness endianness, float* value);
+microcdr_DllAPI bool deserialize_endian_double(MicroBuffer* buffer, Endianness endianness, double* value);
 
 // Array
 microcdr_DllAPI bool serialize_endian_array_uint16_t(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, uint32_t size);
