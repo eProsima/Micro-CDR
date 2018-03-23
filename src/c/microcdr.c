@@ -64,14 +64,18 @@ inline static bool check_size(MicroBuffer* buffer, uint32_t bytes);
 // -------------------------------------------------------------------
 //                 BUFFER MANAGEMENT IMPLEMENTATION
 // -------------------------------------------------------------------
-
 void init_micro_buffer(MicroBuffer* buffer, uint8_t* data, const uint32_t size)
+{
+    init_micro_buffer_endian(buffer, data, size, BIG_ENDIANNESS);
+}
+
+void init_micro_buffer_endian(MicroBuffer* buffer, uint8_t* data, const uint32_t size, Endianness endianness)
 {
     buffer->init = data;
     buffer->final = buffer->init + size;
     buffer->iterator = buffer->init;
     buffer->last_data_size = 0;
-    buffer->endianness = BIG_ENDIANNESS;
+    buffer->endianness = endianness;
     buffer->error = BUFFER_OK;
 }
 

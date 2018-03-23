@@ -65,12 +65,14 @@ microcdr_DllAPI extern const Endianness MACHINE_ENDIANNESS;
 //                         MICRO BUFFER FUNCTIONS
 // -------------------------------------------------------------------
 
-microcdr_DllAPI void init_micro_buffer(MicroBuffer *buffer, uint8_t *data, uint32_t size);
-microcdr_DllAPI void reset_micro_buffer(MicroBuffer *buffer);
+microcdr_DllAPI void init_micro_buffer       (MicroBuffer* buffer, uint8_t* data, uint32_t size);
+microcdr_DllAPI void init_micro_buffer_endian(MicroBuffer* buffer, uint8_t* data, uint32_t size, Endianness endianness);
+microcdr_DllAPI void reset_micro_buffer      (MicroBuffer* buffer);
 
-microcdr_DllAPI MicroState get_micro_state(MicroBuffer *buffer);
-microcdr_DllAPI void restore_micro_state(MicroBuffer *buffer, MicroState state);
-microcdr_DllAPI void align_to(MicroBuffer *buffer, uint32_t size);
+microcdr_DllAPI MicroState get_micro_state(MicroBuffer* buffer);
+microcdr_DllAPI void restore_micro_state  (MicroBuffer* buffer, MicroState state);
+
+microcdr_DllAPI void align_to(MicroBuffer* buffer, uint32_t size);
 
 // -------------------------------------------------------------------
 //                        SERIALIZATION FUNCTIONS
