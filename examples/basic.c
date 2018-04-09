@@ -17,17 +17,18 @@
 
 #define BUFFER_LENGTH 256
 
-uint8_t buffer[BUFFER_LENGTH];
-
 int main(int argc, char** args)
 {
+    // Data buffer
+    uint8_t buffer[BUFFER_LENGTH];
+
     // Structs for handle the buffer.
     MicroBuffer writer;
     MicroBuffer reader;
 
     // Initialize the MicroBuffers for working with an user-managed buffer.
-    init_external_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_external_buffer(&reader, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     // Serialize data
     char input[16] = "Hello microCDR!"; //16 characters

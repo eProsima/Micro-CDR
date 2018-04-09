@@ -40,6 +40,11 @@ inline static bool deserialize_byte_2(MicroBuffer* buffer, Endianness endianness
 inline static bool deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* bytes);
 inline static bool deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* bytes);
 
+inline static void jump_byte_1(MicroBuffer* buffer);
+inline static void jump_byte_2(MicroBuffer* buffer);
+inline static void jump_byte_4(MicroBuffer* buffer);
+inline static void jump_byte_8(MicroBuffer* buffer);
+
 inline static bool serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, uint32_t size);
 inline static bool serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, uint32_t size);
 inline static bool serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, uint32_t size);
@@ -55,6 +60,10 @@ inline static bool deserialize_inline_array_byte_2(MicroBuffer* buffer, Endianne
 inline static bool deserialize_inline_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t** array, uint32_t size);
 inline static bool deserialize_inline_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t** array, uint32_t size);
 
+inline static void jump_array_byte_1(MicroBuffer* buffer, uint32_t size);
+inline static void jump_array_byte_2(MicroBuffer* buffer, uint32_t size);
+inline static void jump_array_byte_4(MicroBuffer* buffer, uint32_t size);
+inline static void jump_array_byte_8(MicroBuffer* buffer, uint32_t size);
 // -------------------------------------------------------------------
 //                      INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
@@ -325,6 +334,37 @@ bool deserialize_byte_8(MicroBuffer* buffer, const Endianness endianness, uint64
     }
     buffer->error = BUFFER_NOK;
     return false;
+}
+
+void jump_byte_1(MicroBuffer* buffer)
+{
+    uint32_t data_size = sizeof(uint8_t);
+    buffer->iterator += data_size;
+    buffer->last_data_size = data_size;
+}
+
+void jump_byte_2(MicroBuffer* buffer)
+{
+    uint32_t data_size = sizeof(uint16_t);
+    uint32_t alignment = get_alignment_offset(buffer, data_size);
+    buffer->iterator += alignment + data_size;
+    buffer->last_data_size = data_size;
+}
+
+void jump_byte_4(MicroBuffer* buffer)
+{
+    uint32_t data_size = sizeof(uint32_t);
+    uint32_t alignment = get_alignment_offset(buffer, data_size);
+    buffer->iterator += alignment + data_size;
+    buffer->last_data_size = data_size;
+}
+
+void jump_byte_8(MicroBuffer* buffer)
+{
+    uint32_t data_size = sizeof(uint64_t);
+    uint32_t alignment = get_alignment_offset(buffer, data_size);
+    buffer->iterator += alignment + data_size;
+    buffer->last_data_size = data_size;
 }
 
 bool serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, const uint32_t size)
@@ -629,6 +669,40 @@ bool deserialize_inline_array_byte_8(MicroBuffer* buffer, const Endianness endia
     return false;
 }
 
+void jump_array_byte_1(MicroBuffer* buffer, uint32_t size)
+{
+    uint32_t data_size = sizeof(uint8_t);
+    buffer->iterator += size;
+    buffer->last_data_size = data_size;
+}
+
+void jump_array_byte_2(MicroBuffer* buffer, uint32_t size)
+{
+    uint32_t data_size = sizeof(uint16_t);
+    uint32_t array_size = size * data_size;
+    uint32_t alignment = get_alignment_offset(buffer, data_size);
+    buffer->iterator += alignment + array_size;
+    buffer->last_data_size = data_size;
+}
+
+void jump_array_byte_4(MicroBuffer* buffer, uint32_t size)
+{
+    uint32_t data_size = sizeof(uint32_t);
+    uint32_t array_size = size * data_size;
+    uint32_t alignment = get_alignment_offset(buffer, data_size);
+    buffer->iterator += alignment + array_size;
+    buffer->last_data_size = data_size;
+}
+
+void jump_array_byte_8(MicroBuffer* buffer, uint32_t size)
+{
+    uint32_t data_size = sizeof(uint64_t);
+    uint32_t array_size = size * data_size;
+    uint32_t alignment = get_alignment_offset(buffer, data_size);
+    buffer->iterator += alignment + array_size;
+    buffer->last_data_size = data_size;
+}
+
 bool serialize_char(MicroBuffer* buffer, const char value)
 {
     return serialize_byte_1(buffer, (uint8_t*)&value);
@@ -737,6 +811,67 @@ bool deserialize_float(MicroBuffer* buffer, float* value)
 bool deserialize_double(MicroBuffer* buffer, double* value)
 {
     return deserialize_byte_8(buffer, buffer->endianness, (uint64_t*)value);
+}
+
+void jump_char(MicroBuffer* buffer)
+{
+    jump_byte_1(buffer);
+}
+
+void jump_bool(MicroBuffer* buffer)
+{
+    jump_byte_1(buffer);
+}
+
+void jump_uint8_t(MicroBuffer* buffer)
+{
+    jump_byte_1(buffer);
+}
+
+void jump_uint16_t(MicroBuffer* buffer)
+{
+    jump_byte_2(buffer);
+}
+
+void jump_uint32_t(MicroBuffer* buffer)
+{
+
+    jump_byte_4(buffer);
+}
+
+void jump_uint64_t(MicroBuffer* buffer)
+{
+
+    jump_byte_8(buffer);
+}
+
+void jump_int16_t(MicroBuffer* buffer)
+{
+
+    jump_byte_2(buffer);
+}
+
+void jump_int32_t(MicroBuffer* buffer)
+{
+
+    jump_byte_4(buffer);
+}
+
+void jump_int64_t(MicroBuffer* buffer)
+{
+
+    jump_byte_8(buffer);
+}
+
+void jump_float(MicroBuffer* buffer)
+{
+
+    jump_byte_4(buffer);
+}
+
+void jump_double(MicroBuffer* buffer)
+{
+    jump_byte_8(buffer);
 }
 
 bool serialize_array_char(MicroBuffer* buffer, const char* array, const uint32_t size)
@@ -904,6 +1039,61 @@ bool deserialize_inline_array_double(MicroBuffer* buffer, double** array, const 
     return deserialize_inline_array_byte_8(buffer, buffer->endianness, (uint64_t**) array, size);
 }
 
+void jump_array_char(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_1(buffer, size);
+}
+
+void jump_array_bool(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_1(buffer, size);
+}
+
+void jump_array_uint8_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_1(buffer, size);
+}
+
+void jump_array_uint16_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_2(buffer, size);
+}
+
+void jump_array_uint32_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_4(buffer, size);
+}
+
+void jump_array_uint64_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_8(buffer, size);
+}
+
+void jump_array_int16_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_2(buffer, size);
+}
+
+void jump_array_int32_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_4(buffer, size);
+}
+
+void jump_array_int64_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_8(buffer, size);
+}
+
+void jump_array_float(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_4(buffer, size);
+}
+
+void jump_array_double(MicroBuffer* buffer, uint32_t size)
+{
+    jump_array_byte_8(buffer, size);
+}
+
 bool serialize_sequence_char(MicroBuffer* buffer, const char* array, const uint32_t size)
 {
     serialize_uint32_t(buffer, size);
@@ -1034,6 +1224,72 @@ bool deserialize_sequence_double(MicroBuffer* buffer, double** array, uint32_t* 
 {
     deserialize_uint32_t(buffer, size);
     return deserialize_inline_array_double(buffer, array, *size);
+}
+
+void jump_sequence_char(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_1(buffer, size);
+}
+
+void jump_sequence_bool(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_1(buffer, size);
+}
+
+void jump_sequence_uint8_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_1(buffer, size);
+}
+
+void jump_sequence_uint16_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_2(buffer, size);
+}
+
+void jump_sequence_uint32_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_4(buffer, size);
+}
+
+void jump_sequence_uint64_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_8(buffer, size);
+}
+
+void jump_sequence_int16_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_2(buffer, size);
+}
+
+void jump_sequence_int32_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_4(buffer, size);
+}
+
+void jump_sequence_int64_t(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_8(buffer, size);
+}
+
+void jump_sequence_float(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_4(buffer, size);
+}
+
+void jump_sequence_double(MicroBuffer* buffer, uint32_t size)
+{
+    jump_byte_4(buffer);
+    jump_array_byte_8(buffer, size);
 }
 
 bool serialize_endian_uint16_t(MicroBuffer* buffer, const Endianness endianness, const uint16_t value)
