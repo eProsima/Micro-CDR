@@ -88,9 +88,9 @@ void init_micro_buffer_endian(MicroBuffer* buffer, uint8_t* data, const uint32_t
     buffer->error = BUFFER_OK;
 }
 
-void reset_micro_buffer(MicroBuffer* buffer)
+void reset_micro_buffer(MicroBuffer* buffer, const uint32_t offset)
 {
-    buffer->iterator = buffer->init;
+    buffer->iterator = buffer->init + offset;
     buffer->last_data_size = 0;
     buffer->error = BUFFER_OK;
 }
