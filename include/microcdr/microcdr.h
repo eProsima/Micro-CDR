@@ -73,6 +73,7 @@ microcdr_DllAPI MicroState get_micro_state(MicroBuffer* buffer);
 microcdr_DllAPI void restore_micro_state  (MicroBuffer* buffer, MicroState state);
 
 microcdr_DllAPI void align_to(MicroBuffer* buffer, uint32_t size);
+microcdr_DllAPI uint32_t get_alignment(uint32_t current_alignment, const uint32_t data_size);
 
 // -------------------------------------------------------------------
 //                        SERIALIZATION FUNCTIONS

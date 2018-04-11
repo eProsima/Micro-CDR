@@ -126,6 +126,11 @@ uint32_t get_alignment_offset(MicroBuffer* buffer, const uint32_t data_size)
     return 0;
 }
 
+uint32_t get_alignment(uint32_t current_alignment, const uint32_t data_size)
+{
+    return (data_size - (current_alignment % data_size) & (data_size - 1));
+}
+
 bool check_size(MicroBuffer* buffer, const uint32_t bytes)
 {
     return buffer->iterator + bytes <= buffer->final;
