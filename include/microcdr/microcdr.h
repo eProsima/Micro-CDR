@@ -104,18 +104,6 @@ microcdr_DllAPI bool deserialize_int64_t(MicroBuffer* buffer, int64_t* value);
 microcdr_DllAPI bool deserialize_float(MicroBuffer* buffer, float* value);
 microcdr_DllAPI bool deserialize_double(MicroBuffer* buffer, double* value);
 
-microcdr_DllAPI void jump_char(MicroBuffer* buffer);
-microcdr_DllAPI void jump_bool(MicroBuffer* buffer);
-microcdr_DllAPI void jump_uint8_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_uint16_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_uint32_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_uint64_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_int16_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_int32_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_int64_t(MicroBuffer* buffer);
-microcdr_DllAPI void jump_float(MicroBuffer* buffer);
-microcdr_DllAPI void jump_double(MicroBuffer* buffer);
-
 // Arrays
 microcdr_DllAPI bool serialize_array_char(MicroBuffer* buffer, const char* array, uint32_t size);
 microcdr_DllAPI bool serialize_array_bool(MicroBuffer* buffer, const bool* array, uint32_t size);
@@ -153,18 +141,6 @@ microcdr_DllAPI bool deserialize_inline_array_int64_t(MicroBuffer* buffer,int64_
 microcdr_DllAPI bool deserialize_inline_array_float(MicroBuffer* buffer, float** array, uint32_t size);
 microcdr_DllAPI bool deserialize_inline_array_double(MicroBuffer* buffer, double** array, uint32_t size);
 
-microcdr_DllAPI void jump_array_char(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_bool(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_uint8_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_uint16_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_uint32_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_uint64_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_int16_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_int32_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_int64_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_float(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_array_double(MicroBuffer* buffer, uint32_t size);
-
 // Sequence
 microcdr_DllAPI bool serialize_sequence_char(MicroBuffer* buffer, const char* array, uint32_t size);
 microcdr_DllAPI bool serialize_sequence_bool(MicroBuffer* buffer, const bool* array, uint32_t size);
@@ -189,18 +165,6 @@ microcdr_DllAPI bool deserialize_sequence_int32_t(MicroBuffer* buffer, int32_t**
 microcdr_DllAPI bool deserialize_sequence_int64_t(MicroBuffer* buffer, int64_t** array, uint32_t* size);
 microcdr_DllAPI bool deserialize_sequence_float(MicroBuffer* buffer, float** array, uint32_t* size);
 microcdr_DllAPI bool deserialize_sequence_double(MicroBuffer* buffer, double** array, uint32_t* size);
-
-microcdr_DllAPI void jump_sequence_char(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_bool(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_uint8_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_uint16_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_uint32_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_uint64_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_int16_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_int32_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_int64_t(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_float(MicroBuffer* buffer, uint32_t size);
-microcdr_DllAPI void jump_sequence_double(MicroBuffer* buffer, uint32_t size);
 
 // -------------------------------------------------------------------
 //                  SERIALIZATION FUNCTIONS - ENDIAN
