@@ -26,8 +26,8 @@ $endif$
 
 #include <string.h>
 #include <stdlib.h>
-#include <micrortps/client/client.h>
-#include <microcdr/microcdr.h>
+#include <stdio.h>
+#include <micrortps/client/xrce_client.h>
 $ctx.directIncludeDependencies : {include | #include "$include$.h"}; separator="\n"$
 
 $definitions; separator="\n"$
@@ -59,26 +59,53 @@ struct_type(ctx, parent, struct, extensions) ::= <<
 typedef struct $struct.name$
 {
     $struct.members:{$private_member_declaration(it)$}; separator="\n"$
+
 } $struct.name$;
 
-bool serialize_$struct.name$_topic(MicroBuffer* writer, const AbstractTopic* topic_structure)
+bool serialize_$struct.name$_topic(MicroBuffer* writer, const $struct.name$* topic)
 {
-    $struct.name$* topic = ($struct.name$*) topic_structure->topic;
     $struct.members : { member |$object_serialization(ctx=ctx, object=member)$}; separator=""$
-    return true;
+    return writer->error == BUFFER_OK;
 }
 
-$struct.name$ *deserialize_$struct.name$_message(MicroBuffer *message)
+bool deserialize_$struct.name$_topic(MicroBuffer* reader, $struct.name$* topic)
 {
-    $struct.name$* topic = malloc(sizeof($struct.name$));
     $struct.members : { member |$object_deserialization(ctx=ctx, object=member)$}; separator=""$
-    return topic;
+    return reader->error == BUFFER_OK;
 }
 
-void deallocate_$struct.name$_topic($struct.name$ *topic)
+uint32_t size_of_$struct.name$_topic(const $struct.name$* topic)
 {
-    $struct.members : { member | $object_deallocation(ctx=ctx, object=member)$}; separator=""$
-    free(topic);
+    uint32_t size = 0;
+
+    $struct.members : { member|$serialized_size(ctx=ctx, object=member, data="topic", var="size")$};separator=""$
+    return size;
+}
+
+bool write_$struct.name$_reliable($struct.name$* topic, ObjectId datawriter_id, OutputReliableStream* reliable_stream)
+{
+    bool result = false;
+    uint32_t topic_size = size_of_$struct.name$_topic(topic);
+    MicroBuffer* topic_buffer = prepare_reliable_stream_for_topic(reliable_stream, datawriter_id, topic_size);
+    if (topic_buffer != NULL)
+    {
+        result = serialize_$struct.name$_topic(topic_buffer, topic);
+        printf("Topic sent\n");
+    }
+    return result;
+}
+
+bool write_$struct.name$_best_effort($struct.name$* topic, ObjectId datawriter_id, OutputBestEffortStream* best_effort_stream)
+{
+    bool result = false;
+    uint32_t topic_size = size_of_$struct.name$_topic(topic);
+    MicroBuffer* topic_buffer = prepare_best_effort_stream_for_topic(best_effort_stream, datawriter_id, topic_size);
+    if (topic_buffer != NULL)
+    {
+        result = serialize_$struct.name$_topic(topic_buffer, topic);
+        printf("Topic sent\n");
+    }
+    return result;
 }
 >>
 
@@ -95,7 +122,14 @@ $private_declaration(typecode=member.typecode, name=member.name)$>>
 public_unionmember_declaration(member) ::= <<>>
 
 private_declaration(typecode, name) ::= <<
+$if(typecode.isType_f)$
+$typecode.cTypename$ $name$[$typecode.dimensions$];
+$elseif(typecode.isType_e)$
+$typecode.cTypename$* $name$_data;
+uint32_t $name$_size;
+$else$
 $typecode.cTypename$ $name$;
+$endif$
 >>
 
 size_functions(type) ::= <<>>

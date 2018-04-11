@@ -46,8 +46,11 @@ object_serialization(ctx, object, preffix) ::= <<
 $if(object.typecode.primitive)$
 serialize_$object.typecode.cTypename$(writer, topic->$preffix$$object.name$);
 $elseif(object.typecode.isType_d)$
-serialize_uint32_t(writer, strlen(topic->$preffix$$object.name$) + 1);
-serialize_array_char(writer, topic->$preffix$$object.name$, strlen(topic->$preffix$$object.name$) + 1);
+serialize_sequence_char(writer, topic->$preffix$$object.name$, strlen(topic->$preffix$$object.name$) + 1);
+$elseif(object.typecode.isType_f)$
+serialize_array_$object.typecode.cTypename$(writer, topic->$preffix$$object.name$, $object.typecode.dimensions$);
+$elseif(object.typecode.isType_e)$
+serialize_sequence_$object.typecode.cTypename$(writer, topic->$preffix$$object.name$_data, topic->$preffix$$object.name$_size); 
 
 $endif$
 
@@ -55,12 +58,14 @@ $endif$
 
 object_deserialization(ctx, object, preffix) ::= <<
 $if(object.typecode.primitive)$
-deserialize_$object.typecode.cTypename$(message, &topic->$preffix$$object.name$);
+deserialize_$object.typecode.cTypename$(reader, &topic->$preffix$$object.name$);
 $elseif(object.typecode.isType_d)$
 uint32_t size_$object.name$ = 0;
-deserialize_uint32_t(message, &size_$object.name$);
-topic->$preffix$$object.name$ = malloc(size_$object.name$);
-deserialize_array_char(message, topic->$preffix$$object.name$, size_$object.name$);
+deserialize_sequence_char(reader, &topic->$preffix$$object.name$, &size_$object.name$);
+$elseif(object.typecode.isType_f)$
+deserialize_array_$object.typecode.cTypename$(reader, &topic->$preffix$$object.name$, $object.typecode.dimensions$);
+$elseif(object.typecode.isType_e)$
+deserialize_sequence_$object.typecode.cTypename$(writer, &topic->$preffix$$object.name$_data, &topic->$preffix$$object.name$_size); 
 
 $endif$
 >>
@@ -95,14 +100,14 @@ $endif$
 
 serialized_size(ctx, object, data, var) ::= <<
 $if(object.typecode.primitive)$
-$var$ += $object.typecode.size$$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $object.typecode.size$)$endif$;
+$var$ += $object.typecode.size$$if(ctx.cdr)$ + get_alignment($var$, $object.typecode.size$)$endif$;
 $elseif(object.typecode.isType_d)$
-$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $data$.$object.name$().size() + 1;
+$var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$ + strlen($data$->$object.name$) + 1;
 $elseif(object.typecode.isType_e)$
-$var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
-$sequence_serialized_size(ctx=ctx, typecodeSeq=object.typecode, data=[data, ".", object.name, "()"], var=var, loopvar=ctx.newLoopVarName)$
+$var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$;
+$sequence_serialized_size(ctx=ctx, typecodeSeq=object.typecode, data=[data, "->", object.name], var=var, loopvar=ctx.newLoopVarName)$
 $elseif(object.typecode.isType_f)$
-$array_serialized_size(ctx=ctx, typecodeArr=object.typecode, data=[data, ".", object.name, "()"], var=var, loopvar=ctx.newLoopVarName, dimensions=object.typecode.dimensions)$
+$array_serialized_size(ctx=ctx, typecodeArr=object.typecode, data=[data, "->", object.name, "()"], var=var, loopvar=ctx.newLoopVarName, dimensions=object.typecode.dimensions)$
 $else$
 $var$ += $object.typecode.scopedname$::getCdrSerializedSize($data$.$object.name$(), $var$);
 $endif$
@@ -110,11 +115,11 @@ $endif$
 
 sequence_max_serialized_size(ctx, typecodeSeq, var, loopvar) ::= <<
 $if(typecodeSeq.contentTypeCode.primitive)$
-$var$ += ($typecodeSeq.maxsize$ * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
+$var$ += ($typecodeSeq.maxsize$ * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + get_alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
 $elseif(typecodeSeq.contentTypeCode.isType_d)$
 for(size_t $loopvar$ = 0; $loopvar$ < $typecodeSeq.maxsize$; ++$loopvar$)
 {
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeSeq.contentTypeCode.maxsize$ + 1;
+    $var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$ + $typecodeSeq.contentTypeCode.maxsize$ + 1;
 }
 $else$
 for(size_t $loopvar$ = 0; $loopvar$ < $typecodeSeq.maxsize$; ++$loopvar$)
@@ -133,7 +138,7 @@ $endif$
 
 sequence_serialized_size(ctx, typecodeSeq, data, var, loopvar) ::= <<
 $if(typecodeSeq.contentTypeCode.primitive)$
-$var$ += ($data$.size() * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
+$var$ += ($data$_size * $typecodeSeq.contentTypeCode.size$)$if(ctx.cdr)$ + get_alignment($var$, $typecodeSeq.contentTypeCode.size$)$endif$;
 $elseif(typecodeSeq.contentTypeCode.isType_d)$
 for(size_t $loopvar$ = 0; $loopvar$ < $data$.size(); ++$loopvar$)
 {
@@ -156,17 +161,17 @@ $endif$
 
 array_max_serialized_size(ctx, typecodeArr, var, loopvar) ::= <<
 $if(typecodeArr.contentTypeCode.primitive)$
-$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
+$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + get_alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
 $elseif(typecodeArr.contentTypeCode.isType_d)$
 for(size_t $loopvar$ = 0; $loopvar$ < $typecodeArr.size$; ++$loopvar$)
 {
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$ + $typecodeArr.contentTypeCode.maxsize$ + 1;
+    $var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$ + $typecodeArr.contentTypeCode.maxsize$ + 1;
 }
 $else$
 for(size_t $loopvar$ = 0; $loopvar$ < $typecodeArr.size$; ++$loopvar$)
 {
 $if(typecodeArr.contentTypeCode.isType_e)$
-    $var$ += 4$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, 4)$endif$;
+    $var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$;
     $sequence_max_serialized_size(ctx=ctx, typecodeSeq=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
 $elseif(typecodeArr.contentTypeCode.isType_f)$
 $array_max_serialized_size(ctx=ctx, typecodeArr=typecodeArr.contentTypeCode, var=var, loopvar=ctx.nextLoopVarName)$
@@ -179,7 +184,7 @@ $endif$
 
 array_serialized_size(ctx, typecodeArr, data, var, loopvar, dimensions) ::= <<
 $if(typecodeArr.contentTypeCode.primitive)$
-$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + eprosima::fastcdr::Cdr::alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
+$var$ += ($typecodeArr.size$ * $typecodeArr.contentTypeCode.size$)$if(ctx.cdr)$ + get_alignment($var$, $typecodeArr.contentTypeCode.size$)$endif$;
 $else$
 $if(first(dimensions))$
 for(size_t $loopvar$ = 0; $loopvar$ < $data$.size(); ++$loopvar$)
