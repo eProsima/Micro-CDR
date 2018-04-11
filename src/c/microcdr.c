@@ -75,7 +75,7 @@ void init_micro_buffer_offset(MicroBuffer* buffer, uint8_t* data, const uint32_t
     buffer->final = buffer->init + size;
     buffer->iterator = buffer->init + offset;
     buffer->last_data_size = 0U;
-    buffer->endianness = BIG_ENDIANNESS;
+    buffer->endianness = MACHINE_ENDIANNESS;
     buffer->error = BUFFER_OK;
 }
 
