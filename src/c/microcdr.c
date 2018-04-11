@@ -66,23 +66,28 @@ inline static bool check_size(MicroBuffer* buffer, uint32_t bytes);
 // -------------------------------------------------------------------
 void init_micro_buffer(MicroBuffer* buffer, uint8_t* data, const uint32_t size)
 {
-    init_micro_buffer_endian(buffer, data, size, BIG_ENDIANNESS);
+    init_micro_buffer_offset(buffer, data, size, 0U);
 }
 
-void init_micro_buffer_endian(MicroBuffer* buffer, uint8_t* data, const uint32_t size, Endianness endianness)
+void init_micro_buffer_offset(MicroBuffer* buffer, uint8_t* data, const uint32_t size, uint32_t offset)
 {
     buffer->init = data;
     buffer->final = buffer->init + size;
-    buffer->iterator = buffer->init;
-    buffer->last_data_size = 0;
-    buffer->endianness = endianness;
+    buffer->iterator = buffer->init + offset;
+    buffer->last_data_size = 0U;
+    buffer->endianness = BIG_ENDIANNESS;
     buffer->error = BUFFER_OK;
 }
 
-void reset_micro_buffer(MicroBuffer* buffer, const uint32_t offset)
+void reset_micro_buffer(MicroBuffer* buffer)
+{
+    reset_micro_buffer_offset(buffer, 0U);
+}
+
+void reset_micro_buffer_offset(MicroBuffer* buffer, const uint32_t offset)
 {
     buffer->iterator = buffer->init + offset;
-    buffer->last_data_size = 0;
+    buffer->last_data_size = 0U;
     buffer->error = BUFFER_OK;
 }
 
