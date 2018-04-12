@@ -27,6 +27,7 @@ $endif$
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <micrortps/client/xrce_client.h>
 $ctx.directIncludeDependencies : {include | #include "$include$.h"}; separator="\n"$
 
@@ -62,19 +63,19 @@ typedef struct $struct.name$
 
 } $struct.name$;
 
-bool serialize_$struct.name$_topic(MicroBuffer* writer, const $struct.name$* topic)
+static bool serialize_$struct.name$_topic(MicroBuffer* writer, const $struct.name$* topic)
 {
     $struct.members : { member |$object_serialization(ctx=ctx, object=member)$}; separator=""$
     return writer->error == BUFFER_OK;
 }
 
-bool deserialize_$struct.name$_topic(MicroBuffer* reader, $struct.name$* topic)
+static bool deserialize_$struct.name$_topic(MicroBuffer* reader, $struct.name$* topic)
 {
     $struct.members : { member |$object_deserialization(ctx=ctx, object=member)$}; separator=""$
     return reader->error == BUFFER_OK;
 }
 
-uint32_t size_of_$struct.name$_topic(const $struct.name$* topic)
+static uint32_t size_of_$struct.name$_topic(const $struct.name$* topic)
 {
     uint32_t size = 0;
 
@@ -82,7 +83,7 @@ uint32_t size_of_$struct.name$_topic(const $struct.name$* topic)
     return size;
 }
 
-bool write_$struct.name$_reliable($struct.name$* topic, ObjectId datawriter_id, OutputReliableStream* reliable_stream)
+static bool write_$struct.name$_reliable($struct.name$* topic, ObjectId datawriter_id, OutputReliableStream* reliable_stream)
 {
     bool result = false;
     uint32_t topic_size = size_of_$struct.name$_topic(topic);
@@ -95,7 +96,7 @@ bool write_$struct.name$_reliable($struct.name$* topic, ObjectId datawriter_id, 
     return result;
 }
 
-bool write_$struct.name$_best_effort($struct.name$* topic, ObjectId datawriter_id, OutputBestEffortStream* best_effort_stream)
+static bool write_$struct.name$_best_effort($struct.name$* topic, ObjectId datawriter_id, OutputBestEffortStream* best_effort_stream)
 {
     bool result = false;
     uint32_t topic_size = size_of_$struct.name$_topic(topic);
