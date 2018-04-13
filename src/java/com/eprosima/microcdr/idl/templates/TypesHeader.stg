@@ -83,29 +83,31 @@ static uint32_t size_of_$struct.name$_topic(const $struct.name$* topic)
     return size;
 }
 
-static bool write_$struct.name$_reliable($struct.name$* topic, ObjectId datawriter_id, OutputReliableStream* reliable_stream)
+static bool write_$struct.name$(Session* session, ObjectId datawriter_id, StreamId stream_id, $struct.name$* topic)
 {
-    bool result = false;
-    uint32_t topic_size = size_of_$struct.name$_topic(topic);
-    MicroBuffer* topic_buffer = prepare_reliable_stream_for_topic(reliable_stream, datawriter_id, topic_size);
-    if (topic_buffer != NULL)
+    if (session == NULL)
     {
-        result = serialize_$struct.name$_topic(topic_buffer, topic);
-        printf("Topic sent\n");
+        return false;
     }
-    return result;
-}
 
-static bool write_$struct.name$_best_effort($struct.name$* topic, ObjectId datawriter_id, OutputBestEffortStream* best_effort_stream)
-{
     bool result = false;
     uint32_t topic_size = size_of_$struct.name$_topic(topic);
-    MicroBuffer* topic_buffer = prepare_best_effort_stream_for_topic(best_effort_stream, datawriter_id, topic_size);
+    MicroBuffer* topic_buffer = NULL;
+
+    if (128 < stream_id)
+    {
+        topic_buffer = prepare_best_effort_stream_for_topic(&session->output_best_effort_stream, datawriter_id, topic_size);
+    }
+    else
+    {
+        topic_buffer = prepare_reliable_stream_for_topic(&session->output_reliable_stream, datawriter_id, topic_size);
+    }
+
     if (topic_buffer != NULL)
     {
         result = serialize_$struct.name$_topic(topic_buffer, topic);
-        printf("Topic sent\n");
     }
+
     return result;
 }
 >>
