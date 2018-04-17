@@ -17,7 +17,7 @@
 #include <algorithm>
 
 #define BUFFER_LENGTH 1024
-#define ARRAY_LENGTH 4
+#define ARRAY_LENGTH 4u
 #define PI 3.1415926535897932384626433832795028L
 
 static Endianness endianness = BIG_ENDIANNESS;
@@ -213,7 +213,7 @@ TEST(serialization_deserialization, Uint64)
 
 TEST(serialization_deserialization, Float)
 {
-    float input = PI;
+    float input = (float)PI;
     float output;
     uint8_t buffer[BUFFER_LENGTH] = {0};
 
@@ -481,7 +481,7 @@ TEST(serialization_deserialization, ArrayUint64)
 TEST(serialization_deserialization, ArrayFloat)
 {
     float input[ARRAY_LENGTH];
-    std::fill_n(input, ARRAY_LENGTH, PI);
+    std::fill_n(input, ARRAY_LENGTH, (float)PI);
     float output[ARRAY_LENGTH];
     uint8_t buffer[BUFFER_LENGTH] = {0};
 
@@ -774,7 +774,7 @@ TEST(serialization_deserialization, SequenceUint64)
 TEST(serialization_deserialization, SequenceFloat)
 {
     float input[ARRAY_LENGTH];
-    std::fill_n(input, ARRAY_LENGTH, PI);
+    std::fill_n(input, ARRAY_LENGTH, (float)PI);
     float* output = NULL;
     uint32_t outputSize = 0;
     uint8_t buffer[BUFFER_LENGTH] = {0};

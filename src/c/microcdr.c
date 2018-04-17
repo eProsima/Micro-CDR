@@ -40,26 +40,26 @@ inline static bool deserialize_byte_2(MicroBuffer* buffer, Endianness endianness
 inline static bool deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* bytes);
 inline static bool deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* bytes);
 
-inline static bool serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, uint32_t size);
-inline static bool serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, uint32_t size);
-inline static bool serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, uint32_t size);
-inline static bool serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, uint32_t size);
+inline static bool serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, const uint32_t size);
+inline static bool serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, const uint32_t size);
+inline static bool serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, const uint32_t size);
+inline static bool serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, const uint32_t size);
 
-inline static bool deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, uint32_t size);
-inline static bool deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t size);
-inline static bool deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t size);
-inline static bool deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t size);
+inline static bool deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, const uint32_t size);
+inline static bool deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, const uint32_t size);
+inline static bool deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, const uint32_t size);
+inline static bool deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, const uint32_t size);
 
-inline static bool deserialize_inline_array_byte_1(MicroBuffer* buffer, uint8_t** array, uint32_t size);
-inline static bool deserialize_inline_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t** array, uint32_t size);
-inline static bool deserialize_inline_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t** array, uint32_t size);
-inline static bool deserialize_inline_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t** array, uint32_t size);
+inline static bool deserialize_inline_array_byte_1(MicroBuffer* buffer, uint8_t** array, const uint32_t size);
+inline static bool deserialize_inline_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t** array, const uint32_t size);
+inline static bool deserialize_inline_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t** array, const uint32_t size);
+inline static bool deserialize_inline_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t** array, const uint32_t size);
 
 // -------------------------------------------------------------------
 //                      INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
-inline static uint32_t get_alignment_offset(MicroBuffer* buffer, uint32_t data_size);
-inline static bool check_size(MicroBuffer* buffer, uint32_t bytes);
+inline static uint32_t get_alignment_offset(MicroBuffer* buffer, const uint32_t data_size);
+inline static bool check_size(MicroBuffer* buffer, const uint32_t bytes);
 
 // -------------------------------------------------------------------
 //                 BUFFER MANAGEMENT IMPLEMENTATION

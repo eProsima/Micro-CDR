@@ -194,7 +194,7 @@ TEST(buffer_error, Uint64KO)
 
 TEST(buffer_error, FloatKO)
 {
-    float input = PI;
+    float input = (float)PI;
     float output;
     uint8_t buffer[sizeof(output) / 2] = {0};
 
@@ -403,7 +403,7 @@ TEST(buffer_error, ArrayUint64KO)
 
 TEST(buffer_error, ArrayFloatKO)
 {
-    float input[ARRAY_LENGTH] = {PI};
+    float input[ARRAY_LENGTH] = {(float)PI};
     float output[ARRAY_LENGTH];
     uint8_t buffer[sizeof(output) / 2] = {0};
 
