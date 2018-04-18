@@ -46,7 +46,7 @@ object_serialization(ctx, object, preffix) ::= <<
 $if(object.typecode.primitive)$
 serialize_$object.typecode.cTypename$(writer, topic->$preffix$$object.name$);
 $elseif(object.typecode.isType_d)$
-serialize_sequence_char(writer, topic->$preffix$$object.name$, strlen(topic->$preffix$$object.name$) + 1);
+serialize_sequence_char(writer, topic->$preffix$$object.name$, (uint32_t)(strlen(topic->$preffix$$object.name$) + 1));
 $elseif(object.typecode.isType_f)$
 serialize_array_$object.typecode.cTypename$(writer, topic->$preffix$$object.name$, $object.typecode.dimensions$);
 $elseif(object.typecode.isType_e)$
@@ -102,7 +102,7 @@ serialized_size(ctx, object, data, var) ::= <<
 $if(object.typecode.primitive)$
 $var$ += $object.typecode.size$$if(ctx.cdr)$ + get_alignment($var$, $object.typecode.size$)$endif$;
 $elseif(object.typecode.isType_d)$
-$var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$ + strlen($data$->$object.name$) + 1;
+$var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$ + (uint32_t)(strlen($data$->$object.name$) + 1);
 $elseif(object.typecode.isType_e)$
 $var$ += 4$if(ctx.cdr)$ + get_alignment($var$, 4)$endif$;
 $sequence_serialized_size(ctx=ctx, typecodeSeq=object.typecode, data=[data, "->", object.name], var=var, loopvar=ctx.newLoopVarName)$
