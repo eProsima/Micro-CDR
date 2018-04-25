@@ -13,12 +13,17 @@
 # limitations under the License.
 
 ###############################################################################
-# CMake build rules for microCDR                                               #
+# CMake build rules for Micro CDR
 ###############################################################################
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 if (${CMAKE_VERSION} VERSION_GREATER 3.0)
     cmake_policy(SET CMP0048 OLD)
+endif()
+
+set(IS_TOP_LEVEL TRUE)
+if(PROJECT_SOURCE_DIR)
+    set(IS_TOP_LEVEL FALSE)
 endif()
 
 # Set CMAKE_BUILD_TYPE to Release by default.
@@ -32,117 +37,53 @@ else()
         )
 endif()
 
-if(COMMAND px4_add_module)
-    set(MICRO_LIBRARY_NAME "lib__micro-CDR")
+###############################################################################
+# Product information                                                         #
+###############################################################################
+if(CMAKE_VERSION VERSION_LESS 3.0)
+    project(microcdr C)
+    set(PROJECT_VERION_MAYOR 2)
+    set(PROJECT_VERION_MINOR 0)
+    set(PROJECT_VERION_PATCH 0)
+    set(PROJECT_VERSION ${PROJECT_VERION_MAYOR}.${PROJECT_VERION_MINOR}.${PROJECT_VERION_PATCH})
 else()
-    set(MICRO_LIBRARY_NAME "microcdr")
+    cmake_policy(SET CMP0048 NEW)
+    project(microcdr VERSION "2.0.0" LANGUAGES C)
 endif()
 
-project("microcdr")
-set(PROJECT_NAME_STYLED "microCDR")
-set(PROJECT_NAME_LARGE "micro CDR")
-string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
-set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "C library for serialize using CDR serialization")
-set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides a serialization mechanism.")
-
-message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
-
-###############################################################################
-# Version information                                                         #
-###############################################################################
-
-#If not set, copy over product version from configure.ac
-if(NOT PROJECT_MAJOR_VERSION)
-    file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure.ac
-        PROJECT_MAJOR_VERSION_TMP
-        REGEX "^m4_define\\(\\[?version_major\\]?, *\\[?[0-9]+\\]?\\)"
-        )
-    file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure.ac
-        PROJECT_MINOR_VERSION_TMP
-        REGEX "^m4_define\\(\\[?version_minor\\]?, *\\[?[0-9]+\\]?\\)"
-        )
-    file(STRINGS
-        ${PROJECT_SOURCE_DIR}/configure.ac
-        PROJECT_MICRO_VERSION_TMP
-        REGEX "^m4_define\\(\\[?version_micro\\]?, *\\[?[0-9]+\\]?\\)"
-        )
-
-    string(REGEX REPLACE "m4_define\\(\\[?version_major\\]?, *\\[?([0-9]+)\\]?\\)"
-        "\\1"
-        PROJECT_MAJOR_VERSION
-        ${PROJECT_MAJOR_VERSION_TMP}
-        )
-    string(REGEX REPLACE "m4_define\\(\\[?version_minor\\]?, *\\[?([0-9]+)\\]?\\)"
-        "\\1"
-        PROJECT_MINOR_VERSION
-        ${PROJECT_MINOR_VERSION_TMP}
-        )
-    string(REGEX REPLACE "m4_define\\(\\[?version_micro\\]?, *\\[?([0-9]+)\\]?\\)"
-        "\\1"
-        PROJECT_MICRO_VERSION
-        ${PROJECT_MICRO_VERSION_TMP}
-        )
-endif()
-
-set(PROJECT_VERSION ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_MICRO_VERSION})
-message(STATUS "Version: ${PROJECT_VERSION}")
-message(STATUS "To change the version modify the file configure.ac")
-
-###############################################################################
-# Generation of windows installers.
-###############################################################################
-if(WIN32)
-    option(EPROSIMA_INSTALLER "Activate the creation of a build to create windows installers" OFF)
-    option(EPROSIMA_INSTALLER_MINION "Informs this is part of an installer" OFF)
-endif()
-
-###############################################################################
-# Warning level
-###############################################################################
-if(MSVC OR MSVC_IDE)
-    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-        string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-    else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    endif()
+# Set product name
+if(DEFINED PRODUCT_NAME)
+    set(PRODUCT_NAME ${PRODUCT_NAME} CACHE STRING "Choose the product name in which this project is included")
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra --std=c++11")
-endif()
-
-###############################################################################
-# Load external eProsima projects.
-###############################################################################
-
-option(EPROSIMA_BUILD "Activate internal building" OFF)
-option(MINION "Tells if it is a subproject of a superproject" OFF)
-
-if(EPROSIMA_INSTALLER)
-    set(EPROSIMA_BUILD ON)
-endif()
-
-###############################################################################
-# Test system configuration
-###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
-
-option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
-if(CHECK_ENDIANNESS)
-    check_endianness()
-else()
-    message(STATUS "micro-CDR without check endianness")
+    set(PRODUCT_NAME microcdr CACHE STRING "Choose the product name in which this project is included")
 endif()
 
 ###############################################################################
 # Check MSVC architecture
 ###############################################################################
+include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
 if(MSVC OR MSVC_IDE)
     check_msvc_arch()
 endif()
+
 ###############################################################################
-# Installation paths
+# Targets
 ###############################################################################
+
+# Library
+add_library(${PROJECT_NAME} STATIC src/c/microcdr.c)
+target_include_directories(${PROJECT_NAME} 
+    PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    )
+
+###############################################################################
+# Compile options
+###############################################################################
+
+# Install path
 set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
 set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C headers")
 set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
@@ -153,10 +94,52 @@ else()
     set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
 endif()
 
+# Endianness configuration
+include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
+
+option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
+if(CHECK_ENDIANNESS)
+    check_endianness()
+else()
+    message(STATUS "micro-CDR without check endianness")
+endif()
+
+# Config.h
+configure_file(${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/config.h.in
+    ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
+)
+
 ###############################################################################
-# Compile library.
+# Compile options
 ###############################################################################
-add_subdirectory(src/c)
+
+# Warnings
+if(MSVC OR MSVC_IDE)
+    target_compile_options(${PROJECT_NAME}
+        PRIVATE
+            /W4
+            /wd4700
+            /wd4996
+            /wd4820
+            /wd4255
+            /wd4668
+            -DSERIALIZATION_LOGS
+            -DMESSAGE_LOGS
+        )
+else()
+    target_compile_options(${PROJECT_NAME}
+        PRIVATE
+            -pedantic
+            -Wconversion
+            -fstrict-aliasing
+            -Wall
+            -Wextra
+            -Wcast-align
+            -Wshadow
+            -DSERIALIZATION_LOGS
+            -DMESSAGE_LOGS
+        )
+endif()
 
 ###############################################################################
 # Testing
@@ -175,30 +158,30 @@ endif()
 ###############################################################################
 # Packaging
 ###############################################################################
-# Install licenses
-install(FILES ${PROJECT_SOURCE_DIR}/LICENSE
-    DESTINATION ${LICENSE_INSTALL_DIR}
-    COMPONENT licenses
+include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
+
+# Install public headers
+set_public_headers_directory(${PROJECT_SOURCE_DIR}/include ${PRODUCT_NAME}
+    DESTINATION ${INCLUDE_INSTALL_DIR}
+    COMPONENT headers
     )
-set(CPACK_COMPONENT_LICENSES_HIDDEN 1)
 
-set(CPACK_COMPONENTS_ALL headers licenses)
+# Install config.h header
+set_public_header(${PROJECT_BINARY_DIR}/include ${PROJECT_NAME} config.h
+    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    COMPONENT headers
+    INSTALL
+    )
 
-if(MSVC OR MSVC_IDE)
-    if(EPROSIMA_INSTALLER)
-        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL}
-            libraries_i86Win32VS2010
-            libraries_x64Win64VS2010
-            libraries_i86Win32VS2013
-            libraries_x64Win64VS2013
-            libraries_i86Win32VS2015
-            libraries_x64Win64VS2015
-            )
-    else()
-        set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries_${MSVC_ARCH})
-    endif()
-else()
-    set(CPACK_COMPONENTS_ALL ${CPACK_COMPONENTS_ALL} libraries)
-endif()
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+    COMPONENT libraries
+    )
 
-include(${PROJECT_SOURCE_DIR}/cmake/packaging/eProsimaPackaging.cmake)
+install(EXPORT ${PROJECT_NAME}Targets
+    DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
+    COMPONENT cmake
+    )
