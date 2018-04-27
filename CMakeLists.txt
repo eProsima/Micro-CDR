@@ -17,10 +17,6 @@
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-if (${CMAKE_VERSION} VERSION_GREATER 3.0)
-    cmake_policy(SET CMP0048 OLD)
-endif()
-
 set(IS_TOP_LEVEL TRUE)
 if(PROJECT_SOURCE_DIR)
     set(IS_TOP_LEVEL FALSE)
@@ -71,7 +67,7 @@ endif()
 ###############################################################################
 
 # Library
-add_library(${PROJECT_NAME} STATIC src/c/microcdr.c)
+add_library(${PROJECT_NAME} src/c/microcdr.c)
 target_include_directories(${PROJECT_NAME} 
     PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
@@ -110,8 +106,17 @@ configure_file(${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/config.h.in
 )
 
 ###############################################################################
-# Compile options
+# Compile settings
 ###############################################################################
+
+# Definitions
+get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
+if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
+    target_compile_definitions(${PROJECT_NAME}
+        PUBLIC
+            -DBUILDING_SHARED_LIB
+        )
+endif()
 
 # Warnings
 if(MSVC OR MSVC_IDE)
@@ -161,7 +166,7 @@ endif()
 include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
 
 # Install public headers
-set_public_headers_directory(${PROJECT_SOURCE_DIR}/include ${PRODUCT_NAME}
+set_public_headers_directory(${PROJECT_SOURCE_DIR}/include ${PROJECT_NAME}
     DESTINATION ${INCLUDE_INSTALL_DIR}
     COMPONENT headers
     )
