@@ -68,7 +68,10 @@ endif()
 
 # Library
 add_library(${PROJECT_NAME} src/c/microcdr.c)
-target_include_directories(${PROJECT_NAME} 
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
+
+# Define public headers
+target_include_directories(${PROJECT_NAME}
     PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
