@@ -12,25 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if(NOT ((MSVC OR MSVC_IDE) AND EPROSIMA_INSTALLER))
-    include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-    # If Windows, link against export dll functions
-    if(WIN32)
-        add_definitions(-DMICROCDR_DYN_LINK)
-    endif()
+if(CMAKE_VERSION VERSION_LESS 3.0)
+    project(microcdr_tests C CXX)
+else()
+    cmake_policy(SET CMP0048 NEW)
+    project(microcdr_tests LANGUAGES C CXX)
+endif()
 
-    set(MICROCDR_UNITTESTS_SOURCE SerializationDeserialization.cpp Alignment.cpp BufferError.cpp)
-    add_executable(MicroCDRUnitTests ${MICROCDR_UNITTESTS_SOURCE})
-    add_gtest(MicroCDRUnitTests ${MICROCDR_UNITTESTS_SOURCE})
-    target_include_directories(MicroCDRUnitTests PRIVATE ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(MicroCDRUnitTests microcdr ${GTEST_BOTH_LIBRARIES})
+include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
+check_gtest()
+if(GTEST_FOUND)
+    include(CTest)
+    set(SRCS
+        SerializationDeserialization.cpp
+        Alignment.cpp
+        BufferError.cpp)
+    add_executable(${PROJECT_NAME} ${SRCS})
+    add_gtest(${PROJECT_NAME} ${SRCS})
+    target_include_directories(${PROJECT_NAME} PRIVATE ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} microcdr ${GTEST_BOTH_LIBRARIES})
 
     if(WIN32)
         string(REPLACE ";" "\\;" WIN_PATH "$ENV{PATH}")
-        set_property(TEST MicroCDRUnitTests APPEND PROPERTY ENVIRONMENT
+        set_property(TEST ${PROJECT_NAME} APPEND PROPERTY ENVIRONMENT
             "PATH=$<SHELL_PATH:$<TARGET_FILE_DIR:microcdr>>\\;${WIN_PATH}"
-	)
+    )
     endif()
-
 endif()
+

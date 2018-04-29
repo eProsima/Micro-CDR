@@ -34,14 +34,14 @@ else()
 endif()
 
 ###############################################################################
-# Product information                                                         #
+# Product information
 ###############################################################################
 if(CMAKE_VERSION VERSION_LESS 3.0)
     project(microcdr C)
-    set(PROJECT_VERION_MAYOR 2)
-    set(PROJECT_VERION_MINOR 0)
-    set(PROJECT_VERION_PATCH 0)
-    set(PROJECT_VERSION ${PROJECT_VERION_MAYOR}.${PROJECT_VERION_MINOR}.${PROJECT_VERION_PATCH})
+    set(PROJECT_VERSION_MAJOR 2)
+    set(PROJECT_VERSION_MINOR 0)
+    set(PROJECT_VERSION_PATCH 0)
+    set(PROJECT_VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 else()
     cmake_policy(SET CMP0048 NEW)
     project(microcdr VERSION "2.0.0" LANGUAGES C)
@@ -52,6 +52,16 @@ if(DEFINED PRODUCT_NAME)
     set(PRODUCT_NAME ${PRODUCT_NAME} CACHE STRING "Choose the product name in which this project is included")
 else()
     set(PRODUCT_NAME microcdr CACHE STRING "Choose the product name in which this project is included")
+endif()
+
+###############################################################################
+# eProsima build options
+###############################################################################
+option(EPROSIMA_BUILD "Activate internal building" OFF)
+option(EPROSIMA_BUILD_TESTS "Activate the building of tests" OFF)
+
+if(EPROSIMA_BUILD)
+    set(EPROSIMA_BUILD_TESTS ON)
 endif()
 
 ###############################################################################
@@ -79,7 +89,7 @@ target_include_directories(${PROJECT_NAME}
     )
 
 ###############################################################################
-# Compile options
+# Config
 ###############################################################################
 
 # Install path
@@ -131,8 +141,6 @@ if(MSVC OR MSVC_IDE)
             /wd4820
             /wd4255
             /wd4668
-            -DSERIALIZATION_LOGS
-            -DMESSAGE_LOGS
         )
 else()
     target_compile_options(${PROJECT_NAME}
@@ -144,23 +152,15 @@ else()
             -Wextra
             -Wcast-align
             -Wshadow
-            -DSERIALIZATION_LOGS
-            -DMESSAGE_LOGS
         )
 endif()
 
 ###############################################################################
 # Testing
 ###############################################################################
-option(EPROSIMA_BUILD_TESTS "Enable to compile tests." OFF)
-if(EPROSIMA_BUILD_TESTS AND NOT EPROSIMA_INSTALLER)
-    include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
-    check_gtest()
-    if(GTEST_FOUND)
-        enable_testing()
-        include(CTest)
-        add_subdirectory(test)
-    endif()
+if(EPROSIMA_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
 endif()
 
 ###############################################################################
