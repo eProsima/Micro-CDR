@@ -29,16 +29,26 @@ if(GTEST_FOUND)
         SerializationDeserialization.cpp
         Alignment.cpp
         BufferError.cpp)
-    add_executable(${PROJECT_NAME} ${SRCS})
-    add_gtest(${PROJECT_NAME} ${SRCS})
-    target_include_directories(${PROJECT_NAME} PRIVATE ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME} microcdr ${GTEST_BOTH_LIBRARIES})
+    add_executable(${PROJECT_NAME}_exec ${SRCS})
+    add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME}_exec)
+    target_include_directories(${PROJECT_NAME}_exec PRIVATE ${GTEST_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME}_exec microcdr ${GTEST_BOTH_LIBRARIES})
 
     if(WIN32)
-        string(REPLACE ";" "\\;" WIN_PATH "$ENV{PATH}")
-        set_property(TEST ${PROJECT_NAME} APPEND PROPERTY ENVIRONMENT
-            "PATH=$<SHELL_PATH:$<TARGET_FILE_DIR:microcdr>>\\;${WIN_PATH}"
-    )
+        set(DEPENDENCIES
+            microcdr
+            )
+        set(WIN_PATH "$ENV{PATH}")
+        foreach(P ${CMAKE_PREFIX_PATH})
+            set(WIN_PATH "${CMAKE_PREFIX_PATH}/bin;${WIN_PATH}")
+        endforeach()
+        foreach(D ${DEPENDENCIES})
+            if(TARGET ${D})
+                set(WIN_PATH "$<TARGET_FILE_DIR:${D}>;${WIN_PATH}")
+            endif()
+        endforeach()
+        string(REPLACE ";" "\\;" WIN_PATH "${WIN_PATH}")
+        set_tests_properties(${PROJECT_NAME} PROPERTIES ENVIRONMENT "PATH=${WIN_PATH}")
     endif()
 endif()
 
