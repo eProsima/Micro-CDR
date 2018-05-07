@@ -23,14 +23,13 @@ if(PROJECT_SOURCE_DIR)
 endif()
 
 # Set CMAKE_BUILD_TYPE to Release by default.
-if(DEFINED CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING
-        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Set build type to 'Release' as none was specified.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are:
+        None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE
         )
-else()
-    set(CMAKE_BUILD_TYPE Release CACHE STRING
-        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-        )
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRING "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
 ###############################################################################
@@ -45,13 +44,6 @@ if(CMAKE_VERSION VERSION_LESS 3.0)
 else()
     cmake_policy(SET CMP0048 NEW)
     project(microcdr VERSION "2.0.0" LANGUAGES C)
-endif()
-
-# Set product name
-if(DEFINED PRODUCT_NAME)
-    set(PRODUCT_NAME ${PRODUCT_NAME} CACHE STRING "Choose the product name in which this project is included")
-else()
-    set(PRODUCT_NAME microcdr CACHE STRING "Choose the product name in which this project is included")
 endif()
 
 ###############################################################################
@@ -133,26 +125,9 @@ endif()
 
 # Warnings
 if(MSVC OR MSVC_IDE)
-    target_compile_options(${PROJECT_NAME}
-        PRIVATE
-            /W4
-            /wd4700
-            /wd4996
-            /wd4820
-            /wd4255
-            /wd4668
-        )
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4 /wd4700 /wd4996 /wd4820 /wd4255 /wd4668")
 else()
-    target_compile_options(${PROJECT_NAME}
-        PRIVATE
-            -pedantic
-            -Wconversion
-            -fstrict-aliasing
-            -Wall
-            -Wextra
-            -Wcast-align
-            -Wshadow
-        )
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pedantic -fstrict-aliasing -Wall -Wextra -Wcast-align -Wshadow")
 endif()
 
 ###############################################################################
@@ -166,29 +141,28 @@ endif()
 ###############################################################################
 # Packaging
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
 
-# Install public headers
-set_public_headers_directory(${PROJECT_SOURCE_DIR}/include ${PROJECT_NAME}
-    DESTINATION ${INCLUDE_INSTALL_DIR}
-    COMPONENT headers
-    )
-
-# Install config.h header
-set_public_header(${PROJECT_BINARY_DIR}/include ${PROJECT_NAME} config.h
-    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
-    COMPONENT headers
-    INSTALL
-    )
-
+# Install library
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}Targets
-    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
     ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
     COMPONENT libraries
     )
 
+# Install includes
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/
+    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    FILES_MATCHING PATTERN "*.h"
+    )
+
+# Install config.h
+install(FILES ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
+    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    )
+
+# Export library
 install(EXPORT ${PROJECT_NAME}Targets
     DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
     COMPONENT cmake
