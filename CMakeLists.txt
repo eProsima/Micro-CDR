@@ -24,12 +24,11 @@ endif()
 
 # Set CMAKE_BUILD_TYPE to Release by default.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    message(STATUS "Set build type to 'Release' as none was specified.")
-    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are:
-        None Debug Release RelWithDebInfo MinSizeRel."
-        FORCE
-        )
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRING "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+    message(STATUS "Setting build type to 'Release' as none was specified.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING
+        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+        FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
 ###############################################################################
@@ -134,6 +133,7 @@ endif()
 # Testing
 ###############################################################################
 if(EPROSIMA_BUILD_TESTS)
+    include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
     enable_testing()
     add_subdirectory(test)
 endif()

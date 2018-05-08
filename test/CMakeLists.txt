@@ -22,7 +22,6 @@ else()
     project(microcdr_tests LANGUAGES C CXX)
 endif()
 
-include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
 check_gtest()
 if(GTEST_FOUND)
     include(CTest)
