@@ -19,7 +19,7 @@
 #include <microcdr/config.h>
 
 #if defined(_WIN32)
-#if defined(BUILDING_SHARED_LIB)
+#if defined(microcdr_SHARED)
 #if defined(microcdr_EXPORTS)
 #define microcdr_DllAPI __declspec( dllexport )
 #else
