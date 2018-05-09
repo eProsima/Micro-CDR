@@ -93,12 +93,11 @@ void reset_micro_buffer_offset(MicroBuffer* buffer, const uint32_t offset)
 
 MicroState get_micro_state(MicroBuffer* buffer)
 {
-    return (MicroState)
-    {
-        .position = buffer->iterator,
-        .last_data_size = buffer->last_data_size,
-        .error = buffer->error
-    };
+    MicroState state;
+    state.position = buffer->iterator;
+    state.last_data_size = buffer->last_data_size;
+    state.error = buffer->error;
+    return state;
 }
 
 void restore_micro_state(MicroBuffer* buffer, const MicroState state)
