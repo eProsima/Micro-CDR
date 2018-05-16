@@ -102,6 +102,11 @@ endif()
 include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 
 option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
+
+if(__BIG_ENDIAN__)
+    set(CHECK_ENDIANNESS OFF)
+endif()
+
 if(CHECK_ENDIANNESS)
     check_endianness()
 else()
