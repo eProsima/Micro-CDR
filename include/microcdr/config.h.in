@@ -15,41 +15,15 @@
     #ifndef _MICROCDR_CONFIG_H_
     #define _MICROCDR_CONFIG_H_
 
-    #ifndef MICROCDR_VERSION_MAJOR
+    // Version defines
     #define MICROCDR_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-    #endif
-    #ifndef MICROCDR_VERSION_MINOR
     #define MICROCDR_VERSION_MINOR @PROJECT_VERSION_MINOR@
-    #endif
-    #ifndef MICROCDR_VERSION_MICRO
     #define MICROCDR_VERSION_MICRO @PROJECT_VERSION_PATCH@
-    #endif
-    #ifndef MICROCDR_VERSION_STR
     #define MICROCDR_VERSION_STR "@PROJECT_VERSION@"
-    #endif
-
-    // C++11 support defines
-    #ifndef HAVE_CXX11
-    #define HAVE_CXX11 @HAVE_CXX11@
-    #endif
-
-    // C++0x support defines
-    #ifndef HAVE_CXX0X
-    #define HAVE_CXX0X @HAVE_CXX0X@
-    #endif
 
     // Endianness defines
     #ifndef __BIG_ENDIAN__
     #define __BIG_ENDIAN__ @__BIG_ENDIAN__@
-    #endif
-
-    // C++11 Non-copyable feature
-    #ifndef NON_COPYABLE_CXX11
-    #if !defined(HAVE_CXX0X) || (defined(_MSC_VER) && _MSC_VER <= 1600)
-    #define NON_COPYABLE_CXX11
-    #else
-    #define NON_COPYABLE_CXX11 = delete
-    #endif
     #endif
 
     #endif // _MICROCDR_CONFIG_H_
