@@ -58,7 +58,7 @@ endif()
 ###############################################################################
 # Check MSVC architecture
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 if(MSVC OR MSVC_IDE)
     check_msvc_arch()
 endif()
@@ -95,7 +95,7 @@ else()
 endif()
 
 # Endianness configuration
-include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 
 option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
 if(CHECK_ENDIANNESS)
@@ -133,7 +133,7 @@ endif()
 # Testing
 ###############################################################################
 if(EPROSIMA_BUILD_TESTS)
-    include(${PROJECT_SOURCE_DIR}/cmake/dev/gtest.cmake)
+    include(${PROJECT_SOURCE_DIR}/cmake/common/gtest.cmake)
     enable_testing()
     add_subdirectory(test)
 endif()
@@ -165,5 +165,15 @@ install(FILES ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
 # Export library
 install(EXPORT ${PROJECT_NAME}Targets
     DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
-    COMPONENT cmake
+    )
+
+# Package configuration 
+include(CMakePackageConfigHelpers)
+configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/common/Config.cmake.in
+    ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
+    PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR
+    )
+install(FILES ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
+    DESTINATION ${LIB_INSTALL_DIR}${DIR_EXTENSION}/${PROJECT_NAME}/cmake
     )
