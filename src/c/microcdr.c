@@ -133,6 +133,11 @@ bool check_size(MicroBuffer* buffer, const uint32_t bytes)
     return buffer->iterator + bytes <= buffer->final;
 }
 
+uint32_t micro_buffer_length(MicroBuffer* buffer)
+{
+    return buffer->iterator - buffer->init;
+}
+
 // -------------------------------------------------------------------
 //                  SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------
