@@ -138,6 +138,11 @@ uint32_t micro_buffer_length(MicroBuffer* buffer)
     return buffer->iterator - buffer->init;
 }
 
+uint32_t micro_buffer_remaining(MicroBuffer* buffer)
+{
+    return buffer->final - buffer->iterator;
+}
+
 // -------------------------------------------------------------------
 //                  SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------
