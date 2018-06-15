@@ -109,7 +109,13 @@ void restore_micro_state(MicroBuffer* buffer, const MicroState state)
 
 void align_to(MicroBuffer* buffer, const uint32_t size)
 {
-    buffer->iterator += get_alignment_offset(buffer, size);
+    uint32_t offset = get_alignment_offset(buffer, size);
+    buffer->iterator += offset;
+    if(buffer->iterator > buffer->final)
+    {
+        buffer->iterator = buffer->final;
+    }
+
     buffer->last_data_size = size;
 }
 
