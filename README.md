@@ -93,3 +93,22 @@ The types supported in *microCDR* are presented in the following table. For each
 | float array          | endianness |
 | double array         |            |
 | double array         | endianness |
+| bool sequence        |            |
+| char sequence        |            |
+| uint8 sequence       |            |
+| int16 sequence       |            |
+| int16 sequence       | endianness |
+| uint16 sequence      |            |
+| uint16 sequence      | endianness |
+| int32 sequence       |            |
+| int32 sequence       | endianness |
+| uint32 sequence      |            |
+| uint32 sequence      | endianness |
+| int64 sequence       |            |
+| int64 sequence       | endianness |
+| uint64 sequence      |            |
+| uint64 sequence      | endianness |
+| float sequence       |            |
+| float sequence       | endianness |
+| double sequence      |            |
+| double sequence      | endianness |

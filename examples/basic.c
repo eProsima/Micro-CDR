@@ -17,7 +17,7 @@
 
 #define BUFFER_LENGTH 256
 
-int main(int argc, char** args)
+int main()
 {
     // Data buffer
     uint8_t buffer[BUFFER_LENGTH];
