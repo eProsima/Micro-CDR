@@ -27,28 +27,25 @@
 //                  INTERNAL SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
 
-// NOTE: remove inline from byte's functions will reduce significally the size of the compiler data.
-//          put inline from byte's functions will increase the performance.
+static bool serialize_byte_1(MicroBuffer* buffer, const uint8_t* byte);
+static bool serialize_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* bytes);
+static bool serialize_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* bytes);
+static bool serialize_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* bytes);
 
-inline static bool serialize_byte_1(MicroBuffer* buffer, const uint8_t* byte);
-inline static bool serialize_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* bytes);
-inline static bool serialize_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* bytes);
-inline static bool serialize_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* bytes);
+static bool deserialize_byte_1(MicroBuffer* buffer, uint8_t* byte);
+static bool deserialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* bytes);
+static bool deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* bytes);
+static bool deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* bytes);
 
-inline static bool deserialize_byte_1(MicroBuffer* buffer, uint8_t* byte);
-inline static bool deserialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* bytes);
-inline static bool deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* bytes);
-inline static bool deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* bytes);
+static bool serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, const uint32_t size);
+static bool serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, const uint32_t size);
+static bool serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, const uint32_t size);
+static bool serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, const uint32_t size);
 
-inline static bool serialize_array_byte_1(MicroBuffer* buffer, const uint8_t* array, const uint32_t size);
-inline static bool serialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* array, const uint32_t size);
-inline static bool serialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, const uint32_t size);
-inline static bool serialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, const uint32_t size);
-
-inline static bool deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, const uint32_t size);
-inline static bool deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, const uint32_t size);
-inline static bool deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, const uint32_t size);
-inline static bool deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, const uint32_t size);
+static bool deserialize_array_byte_1(MicroBuffer* buffer, uint8_t* array, const uint32_t size);
+static bool deserialize_array_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, const uint32_t size);
+static bool deserialize_array_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, const uint32_t size);
+static bool deserialize_array_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, const uint32_t size);
 
 // -------------------------------------------------------------------
 //                      INTERNAL UTIL FUNCTIONS
