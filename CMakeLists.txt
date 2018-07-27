@@ -140,7 +140,7 @@ endif()
 ###############################################################################
 # Testing
 ###############################################################################
-if(EPROSIMA_BUILD_TESTS)
+if(EPROSIMA_BUILD_TESTS AND IS_TOP_LEVEL)
     include(${PROJECT_SOURCE_DIR}/cmake/common/gtest.cmake)
     enable_testing()
     add_subdirectory(test)

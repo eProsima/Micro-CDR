@@ -530,7 +530,7 @@ TEST(serialization_deserialization, ArrayDouble)
 
 TEST(serialization_deserialization, SequenceChar)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     char input[ARRAY_LENGTH];
     std::fill_n(input, sequence_size, 'A');
     char output[ARRAY_LENGTH];
@@ -558,7 +558,7 @@ TEST(serialization_deserialization, SequenceChar)
 
 TEST(serialization_deserialization, SequenceBool)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     bool input[ARRAY_LENGTH];
     std::fill_n(input, sequence_size, true);
     bool output[ARRAY_LENGTH];
@@ -586,7 +586,7 @@ TEST(serialization_deserialization, SequenceBool)
 
 TEST(serialization_deserialization, SequenceUint8)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     uint8_t input[ARRAY_LENGTH];
     std::fill_n(input, sequence_size, 0x09);
     uint8_t output[ARRAY_LENGTH];
@@ -614,7 +614,7 @@ TEST(serialization_deserialization, SequenceUint8)
 
 TEST(serialization_deserialization, SequenceInt16)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     int16_t input[ARRAY_LENGTH];
     std::fill_n(input, sequence_size, 0x0A0B);
     int16_t output[ARRAY_LENGTH];
@@ -642,7 +642,7 @@ TEST(serialization_deserialization, SequenceInt16)
 
 TEST(serialization_deserialization, SequenceUint16)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     uint16_t input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, 0x0A0B);
     uint16_t output[ARRAY_LENGTH];
@@ -670,7 +670,7 @@ TEST(serialization_deserialization, SequenceUint16)
 
 TEST(serialization_deserialization, SequenceInt32)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     int32_t input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, 0x0A0B0C0D);
     int32_t output[ARRAY_LENGTH];
@@ -698,7 +698,7 @@ TEST(serialization_deserialization, SequenceInt32)
 
 TEST(serialization_deserialization, SequenceUint32)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     uint32_t input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, 0x0A0B0C0D);
     uint32_t output[ARRAY_LENGTH];
@@ -726,7 +726,7 @@ TEST(serialization_deserialization, SequenceUint32)
 
 TEST(serialization_deserialization, SequenceInt64)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     int64_t input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, 0x0102030405060708L);
     int64_t output[ARRAY_LENGTH];
@@ -754,7 +754,7 @@ TEST(serialization_deserialization, SequenceInt64)
 
 TEST(serialization_deserialization, SequenceUint64)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     uint64_t input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, 0x0102030405060708L);
     uint64_t output[ARRAY_LENGTH];
@@ -782,7 +782,7 @@ TEST(serialization_deserialization, SequenceUint64)
 
 TEST(serialization_deserialization, SequenceFloat)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     float input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, (float)PI);
     float output[ARRAY_LENGTH];
@@ -810,7 +810,7 @@ TEST(serialization_deserialization, SequenceFloat)
 
 TEST(serialization_deserialization, SequenceDouble)
 {
-    uint sequence_size = ARRAY_LENGTH * 0.5;
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
     double input[ARRAY_LENGTH];
     std::fill_n(input, ARRAY_LENGTH, PI);
     double output[ARRAY_LENGTH];
