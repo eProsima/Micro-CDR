@@ -69,6 +69,7 @@ endif()
 
 # Library
 add_library(${PROJECT_NAME} src/c/microcdr.c)
+set_common_compile_options(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     C_STANDARD 99
@@ -128,13 +129,6 @@ if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
         PUBLIC
             -D${PROJECT_NAME}_SHARED
         )
-endif()
-
-# Warnings
-if(MSVC OR MSVC_IDE)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4 /wd4700 /wd4996 /wd4820 /wd4255 /wd4668")
-else()
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pedantic -fstrict-aliasing -Wall -Wextra -Wcast-align -Wshadow")
 endif()
 
 ###############################################################################

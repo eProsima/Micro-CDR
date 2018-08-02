@@ -133,17 +133,17 @@ bool check_size(MicroBuffer* buffer, const uint32_t bytes)
 
 size_t micro_buffer_size(const MicroBuffer* buffer)
 {
-    return buffer->final - buffer->init;
+    return (size_t)(buffer->final - buffer->init);
 }
 
 size_t micro_buffer_length(const MicroBuffer* buffer)
 {
-    return buffer->iterator - buffer->init;
+    return (size_t)(buffer->iterator - buffer->init);
 }
 
 size_t micro_buffer_remaining(const MicroBuffer* buffer)
 {
-    return buffer->final - buffer->iterator;
+    return (size_t)(buffer->final - buffer->iterator);
 }
 
 // -------------------------------------------------------------------

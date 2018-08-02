@@ -17,7 +17,7 @@
 
 #define BUFFER_LENGTH_KO 0
 #define ARRAY_LENGTH 4
-#define PI 3.1415926535897932384626433832795028L
+#define PI 3.1415926535897932384626433832795028
 
 static Endianness endianness = BIG_ENDIANNESS;
 
@@ -194,7 +194,7 @@ TEST(buffer_error, Uint64KO)
 
 TEST(buffer_error, FloatKO)
 {
-    float input = (float)PI;
+    float input = static_cast<float>(PI);
     float output;
     uint8_t buffer[sizeof(output) / 2] = {0};
 
@@ -403,7 +403,7 @@ TEST(buffer_error, ArrayUint64KO)
 
 TEST(buffer_error, ArrayFloatKO)
 {
-    float input[ARRAY_LENGTH] = {(float)PI};
+    float input[ARRAY_LENGTH] = {static_cast<float>(PI)};
     float output[ARRAY_LENGTH];
     uint8_t buffer[sizeof(output) / 2] = {0};
 

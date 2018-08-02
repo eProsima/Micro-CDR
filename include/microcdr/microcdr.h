@@ -23,6 +23,7 @@ extern "C" {
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 // -------------------------------------------------------------------
 //                         MICRO CDR STRUCTURES
