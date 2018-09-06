@@ -24,6 +24,10 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
+// -------------------------------------------------------------------
+//                   PUBLIC SERIALIZATION FUNCTIONS
+// -------------------------------------------------------------------
+
 microcdr_DllAPI bool serialize_sequence_char(MicroBuffer* buffer, const char* array, const uint32_t size);
 microcdr_DllAPI bool serialize_sequence_bool(MicroBuffer* buffer, const bool* array, const uint32_t size);
 microcdr_DllAPI bool serialize_sequence_uint8_t(MicroBuffer* buffer, const uint8_t* array, const uint32_t size);

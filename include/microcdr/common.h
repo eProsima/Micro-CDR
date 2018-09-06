@@ -61,6 +61,9 @@ typedef struct MicroBuffer
 
 microcdr_DllAPI extern const Endianness MACHINE_ENDIANNESS;
 
+uint32_t get_alignment_offset(MicroBuffer* buffer, const uint32_t data_size);
+bool check_size(MicroBuffer* buffer, const uint32_t bytes);
+
 #ifdef __cplusplus
 }
 #endif
