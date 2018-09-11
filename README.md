@@ -56,7 +56,7 @@ Initialize a `MicroBuffer` structure, the main struct of *MicroCDR*.
 - `data`: the buffer that the `MicroBuffer` will use.
 - `size`: the size of the buffer that the `MicroBuffer` will use.
 - `offset`: where the serialization/deserialization will start.
-Initially, the serialization/deserialization starts at the position where the buffer is.
+Initially, the serialization/deserialization starts at the beginning of the buffer.
 
 ---
 
@@ -67,14 +67,14 @@ void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset);
 Reset the `MicroBuffer` as the same state that it was created.
 - `mb`: the `MicroBuffer` struct
 - `offset`: where the serialization/deserialization will start.
-Initially, the serialization/deserialization starts at the position where the buffer is.
+Initially, the serialization/deserialization starts at the beginning of the buffer.
 
 ---
 
 ```c
 void align_to         (MicroBuffer* mb, const uint32_t alignment);
 ```
-Align the MicroBuffer to a `size` position.
+Align the MicroBuffer to an `alignment` position.
 After call this function, the serialization pointer will be moved only if the current `MicroBuffer` was not aligment to the passed value.
 
 - `mb`: the `MicroBuffer` struct
