@@ -68,7 +68,14 @@ endif()
 ###############################################################################
 
 # Library
-add_library(${PROJECT_NAME} src/c/microcdr.c)
+add_library(${PROJECT_NAME}
+    src/c/common.c
+    src/c/microcdr.c
+    src/c/types/basics.c
+    src/c/types/array.c
+    src/c/types/sequence.c
+    )
+
 set_common_compile_options(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
@@ -169,7 +176,7 @@ install(EXPORT ${PROJECT_NAME}Targets
     DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
     )
 
-# Package configuration 
+# Package configuration
 include(CMakePackageConfigHelpers)
 configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
     ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
