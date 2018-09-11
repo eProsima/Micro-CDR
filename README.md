@@ -2,7 +2,7 @@
 
 <a href="http://www.eprosima.com"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSd0PDlVz1U_7MgdTe0FRIWD0Jc9_YH-gGi0ZpLkr-qgCI6ZEoJZ5GBqQ" align="left" hspace="8" vspace="2" width="100" height="100" ></a>
 
-*MicroCDR* is a *C* library implementing the *CDR* standard serialization methods.
+*eProsima MicroCDR* is a *C* library implementing the *CDR* standard serialization methods.
 This library is focused on embedded and resource-limited systems.
 
 *MicroCDR* uses a static buffer, and allow to serialize and deserialize in both, big endianness and little endianness.
@@ -31,7 +31,7 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
         init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
         // Serialize data
-        char input[16] = "Hello microCDR!"; //16 characters
+        char input[16] = "Hello MicroCDR!"; //16 characters
         serialize_array_char(&writer, input, 16);
 
         // Deserialize data
@@ -85,7 +85,7 @@ After call this function, the serialization pointer will be moved only if the cu
 ```c
 uint32_t get_alignment(uint32_t buffer_position, const uint32_t data_size);
 ```
-Return the aligment necessary to serialize/deserialize a type with `data_size` size.
+Returns the aligment necessary to serialize/deserialize a type with `data_size` size.
 
 - `buffer_position`: the current serialization/deserialization position of the `MicroBuffer`. (Typically  `mb->iterator - mb->init`).
 - `data_size`: the bytes of the data that you are asking for.
@@ -131,7 +131,7 @@ Also, there are a functions that allow to force an endianness in their serializa
 These functions contains the name `endiannness` in their signature.
 
 ## Serialization/deserialization list
-The avaialble modes of serialization/deserializations in *microCDR* are shown in the following table.
+The avaialble modes of serialization/deserializations in *MicroCDR* are shown in the following table.
 
 
 | Type                 | Endianness |
