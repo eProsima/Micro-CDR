@@ -164,6 +164,24 @@ bool deserialize_sequence_double(MicroBuffer* buffer, double* array, uint32_t* s
     return deserialize_array_double(buffer, array, *size);
 }
 
+bool serialize_endian_sequence_char(MicroBuffer* buffer, const Endianness endianness, const char* array, const uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_array_char(buffer, array, size);
+}
+
+bool serialize_endian_sequence_bool(MicroBuffer* buffer, const Endianness endianness, const bool* array, const uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_array_bool(buffer, array, size);
+}
+
+bool serialize_endian_sequence_uint8_t(MicroBuffer* buffer, const Endianness endianness, const uint8_t* array, const uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_array_uint8_t(buffer, array, size);
+}
+
 bool serialize_endian_sequence_uint16_t(MicroBuffer* buffer, const Endianness endianness, const uint16_t* array, const uint32_t size)
 {
     serialize_endian_uint32_t(buffer, endianness, size);
@@ -180,6 +198,12 @@ bool serialize_endian_sequence_uint64_t(MicroBuffer* buffer, const Endianness en
 {
     serialize_endian_uint32_t(buffer, endianness, size);
     return serialize_endian_array_uint64_t(buffer, endianness, array, size);
+}
+
+bool serialize_endian_sequence_int8_t(MicroBuffer* buffer, const Endianness endianness, const int8_t* array, const uint32_t size)
+{
+    serialize_endian_uint32_t(buffer, endianness, size);
+    return serialize_array_int8_t(buffer, array, size);
 }
 
 bool serialize_endian_sequence_int16_t(MicroBuffer* buffer, const Endianness endianness, const int16_t* array, const uint32_t size)
@@ -212,6 +236,24 @@ bool serialize_endian_sequence_double(MicroBuffer* buffer, const Endianness endi
     return serialize_endian_array_double(buffer, endianness, array, size);
 }
 
+bool deserialize_endian_sequence_char(MicroBuffer* buffer, const Endianness endianness, char* array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_array_char(buffer, array, *size);
+}
+
+bool deserialize_endian_sequence_bool(MicroBuffer* buffer, const Endianness endianness, bool* array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_array_bool(buffer, array, *size);
+}
+
+bool deserialize_endian_sequence_uint8_t(MicroBuffer* buffer, const Endianness endianness, uint8_t* array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_array_uint8_t(buffer, array, *size);
+}
+
 bool deserialize_endian_sequence_uint16_t(MicroBuffer* buffer, const Endianness endianness, uint16_t* array, uint32_t* size)
 {
     deserialize_endian_uint32_t(buffer, endianness, size);
@@ -228,6 +270,12 @@ bool deserialize_endian_sequence_uint64_t(MicroBuffer* buffer, const Endianness 
 {
     deserialize_endian_uint32_t(buffer, endianness, size);
     return deserialize_endian_array_uint64_t(buffer, endianness, array, *size);
+}
+
+bool deserialize_endian_sequence_int8_t(MicroBuffer* buffer, const Endianness endianness, int8_t* array, uint32_t* size)
+{
+    deserialize_endian_uint32_t(buffer, endianness, size);
+    return deserialize_array_int8_t(buffer, array, *size);
 }
 
 bool deserialize_endian_sequence_int16_t(MicroBuffer* buffer, const Endianness endianness, int16_t* array, uint32_t* size)

@@ -21,6 +21,7 @@ extern "C" {
 
 #include <microcdr/common.h>
 #include <microcdr/types/basics.h>
+#include <microcdr/types/string.h>
 #include <microcdr/types/array.h>
 #include <microcdr/types/sequence.h>
 

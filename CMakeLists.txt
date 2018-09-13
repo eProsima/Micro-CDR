@@ -72,6 +72,7 @@ add_library(${PROJECT_NAME}
     src/c/common.c
     src/c/microcdr.c
     src/c/types/basics.c
+    src/c/types/string.c
     src/c/types/array.c
     src/c/types/sequence.c
     )
