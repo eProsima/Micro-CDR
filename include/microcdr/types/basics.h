@@ -73,21 +73,6 @@ microcdr_DllAPI bool deserialize_endian_int64_t(MicroBuffer* buffer, Endianness 
 microcdr_DllAPI bool deserialize_endian_float(MicroBuffer* buffer, Endianness endianness, float* value);
 microcdr_DllAPI bool deserialize_endian_double(MicroBuffer* buffer, Endianness endianness, double* value);
 
-// -------------------------------------------------------------------
-//                  INTERNAL SERIALIZATION FUNCTIONS
-// -------------------------------------------------------------------
-
-bool serialize_byte_1(MicroBuffer* buffer, const uint8_t* byte);
-bool serialize_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* bytes);
-bool serialize_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* bytes);
-bool serialize_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* bytes);
-
-bool deserialize_byte_1(MicroBuffer* buffer, uint8_t* byte);
-bool deserialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* bytes);
-bool deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* bytes);
-bool deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* bytes);
-
-
 #ifdef __cplusplus
 }
 #endif

@@ -15,6 +15,7 @@
 #include <microcdr/types/basics.h>
 #include <microcdr/types/array.h>
 #include <microcdr/types/sequence.h>
+#include <microcdr/serialization.h>
 
 // -------------------------------------------------------------------
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS

@@ -25,23 +25,6 @@ extern "C" {
 #include <microcdr/types/array.h>
 #include <microcdr/types/sequence.h>
 
-#include <stddef.h>
-
-microcdr_DllAPI void init_micro_buffer        (MicroBuffer* mb, uint8_t* data, const uint32_t size);
-microcdr_DllAPI void init_micro_buffer_offset (MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-microcdr_DllAPI void reset_micro_buffer       (MicroBuffer* mb);
-microcdr_DllAPI void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset);
-
-microcdr_DllAPI MicroState get_micro_state(MicroBuffer* mb);
-microcdr_DllAPI void restore_micro_state  (MicroBuffer* mb, const MicroState state);
-
-microcdr_DllAPI void align_to(MicroBuffer* mb, const uint32_t alignment);
-microcdr_DllAPI uint32_t get_alignment(uint32_t buffer_position, const uint32_t data_size);
-
-microcdr_DllAPI size_t micro_buffer_size(const MicroBuffer* mb);
-microcdr_DllAPI size_t micro_buffer_length(const MicroBuffer* mb);
-microcdr_DllAPI size_t micro_buffer_remaining(const MicroBuffer* mb);
-
 #ifdef __cplusplus
 }
 #endif
