@@ -16,17 +16,21 @@
 #include <microcdr/microcdr.h>
 #include <algorithm>
 #include <cstring>
+#include <type_traits>
 
 #define SEQUENCE_LENGTH 16
 #define ARRAY_LENGTH 32
-#define BUFFER_LENGTH  321024
+#define BUFFER_LENGTH  1024
 #define PI 3.141592653589793238462
 
+template<typename T>
 class TypeSerialization : public testing::Test
 {
 public:
     TypeSerialization()
     {
+        std::memset(&input, 0xFF, sizeof(T));
+        std::memset(&output, 0x00, sizeof(T));
         std::memset(buffer, 0, BUFFER_LENGTH);
         init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
         init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
@@ -36,14 +40,96 @@ public:
     {
         EXPECT_FALSE(writer.error);
         EXPECT_FALSE(reader.error);
+        EXPECT_TRUE(0 == std::memcmp(&input, &output, sizeof(T)));
     }
 
 protected:
     MicroBuffer writer;
     MicroBuffer reader;
     uint8_t buffer[BUFFER_LENGTH];
+    T input;
+    T output;
 };
 
+TYPED_TEST_CASE_P(TypeSerialization);
+
+TYPED_TEST_P(TypeSerialization, Basic)
+{
+    if (std::is_same<TypeParam, bool>::value)
+    {
+        EXPECT_TRUE(serialize_bool(&this->writer, static_cast<bool>(this->input)));
+        EXPECT_TRUE(deserialize_bool(&this->reader, reinterpret_cast<bool*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, char>::value)
+    {
+        EXPECT_TRUE(serialize_char(&this->writer, static_cast<char>(this->input)));
+        EXPECT_TRUE(deserialize_char(&this->reader, reinterpret_cast<char*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, int8_t>::value)
+    {
+        EXPECT_TRUE(serialize_int8_t(&this->writer, static_cast<int8_t>(this->input)));
+        EXPECT_TRUE(deserialize_int8_t(&this->reader, reinterpret_cast<int8_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, uint8_t>::value)
+    {
+        EXPECT_TRUE(serialize_uint8_t(&this->writer, static_cast<uint8_t>(this->input)));
+        EXPECT_TRUE(deserialize_uint8_t(&this->reader, reinterpret_cast<uint8_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, int16_t>::value)
+    {
+        EXPECT_TRUE(serialize_int16_t(&this->writer, static_cast<int16_t>(this->input)));
+        EXPECT_TRUE(deserialize_int16_t(&this->reader, reinterpret_cast<int16_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, uint16_t>::value)
+    {
+        EXPECT_TRUE(serialize_uint16_t(&this->writer, static_cast<uint16_t>(this->input)));
+        EXPECT_TRUE(deserialize_uint16_t(&this->reader, reinterpret_cast<uint16_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, int32_t>::value)
+    {
+        EXPECT_TRUE(serialize_int32_t(&this->writer, static_cast<int32_t>(this->input)));
+        EXPECT_TRUE(deserialize_int32_t(&this->reader, reinterpret_cast<int32_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, uint32_t>::value)
+    {
+        EXPECT_TRUE(serialize_uint32_t(&this->writer, static_cast<uint32_t>(this->input)));
+        EXPECT_TRUE(deserialize_uint32_t(&this->reader, reinterpret_cast<uint32_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, int64_t>::value)
+    {
+        EXPECT_TRUE(serialize_int64_t(&this->writer, static_cast<int64_t>(this->input)));
+        EXPECT_TRUE(deserialize_int64_t(&this->reader, reinterpret_cast<int64_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, uint64_t>::value)
+    {
+        EXPECT_TRUE(serialize_uint64_t(&this->writer, static_cast<uint64_t>(this->input)));
+        EXPECT_TRUE(deserialize_uint64_t(&this->reader, reinterpret_cast<uint64_t*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, float>::value)
+    {
+        EXPECT_TRUE(serialize_float(&this->writer, static_cast<float>(this->input)));
+        EXPECT_TRUE(deserialize_float(&this->reader, reinterpret_cast<float*>(&this->output)));
+    }
+    else if(std::is_same<TypeParam, double>::value)
+    {
+        EXPECT_TRUE(serialize_double(&this->writer, static_cast<double>(this->input)));
+        EXPECT_TRUE(deserialize_double(&this->reader, reinterpret_cast<double*>(&this->output)));
+    }
+}
+
+REGISTER_TYPED_TEST_CASE_P(TypeSerialization, Basic);
+
+typedef ::testing::Types<bool,
+                         char, int8_t, uint8_t,
+                         int16_t, uint16_t,
+                         int32_t, uint32_t,
+                         int64_t, uint64_t,
+                         float, double>
+                         Types;
+
+INSTANTIATE_TYPED_TEST_CASE_P(My, TypeSerialization, Types);
+
+/*
 class TypeSeqSerialization : public TypeSerialization
 {
 public:
@@ -489,4 +575,4 @@ TEST_F(TypeSeqSerialization, SequenceDouble)
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_LENGTH));
 }
-
+*/

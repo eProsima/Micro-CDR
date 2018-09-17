@@ -15,31 +15,41 @@
 #include <gtest/gtest.h>
 #include <microcdr/microcdr.h>
 
-#define BUFFER_LENGTH_KO 0
-#define ARRAY_LENGTH 4
-#define PI 3.1415926535897932384626433832795028
-
-static Endianness endianness = BIG_ENDIANNESS;
-
-TEST(buffer_error, BoolKO)
+#define ARRAY_LENGTH   32
+#define BUFFER_LENGTH  1024
+class LimitCase : public testing::Test
 {
-    bool input = true;
-    bool output;
-    uint8_t *buffer = NULL;
+public:
+    LimitCase(int a)
+    {
+        std::cout << a << std::endl;
+        std::memset(buffer, 0, BUFFER_LENGTH);
+        init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+        init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+    }
 
+    virtual ~LimitCase() { }
+
+protected:
     MicroBuffer writer;
     MicroBuffer reader;
+    uint8_t buffer[BUFFER_LENGTH];
+};
 
-    init_micro_buffer(&writer, buffer, BUFFER_LENGTH_KO);
-    init_micro_buffer(&reader, buffer, BUFFER_LENGTH_KO);
+TEST_F(LimitCase(1), CheckSerializationWithoutSize)
+{
+    /*uint32_t input = true;
+    uint32_t output;
 
     EXPECT_FALSE(serialize_bool(&writer, input));
     EXPECT_FALSE(deserialize_bool(&reader, &output));
 
     EXPECT_EQ(writer.error, BUFFER_NOK);
-    EXPECT_EQ(reader.error, BUFFER_NOK);
+    EXPECT_EQ(reader.error, BUFFER_NOK);*/
 }
 
+/*
+CheckSerializationEmptyBuffer
 TEST(buffer_error, CharKO)
 {
     char input = 'A';
@@ -476,4 +486,4 @@ TEST(buffer_error, ArrayDoubleKO)
     EXPECT_EQ(writer.error, BUFFER_NOK);
     EXPECT_EQ(reader.error, BUFFER_NOK);
 }
-
+*/
