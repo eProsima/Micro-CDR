@@ -22,12 +22,13 @@ inline static bool check_buffer(MicroBuffer* mb, const uint32_t bytes)
 {
     if(!mb->error)
     {
-        return mb->iterator + bytes <= mb->final;
+        bool fit = mb->iterator + bytes <= mb->final;
+        if(!fit)
+        {
+            mb->error = true;
+        }
     }
-    else
-    {
-        mb->error = false;
-    }
+
     return !mb->error;
 }
 

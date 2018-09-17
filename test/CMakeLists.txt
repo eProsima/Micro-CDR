@@ -26,9 +26,12 @@ check_gtest()
 if(GTEST_FOUND)
     include(CTest)
     set(SRCS
-        TypeSerialization.cpp
+        serialization/BasicSerialization.cpp
+        serialization/StringSerialization.cpp
+        serialization/ArraySerialization.cpp
+        serialization/SequenceSerialization.cpp
         Alignment.cpp
-        #BufferError.cpp
+        FullBuffer.cpp
         )
     add_executable(${PROJECT_NAME} ${SRCS})
     set_common_compile_options(${PROJECT_NAME})
