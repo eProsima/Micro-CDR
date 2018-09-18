@@ -28,8 +28,8 @@ public:
             uint8_t_serialization();
         }
 
-        std::cout << (uint64_t)writer.iterator << std::endl;
-        std::cout << (uint64_t)writer.final << std::endl;
+        writer_it = writer.iterator;
+        reader_it = reader.iterator;
     }
 
     void try_block_1()

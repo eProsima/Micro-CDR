@@ -27,10 +27,10 @@ bool serialize_string(MicroBuffer* buffer, const char* string)
     return serialize_sequence_char(buffer, string, (uint32_t)strlen(string) + 1);
 }
 
-bool deserialize_string(MicroBuffer* buffer, char* string)
+bool deserialize_string(MicroBuffer* buffer, char* string, const uint32_t max_size)
 {
     uint32_t length;
-    return deserialize_sequence_char(buffer, string, &length);
+    return deserialize_sequence_char(buffer, string, &length, max_size);
 }
 
 bool serialize_endian_string(MicroBuffer* buffer, Endianness endianness, const char* string)
@@ -38,8 +38,8 @@ bool serialize_endian_string(MicroBuffer* buffer, Endianness endianness, const c
     return serialize_endian_sequence_char(buffer, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
-bool deserialize_endian_string(MicroBuffer* buffer, Endianness endianness, char* string)
+bool deserialize_endian_string(MicroBuffer* buffer, Endianness endianness, char* string, const uint32_t max_size)
 {
     uint32_t length;
-    return deserialize_endian_sequence_char(buffer, endianness, string, &length);
+    return deserialize_endian_sequence_char(buffer, endianness, string, &length, max_size);
 }

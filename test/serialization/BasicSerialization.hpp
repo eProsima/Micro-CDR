@@ -22,7 +22,7 @@
 
 #define BUFFER_LENGTH 1024
 
-class BasicSerialization : public testing::Test
+class BasicSerialization : public ::testing::Test
 {
 public:
 
@@ -35,6 +35,7 @@ public:
 
     virtual ~BasicSerialization()
     {
+        EXPECT_EQ(writer.iterator, reader.iterator);
         EXPECT_FALSE(writer.error);
         EXPECT_FALSE(reader.error);
     }

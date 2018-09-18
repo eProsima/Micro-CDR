@@ -30,6 +30,9 @@ if(GTEST_FOUND)
         serialization/StringSerialization.cpp
         serialization/ArraySerialization.cpp
         serialization/SequenceSerialization.cpp
+        endianness/BasicEndianness.cpp
+        endianness/ArrayEndianness.cpp
+        endianness/SequenceEndianness.cpp
         Alignment.cpp
         FullBuffer.cpp
         )

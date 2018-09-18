@@ -14,14 +14,14 @@
 
 #include "serialization/BasicSerialization.hpp"
 
-class Alignment : public BasicSerialization,
-                  public ::testing::WithParamInterface<int>
+class Alignment : public BasicSerialization, public ::testing::WithParamInterface<int>
 {
 public:
 
     Alignment()
     {
-        for(int i = 0; i < GetParam(); ++i)
+        int offset = GetParam();
+        for(int i = 0; i < offset; ++i)
         {
             uint8_t_serialization();
         }
@@ -38,7 +38,7 @@ public:
     }
 };
 
-INSTANTIATE_TEST_CASE_P(Offset_0_to_16, Alignment, ::testing::Range(0, 17), ::testing::PrintToStringParamName());
+INSTANTIATE_TEST_CASE_P(Offset, Alignment, ::testing::Range(0, 17), ::testing::PrintToStringParamName());
 
 TEST_P(Alignment, Block_8)
 {

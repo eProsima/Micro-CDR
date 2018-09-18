@@ -17,7 +17,7 @@
 
 #include "BasicSerialization.hpp"
 
-#define STRING_LENGTH 64
+#define MAX_STRING_LENGTH 64
 
 class StringSerialization : public BasicSerialization
 {
@@ -32,11 +32,11 @@ public:
 
     void string_serialization()
     {
-        char input[STRING_LENGTH] = "This is a message test";
-        char output[STRING_LENGTH] = {0};
+        char input[MAX_STRING_LENGTH] = "This is a message test";
+        char output[MAX_STRING_LENGTH] = {0};
 
         EXPECT_TRUE(serialize_string(&writer, input));
-        EXPECT_TRUE(deserialize_string(&reader, output));
+        EXPECT_TRUE(deserialize_string(&reader, output, MAX_STRING_LENGTH));
 
         EXPECT_STREQ(input, output);
     }
