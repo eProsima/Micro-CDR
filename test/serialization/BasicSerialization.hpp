@@ -33,6 +33,12 @@ public:
         init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
     }
 
+    void check_data_size(uint32_t data_size)
+    {
+        EXPECT_EQ(writer.last_data_size, data_size);
+        EXPECT_EQ(reader.last_data_size, data_size);
+    }
+
     virtual ~BasicSerialization()
     {
         EXPECT_EQ(writer.iterator, reader.iterator);
@@ -49,6 +55,8 @@ public:
         EXPECT_TRUE(deserialize_bool(&reader, &output));
 
         EXPECT_EQ(input, output);
+
+        check_data_size(1);
     }
 
     void char_serialization()
@@ -60,6 +68,7 @@ public:
         EXPECT_TRUE(deserialize_char(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(1);
     }
 
     void int8_t_serialization()
@@ -71,6 +80,7 @@ public:
         EXPECT_TRUE(deserialize_int8_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(1);
     }
 
     void uint8_t_serialization()
@@ -82,6 +92,7 @@ public:
         EXPECT_TRUE(deserialize_uint8_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(1);
     }
 
     void int16_t_serialization()
@@ -93,6 +104,7 @@ public:
         EXPECT_TRUE(deserialize_int16_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(2);
     }
 
     void uint16_t_serialization()
@@ -104,6 +116,7 @@ public:
         EXPECT_TRUE(deserialize_uint16_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(2);
     }
 
     void int32_t_serialization()
@@ -115,6 +128,7 @@ public:
         EXPECT_TRUE(deserialize_int32_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(4);
     }
 
     void uint32_t_serialization()
@@ -126,6 +140,7 @@ public:
         EXPECT_TRUE(deserialize_uint32_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(4);
     }
 
     void int64_t_serialization()
@@ -137,6 +152,7 @@ public:
         EXPECT_TRUE(deserialize_int64_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(8);
     }
 
     void uint64_t_serialization()
@@ -148,6 +164,7 @@ public:
         EXPECT_TRUE(deserialize_uint64_t(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(8);
     }
 
     void float_serialization()
@@ -159,6 +176,7 @@ public:
         EXPECT_TRUE(deserialize_float(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(4);
     }
 
     void double_serialization()
@@ -170,6 +188,7 @@ public:
         EXPECT_TRUE(deserialize_double(&reader, &output));
 
         EXPECT_EQ(input, output);
+        check_data_size(8);
     }
 
 protected:

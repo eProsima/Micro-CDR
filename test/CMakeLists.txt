@@ -33,6 +33,7 @@ if(GTEST_FOUND)
         endianness/BasicEndianness.cpp
         endianness/ArrayEndianness.cpp
         endianness/SequenceEndianness.cpp
+        SequenceOverflow.cpp
         Alignment.cpp
         FullBuffer.cpp
         )
