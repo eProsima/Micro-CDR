@@ -14,6 +14,7 @@
 
 #include <microcdr/types/array.h>
 
+#include "../common_internals.h"
 #include "array_internals.h"
 #include "basic_internals.h"
 

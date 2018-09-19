@@ -13,26 +13,11 @@
 // limitations under the License.
 
 #include <microcdr/types/basic.h>
+#include "../common_internals.h"
 #include "basic_internals.h"
 
 #include <string.h>
 
-// -------------------------------------------------------------------
-//                   INTERNAL UTIL IMPLEMENTATIONS
-// -------------------------------------------------------------------
-bool check_buffer(MicroBuffer* mb, const uint32_t bytes)
-{
-    if(!mb->error)
-    {
-        bool fit = mb->iterator + bytes <= mb->final;
-        if(!fit)
-        {
-            mb->error = true;
-        }
-    }
-
-    return !mb->error;
-}
 
 // -------------------------------------------------------------------
 //                INTERNAL SERIALIZATION IMPLEMENTATION
@@ -235,6 +220,7 @@ bool deserialize_byte_8(MicroBuffer* mb, const Endianness endianness, uint64_t* 
     }
     return !mb->error;
 }
+
 // -------------------------------------------------------------------
 //                  PUBLIC SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------

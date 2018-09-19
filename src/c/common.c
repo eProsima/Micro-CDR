@@ -20,6 +20,26 @@
     const Endianness MACHINE_ENDIANNESS = LITTLE_ENDIANNESS;
 #endif
 
+// -------------------------------------------------------------------
+//                   INTERNAL UTIL IMPLEMENTATIONS
+// -------------------------------------------------------------------
+bool check_buffer(MicroBuffer* mb, const uint32_t bytes)
+{
+    if(!mb->error)
+    {
+        bool fit = mb->iterator + bytes <= mb->final;
+        if(!fit)
+        {
+            mb->error = true;
+        }
+    }
+
+    return !mb->error;
+}
+
+// -------------------------------------------------------------------
+//                       PUBLIC IMPLEMENTATION
+// -------------------------------------------------------------------
 void init_micro_buffer(MicroBuffer* mb, uint8_t* data, const uint32_t size)
 {
     init_micro_buffer_offset(mb, data, size, 0U);
