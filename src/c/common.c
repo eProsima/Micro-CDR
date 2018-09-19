@@ -14,6 +14,8 @@
 
 #include <microcdr/common.h>
 
+#include <string.h>
+
 #if __BIG_ENDIAN__
     const Endianness MACHINE_ENDIANNESS = BIG_ENDIANNESS;
 #else
@@ -59,6 +61,13 @@ void init_micro_buffer_offset_endian(MicroBuffer* mb, uint8_t* data, const uint3
     mb->endianness = endianness;
     mb->error = false;
 }
+
+
+void copy_micro_buffer(MicroBuffer* mb_dest, const MicroBuffer* mb_source)
+{
+    memcpy(mb_dest, mb_source, sizeof(MicroBuffer));
+}
+
 void reset_micro_buffer(MicroBuffer* mb)
 {
     reset_micro_buffer_offset(mb, 0U);
@@ -88,7 +97,6 @@ void align_to(MicroBuffer* mb, const uint32_t size)
     mb->last_data_size = size;
 }
 
-// Deprecated: used get_alignment_offset instead (common.h)
 uint32_t get_alignment(uint32_t current_alignment, const uint32_t data_size)
 {
     return ((data_size - (current_alignment % data_size)) & (data_size - 1));
@@ -127,20 +135,4 @@ Endianness micro_buffer_endianness(const MicroBuffer* mb)
 bool micro_buffer_has_error(const MicroBuffer* mb)
 {
     return mb->error;
-}
-
-MicroState get_micro_state(MicroBuffer* mb)
-{
-    MicroState state;
-    state.position = mb->iterator;
-    state.last_data_size = mb->last_data_size;
-    state.error = mb->error;
-    return state;
-}
-
-void restore_micro_state(MicroBuffer* mb, const MicroState state)
-{
-    mb->iterator = state.position;
-    mb->last_data_size = state.last_data_size;
-    mb->error = state.error;
 }
