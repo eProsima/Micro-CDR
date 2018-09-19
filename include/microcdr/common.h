@@ -57,7 +57,6 @@ microcdr_DllAPI void copy_micro_buffer               (MicroBuffer* mb_dest, cons
 
 microcdr_DllAPI void reset_micro_buffer        (MicroBuffer* mb);
 microcdr_DllAPI void reset_micro_buffer_offset (MicroBuffer* mb, const uint32_t offset);
-microcdr_DllAPI void set_micro_buffer_as_valid (MicroBuffer* mb);
 
 microcdr_DllAPI void     align_to            (MicroBuffer* mb, const uint32_t alignment);
 microcdr_DllAPI uint32_t get_alignment       (uint32_t buffer_position, const uint32_t data_size); //change name

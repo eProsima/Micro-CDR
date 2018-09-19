@@ -61,11 +61,20 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
+void copy_micro_buffer (MicroBuffer* mb_dest, const MicroBuffer* mb_source);
+```
+Copy a `MicroBuffer` structure data to another `MicroBuffer` structure.
+- `mb_dest`: the destination `MicroBuffer` struct.
+- `mb_source`: the origin initialized `MicroBuffer` struct.
+
+---
+
+```c
 void reset_micro_buffer       (MicroBuffer* mb);
 void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset);
 ```
 Reset the `MicroBuffer` as the same state that it was created.
-- `mb`: the `MicroBuffer` struct
+- `mb`: the `MicroBuffer` struct.
 - `offset`: where the serialization/deserialization will start.
 Initially, the serialization/deserialization starts at the beginning of the buffer.
 
@@ -112,6 +121,23 @@ Returns the size of the serialized/deserialized data.
 size_t micro_buffer_remaining(const MicroBuffer* mb);
 ```
 Returns the remaining size for the serializing/deserializing.
+- `mb`: the `MicroBuffer` struct
+
+
+---
+
+```c
+Endianness micro_buffer_endianness(const MicroBuffer* mb);
+```
+Returns the serialization/deserialization endianness.
+- `mb`: the `MicroBuffer` struct
+
+---
+
+```c
+bool micro_buffer_error(const MicroBuffer* mb);
+```
+Returns the status error of the `MicroBuffer`.
 - `mb`: the `MicroBuffer` struct
 
 

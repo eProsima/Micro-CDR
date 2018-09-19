@@ -80,11 +80,6 @@ void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset)
     mb->error = false;
 }
 
-void set_micro_buffer_as_valid (MicroBuffer* mb)
-{
-    mb->error = false;
-}
-
 void align_to(MicroBuffer* mb, const uint32_t size)
 {
     uint32_t offset = get_alignment_offset(mb, size);
