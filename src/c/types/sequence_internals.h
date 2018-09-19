@@ -31,10 +31,10 @@ bool serialize_sequence_byte_2(MicroBuffer* buffer, Endianness endianness, const
 bool serialize_sequence_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* array, const uint32_t size);
 bool serialize_sequence_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* array, const uint32_t size);
 
-bool deserialize_sequence_byte_1(MicroBuffer* buffer, Endianness endianness, uint8_t* array, uint32_t* size, const uint32_t array_size);
-bool deserialize_sequence_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, uint32_t* size, const uint32_t array_size);
-bool deserialize_sequence_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, uint32_t* size, const uint32_t array_size);
-bool deserialize_sequence_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, uint32_t* size, const uint32_t array_size);
+bool deserialize_sequence_byte_1(MicroBuffer* buffer, Endianness endianness, uint8_t* array, const uint32_t array_capacity, uint32_t* size);
+bool deserialize_sequence_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* array, const uint32_t array_capacity, uint32_t* size);
+bool deserialize_sequence_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* array, const uint32_t array_capacity, uint32_t* size);
+bool deserialize_sequence_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* array, const uint32_t array_capacity, uint32_t* size);
 
 #ifdef __cplusplus
 }
