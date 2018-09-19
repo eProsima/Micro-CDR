@@ -14,14 +14,14 @@
 
 #include "serialization/SequenceSerialization.hpp"
 
-#define SEQUENCE_LENGTH_OVERFLOW      ARRAY_LENGTH + 1
+#define SEQUENCE_SIZE_OVERFLOW      ARRAY_CAPACITY + 1
 
 class SequenceOverflow : public SequenceSerialization
 {
 public:
     SequenceOverflow()
     {
-        set_sequence_length(SEQUENCE_LENGTH_OVERFLOW);
+        set_sequence_size(SEQUENCE_SIZE_OVERFLOW);
     }
 
     ~SequenceOverflow()
@@ -40,37 +40,37 @@ private:
 
 TEST_F(SequenceOverflow, Block1)
 {
-    uint8_t input[SEQUENCE_LENGTH_OVERFLOW];
-    uint8_t output[ARRAY_LENGTH];
+    uint8_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint8_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint8_t(&writer, input, SEQUENCE_LENGTH_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint8_t(&reader, output, ARRAY_LENGTH, &output_size));
+    EXPECT_TRUE(serialize_sequence_uint8_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(deserialize_sequence_uint8_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
 TEST_F(SequenceOverflow, Block2)
 {
-    uint16_t input[SEQUENCE_LENGTH_OVERFLOW];
-    uint16_t output[ARRAY_LENGTH];
+    uint16_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint16_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint16_t(&writer, input, SEQUENCE_LENGTH_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint16_t(&reader, output, ARRAY_LENGTH, &output_size));
+    EXPECT_TRUE(serialize_sequence_uint16_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(deserialize_sequence_uint16_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
 TEST_F(SequenceOverflow, Block4)
 {
-    uint32_t input[SEQUENCE_LENGTH_OVERFLOW];
-    uint32_t output[ARRAY_LENGTH];
+    uint32_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint32_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint32_t(&writer, input, SEQUENCE_LENGTH_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint32_t(&reader, output, ARRAY_LENGTH, &output_size));
+    EXPECT_TRUE(serialize_sequence_uint32_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(deserialize_sequence_uint32_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
 TEST_F(SequenceOverflow, Block8)
 {
-    uint64_t input[SEQUENCE_LENGTH_OVERFLOW];
-    uint64_t output[ARRAY_LENGTH];
+    uint64_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint64_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint64_t(&writer, input, SEQUENCE_LENGTH_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint64_t(&reader, output, ARRAY_LENGTH, &output_size));
+    EXPECT_TRUE(serialize_sequence_uint64_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(deserialize_sequence_uint64_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
