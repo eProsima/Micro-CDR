@@ -156,6 +156,8 @@ The avaialble modes of serialization/deserializations in *MicroCDR* are shown in
 | float                | endianness |
 | double               |            |
 | double               | endianness |
+| string               |            |
+| string               | endianness |
 | bool array           |            |
 | char array           |            |
 | int8 array           |            |
@@ -177,9 +179,13 @@ The avaialble modes of serialization/deserializations in *MicroCDR* are shown in
 | double array         |            |
 | double array         | endianness |
 | bool sequence        |            |
+| bool sequence        | endianness |
 | char sequence        |            |
+| char sequence        | endianness |
 | int8 sequence        |            |
+| int8 sequence        | endianness |
 | uint8 sequence       |            |
+| uint8 sequence       | endianness |
 | int16 sequence       |            |
 | int16 sequence       | endianness |
 | uint16 sequence      |            |

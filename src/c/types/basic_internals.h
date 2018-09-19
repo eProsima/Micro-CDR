@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _MICROCDR_TYPES_STRING_H_
-#define _MICROCDR_TYPES_STRING_H_
+#ifndef _SRC_TYPES_BASIC_INTERNALS_H_
+#define _SRC_TYPES_BASIC_INTERNALS_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,21 +21,21 @@ extern "C" {
 
 #include <microcdr/common.h>
 
-#include <stdint.h>
-#include <stdbool.h>
-
 // -------------------------------------------------------------------
-//                   PUBLIC SERIALIZATION FUNCTIONS
+//                  INTERNAL SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
+bool serialize_byte_1(MicroBuffer* buffer, const uint8_t* byte);
+bool serialize_byte_2(MicroBuffer* buffer, Endianness endianness, const uint16_t* bytes);
+bool serialize_byte_4(MicroBuffer* buffer, Endianness endianness, const uint32_t* bytes);
+bool serialize_byte_8(MicroBuffer* buffer, Endianness endianness, const uint64_t* bytes);
 
-microcdr_DllAPI bool serialize_string(MicroBuffer* mb, const char* string);
-microcdr_DllAPI bool deserialize_string(MicroBuffer* mb, char* string, const uint32_t string_capacity);
-
-microcdr_DllAPI bool serialize_endian_string(MicroBuffer* mb, Endianness endianness, const char* string);
-microcdr_DllAPI bool deserialize_endian_string(MicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity);
+bool deserialize_byte_1(MicroBuffer* buffer, uint8_t* byte);
+bool deserialize_byte_2(MicroBuffer* buffer, Endianness endianness, uint16_t* bytes);
+bool deserialize_byte_4(MicroBuffer* buffer, Endianness endianness, uint32_t* bytes);
+bool deserialize_byte_8(MicroBuffer* buffer, Endianness endianness, uint64_t* bytes);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //_MICROCDR_TYPES_STRING_H_
+#endif //_SRC_TYPES_BASIC_INTERNALS_H_

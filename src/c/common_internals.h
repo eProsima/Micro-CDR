@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _MICROCDR_TYPES_STRING_H_
-#define _MICROCDR_TYPES_STRING_H_
+#ifndef _SRC_COMMON_INTERNALS_H_
+#define _SRC_COMMON_INTERNALS_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,21 +21,13 @@ extern "C" {
 
 #include <microcdr/common.h>
 
-#include <stdint.h>
-#include <stdbool.h>
-
 // -------------------------------------------------------------------
-//                   PUBLIC SERIALIZATION FUNCTIONS
+//                     INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
-
-microcdr_DllAPI bool serialize_string(MicroBuffer* mb, const char* string);
-microcdr_DllAPI bool deserialize_string(MicroBuffer* mb, char* string, const uint32_t string_capacity);
-
-microcdr_DllAPI bool serialize_endian_string(MicroBuffer* mb, Endianness endianness, const char* string);
-microcdr_DllAPI bool deserialize_endian_string(MicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity);
+bool check_buffer(MicroBuffer* mb, const uint32_t bytes);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //_MICROCDR_TYPES_STRING_H_
+#endif //_SRC_COMMON_INTERNALS_H_

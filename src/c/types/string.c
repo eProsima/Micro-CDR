@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <microcdr/types/sequence.h>
 #include <microcdr/types/string.h>
+#include <microcdr/types/sequence.h>
 
 #include <string.h>
 
@@ -22,24 +22,24 @@
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
 
-bool serialize_string(MicroBuffer* buffer, const char* string)
+bool serialize_string(MicroBuffer* mb, const char* string)
 {
-    return serialize_sequence_char(buffer, string, (uint32_t)strlen(string) + 1);
+    return serialize_sequence_char(mb, string, (uint32_t)strlen(string) + 1);
 }
 
-bool deserialize_string(MicroBuffer* buffer, char* string)
+bool deserialize_string(MicroBuffer* mb, char* string, const uint32_t string_capacity)
 {
     uint32_t length;
-    return deserialize_sequence_char(buffer, string, &length);
+    return deserialize_sequence_char(mb, string, string_capacity, &length);
 }
 
-bool serialize_endian_string(MicroBuffer* buffer, Endianness endianness, const char* string)
+bool serialize_endian_string(MicroBuffer* mb, Endianness endianness, const char* string)
 {
-    return serialize_endian_sequence_char(buffer, endianness, string, (uint32_t)strlen(string) + 1);
+    return serialize_endian_sequence_char(mb, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
-bool deserialize_endian_string(MicroBuffer* buffer, Endianness endianness, char* string)
+bool deserialize_endian_string(MicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity)
 {
     uint32_t length;
-    return deserialize_endian_sequence_char(buffer, endianness, string, &length);
+    return deserialize_endian_sequence_char(mb, endianness, string, string_capacity, &length);
 }

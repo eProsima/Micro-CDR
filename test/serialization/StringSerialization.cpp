@@ -12,21 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _MICROCDR_MICRO_CDR_H_
-#define _MICROCDR_MICRO_CDR_H_
+#include "StringSerialization.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <microcdr/common.h>
-#include <microcdr/types/basic.h>
-#include <microcdr/types/string.h>
-#include <microcdr/types/array.h>
-#include <microcdr/types/sequence.h>
-
-#ifdef __cplusplus
+TEST_F(StringSerialization, String)
+{
+    string_serialization();
 }
-#endif
 
-#endif //_MICROCDR_MICRO_CDR_H_
