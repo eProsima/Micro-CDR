@@ -60,18 +60,22 @@ microcdr_DllAPI extern const Endianness MACHINE_ENDIANNESS;
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
-microcdr_DllAPI void init_micro_buffer        (MicroBuffer* mb, uint8_t* data, const uint32_t size);
-microcdr_DllAPI void init_micro_buffer_offset (MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-microcdr_DllAPI void reset_micro_buffer       (MicroBuffer* mb);
-microcdr_DllAPI void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset);
+microcdr_DllAPI void init_micro_buffer               (MicroBuffer* mb, uint8_t* data, const uint32_t size);
+microcdr_DllAPI void init_micro_buffer_offset        (MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
+microcdr_DllAPI void init_micro_buffer_offset_endian (MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, Endianness endianness);
+microcdr_DllAPI void reset_micro_buffer        (MicroBuffer* mb);
+microcdr_DllAPI void reset_micro_buffer_offset (MicroBuffer* mb, const uint32_t offset);
+microcdr_DllAPI void set_micro_buffer_as_valid (MicroBuffer* mb);
 
-microcdr_DllAPI void align_to(MicroBuffer* mb, const uint32_t alignment);
-microcdr_DllAPI uint32_t get_alignment(uint32_t buffer_position, const uint32_t data_size); // Deprecated?
-microcdr_DllAPI uint32_t get_alignment_offset(MicroBuffer* mb, const uint32_t data_size); //Mix with get_alignment
+microcdr_DllAPI void     align_to            (MicroBuffer* mb, const uint32_t alignment);
+microcdr_DllAPI uint32_t get_alignment       (uint32_t buffer_position, const uint32_t data_size); // Deprecated.
+microcdr_DllAPI uint32_t get_alignment_offset(const MicroBuffer* mb, const uint32_t data_size);
 
-microcdr_DllAPI size_t micro_buffer_size(const MicroBuffer* mb);
-microcdr_DllAPI size_t micro_buffer_length(const MicroBuffer* mb);
-microcdr_DllAPI size_t micro_buffer_remaining(const MicroBuffer* mb);
+microcdr_DllAPI size_t     micro_buffer_size      (const MicroBuffer* mb);
+microcdr_DllAPI size_t     micro_buffer_length    (const MicroBuffer* mb);
+microcdr_DllAPI size_t     micro_buffer_remaining (const MicroBuffer* mb);
+microcdr_DllAPI Endianness micro_buffer_endianness(const MicroBuffer* mb);
+microcdr_DllAPI bool       micro_buffer_has_error (const MicroBuffer* mb);
 
 // ------------------------------------------------
 //               MicroState Utility
