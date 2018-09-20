@@ -156,8 +156,19 @@ The default endianness serialization can be choosen by setting the `endianness` 
 Also, there are a functions that allow to force an endianness in their serialization/deserialization.
 These functions contains the name `endiannness` in their signature.
 
+### Error
+All serialization/deserialization functions return a boolean indicating the result of their operations.
+When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
+an status error is setted into the `MicroBuffer`.
+If a `MicroBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
+A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
+
+If is kwown that an operation can fails over a `MicroBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
+the `MicroBuffer` state can be saved using the `copy_micro_buffer` function.
+After the application of the wrong serialization/deserialization, only the `MicroBuffer` that performed the operation will have a dirty state.
+
 ## Serialization/deserialization list
-The avaialble modes of serialization/deserializations in *MicroCDR* are shown in the following table.
+The available modes of serialization/deserializations in *MicroCDR* are shown in the following table.
 
 
 | Type                 | Endianness |
