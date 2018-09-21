@@ -61,11 +61,20 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
+void copy_micro_buffer (MicroBuffer* mb_dest, const MicroBuffer* mb_source);
+```
+Copy a `MicroBuffer` structure data to another `MicroBuffer` structure.
+- `mb_dest`: the destination `MicroBuffer` struct.
+- `mb_source`: the origin initialized `MicroBuffer` struct.
+
+---
+
+```c
 void reset_micro_buffer       (MicroBuffer* mb);
 void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset);
 ```
 Reset the `MicroBuffer` as the same state that it was created.
-- `mb`: the `MicroBuffer` struct
+- `mb`: the `MicroBuffer` struct.
 - `offset`: where the serialization/deserialization will start.
 Initially, the serialization/deserialization starts at the beginning of the buffer.
 
@@ -115,6 +124,23 @@ Returns the remaining size for the serializing/deserializing.
 - `mb`: the `MicroBuffer` struct
 
 
+---
+
+```c
+Endianness micro_buffer_endianness(const MicroBuffer* mb);
+```
+Returns the serialization/deserialization endianness.
+- `mb`: the `MicroBuffer` struct
+
+---
+
+```c
+bool micro_buffer_error(const MicroBuffer* mb);
+```
+Returns the status error of the `MicroBuffer`.
+- `mb`: the `MicroBuffer` struct
+
+
 ### Serialization/deserialization functions
 Adding to this, there is a big set of functions for deserialize and deserialize different kind of types:
 - Basics: `bool`, `char`, `int8_t`, `uint8_t`,`int16_t`, `uint16_t`,`int32_t`, `uint32_t`,`int64_t`, `uint64_t`,`float`, `double`.
@@ -130,8 +156,19 @@ The default endianness serialization can be choosen by setting the `endianness` 
 Also, there are a functions that allow to force an endianness in their serialization/deserialization.
 These functions contains the name `endiannness` in their signature.
 
+### Error
+All serialization/deserialization functions return a boolean indicating the result of their operations.
+When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
+an status error is setted into the `MicroBuffer`.
+If a `MicroBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
+A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
+
+If is kwown that an operation can fails over a `MicroBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
+the `MicroBuffer` state can be saved using the `copy_micro_buffer` function.
+After the application of the wrong serialization/deserialization, only the `MicroBuffer` that performed the operation will have a dirty state.
+
 ## Serialization/deserialization list
-The avaialble modes of serialization/deserializations in *MicroCDR* are shown in the following table.
+The available modes of serialization/deserializations in *MicroCDR* are shown in the following table.
 
 
 | Type                 | Endianness |
@@ -156,6 +193,8 @@ The avaialble modes of serialization/deserializations in *MicroCDR* are shown in
 | float                | endianness |
 | double               |            |
 | double               | endianness |
+| string               |            |
+| string               | endianness |
 | bool array           |            |
 | char array           |            |
 | int8 array           |            |
@@ -177,9 +216,13 @@ The avaialble modes of serialization/deserializations in *MicroCDR* are shown in
 | double array         |            |
 | double array         | endianness |
 | bool sequence        |            |
+| bool sequence        | endianness |
 | char sequence        |            |
+| char sequence        | endianness |
 | int8 sequence        |            |
+| int8 sequence        | endianness |
 | uint8 sequence       |            |
+| uint8 sequence       | endianness |
 | int16 sequence       |            |
 | int16 sequence       | endianness |
 | uint16 sequence      |            |

@@ -26,9 +26,17 @@ check_gtest()
 if(GTEST_FOUND)
     include(CTest)
     set(SRCS
-        SerializationDeserialization.cpp
+        serialization/BasicSerialization.cpp
+        serialization/StringSerialization.cpp
+        serialization/ArraySerialization.cpp
+        serialization/SequenceSerialization.cpp
+        endianness/BasicEndianness.cpp
+        endianness/ArrayEndianness.cpp
+        endianness/SequenceEndianness.cpp
+        SequenceOverflow.cpp
         Alignment.cpp
-        BufferError.cpp)
+        FullBuffer.cpp
+        )
     add_executable(${PROJECT_NAME} ${SRCS})
     set_common_compile_options(${PROJECT_NAME})
     add_gtest(${PROJECT_NAME}
@@ -39,5 +47,10 @@ if(GTEST_FOUND)
         )
     target_include_directories(${PROJECT_NAME} PRIVATE ${GTEST_INCLUDE_DIRS})
     target_link_libraries(${PROJECT_NAME} microcdr ${GTEST_BOTH_LIBRARIES})
+
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        CXX_STANDARD 11
+        CXX_STANDARD_REQUIRED YES
+        )
 endif()
 
