@@ -13,23 +13,21 @@
 // limitations under the License.
 
 
-#ifndef _MICROCDR_MICROCDR_DLL_H_
-#define _MICROCDR_MICROCDR_DLL_H_
-
-#include <microcdr/config.h>
+#ifndef _MICROCDR_DLL_H_
+#define _MICROCDR_DLL_H_
 
 #if defined(_WIN32)
 #if defined(microcdr_SHARED)
 #if defined(microcdr_EXPORTS)
-#define microcdr_DllAPI __declspec( dllexport )
+#define MCDLLAPI __declspec( dllexport )
 #else
-#define microcdr_DllAPI __declspec( dllimport )
+#define MCDLLAPI __declspec( dllimport )
 #endif // microcdr_EXPORTS
 #else
-#define microcdr_DllAPI
+#define MCDLLAPI
 #endif // BUILDING_SHARED_LIBS
 #else
-#define microcdr_DllAPI
+#define MCDLLAPI
 #endif // _WIN32
 
-#endif // _MICROCDR_MICROCDR_DLL_H_
+#endif // _MICROCDR_DLL_H_

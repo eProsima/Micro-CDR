@@ -31,7 +31,7 @@ int main()
     init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     // Serialize data
-    char input[16] = "Hello microCDR!"; //16 characters
+    char input[16] = "Hello MicroCDR!"; //16 characters
     serialize_array_char(&writer, input, 16);
 
     // Deserialize data
