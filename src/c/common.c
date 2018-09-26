@@ -42,7 +42,7 @@ bool check_buffer(mcBuffer* mb, const uint32_t bytes)
 // -------------------------------------------------------------------
 //                       PUBLIC IMPLEMENTATION
 // -------------------------------------------------------------------
-void mc_init_micro_buffer(mcBuffer* mb, uint8_t* data, const uint32_t size)
+void mc_init_buffer(mcBuffer* mb, uint8_t* data, const uint32_t size)
 {
     mc_init_buffer_offset(mb, data, size, 0U);
 }
@@ -63,12 +63,12 @@ void mc_init_buffer_offset_endian(mcBuffer* mb, uint8_t* data, const uint32_t si
 }
 
 
-void mc_copy_micro_buffer(mcBuffer* mb_dest, const mcBuffer* mb_source)
+void mc_copy_buffer(mcBuffer* mb_dest, const mcBuffer* mb_source)
 {
     memcpy(mb_dest, mb_source, sizeof(mcBuffer));
 }
 
-void mc_reset_micro_buffer(mcBuffer* mb)
+void mc_reset_buffer(mcBuffer* mb)
 {
     mc_reset_buffer_offset(mb, 0U);
 }

@@ -27,8 +27,8 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
         mcBuffer reader;
 
         // Initialize the MicroBuffers for working with an user-managed buffer.
-        mc_init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
-        mc_init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+        mc_init_buffer(&writer, buffer, BUFFER_LENGTH);
+        mc_init_buffer(&reader, buffer, BUFFER_LENGTH);
 
         // Serialize data
         char input[16] = "Hello MicroCDR!"; //16 characters
@@ -48,7 +48,7 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 ## API functions
 
 ```c
-void mc_init_micro_buffer        (mcBuffer* mb, uint8_t* data, const uint32_t size);
+void mc_init_buffer        (mcBuffer* mb, uint8_t* data, const uint32_t size);
 void mc_init_buffer_offset (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
 ```
 Initialize a `mcBuffer` structure, the main struct of *MicroCDR*.
@@ -61,7 +61,7 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
-void mc_copy_micro_buffer (mcBuffer* mb_dest, const mcBuffer* mb_source);
+void mc_copy_buffer (mcBuffer* mb_dest, const mcBuffer* mb_source);
 ```
 Copy a `mcBuffer` structure data to another `mcBuffer` structure.
 - `mb_dest`: the destination `mcBuffer` struct.
@@ -70,7 +70,7 @@ Copy a `mcBuffer` structure data to another `mcBuffer` structure.
 ---
 
 ```c
-void mc_reset_micro_buffer       (mcBuffer* mb);
+void mc_reset_buffer       (mcBuffer* mb);
 void mc_reset_buffer_offset(mcBuffer* mb, const uint32_t offset);
 ```
 Reset the `mcBuffer` as the same state that it was created.
@@ -172,7 +172,7 @@ If a `mcBuffer` has an error state, the next serialization/deserialization opera
 A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
 
 If is kwown that an operation can fails over a `mcBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
-the `mcBuffer` state can be saved using the `copy_micro_buffer` function.
+the `mcBuffer` state can be saved using the `copy_buffer` function.
 After the application of the wrong serialization/deserialization, only the `mcBuffer` that performed the operation will have a dirty state.
 
 ## Serialization/deserialization list

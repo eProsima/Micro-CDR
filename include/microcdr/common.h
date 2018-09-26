@@ -50,12 +50,12 @@ MCDLLAPI extern const mrEndianness MC_MACHINE_ENDIANNESS;
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
-MCDLLAPI void mc_init_micro_buffer               (mcBuffer* mb, uint8_t* data, const uint32_t size);
+MCDLLAPI void mc_init_buffer               (mcBuffer* mb, uint8_t* data, const uint32_t size);
 MCDLLAPI void mc_init_buffer_offset        (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
 MCDLLAPI void mc_init_buffer_offset_endian (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness);
-MCDLLAPI void mc_copy_micro_buffer               (mcBuffer* mb_dest, const mcBuffer* mb_source);
+MCDLLAPI void mc_copy_buffer               (mcBuffer* mb_dest, const mcBuffer* mb_source);
 
-MCDLLAPI void mc_reset_micro_buffer        (mcBuffer* mb);
+MCDLLAPI void mc_reset_buffer        (mcBuffer* mb);
 MCDLLAPI void mc_reset_buffer_offset (mcBuffer* mb, const uint32_t offset);
 
 MCDLLAPI void     mc_align_to              (mcBuffer* mb, const uint32_t alignment);
