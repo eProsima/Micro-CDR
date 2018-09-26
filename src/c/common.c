@@ -17,9 +17,9 @@
 #include <string.h>
 
 #if __BIG_ENDIAN__
-    const Endianness MACHINE_ENDIANNESS = BIG_ENDIANNESS;
+    const mrEndianness MC_MACHINE_ENDIANNESS = MC_BIG_ENDIANNESS;
 #else
-    const Endianness MACHINE_ENDIANNESS = LITTLE_ENDIANNESS;
+    const mrEndianness MC_MACHINE_ENDIANNESS = MC_LITTLE_ENDIANNESS;
 #endif
 
 // -------------------------------------------------------------------
@@ -49,10 +49,10 @@ void mc_init_micro_buffer(mcMicroBuffer* mb, uint8_t* data, const uint32_t size)
 
 void mc_init_micro_buffer_offset(mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset)
 {
-    mc_init_micro_buffer_offset_endian(mb, data, size, offset, MACHINE_ENDIANNESS);
+    mc_init_micro_buffer_offset_endian(mb, data, size, offset, MC_MACHINE_ENDIANNESS);
 }
 
-void mc_init_micro_buffer_offset_endian(mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, Endianness endianness)
+void mc_init_micro_buffer_offset_endian(mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness)
 {
     mb->init = data;
     mb->final = mb->init + size;
@@ -122,7 +122,7 @@ size_t mc_micro_buffer_remaining(const mcMicroBuffer* mb)
     return (size_t)(mb->final - mb->iterator);
 }
 
-Endianness mc_micro_buffer_endianness(const mcMicroBuffer* mb)
+mrEndianness mc_micro_buffer_endianness(const mcMicroBuffer* mb)
 {
     return mb->endianness;
 }

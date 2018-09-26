@@ -127,7 +127,7 @@ Returns the remaining size for the serializing/deserializing.
 ---
 
 ```c
-Endianness micro_buffer_endianness(const mcMicroBuffer* mb);
+mrEndianness micro_buffer_endianness(const mcMicroBuffer* mb);
 ```
 Returns the serialization/deserialization endianness.
 - `mb`: the `mcMicroBuffer` struct
@@ -152,7 +152,7 @@ Adding to this, there is a big set of functions for deserialize and deserialize 
 The configuration can be done by cmake with the cmake `__BIG_ENDIAN__` variable.
 A `0` value implies that the serialization will performed into a little endian machine, and `1` into a big endian machine.
 
-The default endianness serialization can be choosen by setting the `endianness` parameter of a `mcMicroBuffer`  to `BIG_ENDIANNESS` or `LITTLE_ENDIANNESS`.
+The default endianness serialization can be choosen by setting the `endianness` parameter of a `mcMicroBuffer`  to `MC_BIG_ENDIANNESS` or `MC_LITTLE_ENDIANNESS`.
 Also, there are a functions that allow to force an endianness in their serialization/deserialization.
 These functions contains the name `endiannness` in their signature.
 

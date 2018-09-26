@@ -14,7 +14,7 @@
 
 #include "../serialization/SequenceSerialization.hpp"
 
-class SequenceEndianness : public SequenceSerialization, public ::testing::WithParamInterface<Endianness>
+class SequenceEndianness : public SequenceSerialization, public ::testing::WithParamInterface<mrEndianness>
 {
 public:
 
@@ -29,7 +29,7 @@ public:
 
 
 protected:
-    Endianness endianness;
+    mrEndianness endianness;
 };
 
 TEST_P(SequenceEndianness, Bool)
@@ -176,4 +176,4 @@ TEST_P(SequenceEndianness, Double)
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
 
-INSTANTIATE_TEST_CASE_P(Endianness, SequenceEndianness, ::testing::Values(LITTLE_ENDIANNESS, BIG_ENDIANNESS));
+INSTANTIATE_TEST_CASE_P(mrEndianness, SequenceEndianness, ::testing::Values(MC_LITTLE_ENDIANNESS, MC_BIG_ENDIANNESS));

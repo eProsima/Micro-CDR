@@ -26,11 +26,11 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef enum Endianness {
-    BIG_ENDIANNESS,
-    LITTLE_ENDIANNESS
+typedef enum mrEndianness {
+    MC_BIG_ENDIANNESS,
+    MC_LITTLE_ENDIANNESS
 
-} Endianness;
+} mrEndianness;
 
 typedef struct mcMicroBuffer
 {
@@ -38,21 +38,21 @@ typedef struct mcMicroBuffer
     uint8_t *final;
     uint8_t *iterator;
 
-    Endianness endianness;
+    mrEndianness endianness;
     uint32_t last_data_size;
 
     bool error;
 
 } mcMicroBuffer;
 
-MCDLLAPI extern const Endianness MACHINE_ENDIANNESS;
+MCDLLAPI extern const mrEndianness MC_MACHINE_ENDIANNESS;
 
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
 MCDLLAPI void mc_init_micro_buffer               (mcMicroBuffer* mb, uint8_t* data, const uint32_t size);
 MCDLLAPI void mc_init_micro_buffer_offset        (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-MCDLLAPI void mc_init_micro_buffer_offset_endian (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, Endianness endianness);
+MCDLLAPI void mc_init_micro_buffer_offset_endian (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness);
 MCDLLAPI void mc_copy_micro_buffer               (mcMicroBuffer* mb_dest, const mcMicroBuffer* mb_source);
 
 MCDLLAPI void mc_reset_micro_buffer        (mcMicroBuffer* mb);
@@ -65,7 +65,7 @@ MCDLLAPI uint32_t mc_micro_buffer_alignment(const mcMicroBuffer* mb, const uint3
 MCDLLAPI size_t     mc_micro_buffer_size      (const mcMicroBuffer* mb);
 MCDLLAPI size_t     mc_micro_buffer_length    (const mcMicroBuffer* mb);
 MCDLLAPI size_t     mc_micro_buffer_remaining (const mcMicroBuffer* mb);
-MCDLLAPI Endianness mc_micro_buffer_endianness(const mcMicroBuffer* mb);
+MCDLLAPI mrEndianness mc_micro_buffer_endianness(const mcMicroBuffer* mb);
 MCDLLAPI bool       mc_micro_buffer_has_error (const mcMicroBuffer* mb);
 
 #ifdef __cplusplus
