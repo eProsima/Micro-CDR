@@ -27,8 +27,8 @@ int main()
     mcMicroBuffer reader;
 
     // Initialize the MicroBuffers for working with an user-managed buffer.
-    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+    mc_init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    mc_init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
     // Serialize data
     char input[16] = "Hello MicroCDR!"; //16 characters

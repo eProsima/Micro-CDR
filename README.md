@@ -27,16 +27,16 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
         mcMicroBuffer reader;
 
         // Initialize the MicroBuffers for working with an user-managed buffer.
-        init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
-        init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+        mc_init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+        mc_init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
 
         // Serialize data
         char input[16] = "Hello MicroCDR!"; //16 characters
-        serialize_array_char(&writer, input, 16);
+        mc_serialize_array_char(&writer, input, 16);
 
         // Deserialize data
         char output[16];
-        deserialize_array_char(&reader, output, 16);
+        mc_deserialize_array_char(&reader, output, 16);
 
         printf("Input: %s\n", input);
         printf("Output: %s\n", output);
@@ -48,8 +48,8 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 ## API functions
 
 ```c
-void init_micro_buffer        (mcMicroBuffer* mb, uint8_t* data, const uint32_t size);
-void init_micro_buffer_offset (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
+void mc_init_micro_buffer        (mcMicroBuffer* mb, uint8_t* data, const uint32_t size);
+void mc_init_micro_buffer_offset (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
 ```
 Initialize a `mcMicroBuffer` structure, the main struct of *MicroCDR*.
 - `mb`: the `mcMicroBuffer` struct
@@ -61,7 +61,7 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
-void copy_micro_buffer (mcMicroBuffer* mb_dest, const mcMicroBuffer* mb_source);
+void mc_copy_micro_buffer (mcMicroBuffer* mb_dest, const mcMicroBuffer* mb_source);
 ```
 Copy a `mcMicroBuffer` structure data to another `mcMicroBuffer` structure.
 - `mb_dest`: the destination `mcMicroBuffer` struct.
@@ -70,8 +70,8 @@ Copy a `mcMicroBuffer` structure data to another `mcMicroBuffer` structure.
 ---
 
 ```c
-void reset_micro_buffer       (mcMicroBuffer* mb);
-void reset_micro_buffer_offset(mcMicroBuffer* mb, const uint32_t offset);
+void mc_reset_micro_buffer       (mcMicroBuffer* mb);
+void mc_reset_micro_buffer_offset(mcMicroBuffer* mb, const uint32_t offset);
 ```
 Reset the `mcMicroBuffer` as the same state that it was created.
 - `mb`: the `mcMicroBuffer` struct.
@@ -81,7 +81,7 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
-void align_to         (mcMicroBuffer* mb, const uint32_t alignment);
+void mc_align_to (mcMicroBuffer* mb, const uint32_t alignment);
 ```
 Align the mcMicroBuffer to an `alignment` position.
 After call this function, the serialization pointer will be moved only if the current `mcMicroBuffer` was not aligment to the passed value.
@@ -92,7 +92,7 @@ After call this function, the serialization pointer will be moved only if the cu
 ---
 
 ```c
-uint32_t get_alignment(uint32_t buffer_position, const uint32_t data_size);
+uint32_t mc_aligment(uint32_t buffer_position, const uint32_t data_size);
 ```
 Returns the aligment necessary to serialize/deserialize a type with `data_size` size.
 
@@ -102,7 +102,16 @@ Returns the aligment necessary to serialize/deserialize a type with `data_size` 
 ---
 
 ```c
-size_t micro_buffer_size(const mcMicroBuffer* mb);
+uint32_t mc_micro_buffer_alignment(const mcMicroBuffer* mb, const uint32_t data_size);
+```
+Returns the aligment necessary to serialize/deserialize a type with `data_size` size into the `mcMicroBuffer` given.
+
+- `mb`: the `mcMicroBuffer` struct to ask the alignment.
+- `data_size`: the bytes of the data that you are asking for.
+---
+
+```c
+size_t mc_micro_buffer_size(const mcMicroBuffer* mb);
 ```
 Returns the memory size of the buffer.
 - `mb`: the `mcMicroBuffer` struct
@@ -110,7 +119,7 @@ Returns the memory size of the buffer.
 ---
 
 ```c
-size_t micro_buffer_length(const mcMicroBuffer* mb);
+size_t mc_micro_buffer_length(const mcMicroBuffer* mb);
 ```
 Returns the size of the serialized/deserialized data.
 - `mb`: the `mcMicroBuffer` struct
@@ -118,16 +127,15 @@ Returns the size of the serialized/deserialized data.
 ---
 
 ```c
-size_t micro_buffer_remaining(const mcMicroBuffer* mb);
+size_t mc_micro_buffer_remaining(const mcMicroBuffer* mb);
 ```
 Returns the remaining size for the serializing/deserializing.
 - `mb`: the `mcMicroBuffer` struct
 
-
 ---
 
 ```c
-mrEndianness micro_buffer_endianness(const mcMicroBuffer* mb);
+mrEndianness mc_micro_buffer_endianness(const mcMicroBuffer* mb);
 ```
 Returns the serialization/deserialization endianness.
 - `mb`: the `mcMicroBuffer` struct
@@ -135,7 +143,7 @@ Returns the serialization/deserialization endianness.
 ---
 
 ```c
-bool micro_buffer_error(const mcMicroBuffer* mb);
+bool mc_micro_buffer_error(const mcMicroBuffer* mb);
 ```
 Returns the status error of the `mcMicroBuffer`.
 - `mb`: the `mcMicroBuffer` struct

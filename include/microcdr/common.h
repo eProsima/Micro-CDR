@@ -59,8 +59,8 @@ MCDLLAPI void mc_reset_micro_buffer        (mcMicroBuffer* mb);
 MCDLLAPI void mc_reset_micro_buffer_offset (mcMicroBuffer* mb, const uint32_t offset);
 
 MCDLLAPI void     mc_align_to              (mcMicroBuffer* mb, const uint32_t alignment);
-MCDLLAPI uint32_t mc_alignment             (uint32_t buffer_position, const uint32_t data_size); //change name
-MCDLLAPI uint32_t mc_micro_buffer_alignment(const mcMicroBuffer* mb, const uint32_t data_size); //change name
+MCDLLAPI uint32_t mc_alignment             (uint32_t buffer_position, const uint32_t data_size);
+MCDLLAPI uint32_t mc_micro_buffer_alignment(const mcMicroBuffer* mb, const uint32_t data_size);
 
 MCDLLAPI size_t     mc_micro_buffer_size      (const mcMicroBuffer* mb);
 MCDLLAPI size_t     mc_micro_buffer_length    (const mcMicroBuffer* mb);
