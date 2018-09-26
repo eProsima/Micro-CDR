@@ -22,9 +22,9 @@
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
 
-bool serialize_string(mcMicroBuffer* mb, const char* string)
+bool mc_serialize_string(mcMicroBuffer* mb, const char* string)
 {
-    return serialize_sequence_char(mb, string, (uint32_t)strlen(string) + 1);
+    return mc_serialize_sequence_char(mb, string, (uint32_t)strlen(string) + 1);
 }
 
 bool mc_deserialize_string(mcMicroBuffer* mb, char* string, const uint32_t string_capacity)
@@ -33,9 +33,9 @@ bool mc_deserialize_string(mcMicroBuffer* mb, char* string, const uint32_t strin
     return mc_deserialize_sequence_char(mb, string, string_capacity, &length);
 }
 
-bool serialize_endian_string(mcMicroBuffer* mb, Endianness endianness, const char* string)
+bool mc_serialize_endian_string(mcMicroBuffer* mb, Endianness endianness, const char* string)
 {
-    return serialize_endian_sequence_char(mb, endianness, string, (uint32_t)strlen(string) + 1);
+    return mc_serialize_endian_sequence_char(mb, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
 bool mc_deserialize_endian_string(mcMicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity)

@@ -36,7 +36,7 @@ TEST_P(BasicEndianness, Int16)
     int16_t input = 0x0A0B;
     int16_t output = 0;
 
-    EXPECT_TRUE(serialize_endian_int16_t(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_int16_t(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_int16_t(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -47,7 +47,7 @@ TEST_P(BasicEndianness, Uint16)
     uint16_t input = 0x0A0B;
     uint16_t output = 0;
 
-    EXPECT_TRUE(serialize_endian_uint16_t(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_uint16_t(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_uint16_t(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -58,7 +58,7 @@ TEST_P(BasicEndianness, Int32)
     int32_t input = 0x0C0D0E0F;
     int32_t output = 0;
 
-    EXPECT_TRUE(serialize_endian_int32_t(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_int32_t(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_int32_t(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -69,7 +69,7 @@ TEST_P(BasicEndianness, Uint32)
     uint32_t input = 0x0C0D0E0F;
     uint32_t output = 0;
 
-    EXPECT_TRUE(serialize_endian_uint32_t(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_uint32_t(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_uint32_t(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -80,7 +80,7 @@ TEST_P(BasicEndianness, Int64)
     int64_t input = 0x0102030405060708L;
     int64_t output = 0;
 
-    EXPECT_TRUE(serialize_endian_int64_t(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_int64_t(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_int64_t(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -91,7 +91,7 @@ TEST_P(BasicEndianness, Uint64)
     uint64_t input = 0x0102030405060708L;
     uint64_t output = 0;
 
-    EXPECT_TRUE(serialize_endian_uint64_t(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_uint64_t(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_uint64_t(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -102,7 +102,7 @@ TEST_P(BasicEndianness, Float)
     float input  = 3.141592653589793238462f;
     float output = 0;
 
-    EXPECT_TRUE(serialize_endian_float(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_float(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_float(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);
@@ -113,7 +113,7 @@ TEST_P(BasicEndianness, Double)
     double input  = 3.141592653589793238462;
     double output = 0;
 
-    EXPECT_TRUE(serialize_endian_double(&writer, endianness, input));
+    EXPECT_TRUE(mc_serialize_endian_double(&writer, endianness, input));
     EXPECT_TRUE(mc_deserialize_endian_double(&reader, endianness, &output));
 
     EXPECT_EQ(input, output);

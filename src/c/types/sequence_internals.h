@@ -26,10 +26,10 @@ extern "C" {
 // -------------------------------------------------------------------
 //                  INTERNAL SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
-bool serialize_sequence_byte_1(mcMicroBuffer* buffer, Endianness endianness, const uint8_t* array, const uint32_t size);
-bool serialize_sequence_byte_2(mcMicroBuffer* buffer, Endianness endianness, const uint16_t* array, const uint32_t size);
-bool serialize_sequence_byte_4(mcMicroBuffer* buffer, Endianness endianness, const uint32_t* array, const uint32_t size);
-bool serialize_sequence_byte_8(mcMicroBuffer* buffer, Endianness endianness, const uint64_t* array, const uint32_t size);
+bool mc_serialize_sequence_byte_1(mcMicroBuffer* buffer, Endianness endianness, const uint8_t* array, const uint32_t size);
+bool mc_serialize_sequence_byte_2(mcMicroBuffer* buffer, Endianness endianness, const uint16_t* array, const uint32_t size);
+bool mc_serialize_sequence_byte_4(mcMicroBuffer* buffer, Endianness endianness, const uint32_t* array, const uint32_t size);
+bool mc_serialize_sequence_byte_8(mcMicroBuffer* buffer, Endianness endianness, const uint64_t* array, const uint32_t size);
 
 bool mc_deserialize_sequence_byte_1(mcMicroBuffer* buffer, Endianness endianness, uint8_t* array, const uint32_t array_capacity, uint32_t* size);
 bool mc_deserialize_sequence_byte_2(mcMicroBuffer* buffer, Endianness endianness, uint16_t* array, const uint32_t array_capacity, uint32_t* size);

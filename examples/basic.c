@@ -32,7 +32,7 @@ int main()
 
     // Serialize data
     char input[16] = "Hello MicroCDR!"; //16 characters
-    serialize_array_char(&writer, input, 16);
+    mc_serialize_array_char(&writer, input, 16);
 
     // Deserialize data
     char output[16];

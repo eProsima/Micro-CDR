@@ -35,7 +35,7 @@ public:
         char input[MAX_STRING_LENGTH] = "This is a message test";
         char output[MAX_STRING_LENGTH] = {0};
 
-        EXPECT_TRUE(serialize_string(&writer, input));
+        EXPECT_TRUE(mc_serialize_string(&writer, input));
         EXPECT_TRUE(mc_deserialize_string(&reader, output, MAX_STRING_LENGTH));
 
         EXPECT_STREQ(input, output);
