@@ -38,7 +38,7 @@ public:
         uint8_t output = 0;
 
         EXPECT_FALSE(serialize_uint8_t(&writer, input));
-        EXPECT_FALSE(deserialize_uint8_t(&reader, &output));
+        EXPECT_FALSE(mc_deserialize_uint8_t(&reader, &output));
     }
 
     void try_block_2()
@@ -47,7 +47,7 @@ public:
         uint16_t output = 0;
 
         EXPECT_FALSE(serialize_uint16_t(&writer, input));
-        EXPECT_FALSE(deserialize_uint16_t(&reader, &output));
+        EXPECT_FALSE(mc_deserialize_uint16_t(&reader, &output));
     }
 
     void try_block_4()
@@ -56,7 +56,7 @@ public:
         uint32_t output = 0;
 
         EXPECT_FALSE(serialize_uint32_t(&writer, input));
-        EXPECT_FALSE(deserialize_uint32_t(&reader, &output));
+        EXPECT_FALSE(mc_deserialize_uint32_t(&reader, &output));
     }
 
     void try_block_8()
@@ -65,7 +65,7 @@ public:
         uint64_t output = 0;
 
         EXPECT_FALSE(serialize_uint64_t(&writer, input));
-        EXPECT_FALSE(deserialize_uint64_t(&reader, &output));
+        EXPECT_FALSE(mc_deserialize_uint64_t(&reader, &output));
     }
 
     ~FullBuffer()

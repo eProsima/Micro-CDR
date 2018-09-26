@@ -29,10 +29,10 @@ extern "C" {
 // -------------------------------------------------------------------
 
 MCDLLAPI bool serialize_string(mcMicroBuffer* mb, const char* string);
-MCDLLAPI bool deserialize_string(mcMicroBuffer* mb, char* string, const uint32_t string_capacity);
+MCDLLAPI bool mc_deserialize_string(mcMicroBuffer* mb, char* string, const uint32_t string_capacity);
 
 MCDLLAPI bool serialize_endian_string(mcMicroBuffer* mb, Endianness endianness, const char* string);
-MCDLLAPI bool deserialize_endian_string(mcMicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity);
+MCDLLAPI bool mc_deserialize_endian_string(mcMicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity);
 
 #ifdef __cplusplus
 }

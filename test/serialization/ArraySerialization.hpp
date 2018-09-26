@@ -38,7 +38,7 @@ public:
         bool output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_bool(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_bool(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_bool(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -50,7 +50,7 @@ public:
         char output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_char(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_char(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_char(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -62,7 +62,7 @@ public:
         int8_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_int8_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_int8_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_int8_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -74,7 +74,7 @@ public:
         uint8_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_uint8_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_uint8_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_uint8_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -86,7 +86,7 @@ public:
         int16_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_int16_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_int16_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_int16_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -98,7 +98,7 @@ public:
         uint16_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_uint16_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_uint16_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_uint16_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -110,7 +110,7 @@ public:
         int32_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_int32_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_int32_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_int32_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -122,7 +122,7 @@ public:
         uint32_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_uint32_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_uint32_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_uint32_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -134,7 +134,7 @@ public:
         int64_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_int64_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_int64_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_int64_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -146,7 +146,7 @@ public:
         uint64_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_uint64_t(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_uint64_t(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_uint64_t(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -158,7 +158,7 @@ public:
         float output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_float(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_float(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_float(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
@@ -170,7 +170,7 @@ public:
         double output[ARRAY_SIZE];
 
         EXPECT_TRUE(serialize_array_double(&writer, input, ARRAY_SIZE));
-        EXPECT_TRUE(deserialize_array_double(&reader, output, ARRAY_SIZE));
+        EXPECT_TRUE(mc_deserialize_array_double(&reader, output, ARRAY_SIZE));
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }

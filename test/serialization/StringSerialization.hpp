@@ -36,7 +36,7 @@ public:
         char output[MAX_STRING_LENGTH] = {0};
 
         EXPECT_TRUE(serialize_string(&writer, input));
-        EXPECT_TRUE(deserialize_string(&reader, output, MAX_STRING_LENGTH));
+        EXPECT_TRUE(mc_deserialize_string(&reader, output, MAX_STRING_LENGTH));
 
         EXPECT_STREQ(input, output);
     }

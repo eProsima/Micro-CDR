@@ -38,18 +38,18 @@ MCDLLAPI bool serialize_int64_t(mcMicroBuffer* mb, const int64_t value);
 MCDLLAPI bool serialize_float(mcMicroBuffer* mb, const float value);
 MCDLLAPI bool serialize_double(mcMicroBuffer* mb, const double value);
 
-MCDLLAPI bool deserialize_char(mcMicroBuffer* mb, char* value);
-MCDLLAPI bool deserialize_bool(mcMicroBuffer* mb, bool* value);
-MCDLLAPI bool deserialize_uint8_t(mcMicroBuffer* mb, uint8_t* value);
-MCDLLAPI bool deserialize_uint16_t(mcMicroBuffer* mb, uint16_t* value);
-MCDLLAPI bool deserialize_uint32_t(mcMicroBuffer* mb, uint32_t* value);
-MCDLLAPI bool deserialize_uint64_t(mcMicroBuffer* mb, uint64_t* value);
-MCDLLAPI bool deserialize_int8_t(mcMicroBuffer* mb, int8_t* value);
-MCDLLAPI bool deserialize_int16_t(mcMicroBuffer* mb, int16_t* value);
-MCDLLAPI bool deserialize_int32_t(mcMicroBuffer* mb, int32_t* value);
-MCDLLAPI bool deserialize_int64_t(mcMicroBuffer* mb, int64_t* value);
-MCDLLAPI bool deserialize_float(mcMicroBuffer* mb, float* value);
-MCDLLAPI bool deserialize_double(mcMicroBuffer* mb, double* value);
+MCDLLAPI bool mc_deserialize_char(mcMicroBuffer* mb, char* value);
+MCDLLAPI bool mc_deserialize_bool(mcMicroBuffer* mb, bool* value);
+MCDLLAPI bool mc_deserialize_uint8_t(mcMicroBuffer* mb, uint8_t* value);
+MCDLLAPI bool mc_deserialize_uint16_t(mcMicroBuffer* mb, uint16_t* value);
+MCDLLAPI bool mc_deserialize_uint32_t(mcMicroBuffer* mb, uint32_t* value);
+MCDLLAPI bool mc_deserialize_uint64_t(mcMicroBuffer* mb, uint64_t* value);
+MCDLLAPI bool mc_deserialize_int8_t(mcMicroBuffer* mb, int8_t* value);
+MCDLLAPI bool mc_deserialize_int16_t(mcMicroBuffer* mb, int16_t* value);
+MCDLLAPI bool mc_deserialize_int32_t(mcMicroBuffer* mb, int32_t* value);
+MCDLLAPI bool mc_deserialize_int64_t(mcMicroBuffer* mb, int64_t* value);
+MCDLLAPI bool mc_deserialize_float(mcMicroBuffer* mb, float* value);
+MCDLLAPI bool mc_deserialize_double(mcMicroBuffer* mb, double* value);
 
 MCDLLAPI bool serialize_endian_uint16_t(mcMicroBuffer* mb, Endianness endianness, const uint16_t value);
 MCDLLAPI bool serialize_endian_uint32_t(mcMicroBuffer* mb, Endianness endianness, const uint32_t value);
@@ -60,14 +60,14 @@ MCDLLAPI bool serialize_endian_int64_t(mcMicroBuffer* mb, Endianness endianness,
 MCDLLAPI bool serialize_endian_float(mcMicroBuffer* mb, Endianness endianness, const float value);
 MCDLLAPI bool serialize_endian_double(mcMicroBuffer* mb, Endianness endianness, const double value);
 
-MCDLLAPI bool deserialize_endian_uint16_t(mcMicroBuffer* mb, Endianness endianness, uint16_t* value);
-MCDLLAPI bool deserialize_endian_uint32_t(mcMicroBuffer* mb, Endianness endianness, uint32_t *value);
-MCDLLAPI bool deserialize_endian_uint64_t(mcMicroBuffer* mb, Endianness endianness, uint64_t* value);
-MCDLLAPI bool deserialize_endian_int16_t(mcMicroBuffer* mb, Endianness endianness, int16_t* value);
-MCDLLAPI bool deserialize_endian_int32_t(mcMicroBuffer* mb, Endianness endianness, int32_t* value);
-MCDLLAPI bool deserialize_endian_int64_t(mcMicroBuffer* mb, Endianness endianness, int64_t* value);
-MCDLLAPI bool deserialize_endian_float(mcMicroBuffer* mb, Endianness endianness, float* value);
-MCDLLAPI bool deserialize_endian_double(mcMicroBuffer* mb, Endianness endianness, double* value);
+MCDLLAPI bool mc_deserialize_endian_uint16_t(mcMicroBuffer* mb, Endianness endianness, uint16_t* value);
+MCDLLAPI bool mc_deserialize_endian_uint32_t(mcMicroBuffer* mb, Endianness endianness, uint32_t *value);
+MCDLLAPI bool mc_deserialize_endian_uint64_t(mcMicroBuffer* mb, Endianness endianness, uint64_t* value);
+MCDLLAPI bool mc_deserialize_endian_int16_t(mcMicroBuffer* mb, Endianness endianness, int16_t* value);
+MCDLLAPI bool mc_deserialize_endian_int32_t(mcMicroBuffer* mb, Endianness endianness, int32_t* value);
+MCDLLAPI bool mc_deserialize_endian_int64_t(mcMicroBuffer* mb, Endianness endianness, int64_t* value);
+MCDLLAPI bool mc_deserialize_endian_float(mcMicroBuffer* mb, Endianness endianness, float* value);
+MCDLLAPI bool mc_deserialize_endian_double(mcMicroBuffer* mb, Endianness endianness, double* value);
 
 #ifdef __cplusplus
 }

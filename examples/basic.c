@@ -36,7 +36,7 @@ int main()
 
     // Deserialize data
     char output[16];
-    deserialize_array_char(&reader, output, 16);
+    mc_deserialize_array_char(&reader, output, 16);
 
     printf("Input: %s\n", input);
     printf("Output: %s\n", output);
