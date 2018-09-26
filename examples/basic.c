@@ -23,8 +23,8 @@ int main()
     uint8_t buffer[BUFFER_LENGTH];
 
     // Structs for handle the buffer.
-    mcMicroBuffer writer;
-    mcMicroBuffer reader;
+    mcBuffer writer;
+    mcBuffer reader;
 
     // Initialize the MicroBuffers for working with an user-managed buffer.
     mc_init_micro_buffer(&writer, buffer, BUFFER_LENGTH);

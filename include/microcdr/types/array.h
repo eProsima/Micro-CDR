@@ -25,49 +25,49 @@ extern "C" {
 //                   PUBLIC SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
 
-MCDLLAPI bool mc_serialize_array_char(mcMicroBuffer* mb, const char* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_bool(mcMicroBuffer* mb, const bool* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_uint8_t(mcMicroBuffer* mb, const uint8_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_uint16_t(mcMicroBuffer* mb, const uint16_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_uint32_t(mcMicroBuffer* mb, const uint32_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_uint64_t(mcMicroBuffer* mb, const uint64_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_int8_t(mcMicroBuffer* mb, const int8_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_int16_t(mcMicroBuffer* mb, const int16_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_int32_t(mcMicroBuffer* mb, const int32_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_int64_t(mcMicroBuffer* mb, const int64_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_float(mcMicroBuffer* mb, const float* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_array_double(mcMicroBuffer* mb, const double* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_char(mcBuffer* mb, const char* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_bool(mcBuffer* mb, const bool* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_uint8_t(mcBuffer* mb, const uint8_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_uint16_t(mcBuffer* mb, const uint16_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_uint32_t(mcBuffer* mb, const uint32_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_uint64_t(mcBuffer* mb, const uint64_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_int8_t(mcBuffer* mb, const int8_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_int16_t(mcBuffer* mb, const int16_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_int32_t(mcBuffer* mb, const int32_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_int64_t(mcBuffer* mb, const int64_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_float(mcBuffer* mb, const float* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_array_double(mcBuffer* mb, const double* array, const uint32_t size);
 
-MCDLLAPI bool mc_deserialize_array_char(mcMicroBuffer* mb, char* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_bool(mcMicroBuffer* mb, bool* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_uint8_t(mcMicroBuffer* mb, uint8_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_uint16_t(mcMicroBuffer* mb, uint16_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_uint32_t(mcMicroBuffer* mb, uint32_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_uint64_t(mcMicroBuffer* mb, uint64_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_int8_t(mcMicroBuffer* mb, int8_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_int16_t(mcMicroBuffer* mb, int16_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_int32_t(mcMicroBuffer* mb, int32_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_int64_t(mcMicroBuffer* mb, int64_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_float(mcMicroBuffer* mb, float* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_array_double(mcMicroBuffer* mb, double* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_char(mcBuffer* mb, char* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_bool(mcBuffer* mb, bool* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_uint8_t(mcBuffer* mb, uint8_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_uint16_t(mcBuffer* mb, uint16_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_uint32_t(mcBuffer* mb, uint32_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_uint64_t(mcBuffer* mb, uint64_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_int8_t(mcBuffer* mb, int8_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_int16_t(mcBuffer* mb, int16_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_int32_t(mcBuffer* mb, int32_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_int64_t(mcBuffer* mb, int64_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_float(mcBuffer* mb, float* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_array_double(mcBuffer* mb, double* array, const uint32_t size);
 
-MCDLLAPI bool mc_serialize_endian_array_uint16_t(mcMicroBuffer* mb, mrEndianness endianness, const uint16_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_uint32_t(mcMicroBuffer* mb, mrEndianness endianness, const uint32_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_uint64_t(mcMicroBuffer* mb, mrEndianness endianness, const uint64_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_int16_t(mcMicroBuffer* mb, mrEndianness endianness, const int16_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_int32_t(mcMicroBuffer* mb, mrEndianness endianness, const int32_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_int64_t(mcMicroBuffer* mb, mrEndianness endianness, const int64_t* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_float(mcMicroBuffer* mb, mrEndianness endianness, const float* array, const uint32_t size);
-MCDLLAPI bool mc_serialize_endian_array_double(mcMicroBuffer* mb, mrEndianness endianness, const double* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_uint16_t(mcBuffer* mb, mrEndianness endianness, const uint16_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_uint32_t(mcBuffer* mb, mrEndianness endianness, const uint32_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_uint64_t(mcBuffer* mb, mrEndianness endianness, const uint64_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_int16_t(mcBuffer* mb, mrEndianness endianness, const int16_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_int32_t(mcBuffer* mb, mrEndianness endianness, const int32_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_int64_t(mcBuffer* mb, mrEndianness endianness, const int64_t* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_float(mcBuffer* mb, mrEndianness endianness, const float* array, const uint32_t size);
+MCDLLAPI bool mc_serialize_endian_array_double(mcBuffer* mb, mrEndianness endianness, const double* array, const uint32_t size);
 
-MCDLLAPI bool mc_deserialize_endian_array_uint16_t(mcMicroBuffer* mb, mrEndianness endianness, uint16_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_uint32_t(mcMicroBuffer* mb, mrEndianness endianness, uint32_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_uint64_t(mcMicroBuffer* mb, mrEndianness endianness, uint64_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_int16_t(mcMicroBuffer* mb, mrEndianness endianness, int16_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_int32_t(mcMicroBuffer* mb, mrEndianness endianness, int32_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_int64_t(mcMicroBuffer* mb, mrEndianness endianness, int64_t* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_float(mcMicroBuffer* mb, mrEndianness endianness, float* array, const uint32_t size);
-MCDLLAPI bool mc_deserialize_endian_array_double(mcMicroBuffer* mb, mrEndianness endianness, double* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_uint16_t(mcBuffer* mb, mrEndianness endianness, uint16_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_uint32_t(mcBuffer* mb, mrEndianness endianness, uint32_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_uint64_t(mcBuffer* mb, mrEndianness endianness, uint64_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_int16_t(mcBuffer* mb, mrEndianness endianness, int16_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_int32_t(mcBuffer* mb, mrEndianness endianness, int32_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_int64_t(mcBuffer* mb, mrEndianness endianness, int64_t* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_float(mcBuffer* mb, mrEndianness endianness, float* array, const uint32_t size);
+MCDLLAPI bool mc_deserialize_endian_array_double(mcBuffer* mb, mrEndianness endianness, double* array, const uint32_t size);
 
 #ifdef __cplusplus
 }

@@ -192,8 +192,8 @@ public:
     }
 
 protected:
-    mcMicroBuffer writer;
-    mcMicroBuffer reader;
+    mcBuffer writer;
+    mcBuffer reader;
     uint8_t buffer[BUFFER_LENGTH];
 };
 
