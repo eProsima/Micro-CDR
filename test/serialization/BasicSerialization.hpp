@@ -29,8 +29,8 @@ public:
     BasicSerialization()
     {
         std::memset(buffer, 0, BUFFER_LENGTH);
-        init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
-        init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+        mc_init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+        mc_init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
     }
 
     void check_data_size(uint32_t data_size)

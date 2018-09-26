@@ -39,7 +39,7 @@ bool serialize_byte_1(mcMicroBuffer* mb, const uint8_t* byte)
 bool serialize_byte_2(mcMicroBuffer* mb, const Endianness endianness, const uint16_t* bytes)
 {
     uint32_t data_size = sizeof(uint16_t);
-    uint32_t alignment = get_alignment_offset(mb, data_size);
+    uint32_t alignment = mc_micro_buffer_alignment(mb, data_size);
 
     if(check_buffer(mb, alignment + data_size))
     {
@@ -65,7 +65,7 @@ bool serialize_byte_2(mcMicroBuffer* mb, const Endianness endianness, const uint
 bool serialize_byte_4(mcMicroBuffer* mb, const Endianness endianness, const uint32_t* bytes)
 {
     uint32_t data_size = sizeof(uint32_t);
-    uint32_t alignment = get_alignment_offset(mb, data_size);
+    uint32_t alignment = mc_micro_buffer_alignment(mb, data_size);
 
     if(check_buffer(mb, alignment + data_size))
     {
@@ -93,7 +93,7 @@ bool serialize_byte_4(mcMicroBuffer* mb, const Endianness endianness, const uint
 bool serialize_byte_8(mcMicroBuffer* mb, const Endianness endianness, const uint64_t* bytes)
 {
     uint32_t data_size = sizeof(uint64_t);
-    uint32_t alignment = get_alignment_offset(mb, data_size);
+    uint32_t alignment = mc_micro_buffer_alignment(mb, data_size);
 
     if(check_buffer(mb, alignment + data_size))
     {
@@ -138,7 +138,7 @@ bool deserialize_byte_1(mcMicroBuffer* mb, uint8_t* byte)
 bool deserialize_byte_2(mcMicroBuffer* mb, const Endianness endianness, uint16_t* bytes)
 {
     uint32_t data_size = sizeof(uint16_t);
-    uint32_t alignment = get_alignment_offset(mb, data_size);
+    uint32_t alignment = mc_micro_buffer_alignment(mb, data_size);
 
     if(check_buffer(mb, alignment + data_size))
     {
@@ -164,7 +164,7 @@ bool deserialize_byte_2(mcMicroBuffer* mb, const Endianness endianness, uint16_t
 bool deserialize_byte_4(mcMicroBuffer* mb, const Endianness endianness, uint32_t* bytes)
 {
     uint32_t data_size = sizeof(uint32_t);
-    uint32_t alignment = get_alignment_offset(mb, data_size);
+    uint32_t alignment = mc_micro_buffer_alignment(mb, data_size);
 
     if(check_buffer(mb, alignment + data_size))
     {
@@ -192,7 +192,7 @@ bool deserialize_byte_4(mcMicroBuffer* mb, const Endianness endianness, uint32_t
 bool deserialize_byte_8(mcMicroBuffer* mb, const Endianness endianness, uint64_t* bytes)
 {
     uint32_t data_size = sizeof(uint64_t);
-    uint32_t alignment = get_alignment_offset(mb, data_size);
+    uint32_t alignment = mc_micro_buffer_alignment(mb, data_size);
 
     if(check_buffer(mb, alignment + data_size))
     {

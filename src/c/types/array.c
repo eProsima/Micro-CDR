@@ -41,7 +41,7 @@ bool serialize_array_byte_2(mcMicroBuffer* mb, const Endianness endianness, cons
 {
     uint32_t data_size = sizeof(uint16_t);
     uint32_t array_size = size * data_size;
-    uint32_t alignment = get_alignment_offset(mb, sizeof(uint16_t));
+    uint32_t alignment = mc_micro_buffer_alignment(mb, sizeof(uint16_t));
 
     if(check_buffer(mb, alignment + array_size))
     {
@@ -68,7 +68,7 @@ bool serialize_array_byte_4(mcMicroBuffer* mb, const Endianness endianness, cons
 {
     uint32_t data_size = sizeof(uint32_t);
     uint32_t array_size = size * data_size;
-    uint32_t alignment = get_alignment_offset(mb, sizeof(uint32_t));
+    uint32_t alignment = mc_micro_buffer_alignment(mb, sizeof(uint32_t));
 
     if(check_buffer(mb, alignment + array_size))
     {
@@ -95,7 +95,7 @@ bool serialize_array_byte_8(mcMicroBuffer* mb, const Endianness endianness, cons
 {
     uint32_t data_size = sizeof(uint64_t);
     uint32_t array_size = size * data_size;
-    uint32_t alignment = get_alignment_offset(mb, sizeof(uint64_t));
+    uint32_t alignment = mc_micro_buffer_alignment(mb, sizeof(uint64_t));
 
     if(check_buffer(mb, alignment + array_size))
     {
@@ -135,7 +135,7 @@ bool deserialize_array_byte_2(mcMicroBuffer* mb, const Endianness endianness, ui
 {
     uint32_t data_size = sizeof(uint16_t);
     uint32_t array_size = size * data_size;
-    uint32_t alignment = get_alignment_offset(mb, sizeof(uint16_t));
+    uint32_t alignment = mc_micro_buffer_alignment(mb, sizeof(uint16_t));
 
     if(check_buffer(mb, alignment + array_size))
     {
@@ -162,7 +162,7 @@ bool deserialize_array_byte_4(mcMicroBuffer* mb, const Endianness endianness, ui
 {
     uint32_t data_size = sizeof(uint32_t);
     uint32_t array_size = size * data_size;
-    uint32_t alignment = get_alignment_offset(mb, sizeof(uint32_t));
+    uint32_t alignment = mc_micro_buffer_alignment(mb, sizeof(uint32_t));
 
     if(check_buffer(mb, alignment + array_size))
     {
@@ -189,7 +189,7 @@ bool deserialize_array_byte_8(mcMicroBuffer* mb, const Endianness endianness, ui
 {
     uint32_t data_size = sizeof(uint64_t);
     uint32_t array_size = size * data_size;
-    uint32_t alignment = get_alignment_offset(mb, sizeof(uint64_t));
+    uint32_t alignment = mc_micro_buffer_alignment(mb, sizeof(uint64_t));
 
     if(check_buffer(mb, alignment + array_size))
     {
