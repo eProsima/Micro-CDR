@@ -23,7 +23,7 @@
 //                INTERNAL SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------
 
-bool serialize_byte_1(MicroBuffer* mb, const uint8_t* byte)
+bool serialize_byte_1(mcMicroBuffer* mb, const uint8_t* byte)
 {
     uint32_t data_size = sizeof(uint8_t);
     if(check_buffer(mb, data_size))
@@ -36,7 +36,7 @@ bool serialize_byte_1(MicroBuffer* mb, const uint8_t* byte)
     return !mb->error;
 }
 
-bool serialize_byte_2(MicroBuffer* mb, const Endianness endianness, const uint16_t* bytes)
+bool serialize_byte_2(mcMicroBuffer* mb, const Endianness endianness, const uint16_t* bytes)
 {
     uint32_t data_size = sizeof(uint16_t);
     uint32_t alignment = get_alignment_offset(mb, data_size);
@@ -62,7 +62,7 @@ bool serialize_byte_2(MicroBuffer* mb, const Endianness endianness, const uint16
     return !mb->error;
 }
 
-bool serialize_byte_4(MicroBuffer* mb, const Endianness endianness, const uint32_t* bytes)
+bool serialize_byte_4(mcMicroBuffer* mb, const Endianness endianness, const uint32_t* bytes)
 {
     uint32_t data_size = sizeof(uint32_t);
     uint32_t alignment = get_alignment_offset(mb, data_size);
@@ -90,7 +90,7 @@ bool serialize_byte_4(MicroBuffer* mb, const Endianness endianness, const uint32
     return !mb->error;
 }
 
-bool serialize_byte_8(MicroBuffer* mb, const Endianness endianness, const uint64_t* bytes)
+bool serialize_byte_8(mcMicroBuffer* mb, const Endianness endianness, const uint64_t* bytes)
 {
     uint32_t data_size = sizeof(uint64_t);
     uint32_t alignment = get_alignment_offset(mb, data_size);
@@ -122,7 +122,7 @@ bool serialize_byte_8(MicroBuffer* mb, const Endianness endianness, const uint64
     return !mb->error;
 }
 
-bool deserialize_byte_1(MicroBuffer* mb, uint8_t* byte)
+bool deserialize_byte_1(mcMicroBuffer* mb, uint8_t* byte)
 {
     uint32_t data_size = sizeof(uint8_t);
     if(check_buffer(mb, data_size))
@@ -135,7 +135,7 @@ bool deserialize_byte_1(MicroBuffer* mb, uint8_t* byte)
     return !mb->error;
 }
 
-bool deserialize_byte_2(MicroBuffer* mb, const Endianness endianness, uint16_t* bytes)
+bool deserialize_byte_2(mcMicroBuffer* mb, const Endianness endianness, uint16_t* bytes)
 {
     uint32_t data_size = sizeof(uint16_t);
     uint32_t alignment = get_alignment_offset(mb, data_size);
@@ -161,7 +161,7 @@ bool deserialize_byte_2(MicroBuffer* mb, const Endianness endianness, uint16_t* 
     return !mb->error;
 }
 
-bool deserialize_byte_4(MicroBuffer* mb, const Endianness endianness, uint32_t* bytes)
+bool deserialize_byte_4(mcMicroBuffer* mb, const Endianness endianness, uint32_t* bytes)
 {
     uint32_t data_size = sizeof(uint32_t);
     uint32_t alignment = get_alignment_offset(mb, data_size);
@@ -189,7 +189,7 @@ bool deserialize_byte_4(MicroBuffer* mb, const Endianness endianness, uint32_t* 
     return !mb->error;
 }
 
-bool deserialize_byte_8(MicroBuffer* mb, const Endianness endianness, uint64_t* bytes)
+bool deserialize_byte_8(mcMicroBuffer* mb, const Endianness endianness, uint64_t* bytes)
 {
     uint32_t data_size = sizeof(uint64_t);
     uint32_t alignment = get_alignment_offset(mb, data_size);
@@ -225,202 +225,202 @@ bool deserialize_byte_8(MicroBuffer* mb, const Endianness endianness, uint64_t* 
 //                  PUBLIC SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------
 
-bool serialize_char(MicroBuffer* mb, const char value)
+bool serialize_char(mcMicroBuffer* mb, const char value)
 {
     return serialize_byte_1(mb, (uint8_t*)&value);
 }
 
-bool serialize_bool(MicroBuffer* mb, const bool value)
+bool serialize_bool(mcMicroBuffer* mb, const bool value)
 {
     return serialize_byte_1(mb, (uint8_t*)&value);
 }
 
-bool serialize_uint8_t(MicroBuffer* mb, const uint8_t value)
+bool serialize_uint8_t(mcMicroBuffer* mb, const uint8_t value)
 {
     return serialize_byte_1(mb, &value);
 }
 
-bool serialize_uint16_t(MicroBuffer* mb, const uint16_t value)
+bool serialize_uint16_t(mcMicroBuffer* mb, const uint16_t value)
 {
     return serialize_byte_2(mb, mb->endianness, &value);
 }
 
-bool serialize_uint32_t(MicroBuffer* mb, const uint32_t value)
+bool serialize_uint32_t(mcMicroBuffer* mb, const uint32_t value)
 {
     return serialize_byte_4(mb, mb->endianness, &value);
 }
 
-bool serialize_uint64_t(MicroBuffer* mb, const uint64_t value)
+bool serialize_uint64_t(mcMicroBuffer* mb, const uint64_t value)
 {
     return serialize_byte_8(mb, mb->endianness, &value);
 }
 
-bool serialize_int8_t(MicroBuffer* mb, const int8_t value)
+bool serialize_int8_t(mcMicroBuffer* mb, const int8_t value)
 {
     return serialize_byte_1(mb, (uint8_t*)&value);
 }
 
-bool serialize_int16_t(MicroBuffer* mb, const int16_t value)
+bool serialize_int16_t(mcMicroBuffer* mb, const int16_t value)
 {
     return serialize_byte_2(mb, mb->endianness, (uint16_t*)&value);
 }
 
-bool serialize_int32_t(MicroBuffer* mb, const int32_t value)
+bool serialize_int32_t(mcMicroBuffer* mb, const int32_t value)
 {
     return serialize_byte_4(mb, mb->endianness, (uint32_t*)&value);
 }
 
-bool serialize_int64_t(MicroBuffer* mb, const int64_t value)
+bool serialize_int64_t(mcMicroBuffer* mb, const int64_t value)
 {
     return serialize_byte_8(mb, mb->endianness, (uint64_t*)&value);
 }
 
-bool serialize_float(MicroBuffer* mb, const float value)
+bool serialize_float(mcMicroBuffer* mb, const float value)
 {
     return serialize_byte_4(mb, mb->endianness, (uint32_t*)&value);
 }
 
-bool serialize_double(MicroBuffer* mb, const double value)
+bool serialize_double(mcMicroBuffer* mb, const double value)
 {
     return serialize_byte_8(mb, mb->endianness, (uint64_t*)&value);
 }
 
-bool deserialize_char(MicroBuffer* mb, char* value)
+bool deserialize_char(mcMicroBuffer* mb, char* value)
 {
     return deserialize_byte_1(mb, (uint8_t*)value);
 }
 
-bool deserialize_bool(MicroBuffer* mb, bool* value)
+bool deserialize_bool(mcMicroBuffer* mb, bool* value)
 {
     return deserialize_byte_1(mb, (uint8_t*)value);
 }
 
-bool deserialize_uint8_t(MicroBuffer* mb, uint8_t* value)
+bool deserialize_uint8_t(mcMicroBuffer* mb, uint8_t* value)
 {
     return deserialize_byte_1(mb, value);
 }
 
-bool deserialize_uint16_t(MicroBuffer* mb, uint16_t* value)
+bool deserialize_uint16_t(mcMicroBuffer* mb, uint16_t* value)
 {
     return deserialize_byte_2(mb, mb->endianness, value);
 }
 
-bool deserialize_uint32_t(MicroBuffer* mb, uint32_t* value)
+bool deserialize_uint32_t(mcMicroBuffer* mb, uint32_t* value)
 {
     return deserialize_byte_4(mb, mb->endianness, value);
 }
 
-bool deserialize_uint64_t(MicroBuffer* mb, uint64_t* value)
+bool deserialize_uint64_t(mcMicroBuffer* mb, uint64_t* value)
 {
     return deserialize_byte_8(mb, mb->endianness, value);
 }
 
-bool deserialize_int8_t(MicroBuffer* mb, int8_t* value)
+bool deserialize_int8_t(mcMicroBuffer* mb, int8_t* value)
 {
     return deserialize_byte_1(mb, (uint8_t*)value);
 }
 
-bool deserialize_int16_t(MicroBuffer* mb, int16_t* value)
+bool deserialize_int16_t(mcMicroBuffer* mb, int16_t* value)
 {
     return deserialize_byte_2(mb, mb->endianness, (uint16_t*)value);
 }
 
-bool deserialize_int32_t(MicroBuffer* mb, int32_t* value)
+bool deserialize_int32_t(mcMicroBuffer* mb, int32_t* value)
 {
     return deserialize_byte_4(mb, mb->endianness, (uint32_t*)value);
 }
 
-bool deserialize_int64_t(MicroBuffer* mb, int64_t* value)
+bool deserialize_int64_t(mcMicroBuffer* mb, int64_t* value)
 {
     return deserialize_byte_8(mb, mb->endianness, (uint64_t*)value);
 }
 
-bool deserialize_float(MicroBuffer* mb, float* value)
+bool deserialize_float(mcMicroBuffer* mb, float* value)
 {
     return deserialize_byte_4(mb, mb->endianness, (uint32_t*)value);
 }
 
-bool deserialize_double(MicroBuffer* mb, double* value)
+bool deserialize_double(mcMicroBuffer* mb, double* value)
 {
     return deserialize_byte_8(mb, mb->endianness, (uint64_t*)value);
 }
 
-bool serialize_endian_uint16_t(MicroBuffer* mb, const Endianness endianness, const uint16_t value)
+bool serialize_endian_uint16_t(mcMicroBuffer* mb, const Endianness endianness, const uint16_t value)
 {
     return serialize_byte_2(mb, endianness, &value);
 }
 
-bool serialize_endian_uint32_t(MicroBuffer* mb, const Endianness endianness, const uint32_t value)
+bool serialize_endian_uint32_t(mcMicroBuffer* mb, const Endianness endianness, const uint32_t value)
 {
     return serialize_byte_4(mb, endianness, &value);
 }
 
-bool serialize_endian_uint64_t(MicroBuffer* mb, const Endianness endianness, const uint64_t value)
+bool serialize_endian_uint64_t(mcMicroBuffer* mb, const Endianness endianness, const uint64_t value)
 {
     return serialize_byte_8(mb, endianness, &value);
 }
 
-bool serialize_endian_int16_t(MicroBuffer* mb, const Endianness endianness, const int16_t value)
+bool serialize_endian_int16_t(mcMicroBuffer* mb, const Endianness endianness, const int16_t value)
 {
     return serialize_byte_2(mb, endianness, (uint16_t*)&value);
 }
 
-bool serialize_endian_int32_t(MicroBuffer* mb, const Endianness endianness, const int32_t value)
+bool serialize_endian_int32_t(mcMicroBuffer* mb, const Endianness endianness, const int32_t value)
 {
     return serialize_byte_4(mb, endianness, (uint32_t*)&value);
 }
 
-bool serialize_endian_int64_t(MicroBuffer* mb, const Endianness endianness, const int64_t value)
+bool serialize_endian_int64_t(mcMicroBuffer* mb, const Endianness endianness, const int64_t value)
 {
     return serialize_byte_8(mb, endianness, (uint64_t*)&value);
 }
 
-bool serialize_endian_float(MicroBuffer* mb, const Endianness endianness, const float value)
+bool serialize_endian_float(mcMicroBuffer* mb, const Endianness endianness, const float value)
 {
     return serialize_byte_4(mb, endianness, (uint32_t*)&value);
 }
 
-bool serialize_endian_double(MicroBuffer* mb, const Endianness endianness, const double value)
+bool serialize_endian_double(mcMicroBuffer* mb, const Endianness endianness, const double value)
 {
     return serialize_byte_8(mb, endianness, (uint64_t*)&value);
 }
 
-bool deserialize_endian_uint16_t(MicroBuffer* mb, const Endianness endianness, uint16_t* value)
+bool deserialize_endian_uint16_t(mcMicroBuffer* mb, const Endianness endianness, uint16_t* value)
 {
     return deserialize_byte_2(mb, endianness, value);
 }
 
-bool deserialize_endian_uint32_t(MicroBuffer* mb, const Endianness endianness, uint32_t* value)
+bool deserialize_endian_uint32_t(mcMicroBuffer* mb, const Endianness endianness, uint32_t* value)
 {
     return deserialize_byte_4(mb, endianness, value);
 }
 
-bool deserialize_endian_uint64_t(MicroBuffer* mb, const Endianness endianness, uint64_t* value)
+bool deserialize_endian_uint64_t(mcMicroBuffer* mb, const Endianness endianness, uint64_t* value)
 {
     return deserialize_byte_8(mb, endianness, value);
 }
 
-bool deserialize_endian_int16_t(MicroBuffer* mb, const Endianness endianness, int16_t* value)
+bool deserialize_endian_int16_t(mcMicroBuffer* mb, const Endianness endianness, int16_t* value)
 {
     return deserialize_byte_2(mb, endianness, (uint16_t*)value);
 }
 
-bool deserialize_endian_int32_t(MicroBuffer* mb, const Endianness endianness, int32_t* value)
+bool deserialize_endian_int32_t(mcMicroBuffer* mb, const Endianness endianness, int32_t* value)
 {
     return deserialize_byte_4(mb, endianness, (uint32_t*)value);
 }
 
-bool deserialize_endian_int64_t(MicroBuffer* mb, const Endianness endianness, int64_t* value)
+bool deserialize_endian_int64_t(mcMicroBuffer* mb, const Endianness endianness, int64_t* value)
 {
     return deserialize_byte_8(mb, endianness, (uint64_t*)value);
 }
 
-bool deserialize_endian_float(MicroBuffer* mb, const Endianness endianness, float* value)
+bool deserialize_endian_float(mcMicroBuffer* mb, const Endianness endianness, float* value)
 {
     return deserialize_byte_4(mb, endianness, (uint32_t*)value);
 }
 
-bool deserialize_endian_double(MicroBuffer* mb, const Endianness endianness, double* value)
+bool deserialize_endian_double(mcMicroBuffer* mb, const Endianness endianness, double* value)
 {
     return deserialize_byte_8(mb, endianness, (uint64_t*)value);
 }

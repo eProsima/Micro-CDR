@@ -32,7 +32,7 @@ typedef enum Endianness {
 
 } Endianness;
 
-typedef struct MicroBuffer
+typedef struct mcMicroBuffer
 {
     uint8_t *init;
     uint8_t *final;
@@ -43,30 +43,30 @@ typedef struct MicroBuffer
 
     bool error;
 
-} MicroBuffer;
+} mcMicroBuffer;
 
 MCDLLAPI extern const Endianness MACHINE_ENDIANNESS;
 
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
-MCDLLAPI void init_micro_buffer               (MicroBuffer* mb, uint8_t* data, const uint32_t size);
-MCDLLAPI void init_micro_buffer_offset        (MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-MCDLLAPI void init_micro_buffer_offset_endian (MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, Endianness endianness);
-MCDLLAPI void copy_micro_buffer               (MicroBuffer* mb_dest, const MicroBuffer* mb_source);
+MCDLLAPI void init_micro_buffer               (mcMicroBuffer* mb, uint8_t* data, const uint32_t size);
+MCDLLAPI void init_micro_buffer_offset        (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
+MCDLLAPI void init_micro_buffer_offset_endian (mcMicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, Endianness endianness);
+MCDLLAPI void copy_micro_buffer               (mcMicroBuffer* mb_dest, const mcMicroBuffer* mb_source);
 
-MCDLLAPI void reset_micro_buffer        (MicroBuffer* mb);
-MCDLLAPI void reset_micro_buffer_offset (MicroBuffer* mb, const uint32_t offset);
+MCDLLAPI void reset_micro_buffer        (mcMicroBuffer* mb);
+MCDLLAPI void reset_micro_buffer_offset (mcMicroBuffer* mb, const uint32_t offset);
 
-MCDLLAPI void     align_to            (MicroBuffer* mb, const uint32_t alignment);
+MCDLLAPI void     align_to            (mcMicroBuffer* mb, const uint32_t alignment);
 MCDLLAPI uint32_t get_alignment       (uint32_t buffer_position, const uint32_t data_size); //change name
-MCDLLAPI uint32_t get_alignment_offset(const MicroBuffer* mb, const uint32_t data_size); //change name
+MCDLLAPI uint32_t get_alignment_offset(const mcMicroBuffer* mb, const uint32_t data_size); //change name
 
-MCDLLAPI size_t     micro_buffer_size      (const MicroBuffer* mb);
-MCDLLAPI size_t     micro_buffer_length    (const MicroBuffer* mb);
-MCDLLAPI size_t     micro_buffer_remaining (const MicroBuffer* mb);
-MCDLLAPI Endianness micro_buffer_endianness(const MicroBuffer* mb);
-MCDLLAPI bool       micro_buffer_has_error (const MicroBuffer* mb);
+MCDLLAPI size_t     micro_buffer_size      (const mcMicroBuffer* mb);
+MCDLLAPI size_t     micro_buffer_length    (const mcMicroBuffer* mb);
+MCDLLAPI size_t     micro_buffer_remaining (const mcMicroBuffer* mb);
+MCDLLAPI Endianness micro_buffer_endianness(const mcMicroBuffer* mb);
+MCDLLAPI bool       micro_buffer_has_error (const mcMicroBuffer* mb);
 
 #ifdef __cplusplus
 }

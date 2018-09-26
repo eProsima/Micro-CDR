@@ -24,7 +24,7 @@ extern "C" {
 // -------------------------------------------------------------------
 //                     INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
-bool check_buffer(MicroBuffer* mb, const uint32_t bytes);
+bool check_buffer(mcMicroBuffer* mb, const uint32_t bytes);
 
 #ifdef __cplusplus
 }
