@@ -14,7 +14,7 @@
 
 #include "../serialization/ArraySerialization.hpp"
 
-class ArrayEndianness : public ArraySerialization, public ::testing::WithParamInterface<mrEndianness>
+class ArrayEndianness : public ArraySerialization, public ::testing::WithParamInterface<mcEndianness>
 {
 public:
 
@@ -28,7 +28,7 @@ public:
     }
 
 protected:
-    mrEndianness endianness;
+    mcEndianness endianness;
 };
 
 TEST_P(ArrayEndianness, Int16)
@@ -127,4 +127,4 @@ TEST_P(ArrayEndianness, Double)
     EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
 }
 
-INSTANTIATE_TEST_CASE_P(mrEndianness, ArrayEndianness, ::testing::Values(MC_LITTLE_ENDIANNESS, MC_BIG_ENDIANNESS));
+INSTANTIATE_TEST_CASE_P(mcEndianness, ArrayEndianness, ::testing::Values(MC_LITTLE_ENDIANNESS, MC_BIG_ENDIANNESS));

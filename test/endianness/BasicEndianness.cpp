@@ -14,7 +14,7 @@
 
 #include "../serialization/BasicSerialization.hpp"
 
-class BasicEndianness : public BasicSerialization, public ::testing::WithParamInterface<mrEndianness>
+class BasicEndianness : public BasicSerialization, public ::testing::WithParamInterface<mcEndianness>
 {
 public:
 
@@ -28,7 +28,7 @@ public:
     }
 
 protected:
-    mrEndianness endianness;
+    mcEndianness endianness;
 };
 
 TEST_P(BasicEndianness, Int16)
@@ -119,4 +119,4 @@ TEST_P(BasicEndianness, Double)
     EXPECT_EQ(input, output);
 }
 
-INSTANTIATE_TEST_CASE_P(mrEndianness, BasicEndianness, ::testing::Values(MC_LITTLE_ENDIANNESS, MC_BIG_ENDIANNESS));
+INSTANTIATE_TEST_CASE_P(mcEndianness, BasicEndianness, ::testing::Values(MC_LITTLE_ENDIANNESS, MC_BIG_ENDIANNESS));

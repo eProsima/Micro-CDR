@@ -33,12 +33,12 @@ bool mc_deserialize_string(mcBuffer* mb, char* string, const uint32_t string_cap
     return mc_deserialize_sequence_char(mb, string, string_capacity, &length);
 }
 
-bool mc_serialize_endian_string(mcBuffer* mb, mrEndianness endianness, const char* string)
+bool mc_serialize_endian_string(mcBuffer* mb, mcEndianness endianness, const char* string)
 {
     return mc_serialize_endian_sequence_char(mb, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
-bool mc_deserialize_endian_string(mcBuffer* mb, mrEndianness endianness, char* string, const uint32_t string_capacity)
+bool mc_deserialize_endian_string(mcBuffer* mb, mcEndianness endianness, char* string, const uint32_t string_capacity)
 {
     uint32_t length;
     return mc_deserialize_endian_sequence_char(mb, endianness, string, string_capacity, &length);

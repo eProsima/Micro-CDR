@@ -135,7 +135,7 @@ Returns the remaining size for the serializing/deserializing.
 ---
 
 ```c
-mrEndianness mc_buffer_endianness(const mcBuffer* mb);
+mcEndianness mc_buffer_endianness(const mcBuffer* mb);
 ```
 Returns the serialization/deserialization endianness.
 - `mb`: the `mcBuffer` struct
@@ -172,7 +172,7 @@ If a `mcBuffer` has an error state, the next serialization/deserialization opera
 A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
 
 If is kwown that an operation can fails over a `mcBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
-the `mcBuffer` state can be saved using the `copy_buffer` function.
+the `mcBuffer` state can be saved using the `mc_copy_buffer` function.
 After the application of the wrong serialization/deserialization, only the `mcBuffer` that performed the operation will have a dirty state.
 
 ## Serialization/deserialization list

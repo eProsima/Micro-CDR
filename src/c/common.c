@@ -17,9 +17,9 @@
 #include <string.h>
 
 #if __BIG_ENDIAN__
-    const mrEndianness MC_MACHINE_ENDIANNESS = MC_BIG_ENDIANNESS;
+    const mcEndianness MC_MACHINE_ENDIANNESS = MC_BIG_ENDIANNESS;
 #else
-    const mrEndianness MC_MACHINE_ENDIANNESS = MC_LITTLE_ENDIANNESS;
+    const mcEndianness MC_MACHINE_ENDIANNESS = MC_LITTLE_ENDIANNESS;
 #endif
 
 // -------------------------------------------------------------------
@@ -52,7 +52,7 @@ void mc_init_buffer_offset(mcBuffer* mb, uint8_t* data, const uint32_t size, uin
     mc_init_buffer_offset_endian(mb, data, size, offset, MC_MACHINE_ENDIANNESS);
 }
 
-void mc_init_buffer_offset_endian(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness)
+void mc_init_buffer_offset_endian(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mcEndianness endianness)
 {
     mb->init = data;
     mb->final = mb->init + size;
@@ -122,7 +122,7 @@ size_t mc_buffer_remaining(const mcBuffer* mb)
     return (size_t)(mb->final - mb->iterator);
 }
 
-mrEndianness mc_buffer_endianness(const mcBuffer* mb)
+mcEndianness mc_buffer_endianness(const mcBuffer* mb)
 {
     return mb->endianness;
 }

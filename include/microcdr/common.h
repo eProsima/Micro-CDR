@@ -26,11 +26,11 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef enum mrEndianness {
+typedef enum mcEndianness {
     MC_BIG_ENDIANNESS,
     MC_LITTLE_ENDIANNESS
 
-} mrEndianness;
+} mcEndianness;
 
 typedef struct mcBuffer
 {
@@ -38,21 +38,21 @@ typedef struct mcBuffer
     uint8_t *final;
     uint8_t *iterator;
 
-    mrEndianness endianness;
+    mcEndianness endianness;
     uint32_t last_data_size;
 
     bool error;
 
 } mcBuffer;
 
-MCDLLAPI extern const mrEndianness MC_MACHINE_ENDIANNESS;
+MCDLLAPI extern const mcEndianness MC_MACHINE_ENDIANNESS;
 
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
 MCDLLAPI void mc_init_buffer               (mcBuffer* mb, uint8_t* data, const uint32_t size);
 MCDLLAPI void mc_init_buffer_offset        (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-MCDLLAPI void mc_init_buffer_offset_endian (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness);
+MCDLLAPI void mc_init_buffer_offset_endian (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mcEndianness endianness);
 MCDLLAPI void mc_copy_buffer               (mcBuffer* mb_dest, const mcBuffer* mb_source);
 
 MCDLLAPI void mc_reset_buffer        (mcBuffer* mb);
@@ -65,7 +65,7 @@ MCDLLAPI uint32_t mc_buffer_alignment(const mcBuffer* mb, const uint32_t data_si
 MCDLLAPI size_t     mc_buffer_size      (const mcBuffer* mb);
 MCDLLAPI size_t     mc_buffer_length    (const mcBuffer* mb);
 MCDLLAPI size_t     mc_buffer_remaining (const mcBuffer* mb);
-MCDLLAPI mrEndianness mc_buffer_endianness(const mcBuffer* mb);
+MCDLLAPI mcEndianness mc_buffer_endianness(const mcBuffer* mb);
 MCDLLAPI bool       mc_buffer_has_error (const mcBuffer* mb);
 
 #ifdef __cplusplus

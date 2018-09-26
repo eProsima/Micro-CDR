@@ -31,8 +31,8 @@ extern "C" {
 MCDLLAPI bool mc_serialize_string(mcBuffer* mb, const char* string);
 MCDLLAPI bool mc_deserialize_string(mcBuffer* mb, char* string, const uint32_t string_capacity);
 
-MCDLLAPI bool mc_serialize_endian_string(mcBuffer* mb, mrEndianness endianness, const char* string);
-MCDLLAPI bool mc_deserialize_endian_string(mcBuffer* mb, mrEndianness endianness, char* string, const uint32_t string_capacity);
+MCDLLAPI bool mc_serialize_endian_string(mcBuffer* mb, mcEndianness endianness, const char* string);
+MCDLLAPI bool mc_deserialize_endian_string(mcBuffer* mb, mcEndianness endianness, char* string, const uint32_t string_capacity);
 
 #ifdef __cplusplus
 }
