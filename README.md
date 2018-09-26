@@ -49,7 +49,7 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 
 ```c
 void mc_init_micro_buffer        (mcBuffer* mb, uint8_t* data, const uint32_t size);
-void mc_init_micro_buffer_offset (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
+void mc_init_buffer_offset (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
 ```
 Initialize a `mcBuffer` structure, the main struct of *MicroCDR*.
 - `mb`: the `mcBuffer` struct
@@ -71,7 +71,7 @@ Copy a `mcBuffer` structure data to another `mcBuffer` structure.
 
 ```c
 void mc_reset_micro_buffer       (mcBuffer* mb);
-void mc_reset_micro_buffer_offset(mcBuffer* mb, const uint32_t offset);
+void mc_reset_buffer_offset(mcBuffer* mb, const uint32_t offset);
 ```
 Reset the `mcBuffer` as the same state that it was created.
 - `mb`: the `mcBuffer` struct.
@@ -102,7 +102,7 @@ Returns the aligment necessary to serialize/deserialize a type with `data_size` 
 ---
 
 ```c
-uint32_t mc_micro_buffer_alignment(const mcBuffer* mb, const uint32_t data_size);
+uint32_t mc_buffer_alignment(const mcBuffer* mb, const uint32_t data_size);
 ```
 Returns the aligment necessary to serialize/deserialize a type with `data_size` size into the `mcBuffer` given.
 
@@ -111,7 +111,7 @@ Returns the aligment necessary to serialize/deserialize a type with `data_size` 
 ---
 
 ```c
-size_t mc_micro_buffer_size(const mcBuffer* mb);
+size_t mc_buffer_size(const mcBuffer* mb);
 ```
 Returns the memory size of the buffer.
 - `mb`: the `mcBuffer` struct
@@ -119,7 +119,7 @@ Returns the memory size of the buffer.
 ---
 
 ```c
-size_t mc_micro_buffer_length(const mcBuffer* mb);
+size_t mc_buffer_length(const mcBuffer* mb);
 ```
 Returns the size of the serialized/deserialized data.
 - `mb`: the `mcBuffer` struct
@@ -127,7 +127,7 @@ Returns the size of the serialized/deserialized data.
 ---
 
 ```c
-size_t mc_micro_buffer_remaining(const mcBuffer* mb);
+size_t mc_buffer_remaining(const mcBuffer* mb);
 ```
 Returns the remaining size for the serializing/deserializing.
 - `mb`: the `mcBuffer` struct
@@ -135,7 +135,7 @@ Returns the remaining size for the serializing/deserializing.
 ---
 
 ```c
-mrEndianness mc_micro_buffer_endianness(const mcBuffer* mb);
+mrEndianness mc_buffer_endianness(const mcBuffer* mb);
 ```
 Returns the serialization/deserialization endianness.
 - `mb`: the `mcBuffer` struct
@@ -143,7 +143,7 @@ Returns the serialization/deserialization endianness.
 ---
 
 ```c
-bool mc_micro_buffer_error(const mcBuffer* mb);
+bool mc_buffer_error(const mcBuffer* mb);
 ```
 Returns the status error of the `mcBuffer`.
 - `mb`: the `mcBuffer` struct

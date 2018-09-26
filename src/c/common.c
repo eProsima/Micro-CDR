@@ -44,15 +44,15 @@ bool check_buffer(mcBuffer* mb, const uint32_t bytes)
 // -------------------------------------------------------------------
 void mc_init_micro_buffer(mcBuffer* mb, uint8_t* data, const uint32_t size)
 {
-    mc_init_micro_buffer_offset(mb, data, size, 0U);
+    mc_init_buffer_offset(mb, data, size, 0U);
 }
 
-void mc_init_micro_buffer_offset(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset)
+void mc_init_buffer_offset(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset)
 {
-    mc_init_micro_buffer_offset_endian(mb, data, size, offset, MC_MACHINE_ENDIANNESS);
+    mc_init_buffer_offset_endian(mb, data, size, offset, MC_MACHINE_ENDIANNESS);
 }
 
-void mc_init_micro_buffer_offset_endian(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness)
+void mc_init_buffer_offset_endian(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mrEndianness endianness)
 {
     mb->init = data;
     mb->final = mb->init + size;
@@ -70,10 +70,10 @@ void mc_copy_micro_buffer(mcBuffer* mb_dest, const mcBuffer* mb_source)
 
 void mc_reset_micro_buffer(mcBuffer* mb)
 {
-    mc_reset_micro_buffer_offset(mb, 0U);
+    mc_reset_buffer_offset(mb, 0U);
 }
 
-void mc_reset_micro_buffer_offset(mcBuffer* mb, const uint32_t offset)
+void mc_reset_buffer_offset(mcBuffer* mb, const uint32_t offset)
 {
     mb->iterator = mb->init + offset;
     mb->last_data_size = 0U;
@@ -82,7 +82,7 @@ void mc_reset_micro_buffer_offset(mcBuffer* mb, const uint32_t offset)
 
 void mc_align_to(mcBuffer* mb, const uint32_t size)
 {
-    uint32_t offset = mc_micro_buffer_alignment(mb, size);
+    uint32_t offset = mc_buffer_alignment(mb, size);
     mb->iterator += offset;
     if(mb->iterator > mb->final)
     {
@@ -97,7 +97,7 @@ uint32_t mc_alignment(uint32_t current_alignment, const uint32_t data_size)
     return ((data_size - (current_alignment % data_size)) & (data_size - 1));
 }
 
-uint32_t mc_micro_buffer_alignment(const mcBuffer* mb, const uint32_t data_size)
+uint32_t mc_buffer_alignment(const mcBuffer* mb, const uint32_t data_size)
 {
     if(data_size > mb->last_data_size)
     {
@@ -107,27 +107,27 @@ uint32_t mc_micro_buffer_alignment(const mcBuffer* mb, const uint32_t data_size)
     return 0;
 }
 
-size_t mc_micro_buffer_size(const mcBuffer* mb)
+size_t mc_buffer_size(const mcBuffer* mb)
 {
     return (size_t)(mb->final - mb->init);
 }
 
-size_t mc_micro_buffer_length(const mcBuffer* mb)
+size_t mc_buffer_length(const mcBuffer* mb)
 {
     return (size_t)(mb->iterator - mb->init);
 }
 
-size_t mc_micro_buffer_remaining(const mcBuffer* mb)
+size_t mc_buffer_remaining(const mcBuffer* mb)
 {
     return (size_t)(mb->final - mb->iterator);
 }
 
-mrEndianness mc_micro_buffer_endianness(const mcBuffer* mb)
+mrEndianness mc_buffer_endianness(const mcBuffer* mb)
 {
     return mb->endianness;
 }
 
-bool mc_micro_buffer_has_error(const mcBuffer* mb)
+bool mc_buffer_has_error(const mcBuffer* mb)
 {
     return mb->error;
 }
