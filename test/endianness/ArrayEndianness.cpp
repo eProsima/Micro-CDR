@@ -34,7 +34,7 @@ protected:
 TEST_P(ArrayEndianness, Int16)
 {
     int16_t input[ARRAY_SIZE];
-    std::fill_n(input, ARRAY_SIZE, 0x0A0B);
+    std::fill_n(input, ARRAY_SIZE, static_cast<int16_t>(0x0A0B));
     int16_t output[ARRAY_SIZE];
 
     EXPECT_TRUE(mc_serialize_endian_array_int16_t(&writer, endianness, input, ARRAY_SIZE));
@@ -46,7 +46,7 @@ TEST_P(ArrayEndianness, Int16)
 TEST_P(ArrayEndianness, Uint16)
 {
     uint16_t input[ARRAY_SIZE];
-    std::fill_n(input, ARRAY_SIZE, 0x0A0B);
+    std::fill_n(input, ARRAY_SIZE, static_cast<uint16_t>(0x0A0B));
     uint16_t output[ARRAY_SIZE];
 
     EXPECT_TRUE(mc_serialize_endian_array_uint16_t(&writer, endianness, input, ARRAY_SIZE));
