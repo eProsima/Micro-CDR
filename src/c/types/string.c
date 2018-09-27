@@ -22,24 +22,24 @@
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
 
-bool serialize_string(MicroBuffer* mb, const char* string)
+bool mc_serialize_string(mcBuffer* mb, const char* string)
 {
-    return serialize_sequence_char(mb, string, (uint32_t)strlen(string) + 1);
+    return mc_serialize_sequence_char(mb, string, (uint32_t)strlen(string) + 1);
 }
 
-bool deserialize_string(MicroBuffer* mb, char* string, const uint32_t string_capacity)
+bool mc_deserialize_string(mcBuffer* mb, char* string, const uint32_t string_capacity)
 {
     uint32_t length;
-    return deserialize_sequence_char(mb, string, string_capacity, &length);
+    return mc_deserialize_sequence_char(mb, string, string_capacity, &length);
 }
 
-bool serialize_endian_string(MicroBuffer* mb, Endianness endianness, const char* string)
+bool mc_serialize_endian_string(mcBuffer* mb, mcEndianness endianness, const char* string)
 {
-    return serialize_endian_sequence_char(mb, endianness, string, (uint32_t)strlen(string) + 1);
+    return mc_serialize_endian_sequence_char(mb, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
-bool deserialize_endian_string(MicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity)
+bool mc_deserialize_endian_string(mcBuffer* mb, mcEndianness endianness, char* string, const uint32_t string_capacity)
 {
     uint32_t length;
-    return deserialize_endian_sequence_char(mb, endianness, string, string_capacity, &length);
+    return mc_deserialize_endian_sequence_char(mb, endianness, string, string_capacity, &length);
 }

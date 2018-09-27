@@ -14,7 +14,7 @@
 
 #include "../serialization/SequenceSerialization.hpp"
 
-class SequenceEndianness : public SequenceSerialization, public ::testing::WithParamInterface<Endianness>
+class SequenceEndianness : public SequenceSerialization, public ::testing::WithParamInterface<mcEndianness>
 {
 public:
 
@@ -29,7 +29,7 @@ public:
 
 
 protected:
-    Endianness endianness;
+    mcEndianness endianness;
 };
 
 TEST_P(SequenceEndianness, Bool)
@@ -38,8 +38,8 @@ TEST_P(SequenceEndianness, Bool)
     std::fill_n(input, SEQUENCE_SIZE, true);
     bool output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_bool(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_bool(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_bool(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_bool(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -50,8 +50,8 @@ TEST_P(SequenceEndianness, Char)
     std::fill_n(input, SEQUENCE_SIZE, 'A');
     char output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_char(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_char(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_char(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_char(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -59,11 +59,11 @@ TEST_P(SequenceEndianness, Char)
 TEST_P(SequenceEndianness, Int8)
 {
     int8_t input[ARRAY_CAPACITY];
-    std::fill_n(input, SEQUENCE_SIZE, 0x09);
+    std::fill_n(input, SEQUENCE_SIZE, int8_t(0x09));
     int8_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_int8_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_int8_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_int8_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_int8_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -71,11 +71,11 @@ TEST_P(SequenceEndianness, Int8)
 TEST_P(SequenceEndianness, Uint8)
 {
     uint8_t input[ARRAY_CAPACITY];
-    std::fill_n(input, SEQUENCE_SIZE, 0x09);
+    std::fill_n(input, SEQUENCE_SIZE, uint8_t(0x09));
     uint8_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_uint8_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_uint8_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_uint8_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_uint8_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -83,11 +83,11 @@ TEST_P(SequenceEndianness, Uint8)
 TEST_P(SequenceEndianness, Int16)
 {
     int16_t input[ARRAY_CAPACITY];
-    std::fill_n(input, SEQUENCE_SIZE, 0x0A0B);
+    std::fill_n(input, SEQUENCE_SIZE, int16_t(0x0A0B));
     int16_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_int16_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_int16_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_int16_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_int16_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -95,11 +95,11 @@ TEST_P(SequenceEndianness, Int16)
 TEST_P(SequenceEndianness, Uint16)
 {
     uint16_t input[ARRAY_CAPACITY];
-    std::fill_n(input, SEQUENCE_SIZE, 0x0A0B);
+    std::fill_n(input, SEQUENCE_SIZE, uint16_t(0x0A0B));
     uint16_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_uint16_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_uint16_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_uint16_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_uint16_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -110,8 +110,8 @@ TEST_P(SequenceEndianness, Int32)
     std::fill_n(input, SEQUENCE_SIZE, 0x0A0B0C0D);
     int32_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_int32_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_int32_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_int32_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_int32_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -122,8 +122,8 @@ TEST_P(SequenceEndianness, Uint32)
     std::fill_n(input, SEQUENCE_SIZE, 0x0A0B0C0D);
     uint32_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_uint32_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_uint32_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_uint32_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_uint32_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -134,8 +134,8 @@ TEST_P(SequenceEndianness, Int64)
     std::fill_n(input, SEQUENCE_SIZE, 0x0102030405060708L);
     int64_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_int64_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_int64_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_int64_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_int64_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -146,8 +146,8 @@ TEST_P(SequenceEndianness, Uint64)
     std::fill_n(input, SEQUENCE_SIZE, 0x0102030405060708L);
     uint64_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_uint64_t(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_uint64_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_uint64_t(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_uint64_t(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -158,8 +158,8 @@ TEST_P(SequenceEndianness, Float)
     std::fill_n(input, SEQUENCE_SIZE, 3.141592653589793238462f);
     float output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_float(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_float(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_float(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_float(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
@@ -170,10 +170,10 @@ TEST_P(SequenceEndianness, Double)
     std::fill_n(input, SEQUENCE_SIZE, 3.141592653589793238462);
     double output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_endian_sequence_double(&writer, endianness, input, SEQUENCE_SIZE));
-    EXPECT_TRUE(deserialize_endian_sequence_double(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_endian_sequence_double(&writer, endianness, input, SEQUENCE_SIZE));
+    EXPECT_TRUE(mc_deserialize_endian_sequence_double(&reader, endianness, output, ARRAY_CAPACITY, &output_size));
 
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
 
-INSTANTIATE_TEST_CASE_P(Endianness, SequenceEndianness, ::testing::Values(LITTLE_ENDIANNESS, BIG_ENDIANNESS));
+INSTANTIATE_TEST_CASE_P(mcEndianness, SequenceEndianness, ::testing::Values(MC_LITTLE_ENDIANNESS, MC_BIG_ENDIANNESS));

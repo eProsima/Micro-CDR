@@ -28,11 +28,11 @@ extern "C" {
 //                   PUBLIC SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
 
-MCDLLAPI bool serialize_string(MicroBuffer* mb, const char* string);
-MCDLLAPI bool deserialize_string(MicroBuffer* mb, char* string, const uint32_t string_capacity);
+MCDLLAPI bool mc_serialize_string(mcBuffer* mb, const char* string);
+MCDLLAPI bool mc_deserialize_string(mcBuffer* mb, char* string, const uint32_t string_capacity);
 
-MCDLLAPI bool serialize_endian_string(MicroBuffer* mb, Endianness endianness, const char* string);
-MCDLLAPI bool deserialize_endian_string(MicroBuffer* mb, Endianness endianness, char* string, const uint32_t string_capacity);
+MCDLLAPI bool mc_serialize_endian_string(mcBuffer* mb, mcEndianness endianness, const char* string);
+MCDLLAPI bool mc_deserialize_endian_string(mcBuffer* mb, mcEndianness endianness, char* string, const uint32_t string_capacity);
 
 #ifdef __cplusplus
 }

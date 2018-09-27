@@ -17,15 +17,15 @@
 #include <string.h>
 
 #if __BIG_ENDIAN__
-    const Endianness MACHINE_ENDIANNESS = BIG_ENDIANNESS;
+    const mcEndianness MC_MACHINE_ENDIANNESS = MC_BIG_ENDIANNESS;
 #else
-    const Endianness MACHINE_ENDIANNESS = LITTLE_ENDIANNESS;
+    const mcEndianness MC_MACHINE_ENDIANNESS = MC_LITTLE_ENDIANNESS;
 #endif
 
 // -------------------------------------------------------------------
 //                   INTERNAL UTIL IMPLEMENTATIONS
 // -------------------------------------------------------------------
-bool check_buffer(MicroBuffer* mb, const uint32_t bytes)
+bool check_buffer(mcBuffer* mb, const uint32_t bytes)
 {
     if(!mb->error)
     {
@@ -42,17 +42,17 @@ bool check_buffer(MicroBuffer* mb, const uint32_t bytes)
 // -------------------------------------------------------------------
 //                       PUBLIC IMPLEMENTATION
 // -------------------------------------------------------------------
-void init_micro_buffer(MicroBuffer* mb, uint8_t* data, const uint32_t size)
+void mc_init_buffer(mcBuffer* mb, uint8_t* data, const uint32_t size)
 {
-    init_micro_buffer_offset(mb, data, size, 0U);
+    mc_init_buffer_offset(mb, data, size, 0U);
 }
 
-void init_micro_buffer_offset(MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset)
+void mc_init_buffer_offset(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset)
 {
-    init_micro_buffer_offset_endian(mb, data, size, offset, MACHINE_ENDIANNESS);
+    mc_init_buffer_offset_endian(mb, data, size, offset, MC_MACHINE_ENDIANNESS);
 }
 
-void init_micro_buffer_offset_endian(MicroBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, Endianness endianness)
+void mc_init_buffer_offset_endian(mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mcEndianness endianness)
 {
     mb->init = data;
     mb->final = mb->init + size;
@@ -63,26 +63,26 @@ void init_micro_buffer_offset_endian(MicroBuffer* mb, uint8_t* data, const uint3
 }
 
 
-void copy_micro_buffer(MicroBuffer* mb_dest, const MicroBuffer* mb_source)
+void mc_copy_buffer(mcBuffer* mb_dest, const mcBuffer* mb_source)
 {
-    memcpy(mb_dest, mb_source, sizeof(MicroBuffer));
+    memcpy(mb_dest, mb_source, sizeof(mcBuffer));
 }
 
-void reset_micro_buffer(MicroBuffer* mb)
+void mc_reset_buffer(mcBuffer* mb)
 {
-    reset_micro_buffer_offset(mb, 0U);
+    mc_reset_buffer_offset(mb, 0U);
 }
 
-void reset_micro_buffer_offset(MicroBuffer* mb, const uint32_t offset)
+void mc_reset_buffer_offset(mcBuffer* mb, const uint32_t offset)
 {
     mb->iterator = mb->init + offset;
     mb->last_data_size = 0U;
     mb->error = false;
 }
 
-void align_to(MicroBuffer* mb, const uint32_t size)
+void mc_align_to(mcBuffer* mb, const uint32_t size)
 {
-    uint32_t offset = get_alignment_offset(mb, size);
+    uint32_t offset = mc_buffer_alignment(mb, size);
     mb->iterator += offset;
     if(mb->iterator > mb->final)
     {
@@ -92,12 +92,12 @@ void align_to(MicroBuffer* mb, const uint32_t size)
     mb->last_data_size = size;
 }
 
-uint32_t get_alignment(uint32_t current_alignment, const uint32_t data_size)
+uint32_t mc_alignment(uint32_t current_alignment, const uint32_t data_size)
 {
     return ((data_size - (current_alignment % data_size)) & (data_size - 1));
 }
 
-uint32_t get_alignment_offset(const MicroBuffer* mb, const uint32_t data_size)
+uint32_t mc_buffer_alignment(const mcBuffer* mb, const uint32_t data_size)
 {
     if(data_size > mb->last_data_size)
     {
@@ -107,27 +107,27 @@ uint32_t get_alignment_offset(const MicroBuffer* mb, const uint32_t data_size)
     return 0;
 }
 
-size_t micro_buffer_size(const MicroBuffer* mb)
+size_t mc_buffer_size(const mcBuffer* mb)
 {
     return (size_t)(mb->final - mb->init);
 }
 
-size_t micro_buffer_length(const MicroBuffer* mb)
+size_t mc_buffer_length(const mcBuffer* mb)
 {
     return (size_t)(mb->iterator - mb->init);
 }
 
-size_t micro_buffer_remaining(const MicroBuffer* mb)
+size_t mc_buffer_remaining(const mcBuffer* mb)
 {
     return (size_t)(mb->final - mb->iterator);
 }
 
-Endianness micro_buffer_endianness(const MicroBuffer* mb)
+mcEndianness mc_buffer_endianness(const mcBuffer* mb)
 {
     return mb->endianness;
 }
 
-bool micro_buffer_has_error(const MicroBuffer* mb)
+bool mc_buffer_has_error(const mcBuffer* mb)
 {
     return mb->error;
 }

@@ -21,7 +21,7 @@
 #define MICROCDR_VERSION_MICRO @PROJECT_VERSION_PATCH@
 #define MICROCDR_VERSION_STR "@PROJECT_VERSION@"
 
-// Endianness defines
+// mcEndianness defines
 #ifndef __BIG_ENDIAN__
 #define __BIG_ENDIAN__ @__BIG_ENDIAN__@
 #endif

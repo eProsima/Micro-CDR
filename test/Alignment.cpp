@@ -29,8 +29,8 @@ public:
 
     void check_alignment(int alignment)
     {
-        EXPECT_EQ(static_cast<int>(micro_buffer_length(&writer)) % alignment, 0);
-        EXPECT_EQ(static_cast<int>(micro_buffer_length(&reader)) % alignment, 0);
+        EXPECT_EQ(static_cast<int>(mc_buffer_length(&writer)) % alignment, 0);
+        EXPECT_EQ(static_cast<int>(mc_buffer_length(&reader)) % alignment, 0);
     }
 
     virtual ~Alignment()

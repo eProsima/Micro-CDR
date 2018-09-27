@@ -27,7 +27,7 @@ public:
     ~SequenceOverflow()
     {
         //4 because of the sequence header (no necessary padding)
-        EXPECT_EQ(micro_buffer_length(&reader), 4);
+        EXPECT_EQ(mc_buffer_length(&reader), 4u);
         EXPECT_TRUE(reader.error);
 
         // To satisfy the base destructor
@@ -43,8 +43,8 @@ TEST_F(SequenceOverflow, Block1)
     uint8_t input[SEQUENCE_SIZE_OVERFLOW];
     uint8_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint8_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint8_t(&reader, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_sequence_uint8_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(mc_deserialize_sequence_uint8_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
 TEST_F(SequenceOverflow, Block2)
@@ -52,8 +52,8 @@ TEST_F(SequenceOverflow, Block2)
     uint16_t input[SEQUENCE_SIZE_OVERFLOW];
     uint16_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint16_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint16_t(&reader, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_sequence_uint16_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(mc_deserialize_sequence_uint16_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
 TEST_F(SequenceOverflow, Block4)
@@ -61,8 +61,8 @@ TEST_F(SequenceOverflow, Block4)
     uint32_t input[SEQUENCE_SIZE_OVERFLOW];
     uint32_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint32_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint32_t(&reader, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_sequence_uint32_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(mc_deserialize_sequence_uint32_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
 TEST_F(SequenceOverflow, Block8)
@@ -70,7 +70,7 @@ TEST_F(SequenceOverflow, Block8)
     uint64_t input[SEQUENCE_SIZE_OVERFLOW];
     uint64_t output[ARRAY_CAPACITY];
 
-    EXPECT_TRUE(serialize_sequence_uint64_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
-    EXPECT_FALSE(deserialize_sequence_uint64_t(&reader, output, ARRAY_CAPACITY, &output_size));
+    EXPECT_TRUE(mc_serialize_sequence_uint64_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
+    EXPECT_FALSE(mc_deserialize_sequence_uint64_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
