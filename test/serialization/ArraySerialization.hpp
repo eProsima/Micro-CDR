@@ -58,7 +58,7 @@ public:
     void int8_t_array_serialization()
     {
         int8_t input[ARRAY_SIZE];
-        std::fill_n(input, ARRAY_SIZE, static_cast<int8_t>(0x09));
+        std::fill_n(input, ARRAY_SIZE, int8_t(0x09));
         int8_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(mc_serialize_array_int8_t(&writer, input, ARRAY_SIZE));
@@ -70,7 +70,7 @@ public:
     void uint8_t_array_serialization()
     {
         uint8_t input[ARRAY_SIZE];
-        std::fill_n(input, ARRAY_SIZE, static_cast<uint8_t>(0x09));
+        std::fill_n(input, ARRAY_SIZE, uint8_t(0x09));
         uint8_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(mc_serialize_array_uint8_t(&writer, input, ARRAY_SIZE));
@@ -82,7 +82,7 @@ public:
     void int16_t_array_serialization()
     {
         int16_t input[ARRAY_SIZE];
-        std::fill_n(input, ARRAY_SIZE, static_cast<int16_t>(0x0A0B));
+        std::fill_n(input, ARRAY_SIZE, int16_t(0x0A0B));
         int16_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(mc_serialize_array_int16_t(&writer, input, ARRAY_SIZE));
@@ -94,7 +94,7 @@ public:
     void uint16_t_array_serialization()
     {
         uint16_t input[ARRAY_SIZE];
-        std::fill_n(input, ARRAY_SIZE, static_cast<uint16_t>(0x0A0B));
+        std::fill_n(input, ARRAY_SIZE, uint16_t(0x0A0B));
         uint16_t output[ARRAY_SIZE];
 
         EXPECT_TRUE(mc_serialize_array_uint16_t(&writer, input, ARRAY_SIZE));

@@ -27,7 +27,7 @@ public:
     ~SequenceOverflow()
     {
         //4 because of the sequence header (no necessary padding)
-        EXPECT_EQ(mc_buffer_length(&reader), static_cast<size_t>(4));
+        EXPECT_EQ(mc_buffer_length(&reader), 4u);
         EXPECT_TRUE(reader.error);
 
         // To satisfy the base destructor
