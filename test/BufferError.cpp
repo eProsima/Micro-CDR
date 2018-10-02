@@ -59,6 +59,25 @@ TEST(buffer_error, CharKO)
     EXPECT_EQ(reader.error, BUFFER_NOK);
 }
 
+TEST(buffer_error, Int8KO)
+{
+    int8_t input = -9;
+    int8_t output;
+    uint8_t *buffer = NULL;
+
+    MicroBuffer writer;
+    MicroBuffer reader;
+
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH_KO);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH_KO);
+
+    EXPECT_FALSE(serialize_int8_t(&writer, input));
+    EXPECT_FALSE(deserialize_int8_t(&reader, &output));
+
+    EXPECT_EQ(writer.error, BUFFER_NOK);
+    EXPECT_EQ(reader.error, BUFFER_NOK);
+}
+
 TEST(buffer_error, Uint8KO)
 {
     uint8_t input = 0x09;
@@ -268,6 +287,25 @@ TEST(buffer_error, ArrayCharKO)
     EXPECT_EQ(reader.error, BUFFER_NOK);
 }
 
+TEST(buffer_error, ArrayInt8KO)
+{
+    int8_t input[ARRAY_LENGTH] = {-9};
+    int8_t output[ARRAY_LENGTH];
+    uint8_t buffer[sizeof(output) / 2] = {0};
+
+    MicroBuffer writer;
+    MicroBuffer reader;
+
+    init_micro_buffer(&writer, buffer, sizeof(output) / 2);
+    init_micro_buffer(&reader, buffer, sizeof(output) / 2);
+
+    EXPECT_FALSE(serialize_array_int8_t(&writer, input, ARRAY_LENGTH));
+    EXPECT_FALSE(deserialize_array_int8_t(&reader, output, ARRAY_LENGTH));
+
+    EXPECT_EQ(writer.error, BUFFER_NOK);
+    EXPECT_EQ(reader.error, BUFFER_NOK);
+}
+
 TEST(buffer_error, ArrayUint8KO)
 {
     uint8_t input[ARRAY_LENGTH] = {0x09};
@@ -438,4 +476,3 @@ TEST(buffer_error, ArrayDoubleKO)
     EXPECT_EQ(writer.error, BUFFER_NOK);
     EXPECT_EQ(reader.error, BUFFER_NOK);
 }
-

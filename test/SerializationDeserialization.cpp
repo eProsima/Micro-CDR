@@ -64,6 +64,27 @@ TEST(serialization_deserialization, Char)
     EXPECT_EQ(input, output);
 }
 
+TEST(serialization_deserialization, Int8)
+{
+    int8_t input = -9;
+    int8_t output;
+    uint8_t buffer[BUFFER_LENGTH] = {0};
+
+    MicroBuffer writer;
+    MicroBuffer reader;
+
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+
+    EXPECT_TRUE(serialize_int8_t(&writer, input));
+    EXPECT_TRUE(deserialize_int8_t(&reader, &output));
+
+    EXPECT_EQ(writer.error, BUFFER_OK);
+    EXPECT_EQ(reader.error, BUFFER_OK);
+
+    EXPECT_EQ(input, output);
+}
+
 TEST(serialization_deserialization, Uint8)
 {
     uint8_t input = 0x09;
@@ -293,6 +314,31 @@ TEST(serialization_deserialization, ArrayChar)
 
     EXPECT_TRUE(serialize_array_char(&writer, input, ARRAY_LENGTH));
     EXPECT_TRUE(deserialize_array_char(&reader, output, ARRAY_LENGTH));
+
+    EXPECT_EQ(writer.error, BUFFER_OK);
+    EXPECT_EQ(reader.error, BUFFER_OK);
+
+    for (uint32_t i = 0; i < ARRAY_LENGTH; i++)
+    {
+        EXPECT_EQ(input[i], output[i]);
+    }
+}
+
+TEST(serialization_deserialization, ArrayInt8)
+{
+    int8_t input[ARRAY_LENGTH];
+    std::fill_n(input, ARRAY_LENGTH, -9);
+    int8_t output[ARRAY_LENGTH];
+    uint8_t buffer[BUFFER_LENGTH] = {0};
+
+    MicroBuffer writer;
+    MicroBuffer reader;
+
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+
+    EXPECT_TRUE(serialize_array_int8_t(&writer, input, ARRAY_LENGTH));
+    EXPECT_TRUE(deserialize_array_int8_t(&reader, output, ARRAY_LENGTH));
 
     EXPECT_EQ(writer.error, BUFFER_OK);
     EXPECT_EQ(reader.error, BUFFER_OK);
@@ -573,6 +619,34 @@ TEST(serialization_deserialization, SequenceBool)
 
     EXPECT_TRUE(serialize_sequence_bool(&writer, input, sequence_size));
     EXPECT_TRUE(deserialize_sequence_bool(&reader, output, &outputSize));
+
+    EXPECT_EQ(writer.error, BUFFER_OK);
+    EXPECT_EQ(reader.error, BUFFER_OK);
+
+    EXPECT_EQ(sequence_size, outputSize);
+    for (uint32_t i = 0; i < sequence_size; i++)
+    {
+        EXPECT_EQ(input[i], output[i]);
+    }
+}
+
+TEST(serialization_deserialization, SequenceInt8)
+{
+    uint32_t sequence_size = ARRAY_LENGTH / 2;
+    int8_t input[ARRAY_LENGTH];
+    std::fill_n(input, sequence_size, -9);
+    int8_t output[ARRAY_LENGTH];
+    uint32_t outputSize = 0;
+    uint8_t buffer[BUFFER_LENGTH] = {0};
+
+    MicroBuffer writer;
+    MicroBuffer reader;
+
+    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
+    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+
+    EXPECT_TRUE(serialize_sequence_int8_t(&writer, input, sequence_size));
+    EXPECT_TRUE(deserialize_sequence_int8_t(&reader, output, &outputSize));
 
     EXPECT_EQ(writer.error, BUFFER_OK);
     EXPECT_EQ(reader.error, BUFFER_OK);
