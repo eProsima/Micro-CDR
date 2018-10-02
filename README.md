@@ -57,6 +57,7 @@ The types supported in *microCDR* are presented in the following table. For each
 | -------------------- | ---------- |
 | bool                 |            |
 | char                 |            |
+| int8                 |            |
 | uint8                |            |
 | int16                |            |
 | int16                | endianness |
@@ -76,6 +77,7 @@ The types supported in *microCDR* are presented in the following table. For each
 | double               | endianness |
 | bool array           |            |
 | char array           |            |
+| int8 array           |            |
 | uint8 array          |            |
 | int16 array          |            |
 | int16 array          | endianness |
@@ -95,6 +97,7 @@ The types supported in *microCDR* are presented in the following table. For each
 | double array         | endianness |
 | bool sequence        |            |
 | char sequence        |            |
+| int8 sequence        |            |
 | uint8 sequence       |            |
 | int16 sequence       |            |
 | int16 sequence       | endianness |
