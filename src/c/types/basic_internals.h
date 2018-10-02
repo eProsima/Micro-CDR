@@ -24,15 +24,15 @@ extern "C" {
 // -------------------------------------------------------------------
 //                  INTERNAL SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
-bool serialize_byte_1(mcBuffer* buffer, const uint8_t* byte);
-bool serialize_byte_2(mcBuffer* buffer, mcEndianness endianness, const uint16_t* bytes);
-bool serialize_byte_4(mcBuffer* buffer, mcEndianness endianness, const uint32_t* bytes);
-bool serialize_byte_8(mcBuffer* buffer, mcEndianness endianness, const uint64_t* bytes);
+bool serialize_byte_1(ucdrBuffer* buffer, const uint8_t* byte);
+bool serialize_byte_2(ucdrBuffer* buffer, ucdrEndianness endianness, const uint16_t* bytes);
+bool serialize_byte_4(ucdrBuffer* buffer, ucdrEndianness endianness, const uint32_t* bytes);
+bool serialize_byte_8(ucdrBuffer* buffer, ucdrEndianness endianness, const uint64_t* bytes);
 
-bool deserialize_byte_1(mcBuffer* buffer, uint8_t* byte);
-bool deserialize_byte_2(mcBuffer* buffer, mcEndianness endianness, uint16_t* bytes);
-bool deserialize_byte_4(mcBuffer* buffer, mcEndianness endianness, uint32_t* bytes);
-bool deserialize_byte_8(mcBuffer* buffer, mcEndianness endianness, uint64_t* bytes);
+bool deserialize_byte_1(ucdrBuffer* buffer, uint8_t* byte);
+bool deserialize_byte_2(ucdrBuffer* buffer, ucdrEndianness endianness, uint16_t* bytes);
+bool deserialize_byte_4(ucdrBuffer* buffer, ucdrEndianness endianness, uint32_t* bytes);
+bool deserialize_byte_8(ucdrBuffer* buffer, ucdrEndianness endianness, uint64_t* bytes);
 
 #ifdef __cplusplus
 }

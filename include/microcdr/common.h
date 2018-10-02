@@ -26,47 +26,47 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef enum mcEndianness {
-    MC_BIG_ENDIANNESS,
-    MC_LITTLE_ENDIANNESS
+typedef enum ucdrEndianness {
+    UCDR_BIG_ENDIANNESS,
+    UCDR_LITTLE_ENDIANNESS
 
-} mcEndianness;
+} ucdrEndianness;
 
-typedef struct mcBuffer
+typedef struct ucdrBuffer
 {
     uint8_t *init;
     uint8_t *final;
     uint8_t *iterator;
 
-    mcEndianness endianness;
+    ucdrEndianness endianness;
     uint32_t last_data_size;
 
     bool error;
 
-} mcBuffer;
+} ucdrBuffer;
 
-MCDLLAPI extern const mcEndianness MC_MACHINE_ENDIANNESS;
+MCDLLAPI extern const ucdrEndianness UCDR_MACHINE_ENDIANNESS;
 
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
-MCDLLAPI void mc_init_buffer               (mcBuffer* mb, uint8_t* data, const uint32_t size);
-MCDLLAPI void mc_init_buffer_offset        (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-MCDLLAPI void mc_init_buffer_offset_endian (mcBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, mcEndianness endianness);
-MCDLLAPI void mc_copy_buffer               (mcBuffer* mb_dest, const mcBuffer* mb_source);
+MCDLLAPI void ucdr_init_buffer               (ucdrBuffer* mb, uint8_t* data, const uint32_t size);
+MCDLLAPI void ucdr_init_buffer_offset        (ucdrBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
+MCDLLAPI void ucdr_init_buffer_offset_endian (ucdrBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, ucdrEndianness endianness);
+MCDLLAPI void ucdr_copy_buffer               (ucdrBuffer* mb_dest, const ucdrBuffer* mb_source);
 
-MCDLLAPI void mc_reset_buffer        (mcBuffer* mb);
-MCDLLAPI void mc_reset_buffer_offset (mcBuffer* mb, const uint32_t offset);
+MCDLLAPI void ucdr_reset_buffer        (ucdrBuffer* mb);
+MCDLLAPI void ucdr_reset_buffer_offset (ucdrBuffer* mb, const uint32_t offset);
 
-MCDLLAPI void     mc_align_to              (mcBuffer* mb, const uint32_t alignment);
-MCDLLAPI uint32_t mc_alignment             (uint32_t buffer_position, const uint32_t data_size);
-MCDLLAPI uint32_t mc_buffer_alignment(const mcBuffer* mb, const uint32_t data_size);
+MCDLLAPI void     ucdr_align_to              (ucdrBuffer* mb, const uint32_t alignment);
+MCDLLAPI uint32_t ucdr_alignment             (uint32_t buffer_position, const uint32_t data_size);
+MCDLLAPI uint32_t ucdr_buffer_alignment(const ucdrBuffer* mb, const uint32_t data_size);
 
-MCDLLAPI size_t     mc_buffer_size      (const mcBuffer* mb);
-MCDLLAPI size_t     mc_buffer_length    (const mcBuffer* mb);
-MCDLLAPI size_t     mc_buffer_remaining (const mcBuffer* mb);
-MCDLLAPI mcEndianness mc_buffer_endianness(const mcBuffer* mb);
-MCDLLAPI bool       mc_buffer_has_error (const mcBuffer* mb);
+MCDLLAPI size_t     ucdr_buffer_size      (const ucdrBuffer* mb);
+MCDLLAPI size_t     ucdr_buffer_length    (const ucdrBuffer* mb);
+MCDLLAPI size_t     ucdr_buffer_remaining (const ucdrBuffer* mb);
+MCDLLAPI ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* mb);
+MCDLLAPI bool       ucdr_buffer_has_error (const ucdrBuffer* mb);
 
 #ifdef __cplusplus
 }
