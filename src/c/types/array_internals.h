@@ -25,15 +25,15 @@ extern "C" {
 // -------------------------------------------------------------------
 //                  INTERNAL SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
-bool serialize_array_byte_1(ucdrBuffer* buffer, const uint8_t* array, const uint32_t size);
-bool serialize_array_byte_2(ucdrBuffer* buffer, ucdrEndianness endianness, const uint16_t* array, const uint32_t size);
-bool serialize_array_byte_4(ucdrBuffer* buffer, ucdrEndianness endianness, const uint32_t* array, const uint32_t size);
-bool serialize_array_byte_8(ucdrBuffer* buffer, ucdrEndianness endianness, const uint64_t* array, const uint32_t size);
+bool ucdr_serialize_array_byte_1(ucdrBuffer* buffer, const uint8_t* array, const uint32_t size);
+bool ucdr_serialize_array_byte_2(ucdrBuffer* buffer, ucdrEndianness endianness, const uint16_t* array, const uint32_t size);
+bool ucdr_serialize_array_byte_4(ucdrBuffer* buffer, ucdrEndianness endianness, const uint32_t* array, const uint32_t size);
+bool ucdr_serialize_array_byte_8(ucdrBuffer* buffer, ucdrEndianness endianness, const uint64_t* array, const uint32_t size);
 
-bool deserialize_array_byte_1(ucdrBuffer* buffer, uint8_t* array, const uint32_t size);
-bool deserialize_array_byte_2(ucdrBuffer* buffer, ucdrEndianness endianness, uint16_t* array, const uint32_t size);
-bool deserialize_array_byte_4(ucdrBuffer* buffer, ucdrEndianness endianness, uint32_t* array, const uint32_t size);
-bool deserialize_array_byte_8(ucdrBuffer* buffer, ucdrEndianness endianness, uint64_t* array, const uint32_t size);
+bool ucdr_deserialize_array_byte_1(ucdrBuffer* buffer, uint8_t* array, const uint32_t size);
+bool ucdr_deserialize_array_byte_2(ucdrBuffer* buffer, ucdrEndianness endianness, uint16_t* array, const uint32_t size);
+bool ucdr_deserialize_array_byte_4(ucdrBuffer* buffer, ucdrEndianness endianness, uint32_t* array, const uint32_t size);
+bool ucdr_deserialize_array_byte_8(ucdrBuffer* buffer, ucdrEndianness endianness, uint64_t* array, const uint32_t size);
 
 #ifdef __cplusplus
 }

@@ -25,7 +25,7 @@
 // -------------------------------------------------------------------
 //                   INTERNAL UTIL IMPLEMENTATIONS
 // -------------------------------------------------------------------
-bool check_buffer(ucdrBuffer* mb, const uint32_t bytes)
+bool ucdr_check_buffer(ucdrBuffer* mb, const uint32_t bytes)
 {
     if(!mb->error)
     {

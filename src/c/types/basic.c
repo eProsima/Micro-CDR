@@ -23,10 +23,10 @@
 //                INTERNAL SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------
 
-bool serialize_byte_1(ucdrBuffer* mb, const uint8_t* byte)
+bool ucdr_serialize_byte_1(ucdrBuffer* mb, const uint8_t* byte)
 {
     uint32_t data_size = sizeof(uint8_t);
-    if(check_buffer(mb, data_size))
+    if(ucdr_check_buffer(mb, data_size))
     {
         *mb->iterator = *byte;
 
@@ -36,12 +36,12 @@ bool serialize_byte_1(ucdrBuffer* mb, const uint8_t* byte)
     return !mb->error;
 }
 
-bool serialize_byte_2(ucdrBuffer* mb, const ucdrEndianness endianness, const uint16_t* bytes)
+bool ucdr_serialize_byte_2(ucdrBuffer* mb, const ucdrEndianness endianness, const uint16_t* bytes)
 {
     uint32_t data_size = sizeof(uint16_t);
     uint32_t alignment = ucdr_buffer_alignment(mb, data_size);
 
-    if(check_buffer(mb, alignment + data_size))
+    if(ucdr_check_buffer(mb, alignment + data_size))
     {
         mb->iterator += alignment;
 
@@ -62,12 +62,12 @@ bool serialize_byte_2(ucdrBuffer* mb, const ucdrEndianness endianness, const uin
     return !mb->error;
 }
 
-bool serialize_byte_4(ucdrBuffer* mb, const ucdrEndianness endianness, const uint32_t* bytes)
+bool ucdr_serialize_byte_4(ucdrBuffer* mb, const ucdrEndianness endianness, const uint32_t* bytes)
 {
     uint32_t data_size = sizeof(uint32_t);
     uint32_t alignment = ucdr_buffer_alignment(mb, data_size);
 
-    if(check_buffer(mb, alignment + data_size))
+    if(ucdr_check_buffer(mb, alignment + data_size))
     {
         mb->iterator += alignment;
 
@@ -90,12 +90,12 @@ bool serialize_byte_4(ucdrBuffer* mb, const ucdrEndianness endianness, const uin
     return !mb->error;
 }
 
-bool serialize_byte_8(ucdrBuffer* mb, const ucdrEndianness endianness, const uint64_t* bytes)
+bool ucdr_serialize_byte_8(ucdrBuffer* mb, const ucdrEndianness endianness, const uint64_t* bytes)
 {
     uint32_t data_size = sizeof(uint64_t);
     uint32_t alignment = ucdr_buffer_alignment(mb, data_size);
 
-    if(check_buffer(mb, alignment + data_size))
+    if(ucdr_check_buffer(mb, alignment + data_size))
     {
         mb->iterator += alignment;
 
@@ -122,10 +122,10 @@ bool serialize_byte_8(ucdrBuffer* mb, const ucdrEndianness endianness, const uin
     return !mb->error;
 }
 
-bool deserialize_byte_1(ucdrBuffer* mb, uint8_t* byte)
+bool ucdr_deserialize_byte_1(ucdrBuffer* mb, uint8_t* byte)
 {
     uint32_t data_size = sizeof(uint8_t);
-    if(check_buffer(mb, data_size))
+    if(ucdr_check_buffer(mb, data_size))
     {
         *byte = *mb->iterator;
 
@@ -135,12 +135,12 @@ bool deserialize_byte_1(ucdrBuffer* mb, uint8_t* byte)
     return !mb->error;
 }
 
-bool deserialize_byte_2(ucdrBuffer* mb, const ucdrEndianness endianness, uint16_t* bytes)
+bool ucdr_deserialize_byte_2(ucdrBuffer* mb, const ucdrEndianness endianness, uint16_t* bytes)
 {
     uint32_t data_size = sizeof(uint16_t);
     uint32_t alignment = ucdr_buffer_alignment(mb, data_size);
 
-    if(check_buffer(mb, alignment + data_size))
+    if(ucdr_check_buffer(mb, alignment + data_size))
     {
         mb->iterator += alignment;
 
@@ -161,12 +161,12 @@ bool deserialize_byte_2(ucdrBuffer* mb, const ucdrEndianness endianness, uint16_
     return !mb->error;
 }
 
-bool deserialize_byte_4(ucdrBuffer* mb, const ucdrEndianness endianness, uint32_t* bytes)
+bool ucdr_deserialize_byte_4(ucdrBuffer* mb, const ucdrEndianness endianness, uint32_t* bytes)
 {
     uint32_t data_size = sizeof(uint32_t);
     uint32_t alignment = ucdr_buffer_alignment(mb, data_size);
 
-    if(check_buffer(mb, alignment + data_size))
+    if(ucdr_check_buffer(mb, alignment + data_size))
     {
         mb->iterator += alignment;
 
@@ -189,12 +189,12 @@ bool deserialize_byte_4(ucdrBuffer* mb, const ucdrEndianness endianness, uint32_
     return !mb->error;
 }
 
-bool deserialize_byte_8(ucdrBuffer* mb, const ucdrEndianness endianness, uint64_t* bytes)
+bool ucdr_deserialize_byte_8(ucdrBuffer* mb, const ucdrEndianness endianness, uint64_t* bytes)
 {
     uint32_t data_size = sizeof(uint64_t);
     uint32_t alignment = ucdr_buffer_alignment(mb, data_size);
 
-    if(check_buffer(mb, alignment + data_size))
+    if(ucdr_check_buffer(mb, alignment + data_size))
     {
         mb->iterator += alignment;
 
@@ -227,201 +227,201 @@ bool deserialize_byte_8(ucdrBuffer* mb, const ucdrEndianness endianness, uint64_
 
 bool ucdr_serialize_char(ucdrBuffer* mb, const char value)
 {
-    return serialize_byte_1(mb, (uint8_t*)&value);
+    return ucdr_serialize_byte_1(mb, (uint8_t*)&value);
 }
 
 bool ucdr_serialize_bool(ucdrBuffer* mb, const bool value)
 {
-    return serialize_byte_1(mb, (uint8_t*)&value);
+    return ucdr_serialize_byte_1(mb, (uint8_t*)&value);
 }
 
 bool ucdr_serialize_uint8_t(ucdrBuffer* mb, const uint8_t value)
 {
-    return serialize_byte_1(mb, &value);
+    return ucdr_serialize_byte_1(mb, &value);
 }
 
 bool ucdr_serialize_uint16_t(ucdrBuffer* mb, const uint16_t value)
 {
-    return serialize_byte_2(mb, mb->endianness, &value);
+    return ucdr_serialize_byte_2(mb, mb->endianness, &value);
 }
 
 bool ucdr_serialize_uint32_t(ucdrBuffer* mb, const uint32_t value)
 {
-    return serialize_byte_4(mb, mb->endianness, &value);
+    return ucdr_serialize_byte_4(mb, mb->endianness, &value);
 }
 
 bool ucdr_serialize_uint64_t(ucdrBuffer* mb, const uint64_t value)
 {
-    return serialize_byte_8(mb, mb->endianness, &value);
+    return ucdr_serialize_byte_8(mb, mb->endianness, &value);
 }
 
 bool ucdr_serialize_int8_t(ucdrBuffer* mb, const int8_t value)
 {
-    return serialize_byte_1(mb, (uint8_t*)&value);
+    return ucdr_serialize_byte_1(mb, (uint8_t*)&value);
 }
 
 bool ucdr_serialize_int16_t(ucdrBuffer* mb, const int16_t value)
 {
-    return serialize_byte_2(mb, mb->endianness, (uint16_t*)&value);
+    return ucdr_serialize_byte_2(mb, mb->endianness, (uint16_t*)&value);
 }
 
 bool ucdr_serialize_int32_t(ucdrBuffer* mb, const int32_t value)
 {
-    return serialize_byte_4(mb, mb->endianness, (uint32_t*)&value);
+    return ucdr_serialize_byte_4(mb, mb->endianness, (uint32_t*)&value);
 }
 
 bool ucdr_serialize_int64_t(ucdrBuffer* mb, const int64_t value)
 {
-    return serialize_byte_8(mb, mb->endianness, (uint64_t*)&value);
+    return ucdr_serialize_byte_8(mb, mb->endianness, (uint64_t*)&value);
 }
 
 bool ucdr_serialize_float(ucdrBuffer* mb, const float value)
 {
-    return serialize_byte_4(mb, mb->endianness, (uint32_t*)&value);
+    return ucdr_serialize_byte_4(mb, mb->endianness, (uint32_t*)&value);
 }
 
 bool ucdr_serialize_double(ucdrBuffer* mb, const double value)
 {
-    return serialize_byte_8(mb, mb->endianness, (uint64_t*)&value);
+    return ucdr_serialize_byte_8(mb, mb->endianness, (uint64_t*)&value);
 }
 
 bool ucdr_deserialize_char(ucdrBuffer* mb, char* value)
 {
-    return deserialize_byte_1(mb, (uint8_t*)value);
+    return ucdr_deserialize_byte_1(mb, (uint8_t*)value);
 }
 
 bool ucdr_deserialize_bool(ucdrBuffer* mb, bool* value)
 {
-    return deserialize_byte_1(mb, (uint8_t*)value);
+    return ucdr_deserialize_byte_1(mb, (uint8_t*)value);
 }
 
 bool ucdr_deserialize_uint8_t(ucdrBuffer* mb, uint8_t* value)
 {
-    return deserialize_byte_1(mb, value);
+    return ucdr_deserialize_byte_1(mb, value);
 }
 
 bool ucdr_deserialize_uint16_t(ucdrBuffer* mb, uint16_t* value)
 {
-    return deserialize_byte_2(mb, mb->endianness, value);
+    return ucdr_deserialize_byte_2(mb, mb->endianness, value);
 }
 
 bool ucdr_deserialize_uint32_t(ucdrBuffer* mb, uint32_t* value)
 {
-    return deserialize_byte_4(mb, mb->endianness, value);
+    return ucdr_deserialize_byte_4(mb, mb->endianness, value);
 }
 
 bool ucdr_deserialize_uint64_t(ucdrBuffer* mb, uint64_t* value)
 {
-    return deserialize_byte_8(mb, mb->endianness, value);
+    return ucdr_deserialize_byte_8(mb, mb->endianness, value);
 }
 
 bool ucdr_deserialize_int8_t(ucdrBuffer* mb, int8_t* value)
 {
-    return deserialize_byte_1(mb, (uint8_t*)value);
+    return ucdr_deserialize_byte_1(mb, (uint8_t*)value);
 }
 
 bool ucdr_deserialize_int16_t(ucdrBuffer* mb, int16_t* value)
 {
-    return deserialize_byte_2(mb, mb->endianness, (uint16_t*)value);
+    return ucdr_deserialize_byte_2(mb, mb->endianness, (uint16_t*)value);
 }
 
 bool ucdr_deserialize_int32_t(ucdrBuffer* mb, int32_t* value)
 {
-    return deserialize_byte_4(mb, mb->endianness, (uint32_t*)value);
+    return ucdr_deserialize_byte_4(mb, mb->endianness, (uint32_t*)value);
 }
 
 bool ucdr_deserialize_int64_t(ucdrBuffer* mb, int64_t* value)
 {
-    return deserialize_byte_8(mb, mb->endianness, (uint64_t*)value);
+    return ucdr_deserialize_byte_8(mb, mb->endianness, (uint64_t*)value);
 }
 
 bool ucdr_deserialize_float(ucdrBuffer* mb, float* value)
 {
-    return deserialize_byte_4(mb, mb->endianness, (uint32_t*)value);
+    return ucdr_deserialize_byte_4(mb, mb->endianness, (uint32_t*)value);
 }
 
 bool ucdr_deserialize_double(ucdrBuffer* mb, double* value)
 {
-    return deserialize_byte_8(mb, mb->endianness, (uint64_t*)value);
+    return ucdr_deserialize_byte_8(mb, mb->endianness, (uint64_t*)value);
 }
 
 bool ucdr_serialize_endian_uint16_t(ucdrBuffer* mb, const ucdrEndianness endianness, const uint16_t value)
 {
-    return serialize_byte_2(mb, endianness, &value);
+    return ucdr_serialize_byte_2(mb, endianness, &value);
 }
 
 bool ucdr_serialize_endian_uint32_t(ucdrBuffer* mb, const ucdrEndianness endianness, const uint32_t value)
 {
-    return serialize_byte_4(mb, endianness, &value);
+    return ucdr_serialize_byte_4(mb, endianness, &value);
 }
 
 bool ucdr_serialize_endian_uint64_t(ucdrBuffer* mb, const ucdrEndianness endianness, const uint64_t value)
 {
-    return serialize_byte_8(mb, endianness, &value);
+    return ucdr_serialize_byte_8(mb, endianness, &value);
 }
 
 bool ucdr_serialize_endian_int16_t(ucdrBuffer* mb, const ucdrEndianness endianness, const int16_t value)
 {
-    return serialize_byte_2(mb, endianness, (uint16_t*)&value);
+    return ucdr_serialize_byte_2(mb, endianness, (uint16_t*)&value);
 }
 
 bool ucdr_serialize_endian_int32_t(ucdrBuffer* mb, const ucdrEndianness endianness, const int32_t value)
 {
-    return serialize_byte_4(mb, endianness, (uint32_t*)&value);
+    return ucdr_serialize_byte_4(mb, endianness, (uint32_t*)&value);
 }
 
 bool ucdr_serialize_endian_int64_t(ucdrBuffer* mb, const ucdrEndianness endianness, const int64_t value)
 {
-    return serialize_byte_8(mb, endianness, (uint64_t*)&value);
+    return ucdr_serialize_byte_8(mb, endianness, (uint64_t*)&value);
 }
 
 bool ucdr_serialize_endian_float(ucdrBuffer* mb, const ucdrEndianness endianness, const float value)
 {
-    return serialize_byte_4(mb, endianness, (uint32_t*)&value);
+    return ucdr_serialize_byte_4(mb, endianness, (uint32_t*)&value);
 }
 
 bool ucdr_serialize_endian_double(ucdrBuffer* mb, const ucdrEndianness endianness, const double value)
 {
-    return serialize_byte_8(mb, endianness, (uint64_t*)&value);
+    return ucdr_serialize_byte_8(mb, endianness, (uint64_t*)&value);
 }
 
 bool ucdr_deserialize_endian_uint16_t(ucdrBuffer* mb, const ucdrEndianness endianness, uint16_t* value)
 {
-    return deserialize_byte_2(mb, endianness, value);
+    return ucdr_deserialize_byte_2(mb, endianness, value);
 }
 
 bool ucdr_deserialize_endian_uint32_t(ucdrBuffer* mb, const ucdrEndianness endianness, uint32_t* value)
 {
-    return deserialize_byte_4(mb, endianness, value);
+    return ucdr_deserialize_byte_4(mb, endianness, value);
 }
 
 bool ucdr_deserialize_endian_uint64_t(ucdrBuffer* mb, const ucdrEndianness endianness, uint64_t* value)
 {
-    return deserialize_byte_8(mb, endianness, value);
+    return ucdr_deserialize_byte_8(mb, endianness, value);
 }
 
 bool ucdr_deserialize_endian_int16_t(ucdrBuffer* mb, const ucdrEndianness endianness, int16_t* value)
 {
-    return deserialize_byte_2(mb, endianness, (uint16_t*)value);
+    return ucdr_deserialize_byte_2(mb, endianness, (uint16_t*)value);
 }
 
 bool ucdr_deserialize_endian_int32_t(ucdrBuffer* mb, const ucdrEndianness endianness, int32_t* value)
 {
-    return deserialize_byte_4(mb, endianness, (uint32_t*)value);
+    return ucdr_deserialize_byte_4(mb, endianness, (uint32_t*)value);
 }
 
 bool ucdr_deserialize_endian_int64_t(ucdrBuffer* mb, const ucdrEndianness endianness, int64_t* value)
 {
-    return deserialize_byte_8(mb, endianness, (uint64_t*)value);
+    return ucdr_deserialize_byte_8(mb, endianness, (uint64_t*)value);
 }
 
 bool ucdr_deserialize_endian_float(ucdrBuffer* mb, const ucdrEndianness endianness, float* value)
 {
-    return deserialize_byte_4(mb, endianness, (uint32_t*)value);
+    return ucdr_deserialize_byte_4(mb, endianness, (uint32_t*)value);
 }
 
 bool ucdr_deserialize_endian_double(ucdrBuffer* mb, const ucdrEndianness endianness, double* value)
 {
-    return deserialize_byte_8(mb, endianness, (uint64_t*)value);
+    return ucdr_deserialize_byte_8(mb, endianness, (uint64_t*)value);
 }
 
