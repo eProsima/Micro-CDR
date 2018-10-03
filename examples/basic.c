@@ -23,20 +23,20 @@ int main()
     uint8_t buffer[BUFFER_LENGTH];
 
     // Structs for handle the buffer.
-    mcBuffer writer;
-    mcBuffer reader;
+    ucdrBuffer writer;
+    ucdrBuffer reader;
 
     // Initialize the MicroBuffers for working with an user-managed buffer.
-    mc_init_buffer(&writer, buffer, BUFFER_LENGTH);
-    mc_init_buffer(&reader, buffer, BUFFER_LENGTH);
+    ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
+    ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
 
     // Serialize data
     char input[16] = "Hello MicroCDR!"; //16 characters
-    mc_serialize_array_char(&writer, input, 16);
+    ucdr_serialize_array_char(&writer, input, 16);
 
     // Deserialize data
     char output[16];
-    mc_deserialize_array_char(&reader, output, 16);
+    ucdr_deserialize_array_char(&reader, output, 16);
 
     printf("Input: %s\n", input);
     printf("Output: %s\n", output);

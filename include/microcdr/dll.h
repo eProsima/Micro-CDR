@@ -19,15 +19,15 @@
 #if defined(_WIN32)
 #if defined(microcdr_SHARED)
 #if defined(microcdr_EXPORTS)
-#define MCDLLAPI __declspec( dllexport )
+#define UCDRDLLAPI __declspec( dllexport )
 #else
-#define MCDLLAPI __declspec( dllimport )
+#define UCDRDLLAPI __declspec( dllimport )
 #endif // microcdr_EXPORTS
 #else
-#define MCDLLAPI
+#define UCDRDLLAPI
 #endif // BUILDING_SHARED_LIBS
 #else
-#define MCDLLAPI
+#define UCDRDLLAPI
 #endif // _WIN32
 
 #endif // _MICROCDR_DLL_H_
