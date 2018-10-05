@@ -19,11 +19,11 @@
 extern "C" {
 #endif
 
-#include <microcdr/common.h>
-#include <microcdr/types/basic.h>
-#include <microcdr/types/string.h>
-#include <microcdr/types/array.h>
-#include <microcdr/types/sequence.h>
+#include <ucdr/common.h>
+#include <ucdr/types/basic.h>
+#include <ucdr/types/string.h>
+#include <ucdr/types/array.h>
+#include <ucdr/types/sequence.h>
 
 #ifdef __cplusplus
 }

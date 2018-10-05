@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <microcdr/types/basic.h>
-#include <microcdr/types/array.h>
-#include <microcdr/types/sequence.h>
+#include <ucdr/types/basic.h>
+#include <ucdr/types/array.h>
+#include <ucdr/types/sequence.h>
 
 #include "array_internals.h"
 #include "sequence_internals.h"
