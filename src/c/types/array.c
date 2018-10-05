@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <microcdr/types/array.h>
+#include <ucdr/types/array.h>
 
 #include "../common_internals.h"
 #include "array_internals.h"

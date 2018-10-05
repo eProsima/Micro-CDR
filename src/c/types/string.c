@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <microcdr/types/string.h>
-#include <microcdr/types/sequence.h>
+#include <ucdr/types/string.h>
+#include <ucdr/types/sequence.h>
 
 #include <string.h>
 

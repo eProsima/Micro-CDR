@@ -12,7 +12,7 @@ This is a code example showing the serialization and deserialization of a string
 As *MicroCDR* uses a static buffer, that means the user has to provide a defined buffer and its size during the *ucdrBuffer* creation.
 
 ```c
-    #include <microcdr/microcdr.h>
+    #include <ucdr/microcdr.h>
     #include <stdio.h>
 
     #define BUFFER_LENGTH 256

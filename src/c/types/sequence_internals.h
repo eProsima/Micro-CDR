@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-#include <microcdr/common.h>
+#include <ucdr/common.h>
 
 // -------------------------------------------------------------------
 //                  INTERNAL SERIALIZATION FUNCTIONS

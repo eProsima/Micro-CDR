@@ -19,8 +19,8 @@
 extern "C" {
 #endif
 
-#include <microcdr/dll.h>
-#include <microcdr/config.h>
+#include <ucdr/dll.h>
+#include <ucdr/config.h>
 
 #include <stdint.h>
 #include <stdbool.h>
