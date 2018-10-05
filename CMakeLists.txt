@@ -162,13 +162,13 @@ install(TARGETS ${PROJECT_NAME}
 
 # Install includes
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ucdr/
-    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
     FILES_MATCHING PATTERN "*.h"
     )
 
 # Install config.h
 install(FILES ${PROJECT_BINARY_DIR}/include/ucdr/config.h
-    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
     )
 
 # Export library
