@@ -68,7 +68,14 @@ endif()
 ###############################################################################
 
 # Library
-add_library(${PROJECT_NAME} src/c/microcdr.c)
+add_library(${PROJECT_NAME}
+    src/c/common.c
+    src/c/types/basic.c
+    src/c/types/string.c
+    src/c/types/array.c
+    src/c/types/sequence.c
+    )
+
 set_common_compile_options(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
@@ -114,8 +121,8 @@ else()
 endif()
 
 # Config.h
-configure_file(${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/config.h.in
-    ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
+configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
+    ${PROJECT_BINARY_DIR}/include/ucdr/config.h
 )
 
 ###############################################################################
@@ -154,14 +161,14 @@ install(TARGETS ${PROJECT_NAME}
     )
 
 # Install includes
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/
-    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ucdr/
+    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
     FILES_MATCHING PATTERN "*.h"
     )
 
 # Install config.h
-install(FILES ${PROJECT_BINARY_DIR}/include/${PROJECT_NAME}/config.h
-    DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}
+install(FILES ${PROJECT_BINARY_DIR}/include/ucdr/config.h
+    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
     )
 
 # Export library
@@ -169,7 +176,7 @@ install(EXPORT ${PROJECT_NAME}Targets
     DESTINATION ${LIB_INSTALL_DIR}/${PROJECT_NAME}/cmake
     )
 
-# Package configuration 
+# Package configuration
 include(CMakePackageConfigHelpers)
 configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
     ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake

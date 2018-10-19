@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <microcdr/microcdr.h>
+#include <ucdr/microcdr.h>
 #include <stdio.h>
 
 #define BUFFER_LENGTH 256
@@ -23,20 +23,20 @@ int main()
     uint8_t buffer[BUFFER_LENGTH];
 
     // Structs for handle the buffer.
-    MicroBuffer writer;
-    MicroBuffer reader;
+    ucdrBuffer writer;
+    ucdrBuffer reader;
 
     // Initialize the MicroBuffers for working with an user-managed buffer.
-    init_micro_buffer(&writer, buffer, BUFFER_LENGTH);
-    init_micro_buffer(&reader, buffer, BUFFER_LENGTH);
+    ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
+    ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
 
     // Serialize data
-    char input[16] = "Hello microCDR!"; //16 characters
-    serialize_array_char(&writer, input, 16);
+    char input[16] = "Hello MicroCDR!"; //16 characters
+    ucdr_serialize_array_char(&writer, input, 16);
 
     // Deserialize data
     char output[16];
-    deserialize_array_char(&reader, output, 16);
+    ucdr_deserialize_array_char(&reader, output, 16);
 
     printf("Input: %s\n", input);
     printf("Output: %s\n", output);

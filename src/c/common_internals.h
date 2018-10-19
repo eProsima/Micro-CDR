@@ -12,18 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _MICROCDR_CONFIG_H_
-#define _MICROCDR_CONFIG_H_
+#ifndef _SRC_COMMON_INTERNALS_H_
+#define _SRC_COMMON_INTERNALS_H_
 
-// Version defines
-#define MICROCDR_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
-#define MICROCDR_VERSION_MINOR @PROJECT_VERSION_MINOR@
-#define MICROCDR_VERSION_MICRO @PROJECT_VERSION_PATCH@
-#define MICROCDR_VERSION_STR "@PROJECT_VERSION@"
-
-// Endianness defines
-#ifndef __BIG_ENDIAN__
-#define __BIG_ENDIAN__ @__BIG_ENDIAN__@
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#endif // _MICROCDR_CONFIG_H_
+#include <ucdr/common.h>
+
+// -------------------------------------------------------------------
+//                     INTERNAL UTIL FUNCTIONS
+// -------------------------------------------------------------------
+bool ucdr_check_buffer(ucdrBuffer* mb, const uint32_t bytes);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif //_SRC_COMMON_INTERNALS_H_

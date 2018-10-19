@@ -12,24 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef _MICROCDR_CONFIG_H_
+#define _MICROCDR_CONFIG_H_
 
-#ifndef _MICROCDR_MICROCDR_DLL_H_
-#define _MICROCDR_MICROCDR_DLL_H_
+// Version defines
+#define MICROCDR_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define MICROCDR_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define MICROCDR_VERSION_MICRO @PROJECT_VERSION_PATCH@
+#define MICROCDR_VERSION_STR "@PROJECT_VERSION@"
 
-#include <microcdr/config.h>
+// ucdrEndianness defines
+#ifndef __BIG_ENDIAN__
+#define __BIG_ENDIAN__ @__BIG_ENDIAN__@
+#endif
 
-#if defined(_WIN32)
-#if defined(microcdr_SHARED)
-#if defined(microcdr_EXPORTS)
-#define microcdr_DllAPI __declspec( dllexport )
-#else
-#define microcdr_DllAPI __declspec( dllimport )
-#endif // microcdr_EXPORTS
-#else
-#define microcdr_DllAPI
-#endif // BUILDING_SHARED_LIBS
-#else
-#define microcdr_DllAPI
-#endif // _WIN32
-
-#endif // _MICROCDR_MICROCDR_DLL_H_
+#endif // _MICROCDR_CONFIG_H_
