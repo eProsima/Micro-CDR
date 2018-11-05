@@ -66,7 +66,6 @@ endif()
 ###############################################################################
 # Targets
 ###############################################################################
-
 # Library
 add_library(${PROJECT_NAME}
     src/c/common.c
@@ -90,6 +89,8 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:include>
     )
+
+target_compile_options(${PROJECT_NAME} PRIVATE -fdata-sections -ffunction-sections)
 
 ###############################################################################
 # Config
