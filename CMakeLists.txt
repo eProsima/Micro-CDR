@@ -90,7 +90,7 @@ target_include_directories(${PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
     )
 
-target_compile_options(${PROJECT_NAME} PRIVATE -fdata-sections -ffunction-sections)
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<BOOL:${CMAKE_COMPILER_IS_GNUCC}>:-fdata-sections -ffunction-sections>)
 
 ###############################################################################
 # Config
