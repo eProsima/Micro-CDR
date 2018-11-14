@@ -50,23 +50,23 @@ UCDRDLLAPI extern const ucdrEndianness UCDR_MACHINE_ENDIANNESS;
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
-UCDRDLLAPI void ucdr_init_buffer               (ucdrBuffer* mb, uint8_t* data, const uint32_t size);
-UCDRDLLAPI void ucdr_init_buffer_offset        (ucdrBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
-UCDRDLLAPI void ucdr_init_buffer_offset_endian (ucdrBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset, ucdrEndianness endianness);
-UCDRDLLAPI void ucdr_copy_buffer               (ucdrBuffer* mb_dest, const ucdrBuffer* mb_source);
+UCDRDLLAPI void ucdr_init_buffer               (ucdrBuffer* ub, uint8_t* data, const uint32_t size);
+UCDRDLLAPI void ucdr_init_buffer_offset        (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset);
+UCDRDLLAPI void ucdr_init_buffer_offset_endian (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset, ucdrEndianness endianness);
+UCDRDLLAPI void ucdr_copy_buffer               (ucdrBuffer* ub_dest, const ucdrBuffer* ub_source);
 
-UCDRDLLAPI void ucdr_reset_buffer        (ucdrBuffer* mb);
-UCDRDLLAPI void ucdr_reset_buffer_offset (ucdrBuffer* mb, const uint32_t offset);
+UCDRDLLAPI void ucdr_reset_buffer        (ucdrBuffer* ub);
+UCDRDLLAPI void ucdr_reset_buffer_offset (ucdrBuffer* ub, const uint32_t offset);
 
-UCDRDLLAPI void     ucdr_align_to              (ucdrBuffer* mb, const uint32_t alignment);
+UCDRDLLAPI void     ucdr_align_to              (ucdrBuffer* ub, const uint32_t alignment);
 UCDRDLLAPI uint32_t ucdr_alignment             (uint32_t buffer_position, const uint32_t data_size);
-UCDRDLLAPI uint32_t ucdr_buffer_alignment(const ucdrBuffer* mb, const uint32_t data_size);
+UCDRDLLAPI uint32_t ucdr_buffer_alignment(const ucdrBuffer* ub, const uint32_t data_size);
 
-UCDRDLLAPI size_t     ucdr_buffer_size      (const ucdrBuffer* mb);
-UCDRDLLAPI size_t     ucdr_buffer_length    (const ucdrBuffer* mb);
-UCDRDLLAPI size_t     ucdr_buffer_remaining (const ucdrBuffer* mb);
-UCDRDLLAPI ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* mb);
-UCDRDLLAPI bool       ucdr_buffer_has_error (const ucdrBuffer* mb);
+UCDRDLLAPI size_t     ucdr_buffer_size      (const ucdrBuffer* ub);
+UCDRDLLAPI size_t     ucdr_buffer_length    (const ucdrBuffer* ub);
+UCDRDLLAPI size_t     ucdr_buffer_remaining (const ucdrBuffer* ub);
+UCDRDLLAPI ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* ub);
+UCDRDLLAPI bool       ucdr_buffer_has_error (const ucdrBuffer* ub);
 
 #ifdef __cplusplus
 }

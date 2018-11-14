@@ -28,11 +28,11 @@ extern "C" {
 //                   PUBLIC SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
 
-UCDRDLLAPI bool ucdr_serialize_string(ucdrBuffer* mb, const char* string);
-UCDRDLLAPI bool ucdr_deserialize_string(ucdrBuffer* mb, char* string, const uint32_t string_capacity);
+UCDRDLLAPI bool ucdr_serialize_string(ucdrBuffer* ub, const char* string);
+UCDRDLLAPI bool ucdr_deserialize_string(ucdrBuffer* ub, char* string, const uint32_t string_capacity);
 
-UCDRDLLAPI bool ucdr_serialize_endian_string(ucdrBuffer* mb, ucdrEndianness endianness, const char* string);
-UCDRDLLAPI bool ucdr_deserialize_endian_string(ucdrBuffer* mb, ucdrEndianness endianness, char* string, const uint32_t string_capacity);
+UCDRDLLAPI bool ucdr_serialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, const char* string);
+UCDRDLLAPI bool ucdr_deserialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, char* string, const uint32_t string_capacity);
 
 #ifdef __cplusplus
 }

@@ -25,49 +25,49 @@ extern "C" {
 //                   PUBLIC SERIALIZATION FUNCTIONS
 // -------------------------------------------------------------------
 
-UCDRDLLAPI bool ucdr_serialize_char(ucdrBuffer* mb, const char value);
-UCDRDLLAPI bool ucdr_serialize_bool(ucdrBuffer* mb, const bool value);
-UCDRDLLAPI bool ucdr_serialize_uint8_t(ucdrBuffer* mb, const uint8_t value);
-UCDRDLLAPI bool ucdr_serialize_uint16_t(ucdrBuffer* mb, const uint16_t value);
-UCDRDLLAPI bool ucdr_serialize_uint32_t(ucdrBuffer* mb, const uint32_t value);
-UCDRDLLAPI bool ucdr_serialize_uint64_t(ucdrBuffer* mb, const uint64_t value);
-UCDRDLLAPI bool ucdr_serialize_int8_t(ucdrBuffer* mb, const int8_t value);
-UCDRDLLAPI bool ucdr_serialize_int16_t(ucdrBuffer* mb, const int16_t value);
-UCDRDLLAPI bool ucdr_serialize_int32_t(ucdrBuffer* mb, const int32_t value);
-UCDRDLLAPI bool ucdr_serialize_int64_t(ucdrBuffer* mb, const int64_t value);
-UCDRDLLAPI bool ucdr_serialize_float(ucdrBuffer* mb, const float value);
-UCDRDLLAPI bool ucdr_serialize_double(ucdrBuffer* mb, const double value);
+UCDRDLLAPI bool ucdr_serialize_char(ucdrBuffer* ub, const char value);
+UCDRDLLAPI bool ucdr_serialize_bool(ucdrBuffer* ub, const bool value);
+UCDRDLLAPI bool ucdr_serialize_uint8_t(ucdrBuffer* ub, const uint8_t value);
+UCDRDLLAPI bool ucdr_serialize_uint16_t(ucdrBuffer* ub, const uint16_t value);
+UCDRDLLAPI bool ucdr_serialize_uint32_t(ucdrBuffer* ub, const uint32_t value);
+UCDRDLLAPI bool ucdr_serialize_uint64_t(ucdrBuffer* ub, const uint64_t value);
+UCDRDLLAPI bool ucdr_serialize_int8_t(ucdrBuffer* ub, const int8_t value);
+UCDRDLLAPI bool ucdr_serialize_int16_t(ucdrBuffer* ub, const int16_t value);
+UCDRDLLAPI bool ucdr_serialize_int32_t(ucdrBuffer* ub, const int32_t value);
+UCDRDLLAPI bool ucdr_serialize_int64_t(ucdrBuffer* ub, const int64_t value);
+UCDRDLLAPI bool ucdr_serialize_float(ucdrBuffer* ub, const float value);
+UCDRDLLAPI bool ucdr_serialize_double(ucdrBuffer* ub, const double value);
 
-UCDRDLLAPI bool ucdr_deserialize_char(ucdrBuffer* mb, char* value);
-UCDRDLLAPI bool ucdr_deserialize_bool(ucdrBuffer* mb, bool* value);
-UCDRDLLAPI bool ucdr_deserialize_uint8_t(ucdrBuffer* mb, uint8_t* value);
-UCDRDLLAPI bool ucdr_deserialize_uint16_t(ucdrBuffer* mb, uint16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_uint32_t(ucdrBuffer* mb, uint32_t* value);
-UCDRDLLAPI bool ucdr_deserialize_uint64_t(ucdrBuffer* mb, uint64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int8_t(ucdrBuffer* mb, int8_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int16_t(ucdrBuffer* mb, int16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int32_t(ucdrBuffer* mb, int32_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int64_t(ucdrBuffer* mb, int64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_float(ucdrBuffer* mb, float* value);
-UCDRDLLAPI bool ucdr_deserialize_double(ucdrBuffer* mb, double* value);
+UCDRDLLAPI bool ucdr_deserialize_char(ucdrBuffer* ub, char* value);
+UCDRDLLAPI bool ucdr_deserialize_bool(ucdrBuffer* ub, bool* value);
+UCDRDLLAPI bool ucdr_deserialize_uint8_t(ucdrBuffer* ub, uint8_t* value);
+UCDRDLLAPI bool ucdr_deserialize_uint16_t(ucdrBuffer* ub, uint16_t* value);
+UCDRDLLAPI bool ucdr_deserialize_uint32_t(ucdrBuffer* ub, uint32_t* value);
+UCDRDLLAPI bool ucdr_deserialize_uint64_t(ucdrBuffer* ub, uint64_t* value);
+UCDRDLLAPI bool ucdr_deserialize_int8_t(ucdrBuffer* ub, int8_t* value);
+UCDRDLLAPI bool ucdr_deserialize_int16_t(ucdrBuffer* ub, int16_t* value);
+UCDRDLLAPI bool ucdr_deserialize_int32_t(ucdrBuffer* ub, int32_t* value);
+UCDRDLLAPI bool ucdr_deserialize_int64_t(ucdrBuffer* ub, int64_t* value);
+UCDRDLLAPI bool ucdr_deserialize_float(ucdrBuffer* ub, float* value);
+UCDRDLLAPI bool ucdr_deserialize_double(ucdrBuffer* ub, double* value);
 
-UCDRDLLAPI bool ucdr_serialize_endian_uint16_t(ucdrBuffer* mb, ucdrEndianness endianness, const uint16_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_uint32_t(ucdrBuffer* mb, ucdrEndianness endianness, const uint32_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_uint64_t(ucdrBuffer* mb, ucdrEndianness endianness, const uint64_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_int16_t(ucdrBuffer* mb, ucdrEndianness endianness, const int16_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_int32_t(ucdrBuffer* mb, ucdrEndianness endianness, const int32_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_int64_t(ucdrBuffer* mb, ucdrEndianness endianness, const int64_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_float(ucdrBuffer* mb, ucdrEndianness endianness, const float value);
-UCDRDLLAPI bool ucdr_serialize_endian_double(ucdrBuffer* mb, ucdrEndianness endianness, const double value);
+UCDRDLLAPI bool ucdr_serialize_endian_uint16_t(ucdrBuffer* ub, ucdrEndianness endianness, const uint16_t value);
+UCDRDLLAPI bool ucdr_serialize_endian_uint32_t(ucdrBuffer* ub, ucdrEndianness endianness, const uint32_t value);
+UCDRDLLAPI bool ucdr_serialize_endian_uint64_t(ucdrBuffer* ub, ucdrEndianness endianness, const uint64_t value);
+UCDRDLLAPI bool ucdr_serialize_endian_int16_t(ucdrBuffer* ub, ucdrEndianness endianness, const int16_t value);
+UCDRDLLAPI bool ucdr_serialize_endian_int32_t(ucdrBuffer* ub, ucdrEndianness endianness, const int32_t value);
+UCDRDLLAPI bool ucdr_serialize_endian_int64_t(ucdrBuffer* ub, ucdrEndianness endianness, const int64_t value);
+UCDRDLLAPI bool ucdr_serialize_endian_float(ucdrBuffer* ub, ucdrEndianness endianness, const float value);
+UCDRDLLAPI bool ucdr_serialize_endian_double(ucdrBuffer* ub, ucdrEndianness endianness, const double value);
 
-UCDRDLLAPI bool ucdr_deserialize_endian_uint16_t(ucdrBuffer* mb, ucdrEndianness endianness, uint16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_uint32_t(ucdrBuffer* mb, ucdrEndianness endianness, uint32_t *value);
-UCDRDLLAPI bool ucdr_deserialize_endian_uint64_t(ucdrBuffer* mb, ucdrEndianness endianness, uint64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_int16_t(ucdrBuffer* mb, ucdrEndianness endianness, int16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_int32_t(ucdrBuffer* mb, ucdrEndianness endianness, int32_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_int64_t(ucdrBuffer* mb, ucdrEndianness endianness, int64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_float(ucdrBuffer* mb, ucdrEndianness endianness, float* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_double(ucdrBuffer* mb, ucdrEndianness endianness, double* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_uint16_t(ucdrBuffer* ub, ucdrEndianness endianness, uint16_t* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_uint32_t(ucdrBuffer* ub, ucdrEndianness endianness, uint32_t *value);
+UCDRDLLAPI bool ucdr_deserialize_endian_uint64_t(ucdrBuffer* ub, ucdrEndianness endianness, uint64_t* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_int16_t(ucdrBuffer* ub, ucdrEndianness endianness, int16_t* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_int32_t(ucdrBuffer* ub, ucdrEndianness endianness, int32_t* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_int64_t(ucdrBuffer* ub, ucdrEndianness endianness, int64_t* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_float(ucdrBuffer* ub, ucdrEndianness endianness, float* value);
+UCDRDLLAPI bool ucdr_deserialize_endian_double(ucdrBuffer* ub, ucdrEndianness endianness, double* value);
 
 #ifdef __cplusplus
 }
