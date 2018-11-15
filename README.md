@@ -48,11 +48,11 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 ## API functions
 
 ```c
-void ucdr_init_buffer        (ucdrBuffer* mb, uint8_t* data, const uint32_t size);
-void ucdr_init_buffer_offset (ucdrBuffer* mb, uint8_t* data, const uint32_t size, uint32_t offset);
+void ucdr_init_buffer        (ucdrBuffer* ub, uint8_t* data, const uint32_t size);
+void ucdr_init_buffer_offset (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset);
 ```
 Initialize a `ucdrBuffer` structure, the main struct of *MicroCDR*.
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 - `data`: the buffer that the `ucdrBuffer` will use.
 - `size`: the size of the buffer that the `ucdrBuffer` will use.
 - `offset`: where the serialization/deserialization will start.
@@ -61,32 +61,32 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
-void ucdr_copy_buffer (ucdrBuffer* mb_dest, const ucdrBuffer* mb_source);
+void ucdr_copy_buffer (ucdrBuffer* ub_dest, const ucdrBuffer* ub_source);
 ```
 Copy a `ucdrBuffer` structure data to another `ucdrBuffer` structure.
-- `mb_dest`: the destination `ucdrBuffer` struct.
-- `mb_source`: the origin initialized `ucdrBuffer` struct.
+- `ub_dest`: the destination `ucdrBuffer` struct.
+- `ub_source`: the origin initialized `ucdrBuffer` struct.
 
 ---
 
 ```c
-void ucdr_reset_buffer       (ucdrBuffer* mb);
-void ucdr_reset_buffer_offset(ucdrBuffer* mb, const uint32_t offset);
+void ucdr_reset_buffer       (ucdrBuffer* ub);
+void ucdr_reset_buffer_offset(ucdrBuffer* ub, const uint32_t offset);
 ```
 Reset the `ucdrBuffer` as the same state that it was created.
-- `mb`: the `ucdrBuffer` struct.
+- `ub`: the `ucdrBuffer` struct.
 - `offset`: where the serialization/deserialization will start.
 Initially, the serialization/deserialization starts at the beginning of the buffer.
 
 ---
 
 ```c
-void ucdr_align_to (ucdrBuffer* mb, const uint32_t alignment);
+void ucdr_align_to (ucdrBuffer* ub, const uint32_t alignment);
 ```
 Align the ucdrBuffer to an `alignment` position.
 After call this function, the serialization pointer will be moved only if the current `ucdrBuffer` was not aligment to the passed value.
 
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 - `alignment`: the alignment value used.
 
 ---
@@ -96,57 +96,57 @@ uint32_t ucdr_aligment(uint32_t buffer_position, const uint32_t data_size);
 ```
 Returns the aligment necessary to serialize/deserialize a type with `data_size` size.
 
-- `buffer_position`: the current serialization/deserialization position of the `ucdrBuffer`. (Typically  `mb->iterator - mb->init`).
+- `buffer_position`: the current serialization/deserialization position of the `ucdrBuffer`. (Typically  `ub->iterator - ub->init`).
 - `data_size`: the bytes of the data that you are asking for.
 
 ---
 
 ```c
-uint32_t ucdr_buffer_alignment(const ucdrBuffer* mb, const uint32_t data_size);
+uint32_t ucdr_buffer_alignment(const ucdrBuffer* ub, const uint32_t data_size);
 ```
 Returns the aligment necessary to serialize/deserialize a type with `data_size` size into the `ucdrBuffer` given.
 
-- `mb`: the `ucdrBuffer` struct to ask the alignment.
+- `ub`: the `ucdrBuffer` struct to ask the alignment.
 - `data_size`: the bytes of the data that you are asking for.
 ---
 
 ```c
-size_t ucdr_buffer_size(const ucdrBuffer* mb);
+size_t ucdr_buffer_size(const ucdrBuffer* ub);
 ```
 Returns the memory size of the buffer.
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 
 ---
 
 ```c
-size_t ucdr_buffer_length(const ucdrBuffer* mb);
+size_t ucdr_buffer_length(const ucdrBuffer* ub);
 ```
 Returns the size of the serialized/deserialized data.
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 
 ---
 
 ```c
-size_t ucdr_buffer_remaining(const ucdrBuffer* mb);
+size_t ucdr_buffer_remaining(const ucdrBuffer* ub);
 ```
 Returns the remaining size for the serializing/deserializing.
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 
 ---
 
 ```c
-ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* mb);
+ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* ub);
 ```
 Returns the serialization/deserialization endianness.
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 
 ---
 
 ```c
-bool ucdr_buffer_error(const ucdrBuffer* mb);
+bool ucdr_buffer_error(const ucdrBuffer* ub);
 ```
 Returns the status error of the `ucdrBuffer`.
-- `mb`: the `ucdrBuffer` struct
+- `ub`: the `ucdrBuffer` struct
 
 
 ### Serialization/deserialization functions
