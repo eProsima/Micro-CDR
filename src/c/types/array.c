@@ -24,16 +24,33 @@
 //                INTERNAL SERIALIZATION IMPLEMENTATION
 // -------------------------------------------------------------------
 
+void ucdr_serialize_continuous_memory(ucdrBuffer* ub, const uint8_t* array, const uint32_t size)
+{
+    //if defined(ENABLED_FINISHED_BUFFER_CALLBACK) //in order to improve the performance when is not used
+    uint32_t serialization_size;
+    uint32_t remaining_size = size;
+    while(0 < (serialization_size = ucdr_check_buffer(ub, remaining_size)))
+    {
+        memcpy(ub->iterator, array, serialization_size);
+        ub->iterator += serialization_size;
+        remaining_size -= serialization_size;
+    }
+    //else
+    //if(0 < ucdr_check_buffer(ub, size)) //maybe the old version of check_buffer?
+    //{
+    //    memcpy(ub->iterator, array, size);
+    //    ub->iterator += serialization_size;
+    //}
+    //endif
+}
+
 bool ucdr_serialize_array_byte_1(ucdrBuffer* ub, const uint8_t* array, const uint32_t size)
 {
     uint32_t data_size = sizeof(uint8_t);
-    if(ucdr_check_buffer(ub, size))
-    {
-        memcpy(ub->iterator, array, size);
 
-        ub->iterator += size;
-        ub->last_data_size = data_size;
-    }
+    ucdr_serialize_continuous_memory(ub, array, size);
+    ub->last_data_size = data_size;
+
     return !ub->error;
 }
 
@@ -43,24 +60,22 @@ bool ucdr_serialize_array_byte_2(ucdrBuffer* ub, const ucdrEndianness endianness
     uint32_t array_size = size * data_size;
     uint32_t alignment = ucdr_buffer_alignment(ub, sizeof(uint16_t));
 
-    if(ucdr_check_buffer(ub, alignment + array_size))
-    {
-        ub->iterator += alignment;
-        if(UCDR_MACHINE_ENDIANNESS == endianness)
-        {
-            memcpy(ub->iterator, array, array_size);
+    ub->iterator += alignment; //The alignment ALWAYS keep if the buffer is multiply as 8 (Mandatory requirement?)
+                               //If the buffer is not 8 alignment, no seg-fault occurs and error = true will be returned.
 
-            ub->iterator += array_size;
-            ub->last_data_size = data_size;
-        }
-        else
+    if(UCDR_MACHINE_ENDIANNESS == endianness)
+    {
+        ucdr_serialize_continuous_memory(ub, (uint8_t*)array, array_size);
+        ub->last_data_size = data_size;
+    }
+    else
+    {
+        for(uint32_t i = 0; i < size; i++)
         {
-            for(uint32_t i = 0; i < size; i++)
-            {
-                ucdr_serialize_byte_2(ub, endianness, array + i);
-            }
+            ucdr_serialize_byte_2(ub, endianness, array + i); //This function will check the buffer inside
         }
     }
+
     return !ub->error;
 }
 

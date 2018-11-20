@@ -25,18 +25,19 @@
 // -------------------------------------------------------------------
 //                   INTERNAL UTIL IMPLEMENTATIONS
 // -------------------------------------------------------------------
+
 bool ucdr_check_buffer(ucdrBuffer* ub, const uint32_t bytes)
 {
-    if(!ub->error)
+    bool rv = !ub->error || 0 < bytes;
+    if(rv)
     {
-        bool fit = ub->iterator + bytes <= ub->final;
-        if(!fit)
+        if(ub->iterator + bytes > ub->final)
         {
             ub->error = true;
         }
     }
 
-    return !ub->error;
+    return rv;
 }
 
 // -------------------------------------------------------------------
@@ -60,6 +61,8 @@ void ucdr_init_buffer_offset_endian(ucdrBuffer* ub, uint8_t* data, const uint32_
     ub->last_data_size = 0U;
     ub->endianness = endianness;
     ub->error = false;
+    ub->on_finished_buffer = NULL;
+    ub->args = NULL;
 }
 
 

@@ -135,7 +135,7 @@ get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
 if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
     target_compile_definitions(${PROJECT_NAME}
         PUBLIC
-            -D${PROJECT_NAME}_SHARED
+            ${PROJECT_NAME}_SHARED
         )
 endif()
 
