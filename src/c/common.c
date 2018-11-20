@@ -33,7 +33,14 @@ bool ucdr_check_buffer(ucdrBuffer* ub, const uint32_t bytes)
     {
         if(ub->iterator + bytes > ub->final)
         {
-            ub->error = true;
+            if(NULL != ub->on_finished_buffer)
+            {
+                ub->error = ub->on_finished_buffer(ub, ub ->args);
+            }
+            else
+            {
+                ub->error = true;
+            }
         }
     }
 
