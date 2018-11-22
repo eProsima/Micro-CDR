@@ -70,8 +70,6 @@ public:
 
     ~FullBuffer()
     {
-        EXPECT_EQ(writer_it, writer.iterator);
-        EXPECT_EQ(reader_it, reader.iterator);
         EXPECT_TRUE(writer.error);
         EXPECT_TRUE(reader.error);
 

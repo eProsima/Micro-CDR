@@ -22,29 +22,49 @@
     const ucdrEndianness UCDR_MACHINE_ENDIANNESS = UCDR_LITTLE_ENDIANNESS;
 #endif
 
+static uint32_t ucdr_next_remaining_size(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size);
+
 // -------------------------------------------------------------------
 //                   INTERNAL UTIL IMPLEMENTATIONS
 // -------------------------------------------------------------------
 
-bool ucdr_check_buffer(ucdrBuffer* ub, const uint32_t bytes)
+bool ucdr_check_buffer_available_for(ucdrBuffer* ub, const uint32_t bytes)
 {
-    bool rv = !ub->error || 0 < bytes;
-    if(rv)
+    return !ub->error && (ub->iterator + bytes <= ub->final);
+}
+
+bool ucdr_check_final_buffer_behavior(ucdrBuffer* ub, const uint32_t data_size)
+{
+    if(!ub->error && ub->iterator + data_size > ub->final)
     {
-        if(ub->iterator + bytes > ub->final)
-        {
-            if(NULL != ub->on_finished_buffer)
-            {
-                ub->error = ub->on_finished_buffer(ub, ub ->args);
-            }
-            else
-            {
-                ub->error = true;
-            }
-        }
+        ub->error = (NULL != ub->on_finished_buffer) ? ub->on_finished_buffer(ub, ub ->args) : true;
     }
 
-    return rv;
+    return !ub->error;
+}
+
+uint32_t ucdr_next_remaining_size(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size)
+{
+    uint32_t remaining = (uint32_t)ucdr_buffer_remaining(ub);
+    return (ub->iterator + bytes <= ub->final)
+           ? bytes
+           : remaining - (remaining % data_size);
+}
+
+uint32_t ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size)
+{
+    if(!ub->error && ub->iterator + data_size > ub->final && bytes > 0)
+    {
+        ub->error = (NULL != ub->on_finished_buffer) ? ub->on_finished_buffer(ub, ub->args) : true;
+    }
+
+    return (!ub->error) ? ucdr_next_remaining_size(ub, bytes, data_size) : 0;
+}
+
+void ucdr_set_on_finished_buffer_callback(ucdrBuffer* ub, OnFinishedBuffer on_finished_buffer, void* args)
+{
+    ub->on_finished_buffer = on_finished_buffer;
+    ub->args = args;
 }
 
 // -------------------------------------------------------------------

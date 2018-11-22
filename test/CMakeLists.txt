@@ -27,9 +27,9 @@ if(GTEST_FOUND)
     include(CTest)
     set(SRCS
         serialization/BasicSerialization.cpp
-        serialization/StringSerialization.cpp
         serialization/ArraySerialization.cpp
         serialization/SequenceSerialization.cpp
+        serialization/StringSerialization.cpp
         endianness/BasicEndianness.cpp
         endianness/ArrayEndianness.cpp
         endianness/SequenceEndianness.cpp

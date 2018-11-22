@@ -24,7 +24,9 @@ extern "C" {
 // -------------------------------------------------------------------
 //                     INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
-bool ucdr_check_buffer(ucdrBuffer* ub, const uint32_t bytes);
+bool     ucdr_check_buffer_available_for(ucdrBuffer* ub, const uint32_t bytes);
+bool     ucdr_check_final_buffer_behavior(ucdrBuffer* ub, const uint32_t bytes);
+uint32_t ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size);
 
 #ifdef __cplusplus
 }
