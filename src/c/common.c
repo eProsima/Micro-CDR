@@ -37,7 +37,7 @@ bool ucdr_check_final_buffer_behavior(ucdrBuffer* ub, const uint32_t data_size)
 {
     if(!ub->error && ub->iterator + data_size > ub->final)
     {
-        ub->error = (NULL != ub->on_finished_buffer) ? ub->on_finished_buffer(ub, ub ->args) : true;
+        ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub ->args) : true;
     }
 
     return !ub->error;
@@ -55,15 +55,15 @@ uint32_t ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, const uint32_t b
 {
     if(!ub->error && ub->iterator + data_size > ub->final && bytes > 0)
     {
-        ub->error = (NULL != ub->on_finished_buffer) ? ub->on_finished_buffer(ub, ub->args) : true;
+        ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub->args) : true;
     }
 
     return (!ub->error) ? ucdr_next_remaining_size(ub, bytes, data_size) : 0;
 }
 
-void ucdr_set_on_finished_buffer_callback(ucdrBuffer* ub, OnFinishedBuffer on_finished_buffer, void* args)
+void ucdr_set_on_full_buffer_callback(ucdrBuffer* ub, OnFullBuffer on_full_buffer, void* args)
 {
-    ub->on_finished_buffer = on_finished_buffer;
+    ub->on_full_buffer = on_full_buffer;
     ub->args = args;
 }
 
@@ -88,7 +88,7 @@ void ucdr_init_buffer_offset_endian(ucdrBuffer* ub, uint8_t* data, const uint32_
     ub->last_data_size = 0U;
     ub->endianness = endianness;
     ub->error = false;
-    ub->on_finished_buffer = NULL;
+    ub->on_full_buffer = NULL;
     ub->args = NULL;
 }
 

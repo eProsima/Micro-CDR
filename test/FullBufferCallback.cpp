@@ -19,12 +19,12 @@ class FullBufferCallback : public FullBuffer
 public:
     FullBufferCallback()
     {
-        ucdr_set_on_finished_buffer_callback(&writer, on_finished_buffer, buffer);
-        ucdr_set_on_finished_buffer_callback(&reader, on_finished_buffer, buffer);
+        ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, buffer);
+        ucdr_set_on_full_buffer_callback(&reader, on_full_buffer, buffer);
     }
 
 protected:
-    static bool on_finished_buffer(ucdrBuffer* ub, void* args)
+    static bool on_full_buffer(ucdrBuffer* ub, void* args)
     {
         uint8_t* buffer =  static_cast<uint8_t*>(args);
 

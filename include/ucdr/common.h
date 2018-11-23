@@ -33,7 +33,7 @@ typedef enum ucdrEndianness {
 } ucdrEndianness;
 
 struct ucdrBuffer;
-typedef bool (*OnFinishedBuffer)(struct ucdrBuffer* buffer, void* args);
+typedef bool (*OnFullBuffer)(struct ucdrBuffer* buffer, void* args);
 
 typedef struct ucdrBuffer
 {
@@ -46,7 +46,7 @@ typedef struct ucdrBuffer
 
     bool error;
 
-    OnFinishedBuffer on_finished_buffer;
+    OnFullBuffer on_full_buffer;
     void* args;
 
 } ucdrBuffer;
@@ -60,7 +60,7 @@ UCDRDLLAPI void ucdr_init_buffer                     (ucdrBuffer* ub, uint8_t* d
 UCDRDLLAPI void ucdr_init_buffer_offset              (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset);
 UCDRDLLAPI void ucdr_init_buffer_offset_endian       (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset, ucdrEndianness endianness);
 UCDRDLLAPI void ucdr_copy_buffer                     (ucdrBuffer* ub_dest, const ucdrBuffer* ub_source);
-UCDRDLLAPI void ucdr_set_on_finished_buffer_callback (ucdrBuffer* ub, OnFinishedBuffer on_finished_buffer, void* args);
+UCDRDLLAPI void ucdr_set_on_full_buffer_callback     (ucdrBuffer* ub, OnFullBuffer on_full_buffer, void* args);
 
 UCDRDLLAPI void ucdr_reset_buffer        (ucdrBuffer* ub);
 UCDRDLLAPI void ucdr_reset_buffer_offset (ucdrBuffer* ub, const uint32_t offset);

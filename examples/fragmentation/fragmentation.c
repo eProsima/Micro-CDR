@@ -21,7 +21,7 @@
 #define SLOTS 12
 #define STRING_MAX 128
 
-bool on_finished_buffer(ucdrBuffer* ub, void* args)
+bool on_full_buffer(ucdrBuffer* ub, void* args)
 {
     uint8_t* buffer =  (uint8_t*) args;
 
@@ -50,9 +50,9 @@ int main()
     ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
     ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
 
-    // Add a finished buffer behavior to the writer and the reader
-    ucdr_set_on_finished_buffer_callback(&writer, on_finished_buffer, buffer);
-    ucdr_set_on_finished_buffer_callback(&reader, on_finished_buffer, buffer);
+    // Add a full buffer behavior to the writer and the reader
+    ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, buffer);
+    ucdr_set_on_full_buffer_callback(&reader, on_full_buffer, buffer);
 
     // Serialize data
     printf("Serializing...\n");
