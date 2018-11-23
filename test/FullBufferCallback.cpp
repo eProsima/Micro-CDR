@@ -14,25 +14,46 @@
 
 #include "FullBuffer.hpp"
 
-TEST_F(FullBuffer, Block_8)
+class FullBufferCallback : public FullBuffer
+{
+public:
+    FullBufferCallback()
+    {
+        ucdr_set_on_finished_buffer_callback(&writer, on_finished_buffer, buffer);
+        ucdr_set_on_finished_buffer_callback(&reader, on_finished_buffer, buffer);
+    }
+
+protected:
+    static bool on_finished_buffer(ucdrBuffer* ub, void* args)
+    {
+        uint8_t* buffer =  static_cast<uint8_t*>(args);
+
+        EXPECT_EQ(buffer, ub->init);
+        EXPECT_EQ(buffer + BUFFER_LENGTH, ub->final); //only satisfied if BUFFER_LENGTH is aligment to 8.
+
+        return true;
+    }
+};
+
+TEST_F(FullBufferCallback, Block_8_callback)
 {
     fill_buffer_except(7);
     try_block_8();
 }
 
-TEST_F(FullBuffer, Block_4)
+TEST_F(FullBufferCallback, Block_4_callback)
 {
     fill_buffer_except(3);
     try_block_4();
 }
 
-TEST_F(FullBuffer, Block_2)
+TEST_F(FullBufferCallback, Block_2_callback)
 {
     fill_buffer_except(1);
     try_block_2();
 }
 
-TEST_F(FullBuffer, Block_1)
+TEST_F(FullBufferCallback, Block_1_callback)
 {
     fill_buffer_except(0);
     try_block_1();
@@ -40,25 +61,25 @@ TEST_F(FullBuffer, Block_1)
 
 # define SUCCESSFUL_SERIALIZATION   3
 # define ARRAY_SERIALIZATION        (SUCCESSFUL_SERIALIZATION + 1)
-TEST_F(FullBuffer, ArrayBlock_8)
+TEST_F(FullBufferCallback, ArrayBlock_8_callback)
 {
     fill_buffer_except(8 * SUCCESSFUL_SERIALIZATION + 7);
     try_array_block_8(ARRAY_SERIALIZATION);
 }
 
-TEST_F(FullBuffer, ArrayBlock_4)
+TEST_F(FullBufferCallback, ArrayBlock_4_callback)
 {
     fill_buffer_except(4 * SUCCESSFUL_SERIALIZATION + 3);
     try_array_block_4(ARRAY_SERIALIZATION);
 }
 
-TEST_F(FullBuffer, ArrayBlock_2)
+TEST_F(FullBufferCallback, ArrayBlock_2_callback)
 {
     fill_buffer_except(2 * SUCCESSFUL_SERIALIZATION + 1);
     try_array_block_2(ARRAY_SERIALIZATION);
 }
 
-TEST_F(FullBuffer, ArrayBlock_1)
+TEST_F(FullBufferCallback, ArrayBlock_1_callback)
 {
     fill_buffer_except(SUCCESSFUL_SERIALIZATION);
     try_array_block_1(ARRAY_SERIALIZATION);

@@ -17,15 +17,16 @@
 #include <string.h>
 #include <inttypes.h>
 
-#define BUFFER_LENGTH 16
-#define SLOTS 8
+#define BUFFER_LENGTH 12
+#define SLOTS 12
 #define STRING_MAX 128
 
 bool on_finished_buffer(ucdrBuffer* ub, void* args)
 {
     uint8_t* buffer =  (uint8_t*) args;
 
-    uint32_t next_slot = 1 + (uint32_t)(ub->init - buffer) / BUFFER_LENGTH;
+    // leave an odd slots empty.
+    uint32_t next_slot = 2 + (uint32_t)(ub->init - buffer) / BUFFER_LENGTH;
 
     ub->init = buffer + BUFFER_LENGTH * next_slot;
     ub->iterator = ub->init;
