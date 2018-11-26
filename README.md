@@ -148,36 +148,14 @@ bool ucdr_buffer_error(const ucdrBuffer* ub);
 Returns the status error of the `ucdrBuffer`.
 - `ub`: the `ucdrBuffer` struct
 
-
 ### Serialization/deserialization functions
 Adding to this, there is a big set of functions for deserialize and deserialize different kind of types:
 - Basics: `bool`, `char`, `int8_t`, `uint8_t`,`int16_t`, `uint16_t`,`int32_t`, `uint32_t`,`int64_t`, `uint64_t`,`float`, `double`.
 - Arrays: Any fixed size of basics types.
 - Sequence: Similar to arrays, but the information about the size is serialized along with the data.
+- String: Wrapper of char sequence, but easily to use.
 
-### Endianness
-*MicroCDR* supports little and big endianness.
-The configuration can be done by cmake with the cmake `__BIG_ENDIAN__` variable.
-A `0` value implies that the serialization will performed into a little endian machine, and `1` into a big endian machine.
-
-The default endianness serialization can be choosen by setting the `endianness` parameter of a `ucdrBuffer`  to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
-Also, there are a functions that allow to force an endianness in their serialization/deserialization.
-These functions contains the name `endiannness` in their signature.
-
-### Error
-All serialization/deserialization functions return a boolean indicating the result of their operations.
-When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
-an status error is setted into the `ucdrBuffer`.
-If a `ucdrBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
-A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
-
-If is kwown that an operation can fails over a `ucdrBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
-the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
-After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
-
-## Serialization/deserialization list
 The available modes of serialization/deserializations in *MicroCDR* are shown in the following table.
-
 
 | Type                 | Endianness |
 | -------------------- | ---------- |
@@ -247,4 +225,30 @@ The available modes of serialization/deserializations in *MicroCDR* are shown in
 | float sequence       | endianness |
 | double sequence      |            |
 | double sequence      | endianness |
+
+## Additional features
+### Endianness
+*MicroCDR* supports little and big endianness.
+The configuration can be done by cmake with the cmake `__BIG_ENDIAN__` variable.
+A `0` value implies that the serialization will performed into a little endian machine, and `1` into a big endian machine.
+
+The default endianness serialization can be choosen by setting the `endianness` parameter of a `ucdrBuffer`  to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
+Also, there are a functions that allow to force an endianness in their serialization/deserialization.
+These functions contains the name `endiannness` in their signature.
+
+### Error
+All serialization/deserialization functions return a boolean indicating the result of their operations.
+When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
+an status error is setted into the `ucdrBuffer`.
+If a `ucdrBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
+A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
+
+If is kwown that an operation can fails over a `ucdrBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
+the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
+After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
+
+### Full buffer callback
+MicroCDR provides a callback that the user can set in order to control the behavior when the `ucdrBuffer` can not serialize/deserialize anymore because the buffer is full.
+This allows to create a better management error and/or modify the buffer location of the `ucdrBuffer`.
+The last possibility gives the user the capacity to use several small buffers for a big serialization (see the *fragmentation* example).
 
