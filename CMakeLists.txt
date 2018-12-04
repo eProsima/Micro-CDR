@@ -1,4 +1,4 @@
-# Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+# Copyright 2018 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,13 +36,13 @@ endif()
 ###############################################################################
 if(CMAKE_VERSION VERSION_LESS 3.0)
     project(microcdr C)
-    set(PROJECT_VERSION_MAJOR 2)
+    set(PROJECT_VERSION_MAJOR 1)
     set(PROJECT_VERSION_MINOR 0)
-    set(PROJECT_VERSION_PATCH 0)
+    set(PROJECT_VERSION_PATCH 1)
     set(PROJECT_VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 else()
     cmake_policy(SET CMP0048 NEW)
-    project(microcdr VERSION "2.0.0" LANGUAGES C)
+    project(microcdr VERSION "1.0.1" LANGUAGES C)
 endif()
 
 ###############################################################################
