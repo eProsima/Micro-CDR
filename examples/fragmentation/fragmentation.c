@@ -27,7 +27,7 @@ bool on_full_buffer(ucdrBuffer* ub, void* args)
 
     // This value correspong with the ub->error, and will be returned by this function to indicates
     // if the serialization must continue or must stop because of an error.
-    bool rv = true;
+    bool error = true;
 
     // Leave the odd slots empty.
     uint32_t next_slot = 2 + (uint32_t)(ub->init - buffer) / BUFFER_LENGTH;
@@ -41,10 +41,10 @@ bool on_full_buffer(ucdrBuffer* ub, void* args)
         printf("  Extend buffer to slot %u\n", next_slot);
 
         // As we want to continue the serialization without errors, we return false.
-        rv = false;
+        error = false;
     }
 
-    return rv;
+    return error;
 }
 
 int main()

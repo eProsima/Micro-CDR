@@ -44,12 +44,6 @@ void ucdr_array_to_buffer(ucdrBuffer* ub, const uint8_t* array, const uint32_t s
             remaining_size -= serialization_size;
             ub->iterator += serialization_size;
         }
-
-        if(!ub->error)
-        {
-            memcpy(ub->iterator, array + (size - remaining_size), remaining_size);
-            ub->iterator += remaining_size;
-        }
     }
     ub->last_data_size = data_size;
 }
@@ -70,12 +64,6 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
             memcpy(array + (size - remaining_size), ub->iterator, deserialization_size);
             remaining_size -= deserialization_size;
             ub->iterator += deserialization_size;
-        }
-
-        if(!ub->error)
-        {
-            memcpy(array + (size - remaining_size), ub->iterator, remaining_size);
-            ub->iterator += remaining_size;
         }
     }
     ub->last_data_size = data_size;
