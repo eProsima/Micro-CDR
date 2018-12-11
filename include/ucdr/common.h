@@ -32,6 +32,9 @@ typedef enum ucdrEndianness {
 
 } ucdrEndianness;
 
+struct ucdrBuffer;
+typedef bool (*OnFullBuffer)(struct ucdrBuffer* buffer, void* args);
+
 typedef struct ucdrBuffer
 {
     uint8_t *init;
@@ -43,6 +46,9 @@ typedef struct ucdrBuffer
 
     bool error;
 
+    OnFullBuffer on_full_buffer;
+    void* args;
+
 } ucdrBuffer;
 
 UCDRDLLAPI extern const ucdrEndianness UCDR_MACHINE_ENDIANNESS;
@@ -50,23 +56,24 @@ UCDRDLLAPI extern const ucdrEndianness UCDR_MACHINE_ENDIANNESS;
 // ------------------------------------------------
 //              Main library functions
 // ------------------------------------------------
-UCDRDLLAPI void ucdr_init_buffer               (ucdrBuffer* ub, uint8_t* data, const uint32_t size);
-UCDRDLLAPI void ucdr_init_buffer_offset        (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset);
-UCDRDLLAPI void ucdr_init_buffer_offset_endian (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset, ucdrEndianness endianness);
-UCDRDLLAPI void ucdr_copy_buffer               (ucdrBuffer* ub_dest, const ucdrBuffer* ub_source);
+UCDRDLLAPI void ucdr_init_buffer                     (ucdrBuffer* ub, uint8_t* data, const uint32_t size);
+UCDRDLLAPI void ucdr_init_buffer_offset              (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset);
+UCDRDLLAPI void ucdr_init_buffer_offset_endian       (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset, ucdrEndianness endianness);
+UCDRDLLAPI void ucdr_copy_buffer                     (ucdrBuffer* ub_dest, const ucdrBuffer* ub_source);
+UCDRDLLAPI void ucdr_set_on_full_buffer_callback     (ucdrBuffer* ub, OnFullBuffer on_full_buffer, void* args);
 
 UCDRDLLAPI void ucdr_reset_buffer        (ucdrBuffer* ub);
 UCDRDLLAPI void ucdr_reset_buffer_offset (ucdrBuffer* ub, const uint32_t offset);
 
-UCDRDLLAPI void     ucdr_align_to              (ucdrBuffer* ub, const uint32_t alignment);
-UCDRDLLAPI uint32_t ucdr_alignment             (uint32_t buffer_position, const uint32_t data_size);
-UCDRDLLAPI uint32_t ucdr_buffer_alignment(const ucdrBuffer* ub, const uint32_t data_size);
+UCDRDLLAPI void     ucdr_align_to         (ucdrBuffer* ub, const uint32_t alignment);
+UCDRDLLAPI uint32_t ucdr_alignment        (uint32_t buffer_position, const uint32_t data_size);
+UCDRDLLAPI uint32_t ucdr_buffer_alignment (const ucdrBuffer* ub, const uint32_t data_size);
 
-UCDRDLLAPI size_t     ucdr_buffer_size      (const ucdrBuffer* ub);
-UCDRDLLAPI size_t     ucdr_buffer_length    (const ucdrBuffer* ub);
-UCDRDLLAPI size_t     ucdr_buffer_remaining (const ucdrBuffer* ub);
-UCDRDLLAPI ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* ub);
-UCDRDLLAPI bool       ucdr_buffer_has_error (const ucdrBuffer* ub);
+UCDRDLLAPI size_t         ucdr_buffer_size       (const ucdrBuffer* ub);
+UCDRDLLAPI size_t         ucdr_buffer_length     (const ucdrBuffer* ub);
+UCDRDLLAPI size_t         ucdr_buffer_remaining  (const ucdrBuffer* ub);
+UCDRDLLAPI ucdrEndianness ucdr_buffer_endianness (const ucdrBuffer* ub);
+UCDRDLLAPI bool           ucdr_buffer_has_error  (const ucdrBuffer* ub);
 
 #ifdef __cplusplus
 }

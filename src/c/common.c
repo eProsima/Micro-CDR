@@ -22,21 +22,49 @@
     const ucdrEndianness UCDR_MACHINE_ENDIANNESS = UCDR_LITTLE_ENDIANNESS;
 #endif
 
+static uint32_t ucdr_next_remaining_size(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size);
+
 // -------------------------------------------------------------------
 //                   INTERNAL UTIL IMPLEMENTATIONS
 // -------------------------------------------------------------------
-bool ucdr_check_buffer(ucdrBuffer* ub, const uint32_t bytes)
+
+bool ucdr_check_buffer_available_for(ucdrBuffer* ub, const uint32_t bytes)
 {
-    if(!ub->error)
+    return !ub->error && (ub->iterator + bytes <= ub->final);
+}
+
+bool ucdr_check_final_buffer_behavior(ucdrBuffer* ub, const uint32_t data_size)
+{
+    if(!ub->error && ub->iterator + data_size > ub->final)
     {
-        bool fit = ub->iterator + bytes <= ub->final;
-        if(!fit)
-        {
-            ub->error = true;
-        }
+        ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub ->args) : true;
     }
 
     return !ub->error;
+}
+
+uint32_t ucdr_next_remaining_size(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size)
+{
+    uint32_t remaining = (uint32_t)ucdr_buffer_remaining(ub);
+    return (ub->iterator + bytes <= ub->final)
+           ? bytes
+           : remaining - (remaining % data_size);
+}
+
+uint32_t ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, const uint32_t bytes, const uint32_t data_size)
+{
+    if(!ub->error && ub->iterator + data_size > ub->final && bytes > 0)
+    {
+        ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub->args) : true;
+    }
+
+    return (!ub->error) ? ucdr_next_remaining_size(ub, bytes, data_size) : 0;
+}
+
+void ucdr_set_on_full_buffer_callback(ucdrBuffer* ub, OnFullBuffer on_full_buffer, void* args)
+{
+    ub->on_full_buffer = on_full_buffer;
+    ub->args = args;
 }
 
 // -------------------------------------------------------------------
@@ -60,6 +88,8 @@ void ucdr_init_buffer_offset_endian(ucdrBuffer* ub, uint8_t* data, const uint32_
     ub->last_data_size = 0U;
     ub->endianness = endianness;
     ub->error = false;
+    ub->on_full_buffer = NULL;
+    ub->args = NULL;
 }
 
 

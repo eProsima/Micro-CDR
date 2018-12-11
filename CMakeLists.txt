@@ -50,9 +50,11 @@ endif()
 ###############################################################################
 option(EPROSIMA_BUILD "Activate internal building" OFF)
 option(EPROSIMA_BUILD_TESTS "Activate the building of tests" OFF)
+option(EPROSIMA_BUILD_EXAMPLES "Compile examples" OFF)
 
 if(EPROSIMA_BUILD)
     set(EPROSIMA_BUILD_TESTS ON)
+    set(EPROSIMA_BUILD_EXAMPLES ON)
 endif()
 
 ###############################################################################
@@ -135,8 +137,16 @@ get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
 if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
     target_compile_definitions(${PROJECT_NAME}
         PUBLIC
-            -D${PROJECT_NAME}_SHARED
+            ${PROJECT_NAME}_SHARED
         )
+endif()
+
+###############################################################################
+# Examples
+###############################################################################
+if(EPROSIMA_BUILD_EXAMPLES)
+    add_subdirectory(examples/basic)
+    add_subdirectory(examples/fragmentation)
 endif()
 
 ###############################################################################
