@@ -13,10 +13,9 @@
 // limitations under the License.
 
 #include <ucdr/types/array.h>
+#include <ucdr/types/basic.h>
 
 #include "../common_internals.h"
-#include "array_internals.h"
-#include "basic_internals.h"
 
 #include <string.h>
 
@@ -83,7 +82,7 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     { \
         for(uint32_t i = 0; i < size; ++i) \
         { \
-            ucdr_serialize_byte_ ## SIZE(ub, ENDIAN, (BASE_TYPE*)array + i); \
+            ucdr_serialize_endian_ ## TYPE(ub, ENDIAN, *(array + i)); \
         } \
     } \
     return !ub->error;
@@ -120,23 +119,23 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     { \
         for(uint32_t i = 0; i < size; i++) \
         { \
-            ucdr_deserialize_byte_ ## SIZE(ub, ENDIAN, (BASE_TYPE*)array + i); \
+            ucdr_deserialize_endian_ ## TYPE(ub, ENDIAN, array + i); \
         } \
     } \
     return !ub->error;
 
-#define UCDR_DESERIALIZE_ARRAY_BYTE_2(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, uint16_t, 2, ENDIAN)
-#define UCDR_DESERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, uint32_t, 4, ENDIAN)
-#define UCDR_DESERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, uint64_t, 8, ENDIAN)
+#define UCDR_DESERIALIZE_ARRAY_BYTE_2(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 2, ENDIAN)
+#define UCDR_DESERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
+#define UCDR_DESERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_DESERIALIZE_ARRAY_DEFINITION(TYPE, SIZE) \
-    bool ucdr_deserialize_array_ ## TYPE (ucdrBuffer* ub, TYPE * array, const uint32_t size) \
+    bool ucdr_deserialize_array_ ## TYPE(ucdrBuffer* ub, TYPE * array, const uint32_t size) \
     { \
         UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE (TYPE, ub->endianness) \
     } \
-    bool ucdr_deserialize_endian_array_ ## TYPE (ucdrBuffer* ub, const ucdrEndianness endianness, TYPE * array, const uint32_t size) \
+    bool ucdr_deserialize_endian_array_ ## TYPE(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE * array, const uint32_t size) \
     { \
-        UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE (TYPE, endianness) \
+        UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, endianness) \
     }
 
 // -------------------------------------------------------------------
@@ -161,4 +160,3 @@ UCDR_ARRAY_DEFINITIONS(int32_t, 4)
 UCDR_ARRAY_DEFINITIONS(int64_t, 8)
 UCDR_ARRAY_DEFINITIONS(float, 4)
 UCDR_ARRAY_DEFINITIONS(double, 8)
-
