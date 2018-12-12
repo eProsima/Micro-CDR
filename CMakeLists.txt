@@ -1,4 +1,4 @@
-# Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+# Copyright 2018 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 ###############################################################################
 # CMake build rules for Micro CDR
 ###############################################################################
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 
 set(IS_TOP_LEVEL TRUE)
 if(PROJECT_SOURCE_DIR)
@@ -34,16 +34,8 @@ endif()
 ###############################################################################
 # Product information
 ###############################################################################
-if(CMAKE_VERSION VERSION_LESS 3.0)
-    project(microcdr C)
-    set(PROJECT_VERSION_MAJOR 2)
-    set(PROJECT_VERSION_MINOR 0)
-    set(PROJECT_VERSION_PATCH 0)
-    set(PROJECT_VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
-else()
-    cmake_policy(SET CMP0048 NEW)
-    project(microcdr VERSION "2.0.0" LANGUAGES C)
-endif()
+cmake_policy(SET CMP0048 NEW)
+project(microcdr VERSION "1.0.1" LANGUAGES C)
 
 ###############################################################################
 # eProsima build options
