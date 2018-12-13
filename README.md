@@ -1,4 +1,4 @@
-# eProsima Micro CDR 
+# eProsima Micro CDR
 
 [![Releases](https://img.shields.io/github/release/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/releases)
 [![License](https://img.shields.io/github/license/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/blob/master/LICENSE)
@@ -90,7 +90,7 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 void ucdr_align_to (ucdrBuffer* ub, const uint32_t alignment);
 ```
 Align the ucdrBuffer to an `alignment` position.
-After call this function, the serialization pointer will be moved only if the current `ucdrBuffer` was not aligment to the passed value.
+After call this function, the serialization pointer will be moved only if the current `ucdrBuffer` was not alignment to the passed value.
 
 - `ub`: the `ucdrBuffer` struct
 - `alignment`: the alignment value used.
@@ -98,9 +98,9 @@ After call this function, the serialization pointer will be moved only if the cu
 ---
 
 ```c
-uint32_t ucdr_aligment(uint32_t buffer_position, const uint32_t data_size);
+uint32_t ucdr_alignment(uint32_t buffer_position, const uint32_t data_size);
 ```
-Returns the aligment necessary to serialize/deserialize a type with `data_size` size.
+Returns the alignment necessary to serialize/deserialize a type with `data_size` size.
 
 - `buffer_position`: the current serialization/deserialization position of the `ucdrBuffer`. (Typically  `ub->iterator - ub->init`).
 - `data_size`: the bytes of the data that you are asking for.
@@ -110,7 +110,7 @@ Returns the aligment necessary to serialize/deserialize a type with `data_size` 
 ```c
 uint32_t ucdr_buffer_alignment(const ucdrBuffer* ub, const uint32_t data_size);
 ```
-Returns the aligment necessary to serialize/deserialize a type with `data_size` size into the `ucdrBuffer` given.
+Returns the alignment necessary to serialize/deserialize a type with `data_size` size into the `ucdrBuffer` given.
 
 - `ub`: the `ucdrBuffer` struct to ask the alignment.
 - `data_size`: the bytes of the data that you are asking for.
