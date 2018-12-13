@@ -29,7 +29,7 @@ protected:
         uint8_t* buffer =  static_cast<uint8_t*>(args);
 
         EXPECT_EQ(buffer, ub->init);
-        EXPECT_EQ(buffer + BUFFER_LENGTH, ub->final); //only satisfied if BUFFER_LENGTH is aligment to 8.
+        EXPECT_EQ(buffer + BUFFER_LENGTH, ub->final); //only satisfied if BUFFER_LENGTH is alignment to 8.
 
         return true;
     }
