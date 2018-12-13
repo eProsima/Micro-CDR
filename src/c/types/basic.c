@@ -14,7 +14,6 @@
 
 #include <ucdr/types/basic.h>
 #include "../common_internals.h"
-#include "basic_internals.h"
 
 #include <string.h>
 

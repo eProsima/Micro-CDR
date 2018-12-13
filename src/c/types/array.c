@@ -14,7 +14,6 @@
 
 #include <ucdr/types/array.h>
 #include <ucdr/types/basic.h>
-
 #include "../common_internals.h"
 
 #include <string.h>
