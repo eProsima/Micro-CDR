@@ -71,7 +71,7 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     ucdr_array_to_buffer(ub, (uint8_t*)array, size, 1); \
     return !ub->error;
 
-#define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, BASE_TYPE, SIZE, ENDIAN) \
+#define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, SIZE, ENDIAN) \
     ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
     if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
     { \
@@ -86,9 +86,9 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     } \
     return !ub->error;
 
-#define UCDR_SERIALIZE_ARRAY_BYTE_2(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, uint16_t, 2, ENDIAN)
-#define UCDR_SERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, uint32_t, 4, ENDIAN)
-#define UCDR_SERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, uint64_t, 8, ENDIAN)
+#define UCDR_SERIALIZE_ARRAY_BYTE_2(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 2, ENDIAN)
+#define UCDR_SERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
+#define UCDR_SERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
     bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE * array, const uint32_t size) \
@@ -105,10 +105,10 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
 // -------------------------------------------------------------------
 #define UCDR_DESERIALIZE_ARRAY_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    ucdr_buffer_to_array(ub, array, size, 1); \
+    ucdr_buffer_to_array(ub, (uint8_t*)array, size, 1); \
     return !ub->error;
 
-#define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, BASE_TYPE, SIZE, ENDIAN) \
+#define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, SIZE, ENDIAN) \
     ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
     if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
     { \
@@ -116,7 +116,7 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     } \
     else \
     { \
-        for(uint32_t i = 0; i < size; i++) \
+        for(uint32_t i = 0; i < size; ++i) \
         { \
             ucdr_deserialize_endian_ ## TYPE(ub, ENDIAN, array + i); \
         } \

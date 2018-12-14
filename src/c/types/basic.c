@@ -55,7 +55,7 @@
 
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
-    if(ucdr_check_final_buffer_behavior(ub, alignment + (uint32_t)SIZE)) \
+    if(ucdr_check_final_buffer_behavior(ub, (uint32_t)SIZE)) \
     { \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
@@ -122,9 +122,8 @@
 
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
-    if(ucdr_check_final_buffer_behavior(ub, alignment + (uint32_t)SIZE)) \
+    if(ucdr_check_final_buffer_behavior(ub, (uint32_t)SIZE)) \
     { \
-        ub->iterator += alignment; \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
             memcpy((void*)value, ub->iterator, (size_t)SIZE); \
