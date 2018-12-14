@@ -90,14 +90,14 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
 #define UCDR_SERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, uint32_t, 4, ENDIAN)
 #define UCDR_SERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, uint64_t, 8, ENDIAN)
 
-#define UCDR_SERIALIZE_ARRAY_DEFINITION(TYPE, SIZE) \
-    bool ucdr_serialize_array_ ## TYPE (ucdrBuffer* ub, const TYPE * array, const uint32_t size) \
+#define UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
+    bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE * array, const uint32_t size) \
     { \
-        UCDR_SERIALIZE_ARRAY_BYTE_ ## SIZE (TYPE, ub->endianness) \
+        UCDR_SERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, ub->endianness) \
     } \
-    bool ucdr_serialize_endian_array_ ## TYPE (ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE * array, const uint32_t size) \
+    bool ucdr_serialize_endian_array ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE * array, const uint32_t size) \
     { \
-        UCDR_SERIALIZE_ARRAY_BYTE_ ## SIZE (TYPE, endianness) \
+        UCDR_SERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, endianness) \
     } \
 
 // -------------------------------------------------------------------
@@ -127,12 +127,12 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
 #define UCDR_DESERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_DESERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
-#define UCDR_DESERIALIZE_ARRAY_DEFINITION(TYPE, SIZE) \
-    bool ucdr_deserialize_array_ ## TYPE(ucdrBuffer* ub, TYPE * array, const uint32_t size) \
+#define UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
+    bool ucdr_deserialize_array ## SUFFIX(ucdrBuffer* ub, TYPE * array, const uint32_t size) \
     { \
-        UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE (TYPE, ub->endianness) \
+        UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, ub->endianness) \
     } \
-    bool ucdr_deserialize_endian_array_ ## TYPE(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE * array, const uint32_t size) \
+    bool ucdr_deserialize_endian_array ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE * array, const uint32_t size) \
     { \
         UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, endianness) \
     }
@@ -140,22 +140,22 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
 // -------------------------------------------------------------------
 //                         DEFINITION MACRO
 // -------------------------------------------------------------------
-#define UCDR_ARRAY_DEFINITIONS(TYPE, SIZE) \
-    UCDR_SERIALIZE_ARRAY_DEFINITION(TYPE, SIZE) \
-    UCDR_DESERIALIZE_ARRAY_DEFINITION(TYPE, SIZE) \
+#define UCDR_ARRAY_DEFINITIONS(SUFFIX, TYPE, SIZE) \
+    UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
+    UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
 
 // -------------------------------------------------------------------
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
-UCDR_ARRAY_DEFINITIONS(char, 1)
-UCDR_ARRAY_DEFINITIONS(bool, 1)
-UCDR_ARRAY_DEFINITIONS(uint8_t, 1)
-UCDR_ARRAY_DEFINITIONS(uint16_t, 2)
-UCDR_ARRAY_DEFINITIONS(uint32_t, 4)
-UCDR_ARRAY_DEFINITIONS(uint64_t, 8)
-UCDR_ARRAY_DEFINITIONS(int8_t, 1)
-UCDR_ARRAY_DEFINITIONS(int16_t, 2)
-UCDR_ARRAY_DEFINITIONS(int32_t, 4)
-UCDR_ARRAY_DEFINITIONS(int64_t, 8)
-UCDR_ARRAY_DEFINITIONS(float, 4)
-UCDR_ARRAY_DEFINITIONS(double, 8)
+UCDR_ARRAY_DEFINITIONS(_char, char, 1)
+UCDR_ARRAY_DEFINITIONS(_bool, bool, 1)
+UCDR_ARRAY_DEFINITIONS(_uint8_t, uint8_t, 1)
+UCDR_ARRAY_DEFINITIONS(_uint16_t, uint16_t, 2)
+UCDR_ARRAY_DEFINITIONS(_uint32_t, uint32_t, 4)
+UCDR_ARRAY_DEFINITIONS(_uint64_t, uint64_t, 8)
+UCDR_ARRAY_DEFINITIONS(_int8_t, int8_t, 1)
+UCDR_ARRAY_DEFINITIONS(_int16_t, int16_t, 2)
+UCDR_ARRAY_DEFINITIONS(_int32_t, int32_t, 4)
+UCDR_ARRAY_DEFINITIONS(_int64_t, int64_t, 8)
+UCDR_ARRAY_DEFINITIONS(_float, float, 4)
+UCDR_ARRAY_DEFINITIONS(_double, double, 8)

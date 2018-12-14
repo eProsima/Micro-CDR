@@ -24,33 +24,33 @@ extern "C" {
 // -------------------------------------------------------------------
 //                         DECLARATION MACROS
 // -------------------------------------------------------------------
-#define UCDR_ARRAY_SERIALIZE_DECLARATION(TYPE) \
-    UCDRDLLAPI bool ucdr_serialize_array_ ## TYPE(ucdrBuffer* ub, const TYPE* array, const uint32_t size); \
-    UCDRDLLAPI bool ucdr_serialize_endian_array_ ## TYPE(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, const uint32_t size); \
+#define UCDR_ARRAY_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE* array, const uint32_t size); \
+    UCDRDLLAPI bool ucdr_serialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, const uint32_t size); \
 
-#define UCDR_ARRAY_DESERIALIZE_DECLARATION(TYPE) \
-    UCDRDLLAPI bool ucdr_deserialize_array_ ## TYPE(ucdrBuffer* ub, TYPE* array, const uint32_t size); \
-    UCDRDLLAPI bool ucdr_deserialize_endian_array_ ## TYPE(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, const uint32_t size); \
+#define UCDR_ARRAY_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_deserialize_array ## SUFFIX(ucdrBuffer* ub, TYPE* array, const uint32_t size); \
+    UCDRDLLAPI bool ucdr_deserialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, const uint32_t size); \
 
-#define UCDR_ARRAY_DECLARATIONS(TYPE) \
-    UCDR_ARRAY_SERIALIZE_DECLARATION(TYPE) \
-    UCDR_ARRAY_DESERIALIZE_DECLARATION(TYPE) \
+#define UCDR_ARRAY_DECLARATIONS(SUFFIX, TYPE) \
+    UCDR_ARRAY_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDR_ARRAY_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION DECLARATIONS
 // -------------------------------------------------------------------
-UCDR_ARRAY_DECLARATIONS(char)
-UCDR_ARRAY_DECLARATIONS(bool)
-UCDR_ARRAY_DECLARATIONS(uint8_t)
-UCDR_ARRAY_DECLARATIONS(uint16_t)
-UCDR_ARRAY_DECLARATIONS(uint32_t)
-UCDR_ARRAY_DECLARATIONS(uint64_t)
-UCDR_ARRAY_DECLARATIONS(int8_t)
-UCDR_ARRAY_DECLARATIONS(int16_t)
-UCDR_ARRAY_DECLARATIONS(int32_t)
-UCDR_ARRAY_DECLARATIONS(int64_t)
-UCDR_ARRAY_DECLARATIONS(float)
-UCDR_ARRAY_DECLARATIONS(double)
+UCDR_ARRAY_DECLARATIONS(_char, char)
+UCDR_ARRAY_DECLARATIONS(_bool, bool)
+UCDR_ARRAY_DECLARATIONS(_uint8_t, uint8_t)
+UCDR_ARRAY_DECLARATIONS(_uint16_t, uint16_t)
+UCDR_ARRAY_DECLARATIONS(_uint32_t, uint32_t)
+UCDR_ARRAY_DECLARATIONS(_uint64_t, uint64_t)
+UCDR_ARRAY_DECLARATIONS(_int8_t, int8_t)
+UCDR_ARRAY_DECLARATIONS(_int16_t, int16_t)
+UCDR_ARRAY_DECLARATIONS(_int32_t, int32_t)
+UCDR_ARRAY_DECLARATIONS(_int64_t, int64_t)
+UCDR_ARRAY_DECLARATIONS(_float, float)
+UCDR_ARRAY_DECLARATIONS(_double, double)
 
 #ifdef __cplusplus
 }

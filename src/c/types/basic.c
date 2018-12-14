@@ -74,12 +74,12 @@
 #define UCDR_SERIALIZE_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_SERIALIZE_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_BYTE_N(TYPE, 8, ENDIAN)
 
-#define UCDR_BASIC_TYPE_SERIALIZE_DEFINITION(TYPE, SIZE) \
-    bool ucdr_serialize_ ## TYPE(ucdrBuffer* ub, const TYPE value) \
+#define UCDR_BASIC_TYPE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
+    bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, const TYPE value) \
     { \
         UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, ub->endianness) \
     } \
-    bool ucdr_serialize_endian_ ## TYPE(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE value) \
+    bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE value) \
     { \
         UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
     }
@@ -142,12 +142,12 @@
 #define UCDR_DESERIALIZE_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_DESERIALIZE_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_BYTE_N(TYPE, 8, ENDIAN)
 
-#define UCDR_BASIC_TYPE_DESERIALIZE_DEFINITION(TYPE, SIZE) \
-    bool ucdr_deserialize_ ## TYPE(ucdrBuffer* ub, TYPE* value) \
+#define UCDR_BASIC_TYPE_DESERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
+    bool ucdr_deserialize ## SUFFIX(ucdrBuffer* ub, TYPE* value) \
     { \
         UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, ub->endianness) \
     } \
-    bool ucdr_deserialize_endian_ ## TYPE(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE* value) \
+    bool ucdr_deserialize_endian ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE* value) \
     { \
         UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
     }
@@ -155,22 +155,22 @@
 // -------------------------------------------------------------------
 //                         DEFINITION MACRO
 // -------------------------------------------------------------------
-#define UCDR_BASIC_TYPE_DEFINITIONS(TYPE, SIZE) \
-    UCDR_BASIC_TYPE_SERIALIZE_DEFINITION(TYPE, SIZE) \
-    UCDR_BASIC_TYPE_DESERIALIZE_DEFINITION(TYPE, SIZE) \
+#define UCDR_BASIC_TYPE_DEFINITIONS(SUFFIX, TYPE, SIZE) \
+    UCDR_BASIC_TYPE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
+    UCDR_BASIC_TYPE_DESERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
-UCDR_BASIC_TYPE_DEFINITIONS(char, 1)
-UCDR_BASIC_TYPE_DEFINITIONS(bool, 1)
-UCDR_BASIC_TYPE_DEFINITIONS(uint8_t, 1)
-UCDR_BASIC_TYPE_DEFINITIONS(uint16_t, 2)
-UCDR_BASIC_TYPE_DEFINITIONS(uint32_t, 4)
-UCDR_BASIC_TYPE_DEFINITIONS(uint64_t, 8)
-UCDR_BASIC_TYPE_DEFINITIONS(int8_t, 1)
-UCDR_BASIC_TYPE_DEFINITIONS(int16_t, 2)
-UCDR_BASIC_TYPE_DEFINITIONS(int32_t, 4)
-UCDR_BASIC_TYPE_DEFINITIONS(int64_t, 8)
-UCDR_BASIC_TYPE_DEFINITIONS(float, 4)
-UCDR_BASIC_TYPE_DEFINITIONS(double, 8)
+UCDR_BASIC_TYPE_DEFINITIONS(_char, char, 1)
+UCDR_BASIC_TYPE_DEFINITIONS(_bool, bool, 1)
+UCDR_BASIC_TYPE_DEFINITIONS(_uint8_t, uint8_t, 1)
+UCDR_BASIC_TYPE_DEFINITIONS(_uint16_t, uint16_t, 2)
+UCDR_BASIC_TYPE_DEFINITIONS(_uint32_t, uint32_t, 4)
+UCDR_BASIC_TYPE_DEFINITIONS(_uint64_t, uint64_t, 8)
+UCDR_BASIC_TYPE_DEFINITIONS(_int8_t, int8_t, 1)
+UCDR_BASIC_TYPE_DEFINITIONS(_int16_t, int16_t, 2)
+UCDR_BASIC_TYPE_DEFINITIONS(_int32_t, int32_t, 4)
+UCDR_BASIC_TYPE_DEFINITIONS(_int64_t, int64_t, 8)
+UCDR_BASIC_TYPE_DEFINITIONS(_float, float, 4)
+UCDR_BASIC_TYPE_DEFINITIONS(_double, double, 8)

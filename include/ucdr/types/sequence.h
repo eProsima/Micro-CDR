@@ -24,33 +24,33 @@ extern "C" {
 // -------------------------------------------------------------------
 //                         DECLARATION MACROS
 // -------------------------------------------------------------------
-#define UCDR_SEQUENCE_SERIALIZE_DECLARATION(TYPE) \
-    UCDRDLLAPI bool ucdr_serialize_sequence_ ## TYPE(ucdrBuffer* ub, const TYPE* array, const uint32_t size); \
-    UCDRDLLAPI bool ucdr_serialize_endian_sequence_ ## TYPE(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, const uint32_t size); \
+#define UCDR_SEQUENCE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_serialize_sequence ## SUFFIX(ucdrBuffer* ub, const TYPE* array, const uint32_t size); \
+    UCDRDLLAPI bool ucdr_serialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, const uint32_t size); \
 
-#define UCDR_SEQUENCE_DESERIALIZE_DECLARATION(TYPE) \
-    UCDRDLLAPI bool ucdr_deserialize_sequence_ ## TYPE(ucdrBuffer* ub, TYPE* array, const uint32_t array_capacity, uint32_t* size); \
-    UCDRDLLAPI bool ucdr_deserialize_endian_sequence_ ## TYPE(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, const uint32_t array_capacity, uint32_t* size); \
+#define UCDR_SEQUENCE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_deserialize_sequence ## SUFFIX(ucdrBuffer* ub, TYPE* array, const uint32_t array_capacity, uint32_t* size); \
+    UCDRDLLAPI bool ucdr_deserialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, const uint32_t array_capacity, uint32_t* size); \
 
-#define UCDR_SEQUENCE_DECLARATIONS(TYPE) \
-    UCDR_SEQUENCE_SERIALIZE_DECLARATION(TYPE) \
-    UCDR_SEQUENCE_DESERIALIZE_DECLARATION(TYPE) \
+#define UCDR_SEQUENCE_DECLARATIONS(SUFFIX, TYPE) \
+    UCDR_SEQUENCE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDR_SEQUENCE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION DECLARATIONS
 // -------------------------------------------------------------------
-UCDR_SEQUENCE_DECLARATIONS(char)
-UCDR_SEQUENCE_DECLARATIONS(bool)
-UCDR_SEQUENCE_DECLARATIONS(uint8_t)
-UCDR_SEQUENCE_DECLARATIONS(uint16_t)
-UCDR_SEQUENCE_DECLARATIONS(uint32_t)
-UCDR_SEQUENCE_DECLARATIONS(uint64_t)
-UCDR_SEQUENCE_DECLARATIONS(int8_t)
-UCDR_SEQUENCE_DECLARATIONS(int16_t)
-UCDR_SEQUENCE_DECLARATIONS(int32_t)
-UCDR_SEQUENCE_DECLARATIONS(int64_t)
-UCDR_SEQUENCE_DECLARATIONS(float)
-UCDR_SEQUENCE_DECLARATIONS(double)
+UCDR_SEQUENCE_DECLARATIONS(_char, char)
+UCDR_SEQUENCE_DECLARATIONS(_bool, bool)
+UCDR_SEQUENCE_DECLARATIONS(_uint8_t, uint8_t)
+UCDR_SEQUENCE_DECLARATIONS(_uint16_t, uint16_t)
+UCDR_SEQUENCE_DECLARATIONS(_uint32_t, uint32_t)
+UCDR_SEQUENCE_DECLARATIONS(_uint64_t, uint64_t)
+UCDR_SEQUENCE_DECLARATIONS(_int8_t, int8_t)
+UCDR_SEQUENCE_DECLARATIONS(_int16_t, int16_t)
+UCDR_SEQUENCE_DECLARATIONS(_int32_t, int32_t)
+UCDR_SEQUENCE_DECLARATIONS(_int64_t, int64_t)
+UCDR_SEQUENCE_DECLARATIONS(_float, float)
+UCDR_SEQUENCE_DECLARATIONS(_double, double)
 
 #ifdef __cplusplus
 }

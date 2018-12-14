@@ -24,33 +24,33 @@ extern "C" {
 // -------------------------------------------------------------------
 //                         DECLARATION MACROS
 // -------------------------------------------------------------------
-#define UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(TYPE) \
-    UCDRDLLAPI bool ucdr_serialize_ ## TYPE (ucdrBuffer* ub, const TYPE value); \
-    UCDRDLLAPI bool ucdr_serialize_endian_ ## TYPE(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE value); \
+#define UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, const TYPE value); \
+    UCDRDLLAPI bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE value); \
 
-#define UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(TYPE) \
-    UCDRDLLAPI bool ucdr_deserialize_ ## TYPE(ucdrBuffer* ub, TYPE* value); \
-    UCDRDLLAPI bool ucdr_deserialize_endian_ ## TYPE(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* value); \
+#define UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_deserialize ## SUFFIX(ucdrBuffer* ub, TYPE* value); \
+    UCDRDLLAPI bool ucdr_deserialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* value); \
 
-#define UCDR_BASIC_TYPE_DECLARATIONS(TYPE) \
-    UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(TYPE) \
-    UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(TYPE) \
+#define UCDR_BASIC_TYPE_DECLARATIONS(SUFFIX, TYPE) \
+    UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION DECLARATIONS
 // -------------------------------------------------------------------
-UCDR_BASIC_TYPE_DECLARATIONS(char)
-UCDR_BASIC_TYPE_DECLARATIONS(bool)
-UCDR_BASIC_TYPE_DECLARATIONS(uint8_t)
-UCDR_BASIC_TYPE_DECLARATIONS(uint16_t)
-UCDR_BASIC_TYPE_DECLARATIONS(uint32_t)
-UCDR_BASIC_TYPE_DECLARATIONS(uint64_t)
-UCDR_BASIC_TYPE_DECLARATIONS(int8_t)
-UCDR_BASIC_TYPE_DECLARATIONS(int16_t)
-UCDR_BASIC_TYPE_DECLARATIONS(int32_t)
-UCDR_BASIC_TYPE_DECLARATIONS(int64_t)
-UCDR_BASIC_TYPE_DECLARATIONS(float)
-UCDR_BASIC_TYPE_DECLARATIONS(double)
+UCDR_BASIC_TYPE_DECLARATIONS(_char, char)
+UCDR_BASIC_TYPE_DECLARATIONS(_bool, bool)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint8_t, uint8_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint16_t, uint16_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint32_t, uint32_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint64_t, uint64_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int8_t, int8_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int16_t, int16_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int32_t, int32_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int64_t, int64_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_float, float)
+UCDR_BASIC_TYPE_DECLARATIONS(_double, double)
 
 #ifdef __cplusplus
 }
