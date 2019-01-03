@@ -71,11 +71,11 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     ucdr_array_to_buffer(ub, (uint8_t*)array, size, 1); \
     return !ub->error;
 
-#define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
+#define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
+    ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)TYPE_SIZE); \
     if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
     { \
-        ucdr_array_to_buffer(ub, (uint8_t*)array, size * SIZE, SIZE); \
+        ucdr_array_to_buffer(ub, (uint8_t*)array, size * TYPE_SIZE, TYPE_SIZE); \
     } \
     else \
     { \
@@ -90,14 +90,14 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
 #define UCDR_SERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_SERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
-#define UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
+#define UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, TYPE_SIZE) \
     bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE * array, const uint32_t size) \
     { \
-        UCDR_SERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, ub->endianness) \
+        UCDR_SERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, ub->endianness) \
     } \
     bool ucdr_serialize_endian_array ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE * array, const uint32_t size) \
     { \
-        UCDR_SERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, endianness) \
+        UCDR_SERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, endianness) \
     } \
 
 // -------------------------------------------------------------------
@@ -108,11 +108,11 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
     ucdr_buffer_to_array(ub, (uint8_t*)array, size, 1); \
     return !ub->error;
 
-#define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
+#define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
+    ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)TYPE_SIZE); \
     if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
     { \
-        ucdr_buffer_to_array(ub, (uint8_t*)array, size * SIZE, SIZE); \
+        ucdr_buffer_to_array(ub, (uint8_t*)array, size * TYPE_SIZE, TYPE_SIZE); \
     } \
     else \
     { \
@@ -127,22 +127,22 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, const uint32_t size, c
 #define UCDR_DESERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_DESERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
-#define UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
+#define UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, TYPE_SIZE) \
     bool ucdr_deserialize_array ## SUFFIX(ucdrBuffer* ub, TYPE * array, const uint32_t size) \
     { \
-        UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, ub->endianness) \
+        UCDR_DESERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, ub->endianness) \
     } \
     bool ucdr_deserialize_endian_array ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE * array, const uint32_t size) \
     { \
-        UCDR_DESERIALIZE_ARRAY_BYTE_ ## SIZE(TYPE, endianness) \
+        UCDR_DESERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, endianness) \
     }
 
 // -------------------------------------------------------------------
 //                         DEFINITION MACRO
 // -------------------------------------------------------------------
-#define UCDR_ARRAY_DEFINITIONS(SUFFIX, TYPE, SIZE) \
-    UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
-    UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, SIZE) \
+#define UCDR_ARRAY_DEFINITIONS(SUFFIX, TYPE, TYPE_SIZE) \
+    UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, TYPE_SIZE) \
+    UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, TYPE_SIZE) \
 
 // -------------------------------------------------------------------
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS

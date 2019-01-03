@@ -16,9 +16,6 @@
 #include <ucdr/types/array.h>
 #include <ucdr/types/sequence.h>
 
-#include "array_internals.h"
-#include "sequence_internals.h"
-
 // -------------------------------------------------------------------
 //                INTERNAL UTIL IMPLEMENTATION
 // -------------------------------------------------------------------
