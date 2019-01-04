@@ -25,8 +25,8 @@
     if(ucdr_check_final_buffer_behavior(ub, (uint32_t)1)) \
     { \
         *ub->iterator = (uint8_t)value; \
-        ub->iterator += (uint32_t)1; \
-        ub->last_data_size = (uint32_t)1; \
+        ub->iterator += 1; \
+        ub->last_data_size = 1; \
     } \
     return !ub->error;
 
@@ -65,8 +65,8 @@
         { \
             UCDR_SERIALIZE_BYTE_ ## SIZE ## _CORE() \
         } \
-        ub->iterator += (uint32_t)SIZE; \
-        ub->last_data_size = (uint32_t)SIZE; \
+        ub->iterator += SIZE; \
+        ub->last_data_size = SIZE; \
     } \
     return !ub->error;
 
