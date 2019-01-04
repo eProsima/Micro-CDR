@@ -25,8 +25,8 @@ extern "C" {
 //                         DECLARATION MACROS
 // -------------------------------------------------------------------
 #define UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
-    UCDRDLLAPI bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, const TYPE value); \
-    UCDRDLLAPI bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE value); \
+    UCDRDLLAPI bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, TYPE value); \
+    UCDRDLLAPI bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE value); \
 
 #define UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
     UCDRDLLAPI bool ucdr_deserialize ## SUFFIX(ucdrBuffer* ub, TYPE* value); \

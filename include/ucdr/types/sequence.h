@@ -25,12 +25,12 @@ extern "C" {
 //                         DECLARATION MACROS
 // -------------------------------------------------------------------
 #define UCDR_SEQUENCE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
-    UCDRDLLAPI bool ucdr_serialize_sequence ## SUFFIX(ucdrBuffer* ub, const TYPE* array, const uint32_t size); \
-    UCDRDLLAPI bool ucdr_serialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, const uint32_t size); \
+    UCDRDLLAPI bool ucdr_serialize_sequence ## SUFFIX(ucdrBuffer* ub, const TYPE* array, uint32_t size); \
+    UCDRDLLAPI bool ucdr_serialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, uint32_t size); \
 
 #define UCDR_SEQUENCE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
-    UCDRDLLAPI bool ucdr_deserialize_sequence ## SUFFIX(ucdrBuffer* ub, TYPE* array, const uint32_t array_capacity, uint32_t* size); \
-    UCDRDLLAPI bool ucdr_deserialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, const uint32_t array_capacity, uint32_t* size); \
+    UCDRDLLAPI bool ucdr_deserialize_sequence ## SUFFIX(ucdrBuffer* ub, TYPE* array, size_t array_capacity, uint32_t* size); \
+    UCDRDLLAPI bool ucdr_deserialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, size_t array_capacity, uint32_t* size); \
 
 #define UCDR_SEQUENCE_DECLARATIONS(SUFFIX, TYPE) \
     UCDR_SEQUENCE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \

@@ -27,18 +27,18 @@ bool ucdr_serialize_string(ucdrBuffer* ub, const char* string)
     return ucdr_serialize_sequence_char(ub, string, (uint32_t)strlen(string) + 1);
 }
 
-bool ucdr_deserialize_string(ucdrBuffer* ub, char* string, const uint32_t string_capacity)
-{
-    uint32_t length;
-    return ucdr_deserialize_sequence_char(ub, string, string_capacity, &length);
-}
-
 bool ucdr_serialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, const char* string)
 {
     return ucdr_serialize_endian_sequence_char(ub, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
-bool ucdr_deserialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, char* string, const uint32_t string_capacity)
+bool ucdr_deserialize_string(ucdrBuffer* ub, char* string, size_t string_capacity)
+{
+    uint32_t length;
+    return ucdr_deserialize_sequence_char(ub, string, string_capacity, &length);
+}
+
+bool ucdr_deserialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, char* string, size_t string_capacity)
 {
     uint32_t length;
     return ucdr_deserialize_endian_sequence_char(ub, endianness, string, string_capacity, &length);
