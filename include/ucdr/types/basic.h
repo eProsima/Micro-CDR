@@ -22,52 +22,35 @@ extern "C" {
 #include <ucdr/common.h>
 
 // -------------------------------------------------------------------
-//                   PUBLIC SERIALIZATION FUNCTIONS
+//                         DECLARATION MACROS
 // -------------------------------------------------------------------
+#define UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, const TYPE value); \
+    UCDRDLLAPI bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE value); \
 
-UCDRDLLAPI bool ucdr_serialize_char(ucdrBuffer* ub, const char value);
-UCDRDLLAPI bool ucdr_serialize_bool(ucdrBuffer* ub, const bool value);
-UCDRDLLAPI bool ucdr_serialize_uint8_t(ucdrBuffer* ub, const uint8_t value);
-UCDRDLLAPI bool ucdr_serialize_uint16_t(ucdrBuffer* ub, const uint16_t value);
-UCDRDLLAPI bool ucdr_serialize_uint32_t(ucdrBuffer* ub, const uint32_t value);
-UCDRDLLAPI bool ucdr_serialize_uint64_t(ucdrBuffer* ub, const uint64_t value);
-UCDRDLLAPI bool ucdr_serialize_int8_t(ucdrBuffer* ub, const int8_t value);
-UCDRDLLAPI bool ucdr_serialize_int16_t(ucdrBuffer* ub, const int16_t value);
-UCDRDLLAPI bool ucdr_serialize_int32_t(ucdrBuffer* ub, const int32_t value);
-UCDRDLLAPI bool ucdr_serialize_int64_t(ucdrBuffer* ub, const int64_t value);
-UCDRDLLAPI bool ucdr_serialize_float(ucdrBuffer* ub, const float value);
-UCDRDLLAPI bool ucdr_serialize_double(ucdrBuffer* ub, const double value);
+#define UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDRDLLAPI bool ucdr_deserialize ## SUFFIX(ucdrBuffer* ub, TYPE* value); \
+    UCDRDLLAPI bool ucdr_deserialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* value); \
 
-UCDRDLLAPI bool ucdr_deserialize_char(ucdrBuffer* ub, char* value);
-UCDRDLLAPI bool ucdr_deserialize_bool(ucdrBuffer* ub, bool* value);
-UCDRDLLAPI bool ucdr_deserialize_uint8_t(ucdrBuffer* ub, uint8_t* value);
-UCDRDLLAPI bool ucdr_deserialize_uint16_t(ucdrBuffer* ub, uint16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_uint32_t(ucdrBuffer* ub, uint32_t* value);
-UCDRDLLAPI bool ucdr_deserialize_uint64_t(ucdrBuffer* ub, uint64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int8_t(ucdrBuffer* ub, int8_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int16_t(ucdrBuffer* ub, int16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int32_t(ucdrBuffer* ub, int32_t* value);
-UCDRDLLAPI bool ucdr_deserialize_int64_t(ucdrBuffer* ub, int64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_float(ucdrBuffer* ub, float* value);
-UCDRDLLAPI bool ucdr_deserialize_double(ucdrBuffer* ub, double* value);
+#define UCDR_BASIC_TYPE_DECLARATIONS(SUFFIX, TYPE) \
+    UCDR_BASIC_TYPE_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
+    UCDR_BASIC_TYPE_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
 
-UCDRDLLAPI bool ucdr_serialize_endian_uint16_t(ucdrBuffer* ub, ucdrEndianness endianness, const uint16_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_uint32_t(ucdrBuffer* ub, ucdrEndianness endianness, const uint32_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_uint64_t(ucdrBuffer* ub, ucdrEndianness endianness, const uint64_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_int16_t(ucdrBuffer* ub, ucdrEndianness endianness, const int16_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_int32_t(ucdrBuffer* ub, ucdrEndianness endianness, const int32_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_int64_t(ucdrBuffer* ub, ucdrEndianness endianness, const int64_t value);
-UCDRDLLAPI bool ucdr_serialize_endian_float(ucdrBuffer* ub, ucdrEndianness endianness, const float value);
-UCDRDLLAPI bool ucdr_serialize_endian_double(ucdrBuffer* ub, ucdrEndianness endianness, const double value);
-
-UCDRDLLAPI bool ucdr_deserialize_endian_uint16_t(ucdrBuffer* ub, ucdrEndianness endianness, uint16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_uint32_t(ucdrBuffer* ub, ucdrEndianness endianness, uint32_t *value);
-UCDRDLLAPI bool ucdr_deserialize_endian_uint64_t(ucdrBuffer* ub, ucdrEndianness endianness, uint64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_int16_t(ucdrBuffer* ub, ucdrEndianness endianness, int16_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_int32_t(ucdrBuffer* ub, ucdrEndianness endianness, int32_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_int64_t(ucdrBuffer* ub, ucdrEndianness endianness, int64_t* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_float(ucdrBuffer* ub, ucdrEndianness endianness, float* value);
-UCDRDLLAPI bool ucdr_deserialize_endian_double(ucdrBuffer* ub, ucdrEndianness endianness, double* value);
+// -------------------------------------------------------------------
+//              PUBLIC DE-SERIALIZATION DECLARATIONS
+// -------------------------------------------------------------------
+UCDR_BASIC_TYPE_DECLARATIONS(_char, char)
+UCDR_BASIC_TYPE_DECLARATIONS(_bool, bool)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint8_t, uint8_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint16_t, uint16_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint32_t, uint32_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_uint64_t, uint64_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int8_t, int8_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int16_t, int16_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int32_t, int32_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_int64_t, int64_t)
+UCDR_BASIC_TYPE_DECLARATIONS(_float, float)
+UCDR_BASIC_TYPE_DECLARATIONS(_double, double)
 
 #ifdef __cplusplus
 }

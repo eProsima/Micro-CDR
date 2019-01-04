@@ -16,9 +16,6 @@
 #include <ucdr/types/array.h>
 #include <ucdr/types/sequence.h>
 
-#include "array_internals.h"
-#include "sequence_internals.h"
-
 // -------------------------------------------------------------------
 //                INTERNAL UTIL IMPLEMENTATION
 // -------------------------------------------------------------------
@@ -32,297 +29,54 @@ static inline void ucdr_deserialize_sequence_header(ucdrBuffer* ub, ucdrEndianne
 }
 
 // -------------------------------------------------------------------
-//                INTERNAL SERIALIZATION IMPLEMENTATION
+//                    SERIALIZE MACROS
 // -------------------------------------------------------------------
-bool ucdr_serialize_sequence_byte_1(ucdrBuffer* ub, ucdrEndianness endianness, const uint8_t* array, const uint32_t size)
-{
-    ucdr_serialize_endian_uint32_t(ub, endianness, size);
-    return ucdr_serialize_array_byte_1(ub, array, size);
-}
-
-bool ucdr_serialize_sequence_byte_2(ucdrBuffer* ub, ucdrEndianness endianness, const uint16_t* array, const uint32_t size)
-{
-    ucdr_serialize_endian_uint32_t(ub, endianness, size);
-    return ucdr_serialize_array_byte_2(ub, endianness, array, size);
-}
-
-bool ucdr_serialize_sequence_byte_4(ucdrBuffer* ub, ucdrEndianness endianness, const uint32_t* array, const uint32_t size)
-{
-    ucdr_serialize_endian_uint32_t(ub, endianness, size);
-    return ucdr_serialize_array_byte_4(ub, endianness, array, size);
-}
-
-bool ucdr_serialize_sequence_byte_8(ucdrBuffer* ub, ucdrEndianness endianness, const uint64_t* array, const uint32_t size)
-{
-    ucdr_serialize_endian_uint32_t(ub, endianness, size);
-    return ucdr_serialize_array_byte_8(ub, endianness, array, size);
-}
-
-bool ucdr_deserialize_sequence_byte_1(ucdrBuffer* ub, ucdrEndianness endianness, uint8_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    ucdr_deserialize_sequence_header(ub, endianness, array_capacity, size);
-    return ucdr_deserialize_array_byte_1(ub, array, *size);
-}
-
-bool ucdr_deserialize_sequence_byte_2(ucdrBuffer* ub, ucdrEndianness endianness, uint16_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    ucdr_deserialize_sequence_header(ub, endianness, array_capacity, size);
-    return ucdr_deserialize_array_byte_2(ub, endianness, array, *size);
-}
-
-bool ucdr_deserialize_sequence_byte_4(ucdrBuffer* ub, ucdrEndianness endianness, uint32_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    ucdr_deserialize_sequence_header(ub, endianness, array_capacity, size);
-    return ucdr_deserialize_array_byte_4(ub, endianness, array, *size);
-}
-
-bool ucdr_deserialize_sequence_byte_8(ucdrBuffer* ub, ucdrEndianness endianness, uint64_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    ucdr_deserialize_sequence_header(ub, endianness, array_capacity, size);
-    return ucdr_deserialize_array_byte_8(ub, endianness, array, *size);
-}
+#define UCDR_SEQUENCE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
+    bool ucdr_serialize_sequence ## SUFFIX(ucdrBuffer* ub, const TYPE* array, const uint32_t size) \
+    { \
+        ucdr_serialize_endian_uint32_t(ub, ub->endianness, size); \
+        return ucdr_serialize_endian_array ## SUFFIX(ub, ub->endianness, array, size); \
+    } \
+    bool ucdr_serialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE* array, const uint32_t size) \
+    { \
+        ucdr_serialize_endian_uint32_t(ub, endianness, size); \
+        return ucdr_serialize_endian_array ## SUFFIX(ub, endianness, array, size); \
+    } \
 
 // -------------------------------------------------------------------
-//              PUBLIC SERIALIZATION IMPLEMENTATIONS
+//                    DESERIALIZE MACROS
 // -------------------------------------------------------------------
+#define UCDR_SEQUENCE_DESERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
+    bool ucdr_deserialize_sequence ## SUFFIX(ucdrBuffer* ub, TYPE* array, const uint32_t array_capacity, uint32_t* size) \
+    { \
+        ucdr_deserialize_sequence_header(ub, ub->endianness, array_capacity, size); \
+        return ucdr_deserialize_endian_array ## SUFFIX(ub, ub->endianness, array, *size); \
+    } \
+    bool ucdr_deserialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE* array, const uint32_t array_capacity, uint32_t* size) \
+    { \
+        ucdr_deserialize_sequence_header(ub, endianness, array_capacity, size); \
+        return ucdr_deserialize_endian_array ## SUFFIX(ub, endianness, array, *size); \
+    } \
 
-bool ucdr_serialize_sequence_char(ucdrBuffer* ub, const char* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, size);
-}
+// -------------------------------------------------------------------
+//                         DEFINITION MACRO
+// -------------------------------------------------------------------
+#define UCDR_SEQUENCE_DEFINITIONS(SUFFIX, TYPE, SIZE) \
+    UCDR_SEQUENCE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
+    UCDR_SEQUENCE_DESERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
 
-bool ucdr_serialize_sequence_bool(ucdrBuffer* ub, const bool* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_uint8_t(ucdrBuffer* ub, const uint8_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_uint16_t(ucdrBuffer* ub, const uint16_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_2(ub, ub->endianness, (uint16_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_uint32_t(ucdrBuffer* ub, const uint32_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_4(ub, ub->endianness, (uint32_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_uint64_t(ucdrBuffer* ub, const uint64_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_8(ub, ub->endianness, (uint64_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_int8_t(ucdrBuffer* ub, const int8_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_int16_t(ucdrBuffer* ub, const int16_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_2(ub, ub->endianness, (uint16_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_int32_t(ucdrBuffer* ub, const int32_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_4(ub, ub->endianness, (uint32_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_int64_t(ucdrBuffer* ub, const int64_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_8(ub, ub->endianness, (uint64_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_float(ucdrBuffer* ub, const float* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_4(ub, ub->endianness, (uint32_t*)array, size);
-}
-
-bool ucdr_serialize_sequence_double(ucdrBuffer* ub, const double* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_8(ub, ub->endianness, (uint64_t*)array, size);
-}
-
-bool ucdr_deserialize_sequence_char(ucdrBuffer* ub, char* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_bool(ucdrBuffer* ub, bool* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_uint8_t(ucdrBuffer* ub, uint8_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_uint16_t(ucdrBuffer* ub, uint16_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_2(ub, ub->endianness, (uint16_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_uint32_t(ucdrBuffer* ub, uint32_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_4(ub, ub->endianness, (uint32_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_uint64_t(ucdrBuffer* ub, uint64_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_8(ub, ub->endianness, (uint64_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_int8_t(ucdrBuffer* ub, int8_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, ub->endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_int16_t(ucdrBuffer* ub, int16_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_2(ub, ub->endianness, (uint16_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_int32_t(ucdrBuffer* ub, int32_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_4(ub, ub->endianness, (uint32_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_int64_t(ucdrBuffer* ub, int64_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_8(ub, ub->endianness, (uint64_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_float(ucdrBuffer* ub, float* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_4(ub, ub->endianness, (uint32_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_sequence_double(ucdrBuffer* ub, double* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_8(ub, ub->endianness, (uint64_t*)array, array_capacity, size);
-}
-
-bool ucdr_serialize_endian_sequence_char(ucdrBuffer* ub, const ucdrEndianness endianness, const char* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_bool(ucdrBuffer* ub, const ucdrEndianness endianness, const bool* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_uint8_t(ucdrBuffer* ub, const ucdrEndianness endianness, const uint8_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_uint16_t(ucdrBuffer* ub, const ucdrEndianness endianness, const uint16_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_2(ub, endianness, (uint16_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_uint32_t(ucdrBuffer* ub, const ucdrEndianness endianness, const uint32_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_4(ub, endianness, (uint32_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_uint64_t(ucdrBuffer* ub, const ucdrEndianness endianness, const uint64_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_8(ub, endianness, (uint64_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_int8_t(ucdrBuffer* ub, const ucdrEndianness endianness, const int8_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_1(ub, endianness, (uint8_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_int16_t(ucdrBuffer* ub, const ucdrEndianness endianness, const int16_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_2(ub, endianness, (uint16_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_int32_t(ucdrBuffer* ub, const ucdrEndianness endianness, const int32_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_4(ub, endianness, (uint32_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_int64_t(ucdrBuffer* ub, const ucdrEndianness endianness, const int64_t* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_8(ub, endianness, (uint64_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_float(ucdrBuffer* ub, const ucdrEndianness endianness, const float* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_4(ub, endianness, (uint32_t*)array, size);
-}
-
-bool ucdr_serialize_endian_sequence_double(ucdrBuffer* ub, const ucdrEndianness endianness, const double* array, const uint32_t size)
-{
-    return ucdr_serialize_sequence_byte_8(ub, endianness, (uint64_t*)array, size);
-}
-
-bool ucdr_deserialize_endian_sequence_char(ucdrBuffer* ub, const ucdrEndianness endianness, char* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_bool(ucdrBuffer* ub, const ucdrEndianness endianness, bool* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_uint8_t(ucdrBuffer* ub, const ucdrEndianness endianness, uint8_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_uint16_t(ucdrBuffer* ub, const ucdrEndianness endianness, uint16_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_2(ub, endianness, (uint16_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_uint32_t(ucdrBuffer* ub, const ucdrEndianness endianness, uint32_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_4(ub, endianness, (uint32_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_uint64_t(ucdrBuffer* ub, const ucdrEndianness endianness, uint64_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_8(ub, endianness, (uint64_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_int8_t(ucdrBuffer* ub, const ucdrEndianness endianness, int8_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_1(ub, endianness, (uint8_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_int16_t(ucdrBuffer* ub, const ucdrEndianness endianness, int16_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_2(ub, endianness, (uint16_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_int32_t(ucdrBuffer* ub, const ucdrEndianness endianness, int32_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_4(ub, endianness, (uint32_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_int64_t(ucdrBuffer* ub, const ucdrEndianness endianness, int64_t* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_8(ub, endianness, (uint64_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_float(ucdrBuffer* ub, const ucdrEndianness endianness, float* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_4(ub, endianness, (uint32_t*)array, array_capacity, size);
-}
-
-bool ucdr_deserialize_endian_sequence_double(ucdrBuffer* ub, const ucdrEndianness endianness, double* array, const uint32_t array_capacity, uint32_t* size)
-{
-    return ucdr_deserialize_sequence_byte_8(ub, endianness, (uint64_t*)array, array_capacity, size);
-}
-
+// -------------------------------------------------------------------
+//              PUBLIC DE-SERIALIZATION IMPLEMENTATIONS
+// -------------------------------------------------------------------
+UCDR_SEQUENCE_DEFINITIONS(_char, char, 1)
+UCDR_SEQUENCE_DEFINITIONS(_bool, bool, 1)
+UCDR_SEQUENCE_DEFINITIONS(_uint8_t, uint8_t, 1)
+UCDR_SEQUENCE_DEFINITIONS(_uint16_t, uint16_t, 2)
+UCDR_SEQUENCE_DEFINITIONS(_uint32_t, uint32_t, 4)
+UCDR_SEQUENCE_DEFINITIONS(_uint64_t, uint64_t, 8)
+UCDR_SEQUENCE_DEFINITIONS(_int8_t, int8_t, 1)
+UCDR_SEQUENCE_DEFINITIONS(_int16_t, int16_t, 2)
+UCDR_SEQUENCE_DEFINITIONS(_int32_t, int32_t, 4)
+UCDR_SEQUENCE_DEFINITIONS(_int64_t, int64_t, 8)
+UCDR_SEQUENCE_DEFINITIONS(_float, float, 4)
+UCDR_SEQUENCE_DEFINITIONS(_double, double, 8)
