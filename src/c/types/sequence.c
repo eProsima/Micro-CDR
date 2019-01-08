@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <ucdr/types/basic.h>
-#include <ucdr/types/array.h>
-#include <ucdr/types/sequence.h>
+#include <ucdr/microcdr.h>
 
 static void ucdr_deserialize_sequence_header(ucdrBuffer* ub, ucdrEndianness endianness, size_t capacity, uint32_t* length);
 
