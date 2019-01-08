@@ -25,12 +25,12 @@ extern "C" {
 //                         DECLARATION MACROS
 // -------------------------------------------------------------------
 #define UCDR_ARRAY_SERIALIZE_DECLARATION(SUFFIX, TYPE) \
-    UCDRDLLAPI bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE* array, const uint32_t size); \
-    UCDRDLLAPI bool ucdr_serialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, const uint32_t size); \
+    UCDRDLLAPI bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE* array, size_t size); \
+    UCDRDLLAPI bool ucdr_serialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, size_t size); \
 
 #define UCDR_ARRAY_DESERIALIZE_DECLARATION(SUFFIX, TYPE) \
-    UCDRDLLAPI bool ucdr_deserialize_array ## SUFFIX(ucdrBuffer* ub, TYPE* array, const uint32_t size); \
-    UCDRDLLAPI bool ucdr_deserialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, const uint32_t size); \
+    UCDRDLLAPI bool ucdr_deserialize_array ## SUFFIX(ucdrBuffer* ub, TYPE* array, size_t size); \
+    UCDRDLLAPI bool ucdr_deserialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, size_t size); \
 
 #define UCDR_ARRAY_DECLARATIONS(SUFFIX, TYPE) \
     UCDR_ARRAY_SERIALIZE_DECLARATION(SUFFIX, TYPE) \

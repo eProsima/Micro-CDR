@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include <ucdr/types/basic.h>
-#include "../common_internals.h"
+#include "../common_internal.h"
 
 #include <string.h>
 
@@ -22,7 +22,7 @@
 // -------------------------------------------------------------------
 #define UCDR_SERIALIZE_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    if(ucdr_check_final_buffer_behavior(ub, (uint32_t)1)) \
+    if(ucdr_check_final_buffer_behavior(ub, 1)) \
     { \
         *ub->iterator = (uint8_t)value; \
         ub->iterator += 1; \
@@ -31,19 +31,19 @@
     return !ub->error;
 
 #define UCDR_SERIALIZE_BYTE_2_CORE() \
-    uint8_t* bytes_pointer = (uint8_t*)&value; \
+    const uint8_t* bytes_pointer = (uint8_t*)&value; \
     *ub->iterator = *(bytes_pointer + 1); \
     *(ub->iterator + 1) = *bytes_pointer;
 
 #define UCDR_SERIALIZE_BYTE_4_CORE() \
-    uint8_t* bytes_pointer = (uint8_t*)&value; \
+    const uint8_t* bytes_pointer = (uint8_t*)&value; \
     *ub->iterator = *(bytes_pointer + 3); \
     *(ub->iterator + 1) = *(bytes_pointer + 2); \
     *(ub->iterator + 2) = *(bytes_pointer + 1); \
     *(ub->iterator + 3) = *bytes_pointer;
 
 #define UCDR_SERIALIZE_BYTE_8_CORE() \
-    uint8_t* bytes_pointer = (uint8_t*)&value; \
+    const uint8_t* bytes_pointer = (uint8_t*)&value; \
     *ub->iterator = *(bytes_pointer + 7); \
     *(ub->iterator + 1) = *(bytes_pointer + 6); \
     *(ub->iterator + 2) = *(bytes_pointer + 5); \
@@ -54,12 +54,12 @@
     *(ub->iterator + 7) = *bytes_pointer;
 
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
-    if(ucdr_check_final_buffer_behavior(ub, (uint32_t)SIZE)) \
+    ub->iterator += ucdr_buffer_alignment(ub, SIZE); \
+    if(ucdr_check_final_buffer_behavior(ub, SIZE)) \
     { \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
-            memcpy(ub->iterator, (void*)&value, (size_t)SIZE); \
+            memcpy(ub->iterator, (void*)&value, SIZE); \
         } \
         else \
         { \
@@ -75,11 +75,11 @@
 #define UCDR_SERIALIZE_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_BASIC_TYPE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
-    bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, const TYPE value) \
+    bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, TYPE value) \
     { \
         UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, ub->endianness) \
     } \
-    bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE value) \
+    bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE value) \
     { \
         UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
     }
@@ -89,11 +89,11 @@
 // -------------------------------------------------------------------
 #define UCDR_DESERIALIZE_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    if(ucdr_check_final_buffer_behavior(ub, (uint32_t)1)) \
+    if(ucdr_check_final_buffer_behavior(ub, 1)) \
     { \
         *value = (TYPE)*ub->iterator; \
-        ub->iterator += (uint32_t)1; \
-        ub->last_data_size = (uint32_t)1; \
+        ub->iterator += 1; \
+        ub->last_data_size = 1; \
     } \
     return !ub->error;
 
@@ -121,19 +121,19 @@
     *(bytes_pointer + 7) = *ub->iterator;
 
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, (uint32_t)SIZE); \
-    if(ucdr_check_final_buffer_behavior(ub, (uint32_t)SIZE)) \
+    ub->iterator += ucdr_buffer_alignment(ub, SIZE); \
+    if(ucdr_check_final_buffer_behavior(ub, SIZE)) \
     { \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
-            memcpy((void*)value, ub->iterator, (size_t)SIZE); \
+            memcpy((void*)value, ub->iterator, SIZE); \
         } \
         else \
         { \
             UCDR_DESERIALIZE_BYTE_ ## SIZE ## _CORE() \
         } \
-        ub->iterator += (uint32_t)SIZE; \
-        ub->last_data_size = (uint32_t)SIZE; \
+        ub->iterator += SIZE; \
+        ub->last_data_size = SIZE; \
     } \
     return !ub->error;
 
@@ -146,7 +146,7 @@
     { \
         UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, ub->endianness) \
     } \
-    bool ucdr_deserialize_endian ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE* value) \
+    bool ucdr_deserialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* value) \
     { \
         UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
     }

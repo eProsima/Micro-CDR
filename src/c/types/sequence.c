@@ -16,13 +16,15 @@
 #include <ucdr/types/array.h>
 #include <ucdr/types/sequence.h>
 
+static void ucdr_deserialize_sequence_header(ucdrBuffer* ub, ucdrEndianness endianness, size_t capacity, uint32_t* length);
+
 // -------------------------------------------------------------------
 //                INTERNAL UTIL IMPLEMENTATION
 // -------------------------------------------------------------------
-static inline void ucdr_deserialize_sequence_header(ucdrBuffer* ub, ucdrEndianness endianness, uint32_t capacity, uint32_t* size)
+inline void ucdr_deserialize_sequence_header(ucdrBuffer* ub, ucdrEndianness endianness, size_t capacity, uint32_t* length)
 {
-    ucdr_deserialize_endian_uint32_t(ub, endianness, size);
-    if(*size > capacity)
+    ucdr_deserialize_endian_uint32_t(ub, endianness, length);
+    if(*length > capacity)
     {
         ub->error = true;
     }
@@ -32,30 +34,30 @@ static inline void ucdr_deserialize_sequence_header(ucdrBuffer* ub, ucdrEndianne
 //                    SERIALIZE MACROS
 // -------------------------------------------------------------------
 #define UCDR_SEQUENCE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
-    bool ucdr_serialize_sequence ## SUFFIX(ucdrBuffer* ub, const TYPE* array, const uint32_t size) \
+    bool ucdr_serialize_sequence ## SUFFIX(ucdrBuffer* ub, const TYPE* array, uint32_t length) \
     { \
-        ucdr_serialize_endian_uint32_t(ub, ub->endianness, size); \
-        return ucdr_serialize_endian_array ## SUFFIX(ub, ub->endianness, array, size); \
+        ucdr_serialize_endian_uint32_t(ub, ub->endianness, length); \
+        return ucdr_serialize_endian_array ## SUFFIX(ub, ub->endianness, array, length); \
     } \
-    bool ucdr_serialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE* array, const uint32_t size) \
+    bool ucdr_serialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, const TYPE* array, uint32_t length) \
     { \
-        ucdr_serialize_endian_uint32_t(ub, endianness, size); \
-        return ucdr_serialize_endian_array ## SUFFIX(ub, endianness, array, size); \
+        ucdr_serialize_endian_uint32_t(ub, endianness, length); \
+        return ucdr_serialize_endian_array ## SUFFIX(ub, endianness, array, length); \
     } \
 
 // -------------------------------------------------------------------
 //                    DESERIALIZE MACROS
 // -------------------------------------------------------------------
 #define UCDR_SEQUENCE_DESERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
-    bool ucdr_deserialize_sequence ## SUFFIX(ucdrBuffer* ub, TYPE* array, const uint32_t array_capacity, uint32_t* size) \
+    bool ucdr_deserialize_sequence ## SUFFIX(ucdrBuffer* ub, TYPE* array, size_t array_capacity, uint32_t* length) \
     { \
-        ucdr_deserialize_sequence_header(ub, ub->endianness, array_capacity, size); \
-        return ucdr_deserialize_endian_array ## SUFFIX(ub, ub->endianness, array, *size); \
+        ucdr_deserialize_sequence_header(ub, ub->endianness, array_capacity, length); \
+        return ucdr_deserialize_endian_array ## SUFFIX(ub, ub->endianness, array, *length); \
     } \
-    bool ucdr_deserialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, TYPE* array, const uint32_t array_capacity, uint32_t* size) \
+    bool ucdr_deserialize_endian_sequence ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, size_t array_capacity, uint32_t* length) \
     { \
-        ucdr_deserialize_sequence_header(ub, endianness, array_capacity, size); \
-        return ucdr_deserialize_endian_array ## SUFFIX(ub, endianness, array, *size); \
+        ucdr_deserialize_sequence_header(ub, endianness, array_capacity, length); \
+        return ucdr_deserialize_endian_array ## SUFFIX(ub, endianness, array, *length); \
     } \
 
 // -------------------------------------------------------------------
