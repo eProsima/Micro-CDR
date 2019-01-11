@@ -19,7 +19,7 @@
 extern "C" {
 #endif
 
-#include <ucdr/common.h>
+#include <ucdr/microcdr.h>
 
 // -------------------------------------------------------------------
 //                     INTERNAL UTIL FUNCTIONS

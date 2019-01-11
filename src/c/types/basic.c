@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <ucdr/types/basic.h>
 #include "../common_internal.h"
 
 #include <string.h>
