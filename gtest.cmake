@@ -123,16 +123,22 @@ macro(add_gtest test)
                         add_test(NAME ${GTEST_INSTATATION_NAME}.${GTEST_GROUP_NAME}.${GTEST_NAME}
                             COMMAND ${test}
                             --gtest_filter=${GTEST_INSTATATION_NAME}/${GTEST_GROUP_NAME}.${GTEST_NAME}/*)
+                        # Add environment
+                        if(WIN32)
+                            set_property(TEST ${GTEST_INSTATATION_NAME}.${GTEST_GROUP_NAME}.${GTEST_NAME} APPEND PROPERTY ENVIRONMENT "PATH=${WIN_PATH}")
+                        endif()
                     endforeach()
+
                 else()
                     add_test(NAME ${GTEST_GROUP_NAME}.${GTEST_NAME}
                         COMMAND ${test}
                         --gtest_filter=${GTEST_GROUP_NAME}.${GTEST_NAME})
+                    # Add environment
+                    if(WIN32)
+                        set_property(TEST ${GTEST_GROUP_NAME}.${GTEST_NAME} APPEND PROPERTY ENVIRONMENT "PATH=${WIN_PATH}")
+                    endif()
                 endif()
-                # Add environment
-                if(WIN32)
-                    set_property(TEST ${GTEST_GROUP_NAME}.${GTEST_NAME} APPEND PROPERTY ENVIRONMENT "PATH=${WIN_PATH}")
-                endif()
+
 
                 foreach(property ${GTEST_ENVIRONMENTS})
                     set_property(TEST ${GTEST_GROUP_NAME}.${GTEST_NAME} APPEND PROPERTY ENVIRONMENT "${property}")
