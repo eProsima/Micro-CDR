@@ -1,4 +1,4 @@
-# eProsima Micro CDR 
+# eProsima Micro CDR
 
 [![Releases](https://img.shields.io/github/release/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/releases)
 [![License](https://img.shields.io/github/license/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/blob/master/LICENSE)
@@ -163,12 +163,12 @@ Adding to this, there is a big set of functions for deserialize and deserialize 
 
 ### Endianness
 *MicroCDR* supports little and big endianness.
-The configuration can be done by cmake with the cmake `__BIG_ENDIAN__` variable.
-A `0` value implies that the serialization will performed into a little endian machine, and `1` into a big endian machine.
+The **machine endianness** can be set by the cmake variable: `CONFIG_BIG_ENDIANNESS`.
+By default, if this varible is `OFF` which means that the machine endianness is little endianness.
 
-The default endianness serialization can be choosen by setting the `endianness` parameter of a `ucdrBuffer`  to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
-Also, there are a functions that allow to force an endianness in their serialization/deserialization.
-These functions contains the name `endiannness` in their signature.
+The `ucdrBuffer` endianness can be set by the `endianness` parameter of the structure to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
+Also, there are a functions that allow to force an endianness independiently of the `ucdrBuffer` endianness in their serialization/deserialization.
+These functions contains the name `endianness` in their signature.
 
 ### Error
 All serialization/deserialization functions return a boolean indicating the result of their operations.
