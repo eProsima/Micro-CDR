@@ -71,9 +71,12 @@ add_library(${PROJECT_NAME}
 
 set_common_compile_options(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    C_STANDARD 99
-    C_STANDARD_REQUIRED YES
+    VERSION
+        ${PROJECT_VERSION}
+    C_STANDARD
+        99
+    C_STANDARD_REQUIRED
+        YES
     )
 
 # Define public headers
@@ -155,37 +158,70 @@ endif()
 ###############################################################################
 
 # Install library
-install(TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}Targets
-    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-    COMPONENT libraries
+install(
+    TARGETS
+        ${PROJECT_NAME}
+    EXPORT
+        ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION
+        ${LIB_INSTALL_DIR}
+    LIBRARY DESTINATION
+        ${LIB_INSTALL_DIR}
+    RUNTIME DESTINATION
+        ${BIN_INSTALL_DIR}
+    COMPONENT
+        libraries
     )
 
 # Install includes
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ucdr/
-    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
-    FILES_MATCHING PATTERN "*.h"
+install(
+    DIRECTORY
+        ${PROJECT_SOURCE_DIR}/include/ucdr/
+    DESTINATION
+        ${INCLUDE_INSTALL_DIR}/ucdr
+    FILES_MATCHING
+        PATTERN "*.h"
     )
 
 # Install config.h
-install(FILES ${PROJECT_BINARY_DIR}/include/ucdr/config.h
-    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
+install(
+    FILES
+        ${PROJECT_BINARY_DIR}/include/ucdr/config.h
+    DESTINATION
+        ${INCLUDE_INSTALL_DIR}/ucdr
     )
 
 # Export library
-install(EXPORT ${PROJECT_NAME}Targets
-    DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
+install(
+    EXPORT
+        ${PROJECT_NAME}Targets
+    DESTINATION
+        ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
     )
 
 # Package configuration
 include(CMakePackageConfigHelpers)
-configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
-    ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-    INSTALL_DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
+
+configure_package_config_file(
+    ${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
+        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION
+        ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
     PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR DATA_INSTALL_DIR
     )
-install(FILES ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-    DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
+
+write_basic_package_version_file(
+    ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
+    VERSION
+        ${PROJECT_VERSION}
+    COMPATIBILITY
+        SameMajorVersion
+    )
+
+install(
+    FILES
+        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
+        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
+    DESTINATION
+        ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
     )
