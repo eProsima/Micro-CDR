@@ -17,11 +17,6 @@
 ###############################################################################
 cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 
-set(IS_TOP_LEVEL TRUE)
-if(PROJECT_SOURCE_DIR)
-    set(IS_TOP_LEVEL FALSE)
-endif()
-
 # Set CMAKE_BUILD_TYPE to Release by default.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(STATUS "Setting build type to 'Release' as none was specified.")
@@ -38,16 +33,10 @@ cmake_policy(SET CMP0048 NEW)
 project(microcdr VERSION "1.0.1" LANGUAGES C)
 
 ###############################################################################
-# eProsima build options
+# Build options
 ###############################################################################
-option(EPROSIMA_BUILD "Activate internal building" OFF)
-option(EPROSIMA_BUILD_TESTS "Activate the building of tests" OFF)
-option(EPROSIMA_BUILD_EXAMPLES "Compile examples" OFF)
-
-if(EPROSIMA_BUILD)
-    set(EPROSIMA_BUILD_TESTS ON)
-    set(EPROSIMA_BUILD_EXAMPLES ON)
-endif()
+option(UCDR_BUILD_TESTS "Build tests" OFF)
+option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
 
 ###############################################################################
 # Check MSVC architecture
@@ -92,7 +81,6 @@ target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:GNU>:-fdata-sec
 ###############################################################################
 # Config
 ###############################################################################
-
 # Install path
 set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
 set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C headers")
@@ -126,7 +114,6 @@ configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
 ###############################################################################
 # Compile settings
 ###############################################################################
-
 # Definitions
 get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
 if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
@@ -139,7 +126,7 @@ endif()
 ###############################################################################
 # Examples
 ###############################################################################
-if(EPROSIMA_BUILD_EXAMPLES)
+if(UCDR_BUILD_EXAMPLES)
     add_subdirectory(examples/basic)
     add_subdirectory(examples/fragmentation)
 endif()
@@ -147,7 +134,7 @@ endif()
 ###############################################################################
 # Testing
 ###############################################################################
-if(EPROSIMA_BUILD_TESTS AND IS_TOP_LEVEL)
+if(UCDR_BUILD_TESTS)
     include(${PROJECT_SOURCE_DIR}/cmake/common/gtest.cmake)
     enable_testing()
     add_subdirectory(test)
@@ -156,7 +143,6 @@ endif()
 ###############################################################################
 # Packaging
 ###############################################################################
-
 # Install library
 install(
     TARGETS
