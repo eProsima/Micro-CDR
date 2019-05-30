@@ -69,9 +69,14 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         YES
     )
 
+target_compile_options(${PROJECT_NAME}
+    PRIVATE
+        $<$<C_COMPILER_ID:GNU>:-fdata-sections -ffunction-sections>
+    )
+
 # Set Windows shared libraries name
 get_target_property(UCDR_TARGET_TYPE ${PROJECT_NAME} TYPE)
-if((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${UCDR_TARGET_TYPE} STREQUAL "SHARED_LIBRARY"))
+if((CMAKE_SYSTEM_NAME STREQUAL "Windows") AND (UCDR_TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
     set_target_properties(${PROJECT_NAME} PROPERTIES
         RELEASE_POSTFIX
             -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -94,8 +99,6 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:include>
     )
-
-target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:GNU>:-fdata-sections -ffunction-sections>)
 
 ###############################################################################
 # Config
@@ -125,7 +128,7 @@ else()
     message(STATUS "Micro CDR without check endianness")
 endif()
 
-# Config.h
+# Generate config.h
 configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
     ${PROJECT_BINARY_DIR}/include/ucdr/config.h
 )
