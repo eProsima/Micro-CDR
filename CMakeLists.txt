@@ -1,4 +1,4 @@
-# Copyright 2018 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+# Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ add_library(${PROJECT_NAME}
     src/c/types/sequence.c
     )
 
+# Set common properties
 set_common_compile_options(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION
@@ -67,6 +68,24 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     C_STANDARD_REQUIRED
         YES
     )
+
+# Set Windows shared libraries name
+get_target_property(UCDR_TARGET_TYPE ${PROJECT_NAME} TYPE)
+if((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${UCDR_TARGET_TYPE} STREQUAL "SHARED_LIBRARY"))
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        RELEASE_POSTFIX
+            -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        RELWITHDEBINFO_POSTFIX
+            -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        DEBUG_POSTFIX
+            d-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        )
+
+    target_compile_definitions(${PROJECT_NAME}
+        PUBLIC
+            ${PROJECT_NAME}_SHARED
+        )
+endif()
 
 # Define public headers
 target_include_directories(${PROJECT_NAME}
@@ -82,10 +101,11 @@ target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:GNU>:-fdata-sec
 # Config
 ###############################################################################
 # Install path
-set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
-set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C headers")
-set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
-set(DATA_INSTALL_DIR share/ CACHE PATH "Installation directory for data")
+include(GNUInstallDirs)
+set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE PATH "Installation directory for C headers")
+set(LIB_INSTALL_DIR     ${CMAKE_INSTALL_LIBDIR}     CACHE PATH "Installation directory for libraries")
+set(DATA_INSTALL_DIR    ${CMAKE_INSTALL_DATADIR}    CACHE PATH "Installation directory for data")
 if(WIN32)
     set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
 else()
@@ -94,34 +114,21 @@ endif()
 
 # Endianness configuration
 include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
-
 option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
 if(__BIG_ENDIAN__)
     set(CHECK_ENDIANNESS OFF)
-    message(STATUS "micro-CDR without check endianness using provided endianness")
+    message(STATUS "Micro CDR without check endianness using provided endianness")
 elseif(CHECK_ENDIANNESS)
     check_endianness()
 else()
     set(__BIG_ENDIAN__ 0)
-    message(STATUS "micro-CDR without check endianness")
+    message(STATUS "Micro CDR without check endianness")
 endif()
 
 # Config.h
 configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
     ${PROJECT_BINARY_DIR}/include/ucdr/config.h
 )
-
-###############################################################################
-# Compile settings
-###############################################################################
-# Definitions
-get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
-if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
-    target_compile_definitions(${PROJECT_NAME}
-        PUBLIC
-            ${PROJECT_NAME}_SHARED
-        )
-endif()
 
 ###############################################################################
 # Examples
@@ -193,7 +200,11 @@ configure_package_config_file(
         ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
     INSTALL_DESTINATION
         ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
-    PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR DATA_INSTALL_DIR
+    PATH_VARS
+        BIN_INSTALL_DIR
+        INCLUDE_INSTALL_DIR
+        LIB_INSTALL_DIR
+        DATA_INSTALL_DIR
     )
 
 write_basic_package_version_file(
