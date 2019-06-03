@@ -37,6 +37,7 @@ project(microcdr VERSION "1.0.1" LANGUAGES C)
 ###############################################################################
 option(UCDR_BUILD_TESTS "Build tests" OFF)
 option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
 
 ###############################################################################
 # Check MSVC architecture
