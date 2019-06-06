@@ -30,7 +30,7 @@ endif()
 # Product information
 ###############################################################################
 cmake_policy(SET CMP0048 NEW)
-project(microcdr VERSION "1.0.1" LANGUAGES C)
+project(microcdr VERSION "1.1.0" LANGUAGES C)
 
 ###############################################################################
 # Build options
