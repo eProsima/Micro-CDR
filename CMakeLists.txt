@@ -119,9 +119,9 @@ endif()
 # Config.h
 set(CONFIG_BIG_ENDIANNESS OFF CACHE BOOL "Set the machine endianness to big endianness (by default is little endianness)")
 if(CONFIG_BIG_ENDIANNESS)
-    set(CONFIG_MACHINE_ENDIANNESS 0) #big
+    set(CONFIG_MACHINE_ENDIANNESS UCDR_BIG_ENDIANNESS) #big
 else()
-    set(CONFIG_MACHINE_ENDIANNESS 1) #little
+    set(CONFIG_MACHINE_ENDIANNESS UCDR_LITTLE_ENDIANNESS) #little
 endif()
 
 configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
