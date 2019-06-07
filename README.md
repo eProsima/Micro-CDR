@@ -54,8 +54,8 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 ## API functions
 
 ```c
-void ucdr_init_buffer        (ucdrBuffer* ub, uint8_t* data, const uint32_t size);
-void ucdr_init_buffer_offset (ucdrBuffer* ub, uint8_t* data, const uint32_t size, uint32_t offset);
+void ucdr_init_buffer        (ucdrBuffer* ub, uint8_t* data, size_t size);
+void ucdr_init_buffer_offset (ucdrBuffer* ub, uint8_t* data, size_t size, size_t offset);
 ```
 Initialize a `ucdrBuffer` structure, the main struct of *MicroCDR*.
 - `ub`: the `ucdrBuffer` struct
@@ -77,7 +77,7 @@ Copy a `ucdrBuffer` structure data to another `ucdrBuffer` structure.
 
 ```c
 void ucdr_reset_buffer       (ucdrBuffer* ub);
-void ucdr_reset_buffer_offset(ucdrBuffer* ub, const uint32_t offset);
+void ucdr_reset_buffer_offset(ucdrBuffer* ub, size_t offset);
 ```
 Reset the `ucdrBuffer` as the same state that it was created.
 - `ub`: the `ucdrBuffer` struct.
@@ -87,18 +87,18 @@ Initially, the serialization/deserialization starts at the beginning of the buff
 ---
 
 ```c
-void ucdr_align_to (ucdrBuffer* ub, const uint32_t alignment);
+void ucdr_align_to (ucdrBuffer* ub, size_t size);
 ```
-Align the ucdrBuffer to an `alignment` position.
+Align the ucdrBuffer to the size `size`.
 After call this function, the serialization pointer will be moved only if the current `ucdrBuffer` was not alignment to the passed value.
 
 - `ub`: the `ucdrBuffer` struct
-- `alignment`: the alignment value used.
+- `size`: the target size alignment.
 
 ---
 
 ```c
-uint32_t ucdr_alignment(uint32_t buffer_position, const uint32_t data_size);
+size_t ucdr_alignment(size_t buffer_position, size_t data_size);
 ```
 Returns the alignment necessary to serialize/deserialize a type with `data_size` size.
 
@@ -108,7 +108,7 @@ Returns the alignment necessary to serialize/deserialize a type with `data_size`
 ---
 
 ```c
-uint32_t ucdr_buffer_alignment(const ucdrBuffer* ub, const uint32_t data_size);
+size_t ucdr_buffer_alignment(const ucdrBuffer* ub, size_t data_size);
 ```
 Returns the alignment necessary to serialize/deserialize a type with `data_size` size into the `ucdrBuffer` given.
 
