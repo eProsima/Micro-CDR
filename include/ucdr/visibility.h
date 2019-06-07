@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#ifndef _MICROCDR_DLL_H_
-#define _MICROCDR_DLL_H_
+#ifndef _MICROCDR_VISIBILITY_H_
+#define _MICROCDR_VISIBILITY_H_
 
 #if defined(_WIN32)
 #if defined(microcdr_SHARED)
@@ -30,4 +30,4 @@
 #define UCDRDLLAPI
 #endif // _WIN32
 
-#endif // _MICROCDR_DLL_H_
+#endif // _MICROCDR_VISIBILITY_H_

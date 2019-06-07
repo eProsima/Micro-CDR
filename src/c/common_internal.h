@@ -12,22 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _SRC_COMMON_INTERNALS_H_
-#define _SRC_COMMON_INTERNALS_H_
+#ifndef _SRC_COMMON_INTERNAL_H_
+#define _SRC_COMMON_INTERNAL_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <ucdr/common.h>
+#include <ucdr/microcdr.h>
 
 // -------------------------------------------------------------------
 //                     INTERNAL UTIL FUNCTIONS
 // -------------------------------------------------------------------
-bool ucdr_check_buffer(ucdrBuffer* mb, const uint32_t bytes);
+bool     ucdr_check_buffer_available_for(ucdrBuffer* ub, size_t bytes);
+bool     ucdr_check_final_buffer_behavior(ucdrBuffer* ub, size_t bytes);
+size_t   ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, size_t bytes, size_t data_size);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //_SRC_COMMON_INTERNALS_H_
+#endif //_SRC_COMMON_INTERNAL_H_
