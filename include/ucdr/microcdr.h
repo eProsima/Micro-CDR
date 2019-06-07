@@ -19,7 +19,7 @@
 extern "C" {
 #endif
 
-#include <ucdr/dll.h>
+#include <ucdr/visibility.h>
 #include <ucdr/config.h>
 
 #include <stdint.h>
