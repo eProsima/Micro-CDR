@@ -34,8 +34,8 @@ struct ucdrBuffer;
 typedef bool (*OnFullBuffer)(struct ucdrBuffer* buffer, void* args);
 
 typedef enum ucdrEndianness {
-    UCDR_BIG_ENDIANNESS,
-    UCDR_LITTLE_ENDIANNESS
+    UCDR_BIG_ENDIANNESS = 0,
+    UCDR_LITTLE_ENDIANNESS = 1
 
 } ucdrEndianness;
 
@@ -54,12 +54,6 @@ typedef struct ucdrBuffer
     void* args;
 
 } ucdrBuffer;
-
-// ------------------------------------------------
-//                   Symbols
-// ------------------------------------------------
-
-UCDRDLLAPI extern const ucdrEndianness UCDR_MACHINE_ENDIANNESS;
 
 // ------------------------------------------------
 //                 Main functions

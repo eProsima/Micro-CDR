@@ -116,23 +116,17 @@ else()
     set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
 endif()
 
-# Endianness configuration
-include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
-option(CHECK_ENDIANNESS "Enable/disable endiannes checking" ON)
-if(__BIG_ENDIAN__)
-    set(CHECK_ENDIANNESS OFF)
-    message(STATUS "Micro CDR without check endianness using provided endianness")
-elseif(CHECK_ENDIANNESS)
-    check_endianness()
+# Config.h
+set(CONFIG_BIG_ENDIANNESS OFF CACHE BOOL "Set the machine endianness to big endianness (by default is little endianness)")
+if(CONFIG_BIG_ENDIANNESS)
+    set(CONFIG_MACHINE_ENDIANNESS 0) #big
 else()
-    set(__BIG_ENDIAN__ 0)
-    message(STATUS "Micro CDR without check endianness")
+    set(CONFIG_MACHINE_ENDIANNESS 1) #little
 endif()
 
-# Generate config.h
 configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
     ${PROJECT_BINARY_DIR}/include/ucdr/config.h
-)
+    )
 
 ###############################################################################
 # Examples

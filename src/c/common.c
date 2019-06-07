@@ -16,12 +16,6 @@
 
 #include <string.h>
 
-#if __BIG_ENDIAN__
-    const ucdrEndianness UCDR_MACHINE_ENDIANNESS = UCDR_BIG_ENDIANNESS;
-#else
-    const ucdrEndianness UCDR_MACHINE_ENDIANNESS = UCDR_LITTLE_ENDIANNESS;
-#endif
-
 static size_t ucdr_next_remaining_size(ucdrBuffer* ub, size_t bytes, size_t data_size);
 
 // -------------------------------------------------------------------

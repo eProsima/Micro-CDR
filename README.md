@@ -161,6 +161,27 @@ Adding to this, there is a big set of functions for deserialize and deserialize 
 - Sequence: Similar to arrays, but the information about the size is serialized along with the data.
 - String: Wrapper of char sequence, but easily to use.
 
+### Endianness
+*MicroCDR* supports little and big endianness.
+The **machine endianness** can be set by the cmake variable: `CONFIG_BIG_ENDIANNESS`.
+By default, if this varible is `OFF` which means that the machine endianness is little endianness.
+
+The `ucdrBuffer` endianness can be set by the `endianness` parameter of the structure to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
+Also, there are a functions that allow to force an endianness independiently of the `ucdrBuffer` endianness in their serialization/deserialization.
+These functions contains the name `endianness` in their signature.
+
+### Error
+All serialization/deserialization functions return a boolean indicating the result of their operations.
+When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
+an status error is setted into the `ucdrBuffer`.
+If a `ucdrBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
+A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
+
+If is kwown that an operation can fails over a `ucdrBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
+the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
+After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
+
+## Serialization/deserialization list
 The available modes of serialization/deserializations in *MicroCDR* are shown in the following table.
 
 | Type                 | Endianness |
