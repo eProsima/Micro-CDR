@@ -27,15 +27,18 @@ if(GTEST_FOUND)
     include(CTest)
     set(SRCS
         serialization/BasicSerialization.cpp
-        serialization/StringSerialization.cpp
         serialization/ArraySerialization.cpp
         serialization/SequenceSerialization.cpp
+        serialization/StringSerialization.cpp
         endianness/BasicEndianness.cpp
         endianness/ArrayEndianness.cpp
         endianness/SequenceEndianness.cpp
+        fragmentation/BasicFragmentation.cpp
+        fragmentation/ArrayFragmentation.cpp
         SequenceOverflow.cpp
         Alignment.cpp
         FullBuffer.cpp
+        FullBufferCallback.cpp
         )
     add_executable(${PROJECT_NAME} ${SRCS})
     set_common_compile_options(${PROJECT_NAME})

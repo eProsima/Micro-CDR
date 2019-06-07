@@ -1,4 +1,4 @@
-# Copyright 2018 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+# Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,12 +15,7 @@
 ###############################################################################
 # CMake build rules for Micro CDR
 ###############################################################################
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
-
-set(IS_TOP_LEVEL TRUE)
-if(PROJECT_SOURCE_DIR)
-    set(IS_TOP_LEVEL FALSE)
-endif()
+cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 
 # Set CMAKE_BUILD_TYPE to Release by default.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -34,26 +29,15 @@ endif()
 ###############################################################################
 # Product information
 ###############################################################################
-if(CMAKE_VERSION VERSION_LESS 3.0)
-    project(microcdr C)
-    set(PROJECT_VERSION_MAJOR 1)
-    set(PROJECT_VERSION_MINOR 0)
-    set(PROJECT_VERSION_PATCH 1)
-    set(PROJECT_VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
-else()
-    cmake_policy(SET CMP0048 NEW)
-    project(microcdr VERSION "1.0.1" LANGUAGES C)
-endif()
+cmake_policy(SET CMP0048 NEW)
+project(microcdr VERSION "1.1.0" LANGUAGES C)
 
 ###############################################################################
-# eProsima build options
+# Build options
 ###############################################################################
-option(EPROSIMA_BUILD "Activate internal building" OFF)
-option(EPROSIMA_BUILD_TESTS "Activate the building of tests" OFF)
-
-if(EPROSIMA_BUILD)
-    set(EPROSIMA_BUILD_TESTS ON)
-endif()
+option(UCDR_BUILD_TESTS "Build tests" OFF)
+option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
 
 ###############################################################################
 # Check MSVC architecture
@@ -66,7 +50,6 @@ endif()
 ###############################################################################
 # Targets
 ###############################################################################
-
 # Library
 add_library(${PROJECT_NAME}
     src/c/common.c
@@ -76,12 +59,39 @@ add_library(${PROJECT_NAME}
     src/c/types/sequence.c
     )
 
+# Set common properties
 set_common_compile_options(${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    C_STANDARD 99
-    C_STANDARD_REQUIRED YES
+    VERSION
+        ${PROJECT_VERSION}
+    C_STANDARD
+        99
+    C_STANDARD_REQUIRED
+        YES
     )
+
+target_compile_options(${PROJECT_NAME}
+    PRIVATE
+        $<$<C_COMPILER_ID:GNU>:-fdata-sections -ffunction-sections>
+    )
+
+# Set Windows shared libraries name
+get_target_property(UCDR_TARGET_TYPE ${PROJECT_NAME} TYPE)
+if((CMAKE_SYSTEM_NAME STREQUAL "Windows") AND (UCDR_TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        RELEASE_POSTFIX
+            -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        RELWITHDEBINFO_POSTFIX
+            -${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        DEBUG_POSTFIX
+            d-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        )
+
+    target_compile_definitions(${PROJECT_NAME}
+        PUBLIC
+            ${PROJECT_NAME}_SHARED
+        )
+endif()
 
 # Define public headers
 target_include_directories(${PROJECT_NAME}
@@ -94,12 +104,12 @@ target_include_directories(${PROJECT_NAME}
 ###############################################################################
 # Config
 ###############################################################################
-
 # Install path
-set(BIN_INSTALL_DIR bin/ CACHE PATH "Installation directory for binaries")
-set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C headers")
-set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
-set(DATA_INSTALL_DIR share/ CACHE PATH "Installation directory for data")
+include(GNUInstallDirs)
+set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE PATH "Installation directory for C headers")
+set(LIB_INSTALL_DIR     ${CMAKE_INSTALL_LIBDIR}     CACHE PATH "Installation directory for libraries")
+set(DATA_INSTALL_DIR    ${CMAKE_INSTALL_DATADIR}    CACHE PATH "Installation directory for data")
 if(WIN32)
     set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
 else()
@@ -119,22 +129,17 @@ configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
     )
 
 ###############################################################################
-# Compile settings
+# Examples
 ###############################################################################
-
-# Definitions
-get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
-if((MSVC OR MSVC_IDE) AND (TARGET_TYPE STREQUAL "SHARED_LIBRARY"))
-    target_compile_definitions(${PROJECT_NAME}
-        PUBLIC
-            -D${PROJECT_NAME}_SHARED
-        )
+if(UCDR_BUILD_EXAMPLES)
+    add_subdirectory(examples/basic)
+    add_subdirectory(examples/fragmentation)
 endif()
 
 ###############################################################################
 # Testing
 ###############################################################################
-if(EPROSIMA_BUILD_TESTS AND IS_TOP_LEVEL)
+if(UCDR_BUILD_TESTS)
     include(${PROJECT_SOURCE_DIR}/cmake/common/gtest.cmake)
     enable_testing()
     add_subdirectory(test)
@@ -143,39 +148,75 @@ endif()
 ###############################################################################
 # Packaging
 ###############################################################################
-
 # Install library
-install(TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}Targets
-    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-    COMPONENT libraries
+install(
+    TARGETS
+        ${PROJECT_NAME}
+    EXPORT
+        ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION
+        ${LIB_INSTALL_DIR}
+    LIBRARY DESTINATION
+        ${LIB_INSTALL_DIR}
+    RUNTIME DESTINATION
+        ${BIN_INSTALL_DIR}
+    COMPONENT
+        libraries
     )
 
 # Install includes
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ucdr/
-    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
-    FILES_MATCHING PATTERN "*.h"
+install(
+    DIRECTORY
+        ${PROJECT_SOURCE_DIR}/include/ucdr/
+    DESTINATION
+        ${INCLUDE_INSTALL_DIR}/ucdr
+    FILES_MATCHING
+        PATTERN "*.h"
     )
 
 # Install config.h
-install(FILES ${PROJECT_BINARY_DIR}/include/ucdr/config.h
-    DESTINATION ${INCLUDE_INSTALL_DIR}/ucdr
+install(
+    FILES
+        ${PROJECT_BINARY_DIR}/include/ucdr/config.h
+    DESTINATION
+        ${INCLUDE_INSTALL_DIR}/ucdr
     )
 
 # Export library
-install(EXPORT ${PROJECT_NAME}Targets
-    DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
+install(
+    EXPORT
+        ${PROJECT_NAME}Targets
+    DESTINATION
+        ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
     )
 
 # Package configuration
 include(CMakePackageConfigHelpers)
-configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
-    ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-    INSTALL_DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
-    PATH_VARS BIN_INSTALL_DIR INCLUDE_INSTALL_DIR LIB_INSTALL_DIR DATA_INSTALL_DIR
+
+configure_package_config_file(
+    ${PROJECT_SOURCE_DIR}/cmake/packaging/Config.cmake.in
+        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION
+        ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
+    PATH_VARS
+        BIN_INSTALL_DIR
+        INCLUDE_INSTALL_DIR
+        LIB_INSTALL_DIR
+        DATA_INSTALL_DIR
     )
-install(FILES ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
-    DESTINATION ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
+
+write_basic_package_version_file(
+    ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
+    VERSION
+        ${PROJECT_VERSION}
+    COMPATIBILITY
+        SameMajorVersion
+    )
+
+install(
+    FILES
+        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}Config.cmake
+        ${PROJECT_BINARY_DIR}/cmake/config/${PROJECT_NAME}ConfigVersion.cmake
+    DESTINATION
+        ${DATA_INSTALL_DIR}/${PROJECT_NAME}/cmake
     )
