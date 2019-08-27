@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+ * @file microcdr.h
+ */
+
 #ifndef MICROCDR_MICRO_CDR_H_
 #define MICROCDR_MICRO_CDR_H_
 
@@ -36,33 +40,37 @@ extern "C" {
 typedef bool ucdrEndianness;
 
 /**
- * @brief
+ * @brief   Represents the information of a buffer associated to a XCDR buffer stream.
  */
 typedef struct ucdrBufferInfo
 {
-    size_t origin;
-    size_t size;
-    uint8_t* data;
+    size_t origin;  /** The byte stream offset where the buffer starts. */
+    size_t size;    /** The size of the buffer. */
+    uint8_t* data;  /** A pointer to the buffer. */
 
-    void* next;
-    void* prev;
+    void* next;     /** A pointer to the next ucdrBufferInfo in the ucdrStream. */
+    void* prev;     /** A pointer to the previous ucdrBufferInfo in the ucdrStream. */
 
 } ucdrBufferInfo;
 
 /**
- * @brief
+ * @brief   A XCDR byte stream where data is de/serialized acording to the XTYPES standard.
+ *          It is composed by a self-contained double linked list of row buffers.
+ *          These buffers are used to de/serialize the data, as well as to keep the information of the linked list,
+ *          that is, the `ucdrBufferInfo` of the prev/next buffer is stored in the buffer itself as shows the following figure.
+ *          ![](ucdr_stream.svg)
  */
 typedef struct ucdrStream
 {
-    size_t offset;
-    uint8_t* iterator;
-    size_t size;
+    size_t offset;              /** Represents the offset into the byte stream where the next serialized byte will be placed. */
+    uint8_t* iterator;          /** A pointer to the current offset. */
+    size_t size;                /** The size of the byte stream. */
 
-    ucdrEndianness endianness;
+    ucdrEndianness endianness;  /** The endianness of the byte stream. */
 
-    bool error;
+    bool error;                 /** A flag which indicates if there was a de/serialization error. */
 
-    ucdrBufferInfo buffer_info;
+    ucdrBufferInfo buffer_info; /** The information of the current buffer. */
 
 } ucdrStream;
 
@@ -84,7 +92,7 @@ UCDRDLLAPI void ucdr_init_stream(
 /**
  * @brief Initializes a ucdrStream from a buffer with a offset.
  * @param us        A pointer to the ucdrStream to initialize.
- * @param buffer    The buffer which will be associated with the ucdrStream.
+ * @param data      The buffer which will be associated with the ucdrStream.
  * @param size      The size of the buffer.
  * @param offset    The initial offset of the ucdrStream.
  */
@@ -121,7 +129,7 @@ UCDRDLLAPI void ucdr_copy_stream(
 /**
  * @brief Links a buffer to the ucdrStream. Multiple buffer can be linked forming a doubly linked list of buffers.
  * @param us        A pointer to the ucdrStream to which the buffer will be linked.
- * @param buffer    A pointer to the buffer to be linked.
+ * @param data      A pointer to the buffer to be linked.
  * @param size      The size of the buffer.
  * @return  true in case of successful buffer linking, and false in other case.
  */
@@ -132,7 +140,7 @@ UCDRDLLAPI bool ucdr_link_buffer(
 
 /**
  * @brief Resets a ucdrStream.
- * @param ub    A pointer to the ucdrStream to reset.
+ * @param us    A pointer to the ucdrStream to reset.
  */
 UCDRDLLAPI void ucdr_reset_stream(
         ucdrStream* us);
