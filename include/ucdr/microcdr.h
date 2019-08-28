@@ -45,8 +45,8 @@ typedef bool ucdrEndianness;
 typedef struct ucdrBufferInfo
 {
     size_t origin;  /** The byte stream offset where the buffer starts. */
-    size_t size;    /** The size of the buffer. */
     uint8_t* data;  /** A pointer to the buffer. */
+    size_t size;    /** The size of the buffer. */
 
     void* next;     /** A pointer to the next ucdrBufferInfo in the ucdrStream. */
     void* prev;     /** A pointer to the previous ucdrBufferInfo in the ucdrStream. */
@@ -118,6 +118,18 @@ UCDRDLLAPI void ucdr_init_stream_offset_endian(
         ucdrEndianness endianness);
 
 /**
+ * @brief Appends a buffer to the ucdrStream. Multiple buffer can be linked forming a doubly linked list of buffers.
+ * @param us        A pointer to the ucdrStream to which the buffer will be linked.
+ * @param data      A pointer to the buffer to be linked.
+ * @param size      The size of the buffer.
+ * @return  true in case of successful buffer linking, and false in other case.
+ */
+UCDRDLLAPI bool ucdr_append_buffer(
+        ucdrStream* us,
+        uint8_t* data,
+        size_t size);
+
+/**
  * @brief Copies the de/serialized data of a ucdrStream into a new one.
  * @param us_dest   A pointer to the ucdrStream to copy to.
  * @param us_source A pointer to the ucdrStream to copy from.
@@ -125,18 +137,6 @@ UCDRDLLAPI void ucdr_init_stream_offset_endian(
 UCDRDLLAPI void ucdr_copy_stream(
         ucdrStream* us_dest,
         const ucdrStream* us_source);
-
-/**
- * @brief Links a buffer to the ucdrStream. Multiple buffer can be linked forming a doubly linked list of buffers.
- * @param us        A pointer to the ucdrStream to which the buffer will be linked.
- * @param data      A pointer to the buffer to be linked.
- * @param size      The size of the buffer.
- * @return  true in case of successful buffer linking, and false in other case.
- */
-UCDRDLLAPI bool ucdr_link_buffer(
-        ucdrStream* us,
-        uint8_t* data,
-        size_t size);
 
 /**
  * @brief Resets a ucdrStream.

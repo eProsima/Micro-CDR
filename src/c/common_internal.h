@@ -21,12 +21,12 @@ extern "C" {
 
 #include <ucdr/microcdr.h>
 
-// -------------------------------------------------------------------
-//                     INTERNAL UTIL FUNCTIONS
-// -------------------------------------------------------------------
-bool     ucdr_check_buffer_available_for(ucdrBuffer* ub, size_t bytes);
-bool     ucdr_check_final_buffer_behavior(ucdrBuffer* ub, size_t bytes);
-size_t   ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, size_t bytes, size_t data_size);
+//// -------------------------------------------------------------------
+////                     INTERNAL UTIL FUNCTIONS
+//// -------------------------------------------------------------------
+//bool     ucdr_check_buffer_available_for(ucdrBuffer* ub, size_t bytes);
+//bool     ucdr_check_final_buffer_behavior(ucdrBuffer* ub, size_t bytes);
+//size_t   ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, size_t bytes, size_t data_size);
 
 #ifdef __cplusplus
 }
