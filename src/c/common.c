@@ -47,7 +47,7 @@ bool ucdr_init_list(
     }
 
     bool rv = false;
-    if (ucdr_init_buffer_info(&us->buffer_info, 0, us->iterator, us->size))
+    if (ucdr_init_buffer_info(&us->buffer_info, us->origin, us->iterator, us->size))
     {
         us->size = us->buffer_info.size;
         rv = true;
@@ -94,6 +94,11 @@ bool ucdr_prev_buffer_info(
     return false;
 }
 
+size_t ucdr_alignment(size_t offset, size_t data_size)
+{
+    return ((data_size - (offset % data_size)) & (data_size - 1));
+}
+
 // -------------------------------------------------------------------
 //                       PUBLIC IMPLEMENTATION
 // -------------------------------------------------------------------
@@ -122,12 +127,13 @@ void ucdr_init_stream_offset_endian(
         ucdrEndianness endianness)
 {
     us->offset = offset;
+    us->origin = offset;
     us->iterator = buffer;
     us->size = size;
     us->endianness = endianness;
     us->error = false;
 
-    us->buffer_info.origin = 0;
+    us->buffer_info.origin = offset;
     us->buffer_info.size = size;
     us->buffer_info.data = buffer;
     us->buffer_info.next = NULL;
@@ -158,141 +164,151 @@ bool ucdr_append_buffer(
     return rv;
 }
 
-//static size_t ucdr_next_remaining_size(ucdrBuffer* ub, size_t bytes, size_t data_size);
-//
-//// -------------------------------------------------------------------
-////                   INTERNAL UTIL IMPLEMENTATIONS
-//// -------------------------------------------------------------------
-//
-//bool ucdr_check_buffer_available_for(ucdrBuffer* ub, size_t bytes)
-//{
-//    return !ub->error && (ub->iterator + bytes <= ub->final);
-//}
-//
-//bool ucdr_check_final_buffer_behavior(ucdrBuffer* ub, size_t data_size)
-//{
-//    if(!ub->error && ub->iterator + data_size > ub->final)
-//    {
-//        ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub ->args) : true;
-//    }
-//
-//    return !ub->error;
-//}
-//
-//size_t ucdr_next_remaining_size(ucdrBuffer* ub, size_t bytes, size_t data_size)
-//{
-//    size_t remaining = ucdr_buffer_remaining(ub);
-//    return (ub->iterator + bytes <= ub->final)
-//           ? bytes
-//           : remaining - (remaining % data_size);
-//}
-//
-//size_t ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, size_t bytes, size_t data_size)
-//{
-//    if(!ub->error && ub->iterator + data_size > ub->final && bytes > 0)
-//    {
-//        ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub->args) : true;
-//    }
-//
-//    return (!ub->error) ? ucdr_next_remaining_size(ub, bytes, data_size) : 0;
-//}
-//
-//void ucdr_set_on_full_buffer_callback(ucdrBuffer* ub, OnFullBuffer on_full_buffer, void* args)
-//{
-//    ub->on_full_buffer = on_full_buffer;
-//    ub->args = args;
-//}
-//
-//// -------------------------------------------------------------------
-////                       PUBLIC IMPLEMENTATION
-//// -------------------------------------------------------------------
-//void ucdr_init_buffer(ucdrBuffer* ub, uint8_t* data, size_t size)
-//{
-//    ucdr_init_buffer_offset(ub, data, size, 0u);
-//}
-//
-//void ucdr_init_buffer_offset(ucdrBuffer* ub, uint8_t* data, size_t size, size_t offset)
-//{
-//    ucdr_init_buffer_offset_endian(ub, data, size, offset, UCDR_MACHINE_ENDIANNESS);
-//}
-//
-//void ucdr_init_buffer_offset_endian(ucdrBuffer* ub, uint8_t* data, size_t size, size_t offset, ucdrEndianness endianness)
-//{
-//    ub->init = data;
-//    ub->final = ub->init + size;
-//    ub->iterator = ub->init + offset;
-//    ub->last_data_size = 0u;
-//    ub->endianness = endianness;
-//    ub->error = false;
-//    ub->on_full_buffer = NULL;
-//    ub->args = NULL;
-//}
-//
-//
-//void ucdr_copy_buffer(ucdrBuffer* ub_dest, const ucdrBuffer* ub_source)
-//{
-//    memcpy(ub_dest, ub_source, sizeof(ucdrBuffer));
-//}
-//
-//void ucdr_reset_buffer(ucdrBuffer* ub)
-//{
-//    ucdr_reset_buffer_offset(ub, 0u);
-//}
-//
-//void ucdr_reset_buffer_offset(ucdrBuffer* ub, size_t offset)
-//{
-//    ub->iterator = ub->init + offset;
-//    ub->last_data_size = 0u;
-//    ub->error = false;
-//}
-//
-//void ucdr_align_to(ucdrBuffer* ub, size_t size)
-//{
-//    ub->iterator += ucdr_buffer_alignment(ub, size);
-//    if(ub->iterator > ub->final)
-//    {
-//        ub->iterator = ub->final;
-//    }
-//
-//    ub->last_data_size = (uint8_t)size;
-//}
-//
-//size_t ucdr_alignment(size_t current_alignment, size_t data_size)
-//{
-//    return ((data_size - (current_alignment % data_size)) & (data_size - 1));
-//}
-//
-//size_t ucdr_buffer_alignment(const ucdrBuffer* ub, size_t data_size)
-//{
-//    if(data_size > ub->last_data_size)
-//    {
-//        return (data_size - ((uint32_t)(ub->iterator - ub->init) % data_size)) & (data_size - 1);
-//    }
-//
-//    return 0;
-//}
-//
-//size_t ucdr_buffer_size(const ucdrBuffer* ub)
-//{
-//    return (size_t)(ub->final - ub->init);
-//}
-//
-//size_t ucdr_buffer_length(const ucdrBuffer* ub)
-//{
-//    return (size_t)(ub->iterator - ub->init);
-//}
-//
-//size_t ucdr_buffer_remaining(const ucdrBuffer* ub)
-//{
-//    return (size_t)(ub->final - ub->iterator);
-//}
-//
-//ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* ub)
-//{
-//    return ub->endianness;
-//}
-//
-//bool ucdr_buffer_has_error(const ucdrBuffer* ub)
-//{
-//    return ub->error;
-//}
+void ucdr_reset_stream(
+        ucdrStream* us)
+{
+    us->offset = us->origin;
+    us->error = false;
+
+    while (ucdr_prev_buffer_info(&us->buffer_info))
+    {}
+    us->iterator = us->buffer_info.data;
+}
+
+size_t ucdr_size(
+        const ucdrStream* us)
+{
+    return us->size;
+}
+
+size_t ucdr_used_size(
+        const ucdrStream* us)
+{
+    return us->offset - us->origin;
+}
+
+size_t ucdr_remaining_size(
+        const ucdrStream* us)
+{
+    return us->size - (us->offset - us->origin);
+}
+
+ucdrEndianness ucdr_endianness(
+        const ucdrStream* us)
+{
+    return us->endianness;
+}
+
+bool ucdr_has_error(
+        const ucdrStream* us)
+{
+    return us->error;
+}
+
+bool ucdr_copy_stream(
+        ucdrStream* us_dst,
+        const ucdrStream* us_src)
+{
+    bool rv = false;
+    size_t remaining_size = us_src->offset - us_src->origin;
+
+    if (us_dst->size >= remaining_size)
+    {
+        rv = true;
+
+        ucdrStream us_tmp = *us_src;
+
+        ucdr_reset_stream(us_dst);
+        ucdr_reset_stream(&us_tmp);
+
+        do
+        {
+            size_t avsize_dst_buffer = us_dst->buffer_info.size - (us_dst->offset - us_dst->buffer_info.origin);
+            size_t avsize_tmp_buffer = us_tmp.buffer_info.size - (us_tmp.offset - us_tmp.buffer_info.origin);
+
+            if (remaining_size <= avsize_dst_buffer && remaining_size <= avsize_tmp_buffer)
+            {
+                memcpy(us_dst->iterator, us_tmp.iterator, remaining_size);
+                us_dst->iterator += remaining_size;
+                remaining_size = 0;
+            }
+            else
+            {
+                size_t copied_size = 0;
+                bool promote_dst = false;
+                bool promote_tmp = false;
+
+                if (avsize_dst_buffer < avsize_tmp_buffer)
+                {
+                    copied_size = avsize_dst_buffer;
+                    promote_dst = true;
+                }
+                else if (avsize_dst_buffer > avsize_tmp_buffer)
+                {
+                    copied_size = avsize_tmp_buffer;
+                    promote_tmp = true;
+                }
+                else
+                {
+                    copied_size = avsize_dst_buffer;
+                    promote_dst = true;
+                    promote_tmp = true;
+                }
+
+                memcpy(us_dst->iterator, us_tmp.iterator, copied_size);
+                us_dst->iterator += copied_size;
+                us_dst->offset += copied_size;
+                us_tmp.iterator += copied_size;
+                us_tmp.offset += copied_size;
+                remaining_size -= copied_size;
+
+                if (promote_dst)
+                {
+                    ucdr_next_buffer_info(&us_dst->buffer_info);
+                    us_dst->iterator = us_dst->buffer_info.data;
+                }
+
+                if (promote_tmp)
+                {
+                    ucdr_next_buffer_info(&us_tmp.buffer_info);
+                    us_tmp.iterator = us_tmp.buffer_info.data;
+                }
+            }
+        } while(remaining_size > 0);
+    }
+
+    return rv;
+}
+
+bool ucdr_align(
+        ucdrStream* us,
+        size_t type_size)
+{
+    bool rv = false;
+    size_t alignment = ucdr_alignment(us->offset, type_size);
+
+    if (alignment <= ucdr_remaining_size(us))
+    {
+        rv = true;
+
+        do
+        {
+            size_t buffer_avsize = us->buffer_info.size - (us->offset - us->buffer_info.origin);
+            if (alignment < buffer_avsize)
+            {
+                us->offset += alignment;
+                us->iterator += alignment;
+                alignment = 0;
+            }
+            else
+            {
+                us->offset += buffer_avsize;
+                ucdr_next_buffer_info(&us->buffer_info);
+                us->iterator = us->buffer_info.data;
+                alignment -= buffer_avsize;
+            }
+        } while(alignment > 0);
+    }
+
+    return rv;
+}

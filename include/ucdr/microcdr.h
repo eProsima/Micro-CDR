@@ -63,6 +63,7 @@ typedef struct ucdrBufferInfo
 typedef struct ucdrStream
 {
     size_t offset;              /** Represents the offset into the byte stream where the next serialized byte will be placed. */
+    size_t origin;              /** Represents the offset into the stream used as the logical beginning of the stream. */
     uint8_t* iterator;          /** A pointer to the current offset. */
     size_t size;                /** The size of the byte stream. */
 
@@ -130,15 +131,6 @@ UCDRDLLAPI bool ucdr_append_buffer(
         size_t size);
 
 /**
- * @brief Copies the de/serialized data of a ucdrStream into a new one.
- * @param us_dest   A pointer to the ucdrStream to copy to.
- * @param us_source A pointer to the ucdrStream to copy from.
- */
-UCDRDLLAPI void ucdr_copy_stream(
-        ucdrStream* us_dest,
-        const ucdrStream* us_source);
-
-/**
  * @brief Resets a ucdrStream.
  * @param us    A pointer to the ucdrStream to reset.
  */
@@ -146,28 +138,11 @@ UCDRDLLAPI void ucdr_reset_stream(
         ucdrStream* us);
 
 /**
- * @brief Advances the XCDR stream to achieve a desired alignment.
- * @param us        A pointer to the ucdrStream to align.
- * @param type_size Size of the type to be aligned.
- */
-UCDRDLLAPI void ucdr_align(
-        ucdrStream* us,
-        size_t type_size);
-
-/**
  * @brief Computes the total size of the ucdrStream, that is, the sum of the linked buffers' effective size.
  * @param us    A pointer to the ucdrStream.
  * @return      The total size of the ucdrStream.
  */
 UCDRDLLAPI size_t ucdr_size(
-        const ucdrStream* us);
-
-/**
- * @brief Computes the remaining size of the ucdrStream.
- * @param us    A pointer to the ucdrStream.
- * @return      The total size of the ucdrStream.
- */
-UCDRDLLAPI size_t ucdr_remaining_size(
         const ucdrStream* us);
 
 /**
@@ -179,12 +154,20 @@ UCDRDLLAPI size_t ucdr_used_size(
         const ucdrStream* us);
 
 /**
+ * @brief Computes the remaining size of the ucdrStream.
+ * @param us    A pointer to the ucdrStream.
+ * @return      The total size of the ucdrStream.
+ */
+UCDRDLLAPI size_t ucdr_remaining_size(
+        const ucdrStream* us);
+
+/**
  * @brief Returns the endianness of the ucdrStream.
- * @param ub    A pointer to the ucdrStream.
+ * @param us    A pointer to the ucdrStream.
  * @return      The endianness of the ucdrStream.
  */
 UCDRDLLAPI ucdrEndianness ucdr_endianness(
-        const ucdrStream* ub);
+        const ucdrStream* us);
 
 /**
  * @brief Indicates whether the ucdrStream has an error.
@@ -193,6 +176,27 @@ UCDRDLLAPI ucdrEndianness ucdr_endianness(
  */
 UCDRDLLAPI bool ucdr_has_error(
         const ucdrStream* us);
+
+/**
+ * @brief Copies the de/serialized data of a ucdrStream into a new one.
+ * @param us_dest   A pointer to the ucdrStream to copy to.
+ * @param us_source A pointer to the ucdrStream to copy from.
+ * @return  true in case of success copy and false in other case.
+ */
+UCDRDLLAPI bool ucdr_copy_stream(
+        ucdrStream* us_dest,
+        const ucdrStream* us_src);
+
+/**
+ * @brief Advances the XCDR stream to achieve a desired alignment.
+ * @param us        A pointer to the ucdrStream to align.
+ * @param type_size Size of the type to be aligned.
+ * @return  true in case of success alignment, and false in other case.
+ */
+UCDRDLLAPI bool ucdr_align(
+        ucdrStream* us,
+        size_t type_size);
+
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION DECLARATIONS
