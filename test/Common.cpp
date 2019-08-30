@@ -14,7 +14,11 @@
 
 #include <gtest/gtest.h>
 #include <ucdr/microcdr.h>
+
+extern "C"
+{
 #include <c/common.c>
+}
 
 #include <cstring>
 

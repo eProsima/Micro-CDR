@@ -26,14 +26,14 @@ check_gtest()
 if(GTEST_FOUND)
     include(CTest)
     set(SRCS
-#        serialization/BasicSerialization.cpp
+        serialization/BasicSerialization.cpp
 #        serialization/ArraySerialization.cpp
 #        serialization/SequenceSerialization.cpp
 #        serialization/StringSerialization.cpp
 #        endianness/BasicEndianness.cpp
 #        endianness/ArrayEndianness.cpp
 #        endianness/SequenceEndianness.cpp
-#        fragmentation/BasicFragmentation.cpp
+        fragmentation/BasicFragmentation.cpp
 #        fragmentation/ArrayFragmentation.cpp
 #        SequenceOverflow.cpp
 #        Alignment.cpp

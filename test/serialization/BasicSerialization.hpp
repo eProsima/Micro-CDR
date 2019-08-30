@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef _BASIC_SERIALIZATION_HPP_
-#define _BASIC_SERIALIZATION_HPP_
+#ifndef BASIC_SERIALIZATION_HPP_
+#define BASIC_SERIALIZATION_HPP_
 
 #include <gtest/gtest.h>
 #include <ucdr/microcdr.h>
@@ -29,14 +29,8 @@ public:
     BasicSerialization()
     {
         std::memset(buffer, 0, BUFFER_LENGTH);
-        ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
-        ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
-    }
-
-    void check_data_size(uint32_t data_size)
-    {
-        EXPECT_EQ(writer.last_data_size, data_size);
-        EXPECT_EQ(reader.last_data_size, data_size);
+        ucdr_init_stream(&writer, buffer, BUFFER_LENGTH);
+        ucdr_init_stream(&reader, buffer, BUFFER_LENGTH);
     }
 
     virtual ~BasicSerialization()
@@ -55,8 +49,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_bool(&reader, &output));
 
         EXPECT_EQ(input, output);
-
-        check_data_size(1);
     }
 
     void char_serialization()
@@ -68,7 +60,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_char(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(1);
     }
 
     void int8_t_serialization()
@@ -80,7 +71,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_int8_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(1);
     }
 
     void uint8_t_serialization()
@@ -92,7 +82,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_uint8_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(1);
     }
 
     void int16_t_serialization()
@@ -104,7 +93,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_int16_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(2);
     }
 
     void uint16_t_serialization()
@@ -116,7 +104,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_uint16_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(2);
     }
 
     void int32_t_serialization()
@@ -128,7 +115,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_int32_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(4);
     }
 
     void uint32_t_serialization()
@@ -140,7 +126,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_uint32_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(4);
     }
 
     void int64_t_serialization()
@@ -152,7 +137,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_int64_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(8);
     }
 
     void uint64_t_serialization()
@@ -164,7 +148,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_uint64_t(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(8);
     }
 
     void float_serialization()
@@ -176,7 +159,6 @@ public:
         EXPECT_TRUE(ucdr_deserialize_float(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(4);
     }
 
     void double_serialization()
@@ -188,13 +170,12 @@ public:
         EXPECT_TRUE(ucdr_deserialize_double(&reader, &output));
 
         EXPECT_EQ(input, output);
-        check_data_size(8);
     }
 
 protected:
-    ucdrBuffer writer;
-    ucdrBuffer reader;
+    ucdrStream writer;
+    ucdrStream reader;
     uint8_t buffer[BUFFER_LENGTH];
 };
 
-#endif //_BASIC_SERIALIZATION_HPP_
+#endif // BASIC_SERIALIZATION_HPP_
