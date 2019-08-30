@@ -21,9 +21,11 @@ class ArrayFragmentation : public ArraySerialization
 public:
     ArrayFragmentation()
     {
-        ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, this);
-        ucdr_set_on_full_buffer_callback(&reader, on_full_buffer, this);
         std::memset(buffer2, 0, BUFFER_LENGTH);
+        ucdr_append_buffer(&writer, buffer2, sizeof(buffer2));
+        ucdr_append_buffer(&writer, buffer3, sizeof(buffer3));
+        ucdr_append_buffer(&reader, buffer2, sizeof(buffer2));
+        ucdr_append_buffer(&reader, buffer3, sizeof(buffer3));
         for(int i = 0; i < BUFFER_LENGTH - OFFSET; ++i)
         {
             uint8_t_serialization();
@@ -31,18 +33,8 @@ public:
     }
 
 protected:
-    static bool on_full_buffer(ucdrBuffer* ub, void* args)
-    {
-        ArrayFragmentation* obj =  static_cast<ArrayFragmentation*>(args);
-
-        ub->init = obj->buffer2;
-        ub->iterator = ub->init;
-        ub->final = ub->init + BUFFER_LENGTH;
-
-        return false;
-    }
-
-    uint8_t buffer2[BUFFER_LENGTH];
+    uint8_t buffer2[sizeof(ucdrBufferInfo) + 1];
+    uint8_t buffer3[BUFFER_LENGTH];
 };
 
 TEST_F(ArrayFragmentation, Bool)

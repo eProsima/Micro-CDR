@@ -13,6 +13,34 @@
 // limitations under the License.
 
 #include "../serialization/BasicSerialization.hpp"
+#include <c/common_internal.h>
+
+void check_iterator(ucdrStream& us)
+{
+    ucdrBufferInfo binfo = us.buffer_info;
+    while (ucdr_prev_buffer_info(&binfo))
+    {}
+
+    uint8_t* iterator = binfo.data;
+    size_t remainding_size = us.offset;
+    do
+    {
+        if (remainding_size <= binfo.size)
+        {
+            iterator += remainding_size;
+            remainding_size = 0;
+        }
+        else
+        {
+            ucdr_next_buffer_info(&binfo);
+            iterator = binfo.data;
+            remainding_size -= binfo.size;
+        }
+
+    } while(remainding_size > 0);
+
+    EXPECT_EQ(us.iterator, iterator);
+}
 
 class BasicFragmentation : public BasicSerialization
 {
@@ -20,8 +48,10 @@ public:
     BasicFragmentation()
     {
         std::memset(buffer2, 0, BUFFER_LENGTH);
-        ucdr_append_buffer(&writer, buffer2, BUFFER_LENGTH);
-        ucdr_append_buffer(&reader, buffer2, BUFFER_LENGTH);
+        ucdr_append_buffer(&writer, buffer2, sizeof(buffer2));
+        ucdr_append_buffer(&writer, buffer3, sizeof(buffer3));
+        ucdr_append_buffer(&reader, buffer2, sizeof(buffer2));
+        ucdr_append_buffer(&reader, buffer3, sizeof(buffer3));
         for(int i = 0; i < BUFFER_LENGTH - int(sizeof(ucdrBufferInfo) + 1); ++i)
         {
             uint8_t_serialization();
@@ -29,32 +59,43 @@ public:
     }
 
 protected:
-    uint8_t buffer2[BUFFER_LENGTH];
+    uint8_t buffer2[sizeof(ucdrBufferInfo) + 1];
+    uint8_t buffer3[BUFFER_LENGTH];
 };
 
 TEST_F(BasicFragmentation, Bool)
 {
     bool_serialization();
+    check_iterator(writer);
+    check_iterator(reader);
 }
 
 TEST_F(BasicFragmentation, Char)
 {
     char_serialization();
+    check_iterator(writer);
+    check_iterator(reader);
 }
 
 TEST_F(BasicFragmentation, Int8)
 {
     int8_t_serialization();
+    check_iterator(writer);
+    check_iterator(reader);
 }
 
 TEST_F(BasicFragmentation, Uint8)
 {
     uint8_t_serialization();
+    check_iterator(writer);
+    check_iterator(reader);
 }
 
 TEST_F(BasicFragmentation, Int16)
 {
     int16_t_serialization();
+    check_iterator(writer);
+    check_iterator(reader);
 }
 
 TEST_F(BasicFragmentation, Uint16)
