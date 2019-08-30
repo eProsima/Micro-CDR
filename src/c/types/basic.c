@@ -21,66 +21,131 @@
 // -------------------------------------------------------------------
 #define UCDR_SERIALIZE_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    if(ucdr_check_final_buffer_behavior(ub, 1)) \
+    if (ucdr_enough_space(us, 1)) \
     { \
-        *ub->iterator = (uint8_t)value; \
-        ub->iterator += 1; \
-        ub->last_data_size = 1; \
+        if (1 > ucdr_buffer_remaining_size(us)) \
+        { \
+            ucdr_next_buffer_info(&us->buffer_info); \
+            us->iterator = us->buffer_info.data; \
+        } \
+        *us->iterator = (uint8_t)value; \
+        ++us->iterator; \
+        ++us->offset; \
     } \
-    return !ub->error;
+    else \
+    { \
+        us->error = true; \
+    } \
 
-#define UCDR_SERIALIZE_BYTE_2_CORE() \
-    const uint8_t* bytes_pointer = (uint8_t*)&value; \
-    *ub->iterator = *(bytes_pointer + 1); \
-    *(ub->iterator + 1) = *bytes_pointer;
+#define UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(SIZE) \
+    size_t remaining_size = ucdr_buffer_remaining_size(us); \
+    for (size_t i = 0; i < remaining_size; ++i) \
+    { \
+        *(us->iterator + i) = *(bytes_pointer + (SIZE - 1) - i); \
+    } \
+    ucdr_next_buffer_info(&us->buffer_info); \
+    us->iterator = us->buffer_info.data; \
+    for (size_t i = 0; i < (SIZE - remaining_size); ++i) \
+    { \
+        *(us->iterator + i) = *(bytes_pointer + (SIZE - 1) - (i + remaining_size)); \
+    } \
+    us->iterator += SIZE - remaining_size;
 
-#define UCDR_SERIALIZE_BYTE_4_CORE() \
+#define UCDR_SERIALIZE_BYTE_2_ENDIAN() \
     const uint8_t* bytes_pointer = (uint8_t*)&value; \
-    *ub->iterator = *(bytes_pointer + 3); \
-    *(ub->iterator + 1) = *(bytes_pointer + 2); \
-    *(ub->iterator + 2) = *(bytes_pointer + 1); \
-    *(ub->iterator + 3) = *bytes_pointer;
+    if (2 <= ucdr_buffer_remaining_size(us)) \
+    { \
+        *us->iterator = *(bytes_pointer + 1); \
+        *(us->iterator + 1) = *bytes_pointer; \
+    } \
+    else \
+    { \
+        UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(2) \
+    } \
 
-#define UCDR_SERIALIZE_BYTE_8_CORE() \
+#define UCDR_SERIALIZE_BYTE_4_ENDIAN() \
     const uint8_t* bytes_pointer = (uint8_t*)&value; \
-    *ub->iterator = *(bytes_pointer + 7); \
-    *(ub->iterator + 1) = *(bytes_pointer + 6); \
-    *(ub->iterator + 2) = *(bytes_pointer + 5); \
-    *(ub->iterator + 3) = *(bytes_pointer + 4); \
-    *(ub->iterator + 4) = *(bytes_pointer + 3); \
-    *(ub->iterator + 5) = *(bytes_pointer + 2); \
-    *(ub->iterator + 6) = *(bytes_pointer + 1); \
-    *(ub->iterator + 7) = *bytes_pointer;
+    if (4 <= ucdr_buffer_remaining_size(us)) \
+    { \
+        *us->iterator = *(bytes_pointer + 3); \
+        *(us->iterator + 1) = *(bytes_pointer + 2); \
+        *(us->iterator + 2) = *(bytes_pointer + 1); \
+        *(us->iterator + 3) = *bytes_pointer; \
+    } \
+    else \
+    { \
+        UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(4) \
+    } \
+
+#define UCDR_SERIALIZE_BYTE_8_ENDIAN() \
+    const uint8_t* bytes_pointer = (uint8_t*)&value; \
+    if (8 <= ucdr_buffer_remaining_size(us)) \
+    { \
+        *us->iterator = *(bytes_pointer + 7); \
+        *(us->iterator + 1) = *(bytes_pointer + 6); \
+        *(us->iterator + 2) = *(bytes_pointer + 5); \
+        *(us->iterator + 3) = *(bytes_pointer + 4); \
+        *(us->iterator + 4) = *(bytes_pointer + 3); \
+        *(us->iterator + 5) = *(bytes_pointer + 2); \
+        *(us->iterator + 6) = *(bytes_pointer + 1); \
+        *(us->iterator + 7) = *bytes_pointer; \
+    } \
+    else \
+    { \
+        UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(8) \
+    } \
 
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, SIZE); \
-    if(ucdr_check_final_buffer_behavior(ub, SIZE)) \
+    if(ucdr_enough_space(us, SIZE)) \
     { \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
-            memcpy(ub->iterator, (void*)&value, SIZE); \
+            if (SIZE <= ucdr_buffer_remaining_size(us)) \
+            { \
+                memcpy(us->iterator, (void*)&value, SIZE); \
+                us->iterator += SIZE; \
+            } \
+            else \
+            { \
+                size_t remaining_size = ucdr_buffer_remaining_size(us); \
+                memcpy(us->iterator, (void*)&value, remaining_size); \
+                ucdr_next_buffer_info(&us->buffer_info); \
+                us->iterator = us->buffer_info.data; \
+                memcpy(us->iterator, (uint8_t*)&value + remaining_size, SIZE - remaining_size); \
+                us->iterator += SIZE - remaining_size; \
+            } \
         } \
         else \
         { \
-            UCDR_SERIALIZE_BYTE_ ## SIZE ## _CORE() \
+            UCDR_SERIALIZE_BYTE_ ## SIZE ## _ENDIAN() \
         } \
-        ub->iterator += SIZE; \
-        ub->last_data_size = SIZE; \
+        us->offset += SIZE; \
     } \
-    return !ub->error;
+    else \
+    { \
+        us->error = true; \
+    } \
 
 #define UCDR_SERIALIZE_BYTE_2(TYPE, ENDIAN) UCDR_SERIALIZE_BYTE_N(TYPE, 2, ENDIAN)
 #define UCDR_SERIALIZE_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_SERIALIZE_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_BASIC_TYPE_SERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
-    bool ucdr_serialize ## SUFFIX(ucdrBuffer* ub, TYPE value) \
+    bool ucdr_serialize ## SUFFIX(ucdrStream* us, TYPE value) \
     { \
-        UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, ub->endianness) \
+        if (!us->error) \
+        { \
+            UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, us->endianness) \
+        } \
+        return !us->error; \
     } \
-    bool ucdr_serialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE value) \
+    bool ucdr_serialize_endian ## SUFFIX(ucdrStream* us, ucdrEndianness endianness, TYPE value) \
     { \
-        UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
+        if (!us->error) \
+        { \
+            UCDR_SERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
+        } \
+        return !us->error; \
     }
 
 // -------------------------------------------------------------------
@@ -88,66 +153,129 @@
 // -------------------------------------------------------------------
 #define UCDR_DESERIALIZE_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    if(ucdr_check_final_buffer_behavior(ub, 1)) \
+    if(ucdr_enough_space(us, 1)) \
     { \
-        *value = (TYPE)*ub->iterator; \
-        ub->iterator += 1; \
-        ub->last_data_size = 1; \
+        if (1 > ucdr_buffer_remaining_size(us)) \
+        { \
+            ucdr_next_buffer_info(&us->buffer_info); \
+            us->iterator = us->buffer_info.data; \
+        } \
+        *value = (TYPE)*us->iterator; \
+        ++us->iterator; \
+        ++us->offset; \
     } \
-    return !ub->error;
+    else \
+    { \
+        us->error = true; \
+    } \
 
-#define UCDR_DESERIALIZE_BYTE_2_CORE() \
-    uint8_t* bytes_pointer = (uint8_t*)value; \
-    *bytes_pointer = *(ub->iterator + 1); \
-    *(bytes_pointer + 1) = *ub->iterator ; \
+#define UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(SIZE) \
+    size_t remaining_size = ucdr_buffer_remaining_size(us); \
+    for (size_t i = 0; i < remaining_size; ++i) \
+    { \
+        *(bytes_pointer + i) = *(us->iterator + (SIZE - 1) - i); \
+    } \
+    ucdr_next_buffer_info(&us->buffer_info); \
+    us->iterator = us->buffer_info.data; \
+    for (size_t i = 0; i < (SIZE - remaining_size); ++i) \
+    { \
+        *(bytes_pointer + i) = *(us->iterator + (SIZE - 1) - (i + remaining_size)); \
+    } \
+    us->iterator += SIZE - remaining_size;
 
-#define UCDR_DESERIALIZE_BYTE_4_CORE() \
-    uint8_t* bytes_pointer = (uint8_t*)value; \
-    *bytes_pointer = *(ub->iterator + 3); \
-    *(bytes_pointer + 1) = *(ub->iterator + 2); \
-    *(bytes_pointer + 2) = *(ub->iterator + 1); \
-    *(bytes_pointer + 3) = *ub->iterator;
 
-#define UCDR_DESERIALIZE_BYTE_8_CORE() \
+#define UCDR_DESERIALIZE_BYTE_2_ENDIAN() \
     uint8_t* bytes_pointer = (uint8_t*)value; \
-    *bytes_pointer = *(ub->iterator + 7); \
-    *(bytes_pointer + 1) = *(ub->iterator + 6); \
-    *(bytes_pointer + 2) = *(ub->iterator + 5); \
-    *(bytes_pointer + 3) = *(ub->iterator + 4); \
-    *(bytes_pointer + 4) = *(ub->iterator + 3); \
-    *(bytes_pointer + 5) = *(ub->iterator + 2); \
-    *(bytes_pointer + 6) = *(ub->iterator + 1); \
-    *(bytes_pointer + 7) = *ub->iterator;
+    if (8 <= ucdr_buffer_remaining_size(us)) \
+    { \
+        *bytes_pointer = *(us->iterator + 1); \
+        *(bytes_pointer + 1) = *us->iterator ; \
+    } \
+    else \
+    { \
+        UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(4) \
+    } \
+
+#define UCDR_DESERIALIZE_BYTE_4_ENDIAN() \
+    uint8_t* bytes_pointer = (uint8_t*)value; \
+    if (8 <= ucdr_buffer_remaining_size(us)) \
+    { \
+        *bytes_pointer = *(us->iterator + 3); \
+        *(bytes_pointer + 1) = *(us->iterator + 2); \
+        *(bytes_pointer + 2) = *(us->iterator + 1); \
+        *(bytes_pointer + 3) = *us->iterator; \
+    } \
+    else \
+    { \
+        UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(4) \
+    } \
+
+#define UCDR_DESERIALIZE_BYTE_8_ENDIAN() \
+    uint8_t* bytes_pointer = (uint8_t*)value; \
+    if (8 <= ucdr_buffer_remaining_size(us)) \
+    { \
+        *bytes_pointer = *(us->iterator + 7); \
+        *(bytes_pointer + 1) = *(us->iterator + 6); \
+        *(bytes_pointer + 2) = *(us->iterator + 5); \
+        *(bytes_pointer + 3) = *(us->iterator + 4); \
+        *(bytes_pointer + 4) = *(us->iterator + 3); \
+        *(bytes_pointer + 5) = *(us->iterator + 2); \
+        *(bytes_pointer + 6) = *(us->iterator + 1); \
+        *(bytes_pointer + 7) = *us->iterator; \
+    } \
+    else \
+    { \
+        UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(8) \
+    } \
 
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, SIZE); \
-    if(ucdr_check_final_buffer_behavior(ub, SIZE)) \
+    if(ucdr_enough_space(us, SIZE)) \
     { \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
-            memcpy((void*)value, ub->iterator, SIZE); \
+            if (SIZE <= ucdr_buffer_remaining_size(us)) \
+            { \
+                memcpy((void*)value, us->iterator, SIZE); \
+                us->iterator += SIZE; \
+            } \
+            else \
+            { \
+                size_t remaining_size = ucdr_buffer_remaining_size(us); \
+                memcpy((void*)value, us->iterator, remaining_size); \
+                ucdr_next_buffer_info(&us->buffer_info); \
+                us->iterator = us->buffer_info.data; \
+                memcpy((uint8_t*)value + remaining_size, us->iterator, SIZE - remaining_size); \
+                us->iterator += SIZE - remaining_size; \
+            } \
         } \
         else \
         { \
-            UCDR_DESERIALIZE_BYTE_ ## SIZE ## _CORE() \
+            UCDR_DESERIALIZE_BYTE_ ## SIZE ## _ENDIAN() \
         } \
-        ub->iterator += SIZE; \
-        ub->last_data_size = SIZE; \
+        us->offset += SIZE; \
     } \
-    return !ub->error;
+    return !us->error;
 
 #define UCDR_DESERIALIZE_BYTE_2(TYPE, ENDIAN) UCDR_DESERIALIZE_BYTE_N(TYPE, 2, ENDIAN)
 #define UCDR_DESERIALIZE_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_DESERIALIZE_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_BASIC_TYPE_DESERIALIZE_DEFINITION(SUFFIX, TYPE, SIZE) \
-    bool ucdr_deserialize ## SUFFIX(ucdrBuffer* ub, TYPE* value) \
+    bool ucdr_deserialize ## SUFFIX(ucdrStream* us, TYPE* value) \
     { \
-        UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, ub->endianness) \
+        if (!us->error) \
+        { \
+            UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, us->endianness) \
+        } \
+        return !us->error; \
     } \
-    bool ucdr_deserialize_endian ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* value) \
+    bool ucdr_deserialize_endian ## SUFFIX(ucdrStream* us, ucdrEndianness endianness, TYPE* value) \
     { \
-        UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
+        if (!us->error) \
+        { \
+            UCDR_DESERIALIZE_BYTE_ ## SIZE(TYPE, endianness) \
+        } \
+        return !us->error; \
     }
 
 // -------------------------------------------------------------------

@@ -18,87 +18,6 @@
 
 #define UCDR_BUFFER_INFO_SIZE sizeof(ucdrBufferInfo)
 
-bool ucdr_init_buffer_info(
-        ucdrBufferInfo* binfo,
-        size_t origin,
-        uint8_t* data,
-        size_t size)
-{
-    bool rv = false;
-    if (UCDR_BUFFER_INFO_SIZE < size)
-    {
-        binfo->origin = origin;
-        binfo->data = data;
-        binfo->size = size - UCDR_BUFFER_INFO_SIZE;
-        binfo->next = NULL;
-        binfo->prev = NULL;
-        memcpy(binfo->data + binfo->size, binfo, UCDR_BUFFER_INFO_SIZE);
-        rv = true;
-    }
-    return rv;
-}
-
-bool ucdr_init_list(
-        ucdrStream* us)
-{
-    if ((NULL != us->buffer_info.next) || (NULL != us->buffer_info.prev))
-    {
-        return true;
-    }
-
-    bool rv = false;
-    if (ucdr_init_buffer_info(&us->buffer_info, us->origin, us->iterator, us->size))
-    {
-        us->size = us->buffer_info.size;
-        rv = true;
-    }
-    return rv;
-}
-
-
-void ucdr_update_buffer_info(
-        ucdrBufferInfo* binfo)
-{
-    memcpy(binfo->data + binfo->size, binfo, UCDR_BUFFER_INFO_SIZE);
-}
-
-void ucdr_link_buffers(
-        ucdrBufferInfo* prev_binfo,
-        ucdrBufferInfo* next_binfo)
-{
-    prev_binfo->next = next_binfo->data + next_binfo->size;
-    next_binfo->prev = prev_binfo->data + prev_binfo->size;
-    ucdr_update_buffer_info(prev_binfo);
-    ucdr_update_buffer_info(next_binfo);
-}
-
-bool ucdr_next_buffer_info(
-        ucdrBufferInfo* binfo)
-{
-    if (NULL != binfo->next)
-    {
-        memcpy(binfo, binfo->next, UCDR_BUFFER_INFO_SIZE);
-        return true;
-    }
-    return false;
-}
-
-bool ucdr_prev_buffer_info(
-        ucdrBufferInfo* binfo)
-{
-    if (NULL != binfo->prev)
-    {
-        memcpy(binfo, binfo->prev, UCDR_BUFFER_INFO_SIZE);
-        return true;
-    }
-    return false;
-}
-
-size_t ucdr_alignment(size_t offset, size_t data_size)
-{
-    return ((data_size - (offset % data_size)) & (data_size - 1));
-}
-
 // -------------------------------------------------------------------
 //                       PUBLIC IMPLEMENTATION
 // -------------------------------------------------------------------
@@ -311,4 +230,102 @@ bool ucdr_align(
     }
 
     return rv;
+}
+
+// -------------------------------------------------------------------
+//                       INTERNAL UTIL IMPLEMENTATION
+// -------------------------------------------------------------------
+bool ucdr_init_buffer_info(
+        ucdrBufferInfo* binfo,
+        size_t origin,
+        uint8_t* data,
+        size_t size)
+{
+    bool rv = false;
+    if (UCDR_BUFFER_INFO_SIZE < size)
+    {
+        binfo->origin = origin;
+        binfo->data = data;
+        binfo->size = size - UCDR_BUFFER_INFO_SIZE;
+        binfo->next = NULL;
+        binfo->prev = NULL;
+        memcpy(binfo->data + binfo->size, binfo, UCDR_BUFFER_INFO_SIZE);
+        rv = true;
+    }
+    return rv;
+}
+
+bool ucdr_init_list(
+        ucdrStream* us)
+{
+    if ((NULL != us->buffer_info.next) || (NULL != us->buffer_info.prev))
+    {
+        return true;
+    }
+
+    bool rv = false;
+    if (ucdr_init_buffer_info(&us->buffer_info, us->origin, us->iterator, us->size))
+    {
+        us->size = us->buffer_info.size;
+        rv = true;
+    }
+    return rv;
+}
+
+void ucdr_update_buffer_info(
+        ucdrBufferInfo* binfo)
+{
+    memcpy(binfo->data + binfo->size, binfo, UCDR_BUFFER_INFO_SIZE);
+}
+
+void ucdr_link_buffers(
+        ucdrBufferInfo* prev_binfo,
+        ucdrBufferInfo* next_binfo)
+{
+    prev_binfo->next = next_binfo->data + next_binfo->size;
+    next_binfo->prev = prev_binfo->data + prev_binfo->size;
+    ucdr_update_buffer_info(prev_binfo);
+    ucdr_update_buffer_info(next_binfo);
+}
+
+bool ucdr_next_buffer_info(
+        ucdrBufferInfo* binfo)
+{
+    if (NULL != binfo->next)
+    {
+        memcpy(binfo, binfo->next, UCDR_BUFFER_INFO_SIZE);
+        return true;
+    }
+    return false;
+}
+
+bool ucdr_prev_buffer_info(
+        ucdrBufferInfo* binfo)
+{
+    if (NULL != binfo->prev)
+    {
+        memcpy(binfo, binfo->prev, UCDR_BUFFER_INFO_SIZE);
+        return true;
+    }
+    return false;
+}
+
+size_t ucdr_alignment(
+        size_t offset,
+        size_t data_size)
+{
+    return ((data_size - (offset % data_size)) & (data_size - 1));
+}
+
+bool ucdr_enough_space(
+        const ucdrStream* us,
+        size_t bytes)
+{
+    return us->size - (us->offset - us->origin) >= bytes;
+}
+
+size_t ucdr_buffer_remaining_size(
+        const ucdrStream* us)
+{
+    return us->buffer_info.size - (us->offset - us->buffer_info.origin);
 }
