@@ -329,3 +329,15 @@ size_t ucdr_buffer_remaining_size(
 {
     return us->buffer_info.size - (us->offset - us->buffer_info.origin);
 }
+
+bool ucdr_promote_buffer(
+        ucdrStream* us)
+{
+    bool rv = false;
+    if (ucdr_next_buffer_info(&us->buffer_info))
+    {
+        us->iterator = us->buffer_info.data;
+        rv = true;
+    }
+    return rv;
+}

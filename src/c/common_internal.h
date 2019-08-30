@@ -55,7 +55,10 @@ bool ucdr_enough_space(
         size_t bytes);
 
 size_t ucdr_buffer_remaining_size(
-        const ucdrStream* us);
+        const ucdrStream* binfo);
+
+bool ucdr_promote_buffer(
+        ucdrStream* us);
 
 #ifdef __cplusplus
 }

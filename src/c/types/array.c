@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,86 +16,122 @@
 
 #include <string.h>
 
-static void ucdr_array_to_buffer(ucdrBuffer* ub, const uint8_t* array, size_t size, size_t data_size);
-static void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, size_t size, size_t data_size);
+static void ucdr_array_to_buffer(
+        ucdrStream* us,
+        const uint8_t* array,
+        size_t size);
+
+static void ucdr_buffer_to_array(
+        ucdrStream* us,
+        uint8_t* array,
+        size_t size);
 
 // -------------------------------------------------------------------
 //                         SERIALIZE MACROS
 // -------------------------------------------------------------------
-void ucdr_array_to_buffer(ucdrBuffer* ub, const uint8_t* array, size_t size, size_t data_size)
+void ucdr_array_to_buffer(
+        ucdrStream* us,
+        const uint8_t* array,
+        size_t size)
 {
-    if(ucdr_check_buffer_available_for(ub, size))
+    size_t remaining_size = size;
+    do
     {
-        memcpy(ub->iterator, array, size);
-        ub->iterator += size;
-    }
-    else
-    {
-        size_t remaining_size = size;
-        size_t serialization_size;
-        while(0 < (serialization_size = ucdr_check_final_buffer_behavior_array(ub, remaining_size, data_size)))
+        size_t buffer_available_size = ucdr_buffer_remaining_size(us);
+        if (remaining_size <= buffer_available_size)
         {
-            memcpy(ub->iterator, array + (size - remaining_size), serialization_size);
-            remaining_size -= serialization_size;
-            ub->iterator += serialization_size;
+            memcpy(us->iterator, array + (size - remaining_size), remaining_size);
+            us->iterator += size;
+            remaining_size = 0;
         }
-    }
-    ub->last_data_size = (uint8_t)data_size;
+        else
+        {
+            memcpy(us->iterator, array + (size - remaining_size), buffer_available_size);
+            ucdr_promote_buffer(us);
+            remaining_size -= buffer_available_size;
+        }
+
+    } while (remaining_size > 0);
 }
 
-void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, size_t size, size_t data_size)
+void ucdr_buffer_to_array(
+        ucdrStream* us,
+        uint8_t* array,
+        size_t size)
 {
-    if(ucdr_check_buffer_available_for(ub, size))
+    size_t remaining_size = size;
+    do
     {
-        memcpy(array, ub->iterator, size);
-        ub->iterator += size;
-    }
-    else
-    {
-        size_t remaining_size = size;
-        size_t deserialization_size;
-        while(0 < (deserialization_size = ucdr_check_final_buffer_behavior_array(ub, remaining_size, data_size)))
+        size_t buffer_available_size = ucdr_buffer_remaining_size(us);
+        if (remaining_size <= buffer_available_size)
         {
-            memcpy(array + (size - remaining_size), ub->iterator, deserialization_size);
-            remaining_size -= deserialization_size;
-            ub->iterator += deserialization_size;
+            memcpy(array + (size - remaining_size), us->iterator, remaining_size);
+            us->iterator += size;
+            remaining_size = 0;
         }
-    }
-    ub->last_data_size = (uint8_t)data_size;
+        else
+        {
+            memcpy(array + (size - remaining_size), us->iterator, buffer_available_size);
+            ucdr_promote_buffer(us);
+            remaining_size -= buffer_available_size;
+        }
+
+    } while (remaining_size > 0);
 }
 
 #define UCDR_SERIALIZE_ARRAY_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    ucdr_array_to_buffer(ub, (uint8_t*)array, size, 1); \
-    return !ub->error;
-
-#define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, TYPE_SIZE); \
-    if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+    if (ucdr_enough_space(us, size)) \
     { \
-        ucdr_array_to_buffer(ub, (uint8_t*)array, size * TYPE_SIZE, TYPE_SIZE); \
+        ucdr_array_to_buffer(us, (uint8_t*)array, size); \
+        us->offset += size; \
     } \
     else \
     { \
-        for(uint32_t i = 0; i < size; ++i) \
-        { \
-            ucdr_serialize_endian_ ## TYPE(ub, ENDIAN, *(array + i)); \
-        } \
+        us->error = true; \
     } \
-    return !ub->error;
+
+#define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
+    if (ucdr_enough_space(us, size * TYPE_SIZE)) \
+    { \
+        if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+        { \
+            ucdr_array_to_buffer(us, (uint8_t*)array, size * TYPE_SIZE); \
+        } \
+        else \
+        { \
+            for(uint32_t i = 0; i < size; ++i) \
+            { \
+                ucdr_serialize_endian_ ## TYPE(us, ENDIAN, *(array + i)); \
+            } \
+        } \
+        us->offset += size * TYPE_SIZE; \
+    } \
+    else \
+    { \
+        us->error = true; \
+    } \
 
 #define UCDR_SERIALIZE_ARRAY_BYTE_2(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 2, ENDIAN)
 #define UCDR_SERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_SERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_SERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, TYPE_SIZE) \
-    bool ucdr_serialize_array ## SUFFIX(ucdrBuffer* ub, const TYPE* array, size_t size) \
+    bool ucdr_serialize_array ## SUFFIX(ucdrStream* us, const TYPE* array, size_t size) \
     { \
-        UCDR_SERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, ub->endianness) \
+        if (!us->error) \
+        { \
+            UCDR_SERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, us->endianness) \
+        } \
+        return !us->error; \
     } \
-    bool ucdr_serialize_endian_array ## SUFFIX(ucdrBuffer* ub, const ucdrEndianness endianness, const TYPE* array, size_t size) \
+    bool ucdr_serialize_endian_array ## SUFFIX(ucdrStream* us, const ucdrEndianness endianness, const TYPE* array, size_t size) \
     { \
-        UCDR_SERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, endianness) \
+        if (!us->error) \
+        { \
+            UCDR_SERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, endianness) \
+        } \
+        return !us->error; \
     } \
 
 // -------------------------------------------------------------------
@@ -103,36 +139,57 @@ void ucdr_buffer_to_array(ucdrBuffer* ub, uint8_t* array, size_t size, size_t da
 // -------------------------------------------------------------------
 #define UCDR_DESERIALIZE_ARRAY_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
-    ucdr_buffer_to_array(ub, (uint8_t*)array, size, 1); \
-    return !ub->error;
-
-#define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
-    ub->iterator += ucdr_buffer_alignment(ub, TYPE_SIZE); \
-    if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+    if (ucdr_enough_space(us, size)) \
     { \
-        ucdr_buffer_to_array(ub, (uint8_t*)array, size * TYPE_SIZE, TYPE_SIZE); \
+        ucdr_buffer_to_array(us, (uint8_t*)array, size); \
+        us->offset += size; \
     } \
     else \
     { \
-        for(uint32_t i = 0; i < size; ++i) \
-        { \
-            ucdr_deserialize_endian_ ## TYPE(ub, ENDIAN, array + i); \
-        } \
+        us->error = true; \
     } \
-    return !ub->error;
+
+#define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
+    if (ucdr_enough_space(us, size * TYPE_SIZE)) \
+    { \
+        if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+        { \
+            ucdr_buffer_to_array(us, (uint8_t*)array, size * TYPE_SIZE); \
+        } \
+        else \
+        { \
+            for(uint32_t i = 0; i < size; ++i) \
+            { \
+                ucdr_deserialize_endian_ ## TYPE(us, ENDIAN, array + i); \
+            } \
+        } \
+        us->offset += size * TYPE_SIZE; \
+    } \
+    else \
+    { \
+        us->error = true; \
+    } \
 
 #define UCDR_DESERIALIZE_ARRAY_BYTE_2(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 2, ENDIAN)
 #define UCDR_DESERIALIZE_ARRAY_BYTE_4(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 4, ENDIAN)
 #define UCDR_DESERIALIZE_ARRAY_BYTE_8(TYPE, ENDIAN) UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, 8, ENDIAN)
 
 #define UCDR_DESERIALIZE_ARRAY_DEFINITION(SUFFIX, TYPE, TYPE_SIZE) \
-    bool ucdr_deserialize_array ## SUFFIX(ucdrBuffer* ub, TYPE* array, size_t size) \
+    bool ucdr_deserialize_array ## SUFFIX(ucdrStream* us, TYPE* array, size_t size) \
     { \
-        UCDR_DESERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, ub->endianness) \
+        if (!us->error) \
+        { \
+            UCDR_DESERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, us->endianness) \
+        } \
+        return !us->error; \
     } \
-    bool ucdr_deserialize_endian_array ## SUFFIX(ucdrBuffer* ub, ucdrEndianness endianness, TYPE* array, size_t size) \
+    bool ucdr_deserialize_endian_array ## SUFFIX(ucdrStream* us, ucdrEndianness endianness, TYPE* array, size_t size) \
     { \
-        UCDR_DESERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, endianness) \
+        if (!us->error) \
+        { \
+            UCDR_DESERIALIZE_ARRAY_BYTE_ ## TYPE_SIZE(TYPE, endianness) \
+        } \
+        return !us->error; \
     }
 
 // -------------------------------------------------------------------
