@@ -43,64 +43,6 @@
         us->error = true; \
     } \
 
-#define UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(SIZE) \
-    size_t remaining_size = ucdr_buffer_remaining_size(us); \
-    for (size_t i = 0; i < remaining_size; ++i) \
-    { \
-        *(us->iterator + i) = *(bytes_pointer + (SIZE - 1) - i); \
-    } \
-    ucdr_next_buffer_info(&us->buffer_info); \
-    us->iterator = us->buffer_info.data; \
-    for (size_t i = 0; i < (SIZE - remaining_size); ++i) \
-    { \
-        *(us->iterator + i) = *(bytes_pointer + (SIZE - 1) - (i + remaining_size)); \
-    } \
-    us->iterator += SIZE - remaining_size;
-
-#define UCDR_SERIALIZE_BYTE_2_ENDIAN() \
-    const uint8_t* bytes_pointer = (uint8_t*)&value; \
-    if (2 <= ucdr_buffer_remaining_size(us)) \
-    { \
-        *us->iterator = *(bytes_pointer + 1); \
-        *(us->iterator + 1) = *bytes_pointer; \
-    } \
-    else \
-    { \
-        UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(2) \
-    } \
-
-#define UCDR_SERIALIZE_BYTE_4_ENDIAN() \
-    const uint8_t* bytes_pointer = (uint8_t*)&value; \
-    if (4 <= ucdr_buffer_remaining_size(us)) \
-    { \
-        *us->iterator = *(bytes_pointer + 3); \
-        *(us->iterator + 1) = *(bytes_pointer + 2); \
-        *(us->iterator + 2) = *(bytes_pointer + 1); \
-        *(us->iterator + 3) = *bytes_pointer; \
-    } \
-    else \
-    { \
-        UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(4) \
-    } \
-
-#define UCDR_SERIALIZE_BYTE_8_ENDIAN() \
-    const uint8_t* bytes_pointer = (uint8_t*)&value; \
-    if (8 <= ucdr_buffer_remaining_size(us)) \
-    { \
-        *us->iterator = *(bytes_pointer + 7); \
-        *(us->iterator + 1) = *(bytes_pointer + 6); \
-        *(us->iterator + 2) = *(bytes_pointer + 5); \
-        *(us->iterator + 3) = *(bytes_pointer + 4); \
-        *(us->iterator + 4) = *(bytes_pointer + 3); \
-        *(us->iterator + 5) = *(bytes_pointer + 2); \
-        *(us->iterator + 6) = *(bytes_pointer + 1); \
-        *(us->iterator + 7) = *bytes_pointer; \
-    } \
-    else \
-    { \
-        UCDR_SERIALIZE_BYTE_N_ENDIAN_FOR(8) \
-    } \
-
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     if(ucdr_enough_space(us, SIZE)) \
     { \
@@ -126,7 +68,30 @@
         } \
         else \
         { \
-            UCDR_SERIALIZE_BYTE_ ## SIZE ## _ENDIAN() \
+            const uint8_t* bytes_pointer = (uint8_t*)&value; \
+            size_t remaining_size = SIZE; \
+            do \
+            { \
+                size_t buffer_available_size = ucdr_buffer_remaining_size(us); \
+                if (remaining_size <= buffer_available_size) \
+                { \
+                    for (size_t i = (SIZE - remaining_size); i < SIZE; ++i) \
+                    { \
+                        *(us->iterator + i) = *(bytes_pointer + SIZE - i - 1); \
+                    } \
+                    ucdr_advance_stream(us, remaining_size); \
+                    remaining_size = 0; \
+                } \
+                else \
+                { \
+                    for (size_t i = (SIZE - remaining_size); i < (SIZE - remaining_size) + buffer_available_size; ++i) \
+                    { \
+                        *(us->iterator + i) = *(bytes_pointer + SIZE - i - 1); \
+                    } \
+                    ucdr_promote_buffer(us); \
+                    remaining_size -= buffer_available_size; \
+                } \
+            } while (remaining_size > 0); \
         } \
     } \
     else \
@@ -183,64 +148,6 @@
         us->error = true; \
     } \
 
-#define UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(SIZE) \
-    size_t remaining_size = ucdr_buffer_remaining_size(us); \
-    for (size_t i = 0; i < remaining_size; ++i) \
-    { \
-        *(bytes_pointer + i) = *(us->iterator + (SIZE - 1) - i); \
-    } \
-    ucdr_next_buffer_info(&us->buffer_info); \
-    us->iterator = us->buffer_info.data; \
-    for (size_t i = 0; i < (SIZE - remaining_size); ++i) \
-    { \
-        *(bytes_pointer + i) = *(us->iterator + (SIZE - 1) - (i + remaining_size)); \
-    } \
-    us->iterator += SIZE - remaining_size;
-
-#define UCDR_DESERIALIZE_BYTE_2_ENDIAN() \
-    uint8_t* bytes_pointer = (uint8_t*)value; \
-    if (8 <= ucdr_buffer_remaining_size(us)) \
-    { \
-        *bytes_pointer = *(us->iterator + 1); \
-        *(bytes_pointer + 1) = *us->iterator ; \
-    } \
-    else \
-    { \
-        UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(4) \
-    } \
-
-#define UCDR_DESERIALIZE_BYTE_4_ENDIAN() \
-    uint8_t* bytes_pointer = (uint8_t*)value; \
-    if (8 <= ucdr_buffer_remaining_size(us)) \
-    { \
-        *bytes_pointer = *(us->iterator + 3); \
-        *(bytes_pointer + 1) = *(us->iterator + 2); \
-        *(bytes_pointer + 2) = *(us->iterator + 1); \
-        *(bytes_pointer + 3) = *us->iterator; \
-    } \
-    else \
-    { \
-        UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(4) \
-    } \
-
-#define UCDR_DESERIALIZE_BYTE_8_ENDIAN() \
-    uint8_t* bytes_pointer = (uint8_t*)value; \
-    if (8 <= ucdr_buffer_remaining_size(us)) \
-    { \
-        *bytes_pointer = *(us->iterator + 7); \
-        *(bytes_pointer + 1) = *(us->iterator + 6); \
-        *(bytes_pointer + 2) = *(us->iterator + 5); \
-        *(bytes_pointer + 3) = *(us->iterator + 4); \
-        *(bytes_pointer + 4) = *(us->iterator + 3); \
-        *(bytes_pointer + 5) = *(us->iterator + 2); \
-        *(bytes_pointer + 6) = *(us->iterator + 1); \
-        *(bytes_pointer + 7) = *us->iterator; \
-    } \
-    else \
-    { \
-        UCDR_DESERIALIZE_BYTE_N_ENDIAN_FOR(8) \
-    } \
-
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     if(ucdr_enough_space(us, SIZE)) \
     { \
@@ -266,7 +173,30 @@
         } \
         else \
         { \
-            UCDR_DESERIALIZE_BYTE_ ## SIZE ## _ENDIAN() \
+            uint8_t* bytes_pointer = (uint8_t*)value; \
+            size_t remaining_size = SIZE; \
+            do \
+            { \
+                size_t buffer_available_size = ucdr_buffer_remaining_size(us); \
+                if (remaining_size <= buffer_available_size) \
+                { \
+                    for (size_t i = (SIZE - remaining_size); i < SIZE; ++i) \
+                    { \
+                        *(bytes_pointer + i) = *(us->iterator + SIZE - i - 1); \
+                    } \
+                    ucdr_advance_stream(us, remaining_size); \
+                    remaining_size = 0; \
+                } \
+                else \
+                { \
+                    for (size_t i = (SIZE - remaining_size); i < (SIZE - remaining_size) + buffer_available_size; ++i) \
+                    { \
+                        *(bytes_pointer + i) = *(us->iterator + SIZE - i - 1); \
+                    } \
+                    ucdr_promote_buffer(us); \
+                    remaining_size -= buffer_available_size; \
+                } \
+            } while (remaining_size > 0); \
         } \
     } \
     return !us->error;

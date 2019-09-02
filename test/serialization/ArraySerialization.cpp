@@ -14,62 +14,65 @@
 
 #include "ArraySerialization.hpp"
 
-TEST_F(ArraySerialization, Bool)
+INSTANTIATE_TEST_CASE_P(Parametrized, ArraySerialization,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(ArraySerialization, Bool)
 {
     bool_array_serialization();
 }
 
-TEST_F(ArraySerialization, Char)
+TEST_P(ArraySerialization, Char)
 {
     char_array_serialization();
 }
 
-TEST_F(ArraySerialization, Int8)
+TEST_P(ArraySerialization, Int8)
 {
     int8_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Uint8)
+TEST_P(ArraySerialization, Uint8)
 {
     uint8_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Int16)
+TEST_P(ArraySerialization, Int16)
 {
     int16_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Uint16)
+TEST_P(ArraySerialization, Uint16)
 {
     uint16_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Int32)
+TEST_P(ArraySerialization, Int32)
 {
     int32_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Uint32)
+TEST_P(ArraySerialization, Uint32)
 {
     uint32_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Int64)
+TEST_P(ArraySerialization, Int64)
 {
     int64_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Uint64)
+TEST_P(ArraySerialization, Uint64)
 {
     uint64_t_array_serialization();
 }
 
-TEST_F(ArraySerialization, Float)
+TEST_P(ArraySerialization, Float)
 {
     float_array_serialization();
 }
 
-TEST_F(ArraySerialization, Double)
+TEST_P(ArraySerialization, Double)
 {
     double_array_serialization();
 }

@@ -43,62 +43,65 @@ protected:
     uint8_t buffer3[BUFFER_LENGTH];
 };
 
-TEST_F(ArrayFragmentation, Bool)
+INSTANTIATE_TEST_CASE_P(Parametrized, ArrayFragmentation,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(ArrayFragmentation, Bool)
 {
     bool_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Char)
+TEST_P(ArrayFragmentation, Char)
 {
     char_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Int8)
+TEST_P(ArrayFragmentation, Int8)
 {
     int8_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Uint8)
+TEST_P(ArrayFragmentation, Uint8)
 {
     uint8_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Int16)
+TEST_P(ArrayFragmentation, Int16)
 {
     int16_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Uint16)
+TEST_P(ArrayFragmentation, Uint16)
 {
     uint16_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Int32)
+TEST_P(ArrayFragmentation, Int32)
 {
     int32_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Uint32)
+TEST_P(ArrayFragmentation, Uint32)
 {
     uint32_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Int64)
+TEST_P(ArrayFragmentation, Int64)
 {
     int64_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Uint64)
+TEST_P(ArrayFragmentation, Uint64)
 {
     uint64_t_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Float)
+TEST_P(ArrayFragmentation, Float)
 {
     float_array_serialization();
 }
 
-TEST_F(ArrayFragmentation, Double)
+TEST_P(ArrayFragmentation, Double)
 {
     double_array_serialization();
 }

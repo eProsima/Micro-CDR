@@ -14,62 +14,65 @@
 
 #include "BasicSerialization.hpp"
 
-TEST_F(BasicSerialization, Bool)
+INSTANTIATE_TEST_CASE_P(Parametrized, BasicSerialization,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(BasicSerialization, Bool)
 {
     bool_serialization();
 }
 
-TEST_F(BasicSerialization, Char)
+TEST_P(BasicSerialization, Char)
 {
     char_serialization();
 }
 
-TEST_F(BasicSerialization, Int8)
+TEST_P(BasicSerialization, Int8)
 {
     int8_t_serialization();
 }
 
-TEST_F(BasicSerialization, Uint8)
+TEST_P(BasicSerialization, Uint8)
 {
     uint8_t_serialization();
 }
 
-TEST_F(BasicSerialization, Int16)
+TEST_P(BasicSerialization, Int16)
 {
     int16_t_serialization();
 }
 
-TEST_F(BasicSerialization, Uint16)
+TEST_P(BasicSerialization, Uint16)
 {
     uint16_t_serialization();
 }
 
-TEST_F(BasicSerialization, Int32)
+TEST_P(BasicSerialization, Int32)
 {
     int32_t_serialization();
 }
 
-TEST_F(BasicSerialization, Uint32)
+TEST_P(BasicSerialization, Uint32)
 {
     uint32_t_serialization();
 }
 
-TEST_F(BasicSerialization, Int64)
+TEST_P(BasicSerialization, Int64)
 {
     int64_t_serialization();
 }
 
-TEST_F(BasicSerialization, Uint64)
+TEST_P(BasicSerialization, Uint64)
 {
     uint64_t_serialization();
 }
 
-TEST_F(BasicSerialization, Float)
+TEST_P(BasicSerialization, Float)
 {
     float_serialization();
 }
 
-TEST_F(BasicSerialization, Double)
+TEST_P(BasicSerialization, Double)
 {
     double_serialization();
 }

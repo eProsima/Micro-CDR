@@ -54,62 +54,65 @@ protected:
     uint8_t buffer5[BUFFER_LENGTH];
 };
 
-TEST_F(BasicFragmentation, Bool)
+INSTANTIATE_TEST_CASE_P(Parametrized, BasicFragmentation,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(BasicFragmentation, Bool)
 {
     bool_serialization();
 }
 
-TEST_F(BasicFragmentation, Char)
+TEST_P(BasicFragmentation, Char)
 {
     char_serialization();
 }
 
-TEST_F(BasicFragmentation, Int8)
+TEST_P(BasicFragmentation, Int8)
 {
     int8_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Uint8)
+TEST_P(BasicFragmentation, Uint8)
 {
     uint8_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Int16)
+TEST_P(BasicFragmentation, Int16)
 {
     int16_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Uint16)
+TEST_P(BasicFragmentation, Uint16)
 {
     uint16_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Int32)
+TEST_P(BasicFragmentation, Int32)
 {
     int32_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Uint32)
+TEST_P(BasicFragmentation, Uint32)
 {
     uint32_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Int64)
+TEST_P(BasicFragmentation, Int64)
 {
     int64_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Uint64)
+TEST_P(BasicFragmentation, Uint64)
 {
     uint64_t_serialization();
 }
 
-TEST_F(BasicFragmentation, Float)
+TEST_P(BasicFragmentation, Float)
 {
     float_serialization();
 }
 
-TEST_F(BasicFragmentation, Double)
+TEST_P(BasicFragmentation, Double)
 {
     double_serialization();
 }

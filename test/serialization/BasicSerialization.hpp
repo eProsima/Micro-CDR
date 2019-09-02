@@ -32,7 +32,7 @@ inline void check_iterator(ucdrStream& us)
     {}
 
     uint8_t* iterator = binfo.data;
-    size_t remainding_size = us.offset;
+    size_t remainding_size = us.offset - us.origin;
     do
     {
         if (remainding_size <= binfo.size)
@@ -52,15 +52,15 @@ inline void check_iterator(ucdrStream& us)
     EXPECT_EQ(us.iterator, iterator);
 }
 
-class BasicSerialization : public ::testing::Test
+class BasicSerialization : public ::testing::TestWithParam<std::tuple<size_t, ucdrEndianness>>
 {
 public:
 
     BasicSerialization()
     {
-        std::memset(buffer, 0, BUFFER_LENGTH);
-        ucdr_init_stream(&writer, buffer, BUFFER_LENGTH);
-        ucdr_init_stream(&reader, buffer, BUFFER_LENGTH);
+        std::memset(buffer, 0, sizeof(buffer));
+        ucdr_init_stream_offset_endian(&writer, buffer, sizeof(buffer), std::get<0>(GetParam()), std::get<1>(GetParam()));
+        ucdr_init_stream_offset_endian(&reader, buffer, sizeof(buffer), std::get<0>(GetParam()), std::get<1>(GetParam()));
     }
 
     virtual ~BasicSerialization()
