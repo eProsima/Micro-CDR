@@ -33,9 +33,6 @@ if(GTEST_FOUND)
         fragmentation/BasicFragmentation.cpp
         fragmentation/ArrayFragmentation.cpp
         SequenceOverflow.cpp
-#        Alignment.cpp
-#        FullBuffer.cpp
-#        FullBufferCallback.cpp
         Common.cpp
         )
     add_executable(${PROJECT_NAME} ${SRCS})
