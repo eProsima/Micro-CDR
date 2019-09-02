@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,62 +14,65 @@
 
 #include "SequenceSerialization.hpp"
 
-TEST_F(SequenceSerialization, Bool)
+INSTANTIATE_TEST_CASE_P(Parametrized, SequenceSerialization,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(SequenceSerialization, Bool)
 {
     bool_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Char)
+TEST_P(SequenceSerialization, Char)
 {
     char_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Int8)
+TEST_P(SequenceSerialization, Int8)
 {
     int8_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Uint8)
+TEST_P(SequenceSerialization, Uint8)
 {
     uint8_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Int16)
+TEST_P(SequenceSerialization, Int16)
 {
     int16_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Uint16)
+TEST_P(SequenceSerialization, Uint16)
 {
     uint16_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Int32)
+TEST_P(SequenceSerialization, Int32)
 {
     int32_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Uint32)
+TEST_P(SequenceSerialization, Uint32)
 {
     uint32_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Int64)
+TEST_P(SequenceSerialization, Int64)
 {
     int64_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Uint64)
+TEST_P(SequenceSerialization, Uint64)
 {
     uint64_t_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Float)
+TEST_P(SequenceSerialization, Float)
 {
     float_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Double)
+TEST_P(SequenceSerialization, Double)
 {
     double_sequence_serialization();
 }
