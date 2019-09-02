@@ -330,12 +330,21 @@ size_t ucdr_buffer_remaining_size(
     return us->buffer_info.size - (us->offset - us->buffer_info.origin);
 }
 
+void ucdr_advance_stream(
+        ucdrStream* us,
+        size_t size)
+{
+    us->offset += size;
+    us->iterator += size;
+}
+
 bool ucdr_promote_buffer(
         ucdrStream* us)
 {
     bool rv = false;
     if (ucdr_next_buffer_info(&us->buffer_info))
     {
+        us->offset = us->buffer_info.origin;
         us->iterator = us->buffer_info.data;
         rv = true;
     }

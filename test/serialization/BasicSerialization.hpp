@@ -16,11 +16,41 @@
 #define BASIC_SERIALIZATION_HPP_
 
 #include <gtest/gtest.h>
+
 #include <ucdr/microcdr.h>
+#include <c/common_internal.h>
+
 #include <algorithm>
 #include <cstring>
 
 #define BUFFER_LENGTH 1024
+
+inline void check_iterator(ucdrStream& us)
+{
+    ucdrBufferInfo binfo = us.buffer_info;
+    while (ucdr_prev_buffer_info(&binfo))
+    {}
+
+    uint8_t* iterator = binfo.data;
+    size_t remainding_size = us.offset;
+    do
+    {
+        if (remainding_size <= binfo.size)
+        {
+            iterator += remainding_size;
+            remainding_size = 0;
+        }
+        else
+        {
+            remainding_size -= binfo.size;
+            ucdr_next_buffer_info(&binfo);
+            iterator = binfo.data;
+        }
+
+    } while(remainding_size > 0);
+
+    EXPECT_EQ(us.iterator, iterator);
+}
 
 class BasicSerialization : public ::testing::Test
 {

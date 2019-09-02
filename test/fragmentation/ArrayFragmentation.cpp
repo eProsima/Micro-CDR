@@ -32,6 +32,12 @@ public:
         }
     }
 
+    ~ArrayFragmentation()
+    {
+        check_iterator(writer);
+        check_iterator(reader);
+    }
+
 protected:
     uint8_t buffer2[sizeof(ucdrBufferInfo) + 1];
     uint8_t buffer3[BUFFER_LENGTH];

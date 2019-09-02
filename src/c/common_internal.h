@@ -57,6 +57,10 @@ bool ucdr_enough_space(
 size_t ucdr_buffer_remaining_size(
         const ucdrStream* us);
 
+void ucdr_advance_stream(
+        ucdrStream* us,
+        size_t size);
+
 bool ucdr_promote_buffer(
         ucdrStream* us);
 
