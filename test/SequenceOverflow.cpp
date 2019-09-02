@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,7 +36,10 @@ public:
 private:
 };
 
-TEST_F(SequenceOverflow, Block1)
+INSTANTIATE_TEST_CASE_P(Parametrized, SequenceOverflow,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(SequenceOverflow, Block1)
 {
     uint8_t input[SEQUENCE_SIZE_OVERFLOW];
     uint8_t output[ARRAY_CAPACITY];
@@ -45,7 +48,7 @@ TEST_F(SequenceOverflow, Block1)
     EXPECT_FALSE(ucdr_deserialize_sequence_uint8_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
-TEST_F(SequenceOverflow, Block2)
+TEST_P(SequenceOverflow, Block2)
 {
     uint16_t input[SEQUENCE_SIZE_OVERFLOW];
     uint16_t output[ARRAY_CAPACITY];
@@ -54,7 +57,7 @@ TEST_F(SequenceOverflow, Block2)
     EXPECT_FALSE(ucdr_deserialize_sequence_uint16_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
-TEST_F(SequenceOverflow, Block4)
+TEST_P(SequenceOverflow, Block4)
 {
     uint32_t input[SEQUENCE_SIZE_OVERFLOW];
     uint32_t output[ARRAY_CAPACITY];
@@ -63,7 +66,7 @@ TEST_F(SequenceOverflow, Block4)
     EXPECT_FALSE(ucdr_deserialize_sequence_uint32_t(&reader, output, ARRAY_CAPACITY, &output_size));
 }
 
-TEST_F(SequenceOverflow, Block8)
+TEST_P(SequenceOverflow, Block8)
 {
     uint64_t input[SEQUENCE_SIZE_OVERFLOW];
     uint64_t output[ARRAY_CAPACITY];

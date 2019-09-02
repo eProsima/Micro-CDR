@@ -14,7 +14,10 @@
 
 #include "StringSerialization.hpp"
 
-TEST_F(StringSerialization, String)
+INSTANTIATE_TEST_CASE_P(Parametrized, StringSerialization,
+        ::testing::Combine(::testing::Values(0, 11), ::testing::Values(UCDR_BIG_ENDIANNESS, UCDR_LITTLE_ENDIANNESS)));
+
+TEST_P(StringSerialization, String)
 {
     string_serialization();
 }

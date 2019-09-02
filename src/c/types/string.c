@@ -21,24 +21,24 @@
 //              PUBLIC SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
 
-bool ucdr_serialize_string(ucdrBuffer* ub, const char* string)
+bool ucdr_serialize_string(ucdrStream* us, const char* string)
 {
-    return ucdr_serialize_sequence_char(ub, string, (uint32_t)strlen(string) + 1);
+    return ucdr_serialize_sequence_char(us, string, (uint32_t)strlen(string) + 1);
 }
 
-bool ucdr_serialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, const char* string)
+bool ucdr_serialize_endian_string(ucdrStream* us, ucdrEndianness endianness, const char* string)
 {
-    return ucdr_serialize_endian_sequence_char(ub, endianness, string, (uint32_t)strlen(string) + 1);
+    return ucdr_serialize_endian_sequence_char(us, endianness, string, (uint32_t)strlen(string) + 1);
 }
 
-bool ucdr_deserialize_string(ucdrBuffer* ub, char* string, size_t string_capacity)
+bool ucdr_deserialize_string(ucdrStream* us, char* string, size_t string_capacity)
 {
     uint32_t length;
-    return ucdr_deserialize_sequence_char(ub, string, string_capacity, &length);
+    return ucdr_deserialize_sequence_char(us, string, string_capacity, &length);
 }
 
-bool ucdr_deserialize_endian_string(ucdrBuffer* ub, ucdrEndianness endianness, char* string, size_t string_capacity)
+bool ucdr_deserialize_endian_string(ucdrStream* us, ucdrEndianness endianness, char* string, size_t string_capacity)
 {
     uint32_t length;
-    return ucdr_deserialize_endian_sequence_char(ub, endianness, string, string_capacity, &length);
+    return ucdr_deserialize_endian_sequence_char(us, endianness, string, string_capacity, &length);
 }

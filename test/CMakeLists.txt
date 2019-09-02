@@ -1,4 +1,4 @@
-# Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+# Copyright 2019 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,13 +29,10 @@ if(GTEST_FOUND)
         serialization/BasicSerialization.cpp
         serialization/ArraySerialization.cpp
         serialization/SequenceSerialization.cpp
-#        serialization/StringSerialization.cpp
-#        endianness/BasicEndianness.cpp
-#        endianness/ArrayEndianness.cpp
-#        endianness/SequenceEndianness.cpp
+        serialization/StringSerialization.cpp
         fragmentation/BasicFragmentation.cpp
         fragmentation/ArrayFragmentation.cpp
-#        SequenceOverflow.cpp
+        SequenceOverflow.cpp
 #        Alignment.cpp
 #        FullBuffer.cpp
 #        FullBufferCallback.cpp
