@@ -32,6 +32,7 @@ extern "C" {
 
 #define UCDR_BIG_ENDIANNESS     0
 #define UCDR_LITTLE_ENDIANNESS  1
+#define UCDR_BUFFER_OFFSET      sizeof(ucdrBufferInfo)
 
 // ------------------------------------------------
 //                      Types

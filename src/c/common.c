@@ -47,7 +47,7 @@ void ucdr_init_stream_offset_endian(
 {
     us->offset = offset;
     us->origin = offset;
-    us->iterator = buffer;
+    us->iterator = buffer + offset;
     us->size = size;
     us->endianness = endianness;
     us->error = false;
