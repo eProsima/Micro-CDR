@@ -44,8 +44,9 @@
     } \
 
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
-    if(ucdr_enough_space(us, SIZE)) \
+    if(ucdr_enough_space(us, SIZE + ucdr_alignment(us->offset, SIZE))) \
     { \
+        ucdr_align(us, SIZE); \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
             size_t remaining_size = SIZE; \
@@ -75,18 +76,18 @@
                 size_t buffer_available_size = ucdr_buffer_remaining_size(us); \
                 if (remaining_size <= buffer_available_size) \
                 { \
-                    for (size_t i = (SIZE - remaining_size); i < SIZE; ++i) \
+                    for (size_t i = 0; i < remaining_size; ++i) \
                     { \
-                        *(us->iterator + i) = *(bytes_pointer + SIZE - i - 1); \
+                        *(us->iterator + i) = *(bytes_pointer + remaining_size - i - 1); \
                     } \
                     ucdr_advance_stream(us, remaining_size); \
                     remaining_size = 0; \
                 } \
                 else \
                 { \
-                    for (size_t i = (SIZE - remaining_size); i < (SIZE - remaining_size) + buffer_available_size; ++i) \
+                    for (size_t i = 0; i < buffer_available_size; ++i) \
                     { \
-                        *(us->iterator + i) = *(bytes_pointer + SIZE - i - 1); \
+                        *(us->iterator + i) = *(bytes_pointer + remaining_size - i - 1); \
                     } \
                     ucdr_promote_buffer(us); \
                     remaining_size -= buffer_available_size; \
@@ -149,8 +150,9 @@
     } \
 
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
-    if(ucdr_enough_space(us, SIZE)) \
+    if(ucdr_enough_space(us, SIZE + ucdr_alignment(us->offset, SIZE))) \
     { \
+        ucdr_align(us, SIZE); \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
             size_t remaining_size = SIZE; \
@@ -180,18 +182,18 @@
                 size_t buffer_available_size = ucdr_buffer_remaining_size(us); \
                 if (remaining_size <= buffer_available_size) \
                 { \
-                    for (size_t i = (SIZE - remaining_size); i < SIZE; ++i) \
+                    for (size_t i = 0; i < remaining_size; ++i) \
                     { \
-                        *(bytes_pointer + i) = *(us->iterator + SIZE - i - 1); \
+                        *(bytes_pointer + remaining_size - i - 1) = *(us->iterator + i); \
                     } \
                     ucdr_advance_stream(us, remaining_size); \
                     remaining_size = 0; \
                 } \
                 else \
                 { \
-                    for (size_t i = (SIZE - remaining_size); i < (SIZE - remaining_size) + buffer_available_size; ++i) \
+                    for (size_t i = 0; i < buffer_available_size; ++i) \
                     { \
-                        *(bytes_pointer + i) = *(us->iterator + SIZE - i - 1); \
+                        *(bytes_pointer + remaining_size - i - 1) = *(us->iterator + i); \
                     } \
                     ucdr_promote_buffer(us); \
                     remaining_size -= buffer_available_size; \

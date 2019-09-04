@@ -56,7 +56,7 @@ TEST_F(CommonTest, InitStreamOffset)
 
     EXPECT_EQ(us.offset, 11);
     EXPECT_EQ(us.size, sizeof(buffer));
-    EXPECT_EQ(us.iterator, buffer);
+    EXPECT_EQ(us.iterator, buffer + 11);
     EXPECT_EQ(us.endianness, UCDR_MACHINE_ENDIANNESS);
     EXPECT_EQ(us.error, false);
 
@@ -73,7 +73,7 @@ TEST_F(CommonTest, InitStreamBigEndian)
 
     EXPECT_EQ(us.offset, 11);
     EXPECT_EQ(us.size, sizeof(buffer));
-    EXPECT_EQ(us.iterator, buffer);
+    EXPECT_EQ(us.iterator, buffer + 11);
     EXPECT_EQ(us.endianness, UCDR_BIG_ENDIANNESS);
     EXPECT_EQ(us.error, false);
 
@@ -90,7 +90,7 @@ TEST_F(CommonTest, InitStreamLittleEndian)
 
     EXPECT_EQ(us.offset, 11);
     EXPECT_EQ(us.size, sizeof(buffer));
-    EXPECT_EQ(us.iterator, buffer);
+    EXPECT_EQ(us.iterator, buffer + 11);
     EXPECT_EQ(us.endianness, UCDR_LITTLE_ENDIANNESS);
     EXPECT_EQ(us.error, false);
 
@@ -273,16 +273,14 @@ TEST_F(CommonTest, Size)
 
 TEST_F(CommonTest, UsedSize)
 {
-    us.origin = 1;
     us.offset = 2;
-    EXPECT_EQ(ucdr_used_size(&us), us.offset - us.origin);
+    EXPECT_EQ(ucdr_used_size(&us), us.offset);
 }
 
 TEST_F(CommonTest, RemaningSize)
 {
-    us.origin = 1;
     us.offset = 2;
-    EXPECT_EQ(ucdr_remaining_size(&us), us.size - (us.offset - us.origin));
+    EXPECT_EQ(ucdr_remaining_size(&us), us.size - us.offset);
 }
 
 TEST_F(CommonTest, CopyStream)

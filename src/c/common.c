@@ -52,7 +52,7 @@ void ucdr_init_stream_offset_endian(
     us->endianness = endianness;
     us->error = false;
 
-    us->buffer_info.origin = offset;
+    us->buffer_info.origin = 0;
     us->buffer_info.size = size;
     us->buffer_info.data = buffer;
     us->buffer_info.next = NULL;
@@ -103,13 +103,13 @@ size_t ucdr_size(
 size_t ucdr_used_size(
         const ucdrStream* us)
 {
-    return us->offset - us->origin;
+    return us->offset;
 }
 
 size_t ucdr_remaining_size(
         const ucdrStream* us)
 {
-    return us->size - (us->offset - us->origin);
+    return us->size - us->offset;
 }
 
 ucdrEndianness ucdr_endianness(
@@ -203,28 +203,23 @@ bool ucdr_align(
         ucdrStream* us,
         size_t type_size)
 {
-    bool rv = false;
     size_t alignment = ucdr_alignment(us->offset, type_size);
+    bool rv = alignment <= ucdr_remaining_size(us);
 
-    if (alignment <= ucdr_remaining_size(us))
+    if ((0 != alignment) && rv)
     {
-        rv = true;
-
         do
         {
-            size_t buffer_avsize = us->buffer_info.size - (us->offset - us->buffer_info.origin);
-            if (alignment < buffer_avsize)
+            size_t buffer_available_size = us->buffer_info.size - (us->offset - us->buffer_info.origin);
+            if (alignment < buffer_available_size)
             {
-                us->offset += alignment;
-                us->iterator += alignment;
+                ucdr_advance_stream(us, alignment);
                 alignment = 0;
             }
             else
             {
-                us->offset += buffer_avsize;
-                ucdr_next_buffer_info(&us->buffer_info);
-                us->iterator = us->buffer_info.data;
-                alignment -= buffer_avsize;
+                ucdr_promote_buffer(us);
+                alignment -= buffer_available_size;
             }
         } while(alignment > 0);
     }
@@ -242,7 +237,7 @@ bool ucdr_init_buffer_info(
         size_t size)
 {
     bool rv = false;
-    if (UCDR_BUFFER_INFO_SIZE < size)
+    if (UCDR_BUFFER_INFO_SIZE <= size)
     {
         binfo->origin = origin;
         binfo->data = data;
@@ -264,7 +259,7 @@ bool ucdr_init_list(
     }
 
     bool rv = false;
-    if (ucdr_init_buffer_info(&us->buffer_info, us->origin, us->iterator, us->size))
+    if (ucdr_init_buffer_info(&us->buffer_info, 0u, us->iterator - us->offset, us->size))
     {
         us->size = us->buffer_info.size;
         rv = true;
@@ -321,7 +316,7 @@ bool ucdr_enough_space(
         const ucdrStream* us,
         size_t bytes)
 {
-    return us->size - (us->offset - us->origin) >= bytes;
+    return (us->size - us->offset) >= bytes;
 }
 
 size_t ucdr_buffer_remaining_size(

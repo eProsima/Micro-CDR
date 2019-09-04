@@ -32,7 +32,7 @@ inline void check_iterator(ucdrStream& us)
     {}
 
     uint8_t* iterator = binfo.data;
-    size_t remainding_size = us.offset - us.origin;
+    size_t remainding_size = us.offset;
     do
     {
         if (remainding_size <= binfo.size)

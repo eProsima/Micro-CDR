@@ -25,15 +25,15 @@ public:
         std::memset(buffer4, 0, sizeof(buffer4));
         std::memset(buffer5, 0, sizeof(buffer5));
 
-        ucdr_append_buffer(&writer, buffer2, sizeof(buffer2));
-        ucdr_append_buffer(&writer, buffer3, sizeof(buffer3));
-        ucdr_append_buffer(&writer, buffer4, sizeof(buffer4));
-        ucdr_append_buffer(&writer, buffer5, sizeof(buffer5));
+        EXPECT_TRUE(ucdr_append_buffer(&writer, buffer2, sizeof(buffer2)));
+        EXPECT_TRUE(ucdr_append_buffer(&writer, buffer3, sizeof(buffer3)));
+        EXPECT_TRUE(ucdr_append_buffer(&writer, buffer4, sizeof(buffer4)));
+        EXPECT_TRUE(ucdr_append_buffer(&writer, buffer5, sizeof(buffer5)));
 
-        ucdr_append_buffer(&reader, buffer2, sizeof(buffer2));
-        ucdr_append_buffer(&reader, buffer3, sizeof(buffer3));
-        ucdr_append_buffer(&reader, buffer4, sizeof(buffer4));
-        ucdr_append_buffer(&reader, buffer5, sizeof(buffer5));
+        EXPECT_TRUE(ucdr_append_buffer(&reader, buffer2, sizeof(buffer2)));
+        EXPECT_TRUE(ucdr_append_buffer(&reader, buffer3, sizeof(buffer3)));
+        EXPECT_TRUE(ucdr_append_buffer(&reader, buffer4, sizeof(buffer4)));
+        EXPECT_TRUE(ucdr_append_buffer(&reader, buffer5, sizeof(buffer5)));
 
         for(int i = 0; i < BUFFER_LENGTH - int(sizeof(ucdrBufferInfo)); ++i)
         {
