@@ -41,7 +41,7 @@ void ucdr_array_to_buffer(
         if (remaining_size <= buffer_available_size)
         {
             memcpy(us->iterator, array + (size - remaining_size), remaining_size);
-            ucdr_advance_stream(us, size);
+            ucdr_advance_stream(us, remaining_size);
             remaining_size = 0;
         }
         else
@@ -66,7 +66,7 @@ void ucdr_buffer_to_array(
         if (remaining_size <= buffer_available_size)
         {
             memcpy(array + (size - remaining_size), us->iterator, remaining_size);
-            ucdr_advance_stream(us, size);
+            ucdr_advance_stream(us, remaining_size);
             remaining_size = 0;
         }
         else
