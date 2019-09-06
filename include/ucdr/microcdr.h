@@ -198,9 +198,41 @@ UCDRDLLAPI bool ucdr_align(
         ucdrStream* us,
         size_t type_size);
 
+/**
+ * @brief Computes the offset of the stream once it is alignment to the next data type's size.
+ * @param offset    The current offset of the stream.
+ * @param data_size The size of the next data type.
+ * @return  The future alignment.
+ */
 size_t ucdr_alignment(
         size_t offset,
         size_t data_size);
+
+/**
+ * @brief Clones the ucdrStream's information (no the content) from one ucdrStream to another.
+ * @param us_dst    A pointer to the ucdrStream to clone to.
+ * @param us_src    A pointer to the ucdrStream to clone from.
+ */
+void ucdr_clone_stream(
+        ucdrStream* us_dst,
+        ucdrStream* us_src);
+
+/**
+ * @brief Promotes the stream a given number of bytes.
+ * @param us    A pointer to the ucdrStream to promote.
+ * @param size  The number of bytes to promote.
+ * @return true in case of successful promotion, false in other case.
+ */
+bool ucdr_promote_stream(
+        ucdrStream* us,
+        size_t size);
+
+/**
+ * @brief Resets the stream taking the current offset as origin.
+ * @param us    A pointer to the ucdrStream to reset.
+ */
+void ucdr_reset_offset(
+        ucdrStream* us);
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION DECLARATIONS
