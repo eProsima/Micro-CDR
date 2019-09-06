@@ -46,10 +46,6 @@ bool ucdr_next_buffer_info(
 bool ucdr_prev_buffer_info(
         ucdrBufferInfo* binfo);
 
-size_t ucdr_alignment(
-        size_t offset,
-        size_t data_size);
-
 bool ucdr_enough_space(
         const ucdrStream* us,
         size_t bytes);

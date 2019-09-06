@@ -198,6 +198,9 @@ UCDRDLLAPI bool ucdr_align(
         ucdrStream* us,
         size_t type_size);
 
+size_t ucdr_alignment(
+        size_t offset,
+        size_t data_size);
 
 // -------------------------------------------------------------------
 //              PUBLIC DE-SERIALIZATION DECLARATIONS
