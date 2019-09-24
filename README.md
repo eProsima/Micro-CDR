@@ -11,7 +11,12 @@
 *eProsima MicroCDR* is a *C* library implementing the *CDR* standard serialization methods.
 This library is focused on embedded and resource-limited systems.
 
-*MicroCDR* uses a static buffer, and allow to serialize and deserialize in both, big endianness and little endianness.
+*MicroCDR* uses static buffers, and allow serializing and deserializing in both, big endianness and little endianness.
+
+The main structure of *MicroCDR* is the `ucdrStream`.
+It represents a XCDR byte stream where data is de/serialized acording to the XTYPES standard.
+This structure is composed by a seft-contained linked list of raw static buffers, that is,
+these buffers are used to de/serialize the data, as well as to keep the information of the linked list.
 
 ## Usage examples
 This is a code example showing the serialization and deserialization of a string.
@@ -23,18 +28,18 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 
     #define BUFFER_LENGTH 256
 
-    int main(int argc, char** args)
+    int main()
     {
         // Data buffer
         uint8_t buffer[BUFFER_LENGTH];
 
-        // Structs for handle the buffer.
-        ucdrBuffer writer;
-        ucdrBuffer reader;
+        // Structs for handle the stream.
+        ucdrStream writer;
+        ucdrStream reader;
 
-        // Initialize the MicroBuffers for working with an user-managed buffer.
-        ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
-        ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
+        // Initialize the MicroBuffers for working with a user-managed buffer.
+        ucdr_init_stream(&writer, buffer, sizeof(buffer));
+        ucdr_init_stream(&reader, buffer, sizeof(buffer));
 
         // Serialize data
         char input[16] = "Hello MicroCDR!"; //16 characters
@@ -54,132 +59,205 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
 ## API functions
 
 ```c
-void ucdr_init_buffer        (ucdrBuffer* ub, uint8_t* data, size_t size);
-void ucdr_init_buffer_offset (ucdrBuffer* ub, uint8_t* data, size_t size, size_t offset);
+void ucdr_init_stream(
+        ucdrStream* us,
+        uint8_t* buffer,
+        size_t size);
 ```
-Initialize a `ucdrBuffer` structure, the main struct of *MicroCDR*.
-- `ub`: the `ucdrBuffer` struct
-- `data`: the buffer that the `ucdrBuffer` will use.
-- `size`: the size of the buffer that the `ucdrBuffer` will use.
-- `offset`: where the serialization/deserialization will start.
-Initially, the serialization/deserialization starts at the beginning of the buffer.
+Initializes a ucdrStream from a buffer.
+ * `us`: a pointer to the ucdrStream to be initialized.
+ * `buffer`: the buffer which will be associated with the ucdrStream.
+ * `size`: the size of the buffer.
+
 
 ---
 
 ```c
-void ucdr_copy_buffer (ucdrBuffer* ub_dest, const ucdrBuffer* ub_source);
+void ucdr_init_stream_offset(
+        ucdrStream* us,
+        uint8_t* data,
+        size_t size,
+        size_t offset);
 ```
-Copy a `ucdrBuffer` structure data to another `ucdrBuffer` structure.
-- `ub_dest`: the destination `ucdrBuffer` struct.
-- `ub_source`: the origin initialized `ucdrBuffer` struct.
+Initializes a ucdrStream from a buffer with a offset.
+ * `us`: a pointer to the ucdrStream to initialize.
+ * `data`: the buffer which will be associated with the ucdrStream.
+ * `size`: the size of the buffer.
+ * `offset`: the initial offset of the ucdrStream.
 
 ---
 
 ```c
-void ucdr_reset_buffer       (ucdrBuffer* ub);
-void ucdr_reset_buffer_offset(ucdrBuffer* ub, size_t offset);
+void ucdr_init_stream_offset_endian(
+        ucdrStream* us,
+        uint8_t* data,
+        size_t size,
+        size_t offset,
+        ucdrEndianness endianness);
 ```
-Reset the `ucdrBuffer` as the same state that it was created.
-- `ub`: the `ucdrBuffer` struct.
-- `offset`: where the serialization/deserialization will start.
-Initially, the serialization/deserialization starts at the beginning of the buffer.
+Initializes a ucdrStream from a buffer with an offset and an endianness.
+ * `us`: a pointer to the ucdrStream to initialize.
+ * `buffer`: a pointer to the buffer which will be associated with the ucdrStream.
+ * `size`: the size of the buffer.
+ * `offset`: the initial offset of the ucdrStream.
+ * `endianness`: the endianness of the ucdrStream.
 
 ---
 
 ```c
-void ucdr_align_to (ucdrBuffer* ub, size_t size);
+bool ucdr_append_buffer(
+        ucdrStream* us,
+        uint8_t* data,
+        size_t size);
 ```
-Align the ucdrBuffer to the size `size`.
-After call this function, the serialization pointer will be moved only if the current `ucdrBuffer` was not alignment to the passed value.
+Appends a buffer to the ucdrStream. Multiple buffer can be linked forming a doubly linked list of buffers.
+ * `us`: a pointer to the ucdrStream to which the buffer will be linked.
+ * `data`: a pointer to the buffer to be linked.
+ * `size`: the size of the buffer.
 
-- `ub`: the `ucdrBuffer` struct
-- `size`: the target size alignment.
+Returns true in case of successful buffer linking, and false in other case.
 
 ---
 
 ```c
-size_t ucdr_alignment(size_t buffer_position, size_t data_size);
+void ucdr_reset_stream(
+        ucdrStream* us);
 ```
-Returns the alignment necessary to serialize/deserialize a type with `data_size` size.
-
-- `buffer_position`: the current serialization/deserialization position of the `ucdrBuffer`. (Typically  `ub->iterator - ub->init`).
-- `data_size`: the bytes of the data that you are asking for.
+Resets a ucdrStream.
+ * `us`: a pointer to the ucdrStream to reset.
 
 ---
 
 ```c
-size_t ucdr_buffer_alignment(const ucdrBuffer* ub, size_t data_size);
+size_t ucdr_size(
+        const ucdrStream* us);
 ```
-Returns the alignment necessary to serialize/deserialize a type with `data_size` size into the `ucdrBuffer` given.
+Computes the total size of the ucdrStream, that is, the sum of the linked buffers' effective size.
+ * `us`: a pointer to the ucdrStream.
 
-- `ub`: the `ucdrBuffer` struct to ask the alignment.
-- `data_size`: the bytes of the data that you are asking for.
----
-
-```c
-size_t ucdr_buffer_size(const ucdrBuffer* ub);
-```
-Returns the memory size of the buffer.
-- `ub`: the `ucdrBuffer` struct
+Returns the total size of the ucdrStream.
 
 ---
 
 ```c
-size_t ucdr_buffer_length(const ucdrBuffer* ub);
+size_t ucdr_used_size(
+        const ucdrStream* us);
 ```
-Returns the size of the serialized/deserialized data.
-- `ub`: the `ucdrBuffer` struct
+Computes the used size of the ucdrStream.
+ * `us`: a pointer to the ucdrStream.
+
+Returns the used size of the ucdrStream.
 
 ---
 
 ```c
-size_t ucdr_buffer_remaining(const ucdrBuffer* ub);
+size_t ucdr_remaining_size(
+        const ucdrStream* us);
 ```
-Returns the remaining size for the serializing/deserializing.
-- `ub`: the `ucdrBuffer` struct
+Computes the remaining size of the ucdrStream.
+ * `us`: a pointer to the ucdrStream.
+
+Returns the total size of the ucdrStream.
 
 ---
 
 ```c
-ucdrEndianness ucdr_buffer_endianness(const ucdrBuffer* ub);
+ucdrEndianness ucdr_endianness(
+        const ucdrStream* us);
 ```
-Returns the serialization/deserialization endianness.
-- `ub`: the `ucdrBuffer` struct
+Returns the endianness of the ucdrStream.
+
+ * `us`: a pointer to the ucdrStream.
 
 ---
 
 ```c
-bool ucdr_buffer_error(const ucdrBuffer* ub);
+bool ucdr_has_error(
+        const ucdrStream* us);
 ```
-Returns the status error of the `ucdrBuffer`.
-- `ub`: the `ucdrBuffer` struct
+Indicates whether the ucdrStream has an error.
+ * `us`: a pointer to the ucdrStream.
+
+Returns the error state of the ucdrStream.
+
+---
+
+```c
+bool ucdr_copy_stream(
+        ucdrStream* us_dest,
+        const ucdrStream* us_src);
+```
+Copies the de/serialized data of a ucdrStream into a new one.
+ * `us_dest`: a pointer to the ucdrStream to copy to.
+ * `us_source`: a pointer to the ucdrStream to copy from.
+
+Returns true in case of success copy and false in other case.
+
+---
+
+```c
+bool ucdr_align(
+        ucdrStream* us,
+        size_t alignment_size);
+```
+Advances the XCDR stream to achieve a desired alignment.
+ * `us`: a pointer to the ucdrStream to align.
+ * `type_size`: size of the type to be aligned.
+Returns true in case of success alignment, and false in other case.
 
 ### Serialization/deserialization functions
 Adding to this, there is a big set of functions for deserialize and deserialize different kind of types:
-- Basics: `bool`, `char`, `int8_t`, `uint8_t`,`int16_t`, `uint16_t`,`int32_t`, `uint32_t`,`int64_t`, `uint64_t`,`float`, `double`.
-- Arrays: Any fixed size of basics types.
-- Sequence: Similar to arrays, but the information about the size is serialized along with the data.
-- String: Wrapper of char sequence, but easily to use.
+- Basics: `bool`, `char`, `int8_t`, `uint8_t`, `int16_t`, `uint16_t`, `int32_t`, `uint32_t`, `int64_t`, `uint64_t`, `float`, `double`.
+```c
+ucdr_serialize_<type>           (ucdrStream* us, <type> value);
+ucdr_serialize_endian_<type>    (ucdrStream* us, ucdrEndianness endianness, <type> value);
+ucdr_deserialize_<type>         (ucdrStream* us, <type>* value); 
+ucdr_deserialize_endian_<type>  (ucdrStream* us, ucdrEndianness endianness, <type>* value);
+```
+
+- Arrays: any fixed size of basics types.
+```c
+ucdr_serialize_array_<type>           (ucdrStream* us, const <type>* array, size_t size);
+ucdr_serialize_endian_array_<type>    (ucdrStream* us, ucdrEndianness endianness, const <type>* array, size_t size);
+ucdr_deserialize_array_<type>         (ucdrStream* us, <type>* array, size_t size); 
+ucdr_deserialize_endian_array_<type>  (ucdrStream* us, ucdrEndianness endianness, <type>* array, size_t size);
+```
+
+- Sequences: similar to arrays, but the information about the size is serialized along with the data.
+```c
+ucdr_serialize_sequence_<type>           (ucdrStream* us, const <type>* sequence, uint32_t length);
+ucdr_serialize_endian_sequence_<type>    (ucdrStream* us, ucdrEndianness endianness, const <type>* sequence, uint32_t length);
+ucdr_deserialize_sequence_<type>         (ucdrStream* us, <type>* sequence, size_t sequence_capacity, uint32_t* length); 
+ucdr_deserialize_endian_sequence_<type>  (ucdrStream* us, ucdrEndianness endianness, <type>* sequence, size_t array_capacity, uint32_t* length);
+```
+
+- Strings: wrapper of char sequence, but easily to use.
+```c
+ucdr_serialize_string           (ucdrStream* us, const char* string);
+ucdr_serialize_endian_string    (ucdrStream* us, ucdrEndianness endianness, const char* string);
+ucdr_deserialize_string         (ucdrStream* us, char* string, size_t string_capacity);
+ucdr_deserialize_endian_string  (ucdrStream* us, ucdrEndianness endianness, char* string, size_t string_capacity);
+```
 
 ### Endianness
 *MicroCDR* supports little and big endianness.
 The **machine endianness** can be set by the cmake variable: `CONFIG_BIG_ENDIANNESS`.
 By default, if this varible is `OFF` which means that the machine endianness is little endianness.
 
-The `ucdrBuffer` endianness can be set by the `endianness` parameter of the structure to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
-Also, there are a functions that allow to force an endianness independiently of the `ucdrBuffer` endianness in their serialization/deserialization.
-These functions contains the name `endianness` in their signature.
+The `ucdrStream` endianness can be set by the `endianness` parameter of the structure to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
+Also, there are functions that allow to force an endianness independiently of the `ucdrStream` endianness in their serialization/deserialization.
+These functions contain the name `endianness` in their signature.
 
 ### Error
 All serialization/deserialization functions return a boolean indicating the result of their operations.
 When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
-an status error is setted into the `ucdrBuffer`.
-If a `ucdrBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
+a status error is setted into the `ucdrStream`.
+If a `ucdrStream` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
 A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
 
-If is kwown that an operation can fails over a `ucdrBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
-the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
-After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
+If is kwown that an operation can fail over a `ucdrStream`, and its necessary to continue with the serialization/deserialization if it happens,
+the `ucdrStream` state can be saved using the `ucdr_copy_buffer` function.
+After the application of the wrong serialization/deserialization, only the `ucdrStream` that performed the operation will have a dirty state.
 
 ## Serialization/deserialization list
 The available modes of serialization/deserializations in *MicroCDR* are shown in the following table.
@@ -257,25 +335,20 @@ The available modes of serialization/deserializations in *MicroCDR* are shown in
 ### Endianness
 *MicroCDR* supports little and big endianness.
 The configuration can be done by cmake with the cmake `__BIG_ENDIAN__` variable.
-A `0` value implies that the serialization will performed into a little endian machine, and `1` into a big endian machine.
+A `0` value implies that the serialization will be performed into a little endian machine, and `1` into a big endian machine.
 
 The default endianness serialization can be choosen by setting the `endianness` parameter of a `ucdrBuffer`  to `UCDR_BIG_ENDIANNESS` or `UCDR_LITTLE_ENDIANNESS`.
-Also, there are a functions that allow to force an endianness in their serialization/deserialization.
-These functions contains the name `endiannness` in their signature.
+Also, there are functions that allow to force an endianness in their serialization/deserialization.
+These functions contain the name `endiannness` in their signature.
 
 ### Error
 All serialization/deserialization functions return a boolean indicating the result of their operations.
 When a serialization/deserialization could not be possible (the type can not be serialized, or the capacity of the destination buffer is not enough),
-an status error is setted into the `ucdrBuffer`.
-If a `ucdrBuffer` has an error state, the next serialization/deserialization operations will not works and will return `false` in their execution.
+a status error is setted into the `ucdrBuffer`.
+If a `ucdrBuffer` has an error state, the next serialization/deserialization operations will not work and will return `false` in their execution.
 A buffer marked with an error can be used, but any serialization/deserialization operation over it will not produce any effect.
 
-If is kwown that an operation can fails over a `ucdrBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
+If is kwown that an operation can fail over a `ucdrBuffer`, and its necessary to continue with the serialization/deserialization if it happens,
 the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
 After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
-
-### Full buffer callback
-MicroCDR provides a callback that the user can set in order to control the behavior when the `ucdrBuffer` can not serialize/deserialize anymore because the buffer is full.
-This allows to create a better management error and/or modify the buffer location of the `ucdrBuffer`.
-The last possibility gives the user the capacity to use several small buffers for a big serialization (see the *fragmentation* example).
 

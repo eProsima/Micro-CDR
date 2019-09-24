@@ -53,9 +53,9 @@ typedef struct ucdrBufferInfo
 
 /**
  * @brief   A XCDR byte stream where data is de/serialized acording to the XTYPES standard.
- *          It is composed by a self-contained double linked list of row buffers.
+ *          It is composed by a self-contained linked list of row buffers.
  *          These buffers are used to de/serialize the data, as well as to keep the information of the linked list,
- *          that is, the `ucdrBufferInfo` of the prev/next buffer is stored in the buffer itself as shows the following figure.
+ *          that is, the `ucdrBufferInfo` of the next buffer is stored in the buffer itself as shows the following figure.
  *          ![](ucdr_stream.svg)
  */
 typedef struct ucdrStream
@@ -104,7 +104,7 @@ UCDRDLLAPI void ucdr_init_stream_offset(
         size_t offset);
 
 /**
- * @brief Initializes a ucdrStream from a buffer with a offset and an endianness.
+ * @brief Initializes a ucdrStream from a buffer with an offset and an endianness.
  * @param us            A pointer to the ucdrStream to initialize.
  * @param buffer        A pointer to the buffer which will be associated with the ucdrStream.
  * @param size          The size of the buffer.
