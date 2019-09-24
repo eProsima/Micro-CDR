@@ -231,30 +231,6 @@ bool ucdr_align(
     return rv;
 }
 
-void ucdr_clone_stream(ucdrStream* us_dst,
-        ucdrStream* us_src)
-{
-    us_dst->offset = us_src->offset;
-    us_dst->origin = us_src->origin;
-    us_dst->iterator = us_src->iterator;
-    us_dst->size = us_src->size;
-    us_dst->endianness = us_src->endianness;
-    us_dst->error = us_src->error;
-
-    while (ucdr_prev_buffer_info(&us_src->buffer_info))
-    {}
-
-    do
-    {
-        us_dst->buffer_info.origin = us_src->buffer_info.origin;
-        us_dst->buffer_info.data = us_src->buffer_info.data;
-        us_dst->buffer_info.size = us_src->buffer_info.size;
-        us_dst->buffer_info.next = us_src->buffer_info.next;
-        us_dst->buffer_info.prev = us_src->buffer_info.prev;
-
-    } while (ucdr_next_buffer_info(&us_src->buffer_info));
-}
-
 bool ucdr_promote_stream(
         ucdrStream* us,
         size_t size)
@@ -287,7 +263,7 @@ void ucdr_reset_offset(
     us->buffer_info.data += (us->offset - us->buffer_info.origin);
     us->buffer_info.size -= (us->offset - us->buffer_info.origin);
     us->buffer_info.origin = 0;
-    us->buffer_info.prev = NULL;
+    us->buffer_info.next = NULL;
     ucdr_update_buffer_info(&us->buffer_info);
 
     ucdrBufferInfo binfo = us->buffer_info;

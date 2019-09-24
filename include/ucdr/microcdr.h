@@ -208,15 +208,6 @@ size_t ucdr_alignment(
         size_t data_size);
 
 /**
- * @brief Clones the ucdrStream's information (no the content) from one ucdrStream to another.
- * @param us_dst    A pointer to the ucdrStream to clone to.
- * @param us_src    A pointer to the ucdrStream to clone from.
- */
-void ucdr_clone_stream(
-        ucdrStream* us_dst,
-        ucdrStream* us_src);
-
-/**
  * @brief Promotes the stream a given number of bytes.
  * @param us    A pointer to the ucdrStream to promote.
  * @param size  The number of bytes to promote.
