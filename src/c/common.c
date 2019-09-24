@@ -52,11 +52,13 @@ void ucdr_init_stream_offset_endian(
     us->endianness = endianness;
     us->error = false;
 
-    us->buffer_info.origin = 0;
+    us->buffer_info.origin = 0u;
     us->buffer_info.size = size;
     us->buffer_info.data = buffer;
     us->buffer_info.next = NULL;
-    us->buffer_info.prev = NULL;
+
+    us->initial_buffer_info = NULL;
+    us->last_buffer_info = NULL;
 }
 
 bool ucdr_append_buffer(
@@ -67,15 +69,15 @@ bool ucdr_append_buffer(
     bool rv = false;
     if (ucdr_init_list(us))
     {
-        ucdrBufferInfo prev_binfo = us->buffer_info;
-        while (ucdr_next_buffer_info(&prev_binfo))
-        {}
+        ucdrBufferInfo prev_binfo;
+        memcpy(&prev_binfo, us->last_buffer_info, UCDR_BUFFER_INFO_SIZE);
 
         ucdrBufferInfo next_binfo;
         if (ucdr_init_buffer_info(&next_binfo, prev_binfo.origin + prev_binfo.size, data, size))
         {
-            us->size += next_binfo.size;
             ucdr_link_buffers(&prev_binfo, &next_binfo);
+            us->last_buffer_info = next_binfo.data + next_binfo.size;
+            us->size += next_binfo.size;
             memcpy(&us->buffer_info, us->buffer_info.data + us->buffer_info.size, UCDR_BUFFER_INFO_SIZE);
             rv = true;
         }
@@ -89,8 +91,10 @@ void ucdr_reset_stream(
     us->offset = us->origin;
     us->error = false;
 
-    while (ucdr_prev_buffer_info(&us->buffer_info))
-    {}
+    if (NULL != us->initial_buffer_info)
+    {
+        memcpy(&us->buffer_info, us->initial_buffer_info, UCDR_BUFFER_INFO_SIZE);
+    }
     us->iterator = us->buffer_info.data;
 }
 
@@ -201,9 +205,9 @@ bool ucdr_copy_stream(
 
 bool ucdr_align(
         ucdrStream* us,
-        size_t type_size)
+        size_t alignment_size)
 {
-    size_t alignment = ucdr_alignment(us->offset, type_size);
+    size_t alignment = ucdr_alignment(us->offset, alignment_size);
     bool rv = alignment <= ucdr_remaining_size(us);
 
     if ((0 != alignment) && rv)
@@ -314,7 +318,6 @@ bool ucdr_init_buffer_info(
         binfo->data = data;
         binfo->size = size - UCDR_BUFFER_INFO_SIZE;
         binfo->next = NULL;
-        binfo->prev = NULL;
         memcpy(binfo->data + binfo->size, binfo, UCDR_BUFFER_INFO_SIZE);
         rv = true;
     }
@@ -324,7 +327,7 @@ bool ucdr_init_buffer_info(
 bool ucdr_init_list(
         ucdrStream* us)
 {
-    if ((NULL != us->buffer_info.next) || (NULL != us->buffer_info.prev))
+    if (NULL != us->initial_buffer_info)
     {
         return true;
     }
@@ -332,6 +335,8 @@ bool ucdr_init_list(
     bool rv = false;
     if (ucdr_init_buffer_info(&us->buffer_info, 0u, us->iterator - us->offset, us->size))
     {
+        us->initial_buffer_info = us->buffer_info.data + us->buffer_info.size;
+        us->last_buffer_info = us->initial_buffer_info;
         us->size = us->buffer_info.size;
         rv = true;
     }
@@ -349,9 +354,7 @@ void ucdr_link_buffers(
         ucdrBufferInfo* next_binfo)
 {
     prev_binfo->next = next_binfo->data + next_binfo->size;
-    next_binfo->prev = prev_binfo->data + prev_binfo->size;
     ucdr_update_buffer_info(prev_binfo);
-    ucdr_update_buffer_info(next_binfo);
 }
 
 bool ucdr_next_buffer_info(
@@ -360,17 +363,6 @@ bool ucdr_next_buffer_info(
     if (NULL != binfo->next)
     {
         memcpy(binfo, binfo->next, UCDR_BUFFER_INFO_SIZE);
-        return true;
-    }
-    return false;
-}
-
-bool ucdr_prev_buffer_info(
-        ucdrBufferInfo* binfo)
-{
-    if (NULL != binfo->prev)
-    {
-        memcpy(binfo, binfo->prev, UCDR_BUFFER_INFO_SIZE);
         return true;
     }
     return false;

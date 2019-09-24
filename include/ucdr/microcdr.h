@@ -32,7 +32,6 @@ extern "C" {
 
 #define UCDR_BIG_ENDIANNESS     0
 #define UCDR_LITTLE_ENDIANNESS  1
-#define UCDR_BUFFER_OFFSET      sizeof(ucdrBufferInfo)
 
 // ------------------------------------------------
 //                      Types
@@ -50,7 +49,6 @@ typedef struct ucdrBufferInfo
     size_t size;    /** The size of the buffer. */
 
     void* next;     /** A pointer to the next ucdrBufferInfo in the ucdrStream. */
-    void* prev;     /** A pointer to the previous ucdrBufferInfo in the ucdrStream. */
 
 } ucdrBufferInfo;
 
@@ -73,6 +71,8 @@ typedef struct ucdrStream
     bool error;                 /** A flag which indicates if there was a de/serialization error. */
 
     ucdrBufferInfo buffer_info; /** The information of the current buffer. */
+    void* initial_buffer_info;  /** A pointer to the first ucdrBufferInfo. */
+    void* last_buffer_info;     /** A pointer to the last appended ucdrBufferInfo. */
 
 } ucdrStream;
 
@@ -196,7 +196,7 @@ UCDRDLLAPI bool ucdr_copy_stream(
  */
 UCDRDLLAPI bool ucdr_align(
         ucdrStream* us,
-        size_t type_size);
+        size_t alignment_size);
 
 /**
  * @brief Computes the offset of the stream once it is alignment to the next data type's size.

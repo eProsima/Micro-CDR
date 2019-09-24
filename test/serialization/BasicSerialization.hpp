@@ -27,9 +27,15 @@
 
 inline void check_iterator(ucdrStream& us)
 {
-    ucdrBufferInfo binfo = us.buffer_info;
-    while (ucdr_prev_buffer_info(&binfo))
-    {}
+    ucdrBufferInfo binfo;
+    if (NULL == us.initial_buffer_info)
+    {
+        binfo = us.buffer_info;
+    }
+    else
+    {
+        memcpy(&binfo, us.initial_buffer_info, sizeof(ucdrBufferInfo));
+    }
 
     uint8_t* iterator = binfo.data;
     size_t remainding_size = us.offset;

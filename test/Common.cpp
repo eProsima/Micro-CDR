@@ -47,7 +47,6 @@ TEST_F(CommonTest, InitStream)
     EXPECT_EQ(us.buffer_info.data, buffer);
     EXPECT_EQ(us.buffer_info.size, sizeof(buffer));
     EXPECT_EQ(us.buffer_info.next, reinterpret_cast<void*>(NULL));
-    EXPECT_EQ(us.buffer_info.prev, reinterpret_cast<void*>(NULL));
 }
 
 TEST_F(CommonTest, InitStreamOffset)
@@ -60,11 +59,10 @@ TEST_F(CommonTest, InitStreamOffset)
     EXPECT_EQ(us.endianness, UCDR_MACHINE_ENDIANNESS);
     EXPECT_EQ(us.error, false);
 
-    EXPECT_EQ(us.buffer_info.origin, 11);
+    EXPECT_EQ(us.buffer_info.origin, 0);
     EXPECT_EQ(us.buffer_info.data, buffer);
     EXPECT_EQ(us.buffer_info.size, sizeof(buffer));
     EXPECT_EQ(us.buffer_info.next, reinterpret_cast<void*>(NULL));
-    EXPECT_EQ(us.buffer_info.prev, reinterpret_cast<void*>(NULL));
 }
 
 TEST_F(CommonTest, InitStreamBigEndian)
@@ -77,11 +75,10 @@ TEST_F(CommonTest, InitStreamBigEndian)
     EXPECT_EQ(us.endianness, UCDR_BIG_ENDIANNESS);
     EXPECT_EQ(us.error, false);
 
-    EXPECT_EQ(us.buffer_info.origin, 11);
+    EXPECT_EQ(us.buffer_info.origin, 0);
     EXPECT_EQ(us.buffer_info.data, buffer);
     EXPECT_EQ(us.buffer_info.size, sizeof(buffer));
     EXPECT_EQ(us.buffer_info.next, reinterpret_cast<void*>(NULL));
-    EXPECT_EQ(us.buffer_info.prev, reinterpret_cast<void*>(NULL));
 }
 
 TEST_F(CommonTest, InitStreamLittleEndian)
@@ -95,7 +92,6 @@ TEST_F(CommonTest, InitStreamLittleEndian)
     EXPECT_EQ(us.error, false);
 
     EXPECT_EQ(us.buffer_info.next, reinterpret_cast<void*>(NULL));
-    EXPECT_EQ(us.buffer_info.prev, reinterpret_cast<void*>(NULL));
 }
 
 TEST_F(CommonTest, InitBufferInfo)
@@ -111,7 +107,6 @@ TEST_F(CommonTest, InitBufferInfo)
     EXPECT_EQ(us.buffer_info.size, binfo.size);
     EXPECT_EQ(us.buffer_info.data, binfo.data);
     EXPECT_EQ(us.buffer_info.next, binfo.next);
-    EXPECT_EQ(us.buffer_info.prev, binfo.prev);
 }
 
 TEST_F(CommonTest, UpdateBufferInfo)
@@ -150,12 +145,10 @@ TEST_F(CommonTest, LinkBuffers)
 
     ucdr_link_buffers(&prev_buffer, &next_buffer);
     EXPECT_EQ(prev_buffer.next, next_buffer.data + next_buffer.size);
-    EXPECT_EQ(next_buffer.prev, prev_buffer.data + prev_buffer.size);
 
     memcpy(&prev_buffer, prev_buffer.data + prev_buffer.size, UCDR_BUFFER_INFO_SIZE);
     memcpy(&next_buffer, next_buffer.data + next_buffer.size, UCDR_BUFFER_INFO_SIZE);
     EXPECT_EQ(prev_buffer.next, next_buffer.data + next_buffer.size);
-    EXPECT_EQ(next_buffer.prev, prev_buffer.data + prev_buffer.size);
 }
 
 TEST_F(CommonTest, NextBufferInfo)
@@ -175,29 +168,7 @@ TEST_F(CommonTest, NextBufferInfo)
     EXPECT_EQ(prev_buffer.data, prev_buffer.data);
     EXPECT_EQ(prev_buffer.size, prev_buffer.size);
     EXPECT_EQ(prev_buffer.next, prev_buffer.next);
-    EXPECT_EQ(prev_buffer.prev, prev_buffer.prev);
     EXPECT_FALSE(ucdr_next_buffer_info(&prev_buffer));
-}
-
-TEST_F(CommonTest, PrevBufferInfo)
-{
-    uint8_t buffer1[sizeof(buffer)];
-    uint8_t buffer2[sizeof(buffer)];
-
-    ucdrBufferInfo prev_buffer;
-    ucdrBufferInfo next_buffer;
-
-    ucdr_init_buffer_info(&prev_buffer, 0, buffer1, sizeof(buffer1));
-    ucdr_init_buffer_info(&next_buffer, 0, buffer2, sizeof(buffer2));
-
-    ucdr_link_buffers(&prev_buffer, &next_buffer);
-    EXPECT_TRUE(ucdr_prev_buffer_info(&next_buffer));
-    EXPECT_EQ(prev_buffer.origin, prev_buffer.origin);
-    EXPECT_EQ(prev_buffer.data, prev_buffer.data);
-    EXPECT_EQ(prev_buffer.size, prev_buffer.size);
-    EXPECT_EQ(prev_buffer.next, prev_buffer.next);
-    EXPECT_EQ(prev_buffer.prev, prev_buffer.prev);
-    EXPECT_FALSE(ucdr_prev_buffer_info(&next_buffer));
 }
 
 TEST_F(CommonTest, Alignment)
@@ -234,16 +205,6 @@ TEST_F(CommonTest, AppendBuffer)
     EXPECT_EQ(binfo.origin, 2 * (sizeof(buffer) - UCDR_BUFFER_INFO_SIZE));
 
     EXPECT_FALSE(ucdr_next_buffer_info(&binfo));
-
-    EXPECT_TRUE(ucdr_prev_buffer_info(&binfo));
-    EXPECT_EQ(binfo.data, buffer1);
-    EXPECT_EQ(binfo.size, sizeof(buffer) - UCDR_BUFFER_INFO_SIZE);
-
-    EXPECT_TRUE(ucdr_prev_buffer_info(&binfo));
-    EXPECT_EQ(binfo.data, buffer);
-    EXPECT_EQ(binfo.size, sizeof(buffer) - UCDR_BUFFER_INFO_SIZE);
-
-    EXPECT_FALSE(ucdr_prev_buffer_info(&binfo));
 }
 
 TEST_F(CommonTest, ResetStream)
@@ -336,25 +297,28 @@ TEST_F(CommonTest, Align)
 {
     uint8_t buffer1[sizeof(buffer) + 1];
     ucdr_append_buffer(&us, buffer1, sizeof(buffer1));
+
     us.offset = sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
     us.iterator = us.buffer_info.data + sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
-
     EXPECT_TRUE(ucdr_align(&us, 1));
     EXPECT_EQ(us.offset, sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1);
     EXPECT_EQ(us.iterator, us.buffer_info.data + sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1);
 
+    ucdr_reset_stream(&us);
+    us.offset = sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
+    us.iterator = us.buffer_info.data + sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
     EXPECT_TRUE(ucdr_align(&us, 2));
     EXPECT_EQ(us.offset, sizeof(buffer) - UCDR_BUFFER_INFO_SIZE);
     EXPECT_EQ(us.iterator, us.buffer_info.data);
 
-    ucdr_prev_buffer_info(&us.buffer_info);
+    ucdr_reset_stream(&us);
     us.offset = sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
     us.iterator = us.buffer_info.data + sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
     EXPECT_TRUE(ucdr_align(&us, 4));
     EXPECT_EQ(us.offset, sizeof(buffer) - UCDR_BUFFER_INFO_SIZE + 2);
     EXPECT_EQ(us.iterator, us.buffer_info.data + 2);
 
-    ucdr_prev_buffer_info(&us.buffer_info);
+    ucdr_reset_stream(&us);
     us.offset = sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
     us.iterator = us.buffer_info.data + sizeof(buffer) - UCDR_BUFFER_INFO_SIZE - 1;
     EXPECT_TRUE(ucdr_align(&us, 8));
