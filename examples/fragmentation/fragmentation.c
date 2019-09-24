@@ -17,56 +17,31 @@
 #include <string.h>
 #include <inttypes.h>
 
-#define BUFFER_LENGTH 12
-#define SLOTS 12
-#define STRING_MAX 128
-
-bool on_full_buffer(ucdrBuffer* ub, void* args)
-{
-    uint8_t* buffer =  (uint8_t*) args;
-
-    // This value correspong with the ub->error, and will be returned by this function to indicates
-    // if the serialization must continue or must stop because of an error.
-    bool error = true;
-
-    // Leave the odd slots empty.
-    uint32_t next_slot = 2 + (uint32_t)(ub->init - buffer) / BUFFER_LENGTH;
-    if(next_slot < SLOTS)
-    {
-        // Modify the internal buffer
-        ub->init = buffer + BUFFER_LENGTH * next_slot;
-        ub->iterator = ub->init;
-        ub->final = ub->init + BUFFER_LENGTH;
-
-        printf("  Extend buffer to slot %u\n", next_slot);
-
-        // As we want to continue the serialization without errors, we return false.
-        error = false;
-    }
-
-    return error;
-}
+#define BUFFER_LENGTH   128
+#define STRING_MAX      256
 
 int main()
 {
     // Data buffer
-    uint8_t buffer[SLOTS * BUFFER_LENGTH];
+    uint8_t buffer1[BUFFER_LENGTH];
+    uint8_t buffer2[BUFFER_LENGTH];
 
-    // Structs for handle the buffer.
-    ucdrBuffer writer;
-    ucdrBuffer reader;
+    // Structs for handle the stream.
+    ucdrStream writer;
+    ucdrStream reader;
 
-    // Initialize the MicroBuffers for working with an user-managed buffer.
-    ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
-    ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
+    // Initialize the MicroStream for working with an user-managed buffer.
+    ucdr_init_stream(&writer, buffer1, sizeof(buffer1));
+    ucdr_init_stream(&reader, buffer1, sizeof(buffer1));
 
-    // Add a full buffer behavior to the writer and the reader
-    ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, buffer);
-    ucdr_set_on_full_buffer_callback(&reader, on_full_buffer, buffer);
+    // Append a buffer to the writer and the reader
+    ucdr_append_buffer(&writer, buffer2, sizeof(buffer2));
+    ucdr_append_buffer(&reader, buffer2, sizeof(buffer2));
 
     // Serialize data
     printf("Serializing...\n");
-    char input[STRING_MAX] = "Hello MicroCDR! this message is fragmented";
+    char input[STRING_MAX] = {0};
+    memset(&input, 'a', BUFFER_LENGTH + 1);
     ucdr_serialize_string(&writer, input);
     printf("\n");
 

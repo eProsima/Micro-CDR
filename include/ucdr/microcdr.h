@@ -47,7 +47,6 @@ typedef struct ucdrBufferInfo
     size_t origin;  /** The byte stream offset where the buffer starts. */
     uint8_t* data;  /** A pointer to the buffer. */
     size_t size;    /** The size of the buffer. */
-
     void* next;     /** A pointer to the next ucdrBufferInfo in the ucdrStream. */
 
 } ucdrBufferInfo;

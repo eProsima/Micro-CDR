@@ -22,13 +22,13 @@ int main()
     // Data buffer
     uint8_t buffer[BUFFER_LENGTH];
 
-    // Structs for handle the buffer.
-    ucdrBuffer writer;
-    ucdrBuffer reader;
+    // Structs for handle the stream.
+    ucdrStream writer;
+    ucdrStream reader;
 
     // Initialize the MicroBuffers for working with an user-managed buffer.
-    ucdr_init_buffer(&writer, buffer, BUFFER_LENGTH);
-    ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
+    ucdr_init_stream(&writer, buffer, sizeof(buffer));
+    ucdr_init_stream(&reader, buffer, sizeof(buffer));
 
     // Serialize data
     char input[16] = "Hello MicroCDR!"; //16 characters

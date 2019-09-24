@@ -83,7 +83,7 @@ void ucdr_buffer_to_array(
     (void)ENDIAN; \
     if (ucdr_enough_space(us, size)) \
     { \
-        ucdr_array_to_buffer(us, (uint8_t*)array, size); \
+        ucdr_array_to_buffer(us, (const uint8_t*)array, size); \
     } \
     else \
     { \
@@ -95,7 +95,7 @@ void ucdr_buffer_to_array(
     { \
         if(UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
-            ucdr_array_to_buffer(us, (uint8_t*)array, size * TYPE_SIZE); \
+            ucdr_array_to_buffer(us, (const uint8_t*)array, size * TYPE_SIZE); \
         } \
         else \
         { \
