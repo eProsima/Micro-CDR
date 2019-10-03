@@ -17,6 +17,14 @@
 ###############################################################################
 cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 
+###############################################################################
+# Build options
+###############################################################################
+option(UCDR_SUPERBUILD "Enable superbuild compilation." ON)
+option(UCDR_BUILD_TESTS "Build tests" OFF)
+option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
+
 # Set CMAKE_BUILD_TYPE to Release by default.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(STATUS "Setting build type to 'Release' as none was specified.")
@@ -29,15 +37,36 @@ endif()
 ###############################################################################
 # Product information
 ###############################################################################
-cmake_policy(SET CMP0048 NEW)
-project(microcdr VERSION "1.1.0" LANGUAGES C)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+if(NOT UCDR_SUPERBUILD)
+    project(microcdr VERSION "1.1.0" LANGUAGES C)
+else()
+    project(ucdr_superbuild NONE)
+    include(${PROJECT_SOURCE_DIR}/cmake/SuperBuild.cmake)
+    return()
+endif()
 
 ###############################################################################
-# Build options
+# Config
 ###############################################################################
-option(UCDR_BUILD_TESTS "Build tests" OFF)
-option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
-option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
+# Install path
+include(GNUInstallDirs)
+set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE PATH "Installation directory for C headers")
+set(LIB_INSTALL_DIR     ${CMAKE_INSTALL_LIBDIR}     CACHE PATH "Installation directory for libraries")
+set(DATA_INSTALL_DIR    ${CMAKE_INSTALL_DATADIR}    CACHE PATH "Installation directory for data")
+if(WIN32)
+    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
+else()
+    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
+endif()
+
+set(CONFIG_BIG_ENDIANNESS OFF CACHE BOOL "Set the machine endianness to big endianness (default: little endianness).")
+if(CONFIG_BIG_ENDIANNESS)
+    set(CONFIG_MACHINE_ENDIANNESS UCDR_BIG_ENDIANNESS) #big
+else()
+    set(CONFIG_MACHINE_ENDIANNESS UCDR_LITTLE_ENDIANNESS) #little
+endif()
 
 ###############################################################################
 # Check MSVC architecture
@@ -102,33 +131,6 @@ target_include_directories(${PROJECT_NAME}
     )
 
 ###############################################################################
-# Config
-###############################################################################
-# Install path
-include(GNUInstallDirs)
-set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
-set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE PATH "Installation directory for C headers")
-set(LIB_INSTALL_DIR     ${CMAKE_INSTALL_LIBDIR}     CACHE PATH "Installation directory for libraries")
-set(DATA_INSTALL_DIR    ${CMAKE_INSTALL_DATADIR}    CACHE PATH "Installation directory for data")
-if(WIN32)
-    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
-else()
-    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
-endif()
-
-# Config.h
-set(CONFIG_BIG_ENDIANNESS OFF CACHE BOOL "Set the machine endianness to big endianness (by default is little endianness)")
-if(CONFIG_BIG_ENDIANNESS)
-    set(CONFIG_MACHINE_ENDIANNESS UCDR_BIG_ENDIANNESS) #big
-else()
-    set(CONFIG_MACHINE_ENDIANNESS UCDR_LITTLE_ENDIANNESS) #little
-endif()
-
-configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
-    ${PROJECT_BINARY_DIR}/include/ucdr/config.h
-    )
-
-###############################################################################
 # Examples
 ###############################################################################
 if(UCDR_BUILD_EXAMPLES)
@@ -172,6 +174,11 @@ install(
         ${INCLUDE_INSTALL_DIR}/ucdr
     FILES_MATCHING
         PATTERN "*.h"
+    )
+
+# Generate config.h
+configure_file(${PROJECT_SOURCE_DIR}/include/ucdr/config.h.in
+    ${PROJECT_BINARY_DIR}/include/ucdr/config.h
     )
 
 # Install config.h
