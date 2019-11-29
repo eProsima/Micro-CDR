@@ -23,6 +23,7 @@ cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 option(UCDR_SUPERBUILD "Enable superbuild compilation." ON)
 option(UCDR_BUILD_TESTS "Build tests" OFF)
 option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
+option(UCDR_PIC "Control Position Independent Code." ON)
 option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
 
 include(GNUInstallDirs)
@@ -51,7 +52,7 @@ endif()
 ###############################################################################
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 if(NOT UCDR_SUPERBUILD)
-    project(microcdr VERSION "1.1.0" LANGUAGES C)
+    project(microcdr VERSION "1.1.1" LANGUAGES C)
 else()
     project(ucdr_superbuild NONE)
     include(${PROJECT_SOURCE_DIR}/cmake/SuperBuild.cmake)
@@ -98,6 +99,8 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         99
     C_STANDARD_REQUIRED
         YES
+    POSITION_INDEPENDENT_CODE
+        ${UCDR_PIC}
     )
 
 target_compile_options(${PROJECT_NAME}
