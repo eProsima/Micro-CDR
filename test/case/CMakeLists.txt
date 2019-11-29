@@ -30,5 +30,7 @@ add_test(
             -DORIGINAL_DIR=${CMAKE_CURRENT_SOURCE_DIR}/packaging
             -DCMAKE_PREFIX_PATH=${_test_install_prefix}
             -DREQUIRED_VERSION=${PROJECT_VERSION}
+            -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET}
+            -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
             -P ${CMAKE_CURRENT_SOURCE_DIR}/packaging/Packaging.cmake
     )
