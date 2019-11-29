@@ -12,23 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-add_test(
-    NAME
-        test-installation
+execute_process(
     COMMAND
-        ${CMAKE_COMMAND} 
-            -DINSTALL_PATH=${_test_install_prefix} 
-            -DLIBRARY_NAME=$<TARGET_FILE_NAME:${PROJECT_NAME}> 
-            -P ${CMAKE_CURRENT_SOURCE_DIR}/installation/InstallationTest.cmake
+        ${CMAKE_COMMAND} ${ORIGINAL_DIR}
+            -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+            -DREQUIRED_VERSION=${REQUIRED_VERSION}
+    RESULT_VARIABLE _result
     )
 
-add_test(
-    NAME
-        test-packaging
+if(_result)
+    message(FATAL_ERROR "Error in find_package.")
+endif()
+
+execute_process(
     COMMAND
-        ${CMAKE_COMMAND}
-            -DORIGINAL_DIR=${CMAKE_CURRENT_SOURCE_DIR}/packaging
-            -DCMAKE_PREFIX_PATH=${_test_install_prefix}
-            -DREQUIRED_VERSION=${PROJECT_VERSION}
-            -P ${CMAKE_CURRENT_SOURCE_DIR}/packaging/Packaging.cmake
+        ${CMAKE_COMMAND} --build .
+    RESULT_VARIABLE _result
     )
+
+if(_result)
+    message(FATAL_ERROR "Error compiling example.")
+endif()
