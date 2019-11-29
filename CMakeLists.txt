@@ -153,20 +153,20 @@ if(UCDR_BUILD_TESTS)
 endif()
 
 if(UCDR_BUILD_TEST_CASES)
-    set(_temp_install_prefix ${CMAKE_INSTALL_PREFIX})
     set(_test_install_prefix ${PROJECT_BINARY_DIR}/test_install)
     add_custom_command(TARGET ${PROJECT_NAME}
         POST_BUILD
         COMMAND
             ${CMAKE_COMMAND} ${PROJECT_BINARY_DIR} -DCMAKE_INSTALL_PREFIX=${_test_install_prefix}
+                -DUCDR_BUILD_TESTS=OFF -DUCDR_BUILD_TEST_CASES=OFF
         COMMAND
             ${CMAKE_COMMAND} --build ${PROJECT_BINARY_DIR} --target install
         COMMAND
-            ${CMAKE_COMMAND} ${PROJECT_BINARY_DIR} -DCMAKE_INSTALL_PREFIX=${_temp_install_prefix}
+            ${CMAKE_COMMAND} ${PROJECT_BINARY_DIR} -DCMAKE_INSTALL_PREFIX=${CMAKE_PREFIX_PATH}
+                -DUCDR_BUILD_TESTS=${UCDR_BUILD_TESTS} -DUCDR_BUILD_TEST_CASES=ON
         )
     enable_testing()
     add_subdirectory(test/case)
-    set(UCDR_BUILD_TEST_CASES OFF CACHE BOOL "" FORCE)
 endif()
 
 ###############################################################################
