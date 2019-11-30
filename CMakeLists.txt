@@ -22,10 +22,14 @@ cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 ###############################################################################
 option(UCDR_SUPERBUILD "Enable superbuild compilation." ON)
 option(UCDR_BUILD_TESTS "Build tests." OFF)
-option(UCDR_BUILD_TEST_CASES "Build test cases." OFF)
 option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
 option(UCDR_PIC "Control Position Independent Code." ON)
 option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
+
+option(UCDR_BUILD_CI_TESTS "Build CI test cases." OFF)
+if(UCDR_BUILD_CI_TESTS)
+    set(UCDR_BUILD_TESTS ON)
+endif()
 
 include(GNUInstallDirs)
 set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
@@ -146,27 +150,16 @@ endif()
 ###############################################################################
 # Testing
 ###############################################################################
+if(UCDR_BUILD_CI_TESTS)
+    include(CTest)
+    set(_test_install_prefix ${CMAKE_INSTALL_PREFIX})
+    add_subdirectory(test/case)
+endif()
+
 if(UCDR_BUILD_TESTS)
     include(${PROJECT_SOURCE_DIR}/cmake/common/gtest.cmake)
     enable_testing()
     add_subdirectory(test)
-endif()
-
-if(UCDR_BUILD_TEST_CASES)
-    set(_test_install_prefix ${PROJECT_BINARY_DIR}/test_install)
-    add_custom_command(TARGET ${PROJECT_NAME}
-        POST_BUILD
-        COMMAND
-            ${CMAKE_COMMAND} ${PROJECT_BINARY_DIR} -DCMAKE_INSTALL_PREFIX=${_test_install_prefix}
-                -DUCDR_BUILD_TESTS=OFF -DUCDR_BUILD_TEST_CASES=OFF
-        COMMAND
-            ${CMAKE_COMMAND} --build ${PROJECT_BINARY_DIR} --target install
-        COMMAND
-            ${CMAKE_COMMAND} ${PROJECT_BINARY_DIR} -DCMAKE_INSTALL_PREFIX=${CMAKE_PREFIX_PATH}
-                -DUCDR_BUILD_TESTS=${UCDR_BUILD_TESTS} -DUCDR_BUILD_TEST_CASES=ON
-        )
-    enable_testing()
-    add_subdirectory(test/case)
 endif()
 
 ###############################################################################

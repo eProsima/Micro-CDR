@@ -14,21 +14,21 @@
 
 add_test(
     NAME
-        test-installation
+        test-case-installation
     COMMAND
         ${CMAKE_COMMAND} 
-            -DINSTALL_PATH=${_test_install_prefix} 
+            -DINSTALL_PATH=${CMAKE_INSTALL_PREFIX}
             -DLIBRARY_NAME=$<TARGET_FILE_NAME:${PROJECT_NAME}> 
             -P ${CMAKE_CURRENT_SOURCE_DIR}/installation/InstallationTest.cmake
     )
 
 add_test(
     NAME
-        test-packaging
+        test-case-packaging
     COMMAND
         ${CMAKE_COMMAND}
             -DORIGINAL_DIR=${CMAKE_CURRENT_SOURCE_DIR}/packaging
-            -DCMAKE_PREFIX_PATH=${_test_install_prefix}
+            -DCMAKE_PREFIX_PATH=${CMAKE_INSTALL_PREFIX}
             -DREQUIRED_VERSION=${PROJECT_VERSION}
             -DCMAKE_GENERATOR_TOOLSET=${CMAKE_GENERATOR_TOOLSET}
             -DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}
