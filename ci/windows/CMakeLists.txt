@@ -6,7 +6,7 @@ include(ExternalProject)
 
 ExternalProject_Add(microcdr
     SOURCE_DIR
-        ${UCDR_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../
     BINARY_DIR
         ${PROJECT_BINARY_DIR}/microcdr-build
     INSTALL_DIR
@@ -14,7 +14,7 @@ ExternalProject_Add(microcdr
     TEST_AFTER_INSTALL
         TRUE
     TEST_COMMAND
-        COMMAND ${CMAKE_CTEST_COMMAND} -VV -T Test
+        COMMAND ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_BUILD_TYPE} -T Test
     CMAKE_CACHE_ARGS
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         -DCMAKE_GENERATOR_TOOLSET:STRING=${CMAKE_GENERATOR_TOOLSET}

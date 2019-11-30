@@ -11,7 +11,7 @@ set(_shared_linker_flags "-fprofile-arcs -ftest-coverage")
 
 ExternalProject_Add(microcdr
     SOURCE_DIR
-        ${UCDR_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../
     BINARY_DIR
         ${PROJECT_BINARY_DIR}/microcdr-build
     INSTALL_DIR
