@@ -152,7 +152,6 @@ endif()
 ###############################################################################
 if(UCDR_BUILD_CI_TESTS)
     include(CTest)
-    set(_test_install_prefix ${CMAKE_INSTALL_PREFIX})
     add_subdirectory(test/case)
 endif()
 
