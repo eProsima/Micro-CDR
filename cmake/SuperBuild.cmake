@@ -16,6 +16,9 @@ include(ExternalProject)
 
 unset(_deps)
 
+enable_language(C)
+enable_language(CXX)
+
 if(UCDR_BUILD_TESTS)
     unset(googletest_DIR CACHE)
     enable_language(CXX)
