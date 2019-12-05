@@ -22,7 +22,7 @@ cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 ###############################################################################
 option(UCDR_SUPERBUILD "Enable superbuild compilation." ON)
 option(UCDR_BUILD_TESTS "Build tests." OFF)
-option(UCDR_BUILD_EXAMPLES "Build examples" OFF)
+option(UCDR_BUILD_EXAMPLES "Build examples." OFF)
 option(UCDR_PIC "Control Position Independent Code." ON)
 option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
 
