@@ -57,7 +57,7 @@ endif()
 ###############################################################################
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 if(NOT UCDR_SUPERBUILD)
-    project(microcdr VERSION "1.1.1" LANGUAGES C)
+    project(microcdr VERSION "1.1.2" LANGUAGES C)
 else()
     project(ucdr_superbuild NONE)
     include(${PROJECT_SOURCE_DIR}/cmake/SuperBuild.cmake)
@@ -99,7 +99,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION
         ${PROJECT_VERSION}
     SOVERSION
-        ${PROJECT_VERSION_MAYOR}.${PROJECT_VERSION_MINOR}
+        ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     C_STANDARD
         99
     C_STANDARD_REQUIRED
