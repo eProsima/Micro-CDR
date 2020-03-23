@@ -71,6 +71,7 @@ UCDRDLLAPI void ucdr_reset_buffer_offset (ucdrBuffer* ub, size_t offset);
 UCDRDLLAPI void   ucdr_align_to         (ucdrBuffer* ub, size_t alignment);
 UCDRDLLAPI size_t ucdr_alignment        (size_t buffer_position, size_t data_size);
 UCDRDLLAPI size_t ucdr_buffer_alignment (const ucdrBuffer* ub, size_t data_size);
+UCDRDLLAPI void   ucdr_advance_buffer   (ucdrBuffer* ub, size_t size);
 
 UCDRDLLAPI size_t         ucdr_buffer_size       (const ucdrBuffer* ub);
 UCDRDLLAPI size_t         ucdr_buffer_length     (const ucdrBuffer* ub);

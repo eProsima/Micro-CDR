@@ -130,6 +130,25 @@ size_t ucdr_buffer_alignment(const ucdrBuffer* ub, size_t data_size)
     return 0;
 }
 
+void ucdr_advance_buffer(ucdrBuffer* ub, size_t size)
+{
+    if (ucdr_check_buffer_available_for(ub, size))
+    {
+        ub->iterator += size;
+    }
+    else
+    {
+        size_t remaining_size = size;
+        size_t serialization_size;
+        while(0 < (serialization_size = ucdr_check_final_buffer_behavior_array(ub, remaining_size, 1)))
+        {
+            remaining_size -= serialization_size;
+            ub->iterator += serialization_size;
+        }
+    }
+    ub->last_data_size = 1;
+}
+
 size_t ucdr_buffer_size(const ucdrBuffer* ub)
 {
     return (size_t)(ub->final - ub->init);
