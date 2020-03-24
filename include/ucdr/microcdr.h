@@ -45,6 +45,9 @@ typedef struct ucdrBuffer
     uint8_t *final;
     uint8_t *iterator;
 
+    size_t origin;
+    size_t offset;
+
     ucdrEndianness endianness;
     uint8_t last_data_size;
 

@@ -79,8 +79,10 @@ void ucdr_init_buffer_offset_endian(ucdrBuffer* ub, uint8_t* data, size_t size, 
     ub->init = data;
     ub->final = ub->init + size;
     ub->iterator = ub->init + offset;
-    ub->last_data_size = 0u;
+    ub->origin = 0u;
+    ub->offset = 0u;
     ub->endianness = endianness;
+    ub->last_data_size = 0u;
     ub->error = false;
     ub->on_full_buffer = NULL;
     ub->args = NULL;
@@ -106,12 +108,15 @@ void ucdr_reset_buffer_offset(ucdrBuffer* ub, size_t offset)
 
 void ucdr_align_to(ucdrBuffer* ub, size_t size)
 {
-    ub->iterator += ucdr_buffer_alignment(ub, size);
+    size_t alignment = ucdr_buffer_alignment(ub, size);
+    ub->offset += alignment;
+
+    // TODO (julibert): rethink.
+    ub->iterator += alignment;
     if(ub->iterator > ub->final)
     {
         ub->iterator = ub->final;
     }
-
     ub->last_data_size = (uint8_t)size;
 }
 
@@ -122,12 +127,9 @@ size_t ucdr_alignment(size_t current_alignment, size_t data_size)
 
 size_t ucdr_buffer_alignment(const ucdrBuffer* ub, size_t data_size)
 {
-    if(data_size > ub->last_data_size)
-    {
-        return (data_size - ((uint32_t)(ub->iterator - ub->init) % data_size)) & (data_size - 1);
-    }
-
-    return 0;
+    return (data_size > ub->last_data_size)
+        ? (data_size - ((uint32_t)(ub->offset - ub->origin) % data_size)) & (data_size - 1)
+        : 0;
 }
 
 void ucdr_advance_buffer(ucdrBuffer* ub, size_t size)
