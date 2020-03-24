@@ -64,23 +64,46 @@ void ucdr_set_on_full_buffer_callback(ucdrBuffer* ub, OnFullBuffer on_full_buffe
 // -------------------------------------------------------------------
 //                       PUBLIC IMPLEMENTATION
 // -------------------------------------------------------------------
-void ucdr_init_buffer(ucdrBuffer* ub, uint8_t* data, size_t size)
+void ucdr_init_buffer(
+        ucdrBuffer* ub,
+        uint8_t* data,
+        size_t size)
 {
-    ucdr_init_buffer_offset(ub, data, size, 0u);
+    ucdr_init_buffer_origin(ub, data, size, 0u);
 }
 
-void ucdr_init_buffer_offset(ucdrBuffer* ub, uint8_t* data, size_t size, size_t offset)
+void ucdr_init_buffer_origin(
+        ucdrBuffer* ub,
+        uint8_t* data,
+        size_t size,
+        size_t origin)
 {
-    ucdr_init_buffer_offset_endian(ub, data, size, offset, UCDR_MACHINE_ENDIANNESS);
+    ucdr_init_buffer_origin_offset(ub, data, size, origin, 0u);
 }
 
-void ucdr_init_buffer_offset_endian(ucdrBuffer* ub, uint8_t* data, size_t size, size_t offset, ucdrEndianness endianness)
+void ucdr_init_buffer_origin_offset(
+        ucdrBuffer* ub,
+        uint8_t* data,
+        size_t size,
+        size_t origin,
+        size_t offset)
+{
+    ucdr_init_buffer_origin_offset_endian(ub, data, size, origin, offset, UCDR_MACHINE_ENDIANNESS);
+}
+
+void ucdr_init_buffer_origin_offset_endian(
+        ucdrBuffer* ub,
+        uint8_t* data,
+        size_t size,
+        size_t origin,
+        size_t offset,
+        ucdrEndianness endianness)
 {
     ub->init = data;
     ub->final = ub->init + size;
     ub->iterator = ub->init + offset;
-    ub->origin = 0u;
-    ub->offset = 0u;
+    ub->origin = origin;
+    ub->offset = origin + offset;
     ub->endianness = endianness;
     ub->last_data_size = 0u;
     ub->error = false;
