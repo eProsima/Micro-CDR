@@ -160,6 +160,7 @@ void ucdr_advance_buffer(ucdrBuffer* ub, size_t size)
     if (ucdr_check_buffer_available_for(ub, size))
     {
         ub->iterator += size;
+        ub->offset += size;
     }
     else
     {
@@ -169,6 +170,7 @@ void ucdr_advance_buffer(ucdrBuffer* ub, size_t size)
         {
             remaining_size -= serialization_size;
             ub->iterator += serialization_size;
+            ub->offset += serialization_size;
         }
     }
     ub->last_data_size = 1;
