@@ -125,6 +125,7 @@ void ucdr_reset_buffer(ucdrBuffer* ub)
 void ucdr_reset_buffer_offset(ucdrBuffer* ub, size_t offset)
 {
     ub->iterator = ub->init + offset;
+    ub->offset = ub->origin + offset;
     ub->last_data_size = 0u;
     ub->error = false;
 }

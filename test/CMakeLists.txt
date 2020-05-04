@@ -26,6 +26,7 @@ check_gtest()
 if(GTEST_FOUND)
     include(CTest)
     set(SRCS
+        CommonFunctions.cpp
         serialization/BasicSerialization.cpp
         serialization/ArraySerialization.cpp
         serialization/SequenceSerialization.cpp
