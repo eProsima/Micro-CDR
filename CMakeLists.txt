@@ -24,6 +24,7 @@ option(UCDR_SUPERBUILD "Enable superbuild compilation." ON)
 option(UCDR_BUILD_TESTS "Build tests." OFF)
 option(UCDR_BUILD_EXAMPLES "Build examples." OFF)
 option(UCDR_PIC "Control Position Independent Code." ON)
+option(UCDR_ISOLATED_INSTALL "Install the project into a separated folder with version control." ON)
 option(BUILD_SHARED_LIBS "Control shared/static library building." OFF)
 
 option(UCDR_BUILD_CI_TESTS "Build CI test cases." OFF)
@@ -31,16 +32,6 @@ if(UCDR_BUILD_CI_TESTS)
     set(UCDR_BUILD_TESTS ON)
 endif()
 
-include(GNUInstallDirs)
-set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
-set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE PATH "Installation directory for C headers")
-set(LIB_INSTALL_DIR     ${CMAKE_INSTALL_LIBDIR}     CACHE PATH "Installation directory for libraries")
-set(DATA_INSTALL_DIR    ${CMAKE_INSTALL_DATADIR}    CACHE PATH "Installation directory for data")
-if(WIN32)
-    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
-else()
-    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
-endif()
 set(CONFIG_BIG_ENDIANNESS OFF CACHE BOOL "Set the machine endianness to big endianness (default: little endianness).")
 
 # Set CMAKE_BUILD_TYPE to Release by default.
@@ -57,7 +48,7 @@ endif()
 ###############################################################################
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 if(NOT UCDR_SUPERBUILD)
-    project(microcdr VERSION "1.1.2" LANGUAGES C)
+    project(microcdr VERSION "1.2.0" LANGUAGES C)
 else()
     project(ucdr_superbuild NONE)
     include(${PROJECT_SOURCE_DIR}/cmake/SuperBuild.cmake)
@@ -79,6 +70,24 @@ endif()
 include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 if(MSVC OR MSVC_IDE)
     check_msvc_arch()
+endif()
+
+###############################################################################
+# Set install directories
+###############################################################################
+if(UCDR_ISOLATED_INSTALL)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}-${PROJECT_VERSION}")
+endif()
+
+include(GNUInstallDirs)
+set(BIN_INSTALL_DIR     ${CMAKE_INSTALL_BINDIR}     CACHE PATH "Installation directory for binaries")
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR} CACHE PATH "Installation directory for C headers")
+set(LIB_INSTALL_DIR     ${CMAKE_INSTALL_LIBDIR}     CACHE PATH "Installation directory for libraries")
+set(DATA_INSTALL_DIR    ${CMAKE_INSTALL_DATADIR}    CACHE PATH "Installation directory for data")
+if(WIN32)
+    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
+else()
+    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
 endif()
 
 ###############################################################################

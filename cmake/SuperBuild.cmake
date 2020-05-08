@@ -35,10 +35,9 @@ if(UCDR_BUILD_TESTS)
             PREFIX
                 ${PROJECT_BINARY_DIR}/googletest
             INSTALL_DIR
-                ${PROJECT_BINARY_DIR}/temp_install
+                ${PROJECT_BINARY_DIR}/temp_install/googletest
             CMAKE_ARGS
                 -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-                -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 $<$<PLATFORM_ID:Windows>:-Dgtest_force_shared_crt:BOOL=ON>
             BUILD_COMMAND
                 COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config Release --target install
@@ -46,8 +45,8 @@ if(UCDR_BUILD_TESTS)
             INSTALL_COMMAND
                 ""
             )
-        set(GTEST_ROOT ${PROJECT_BINARY_DIR}/temp_install CACHE PATH "" FORCE)
-        set(GMOCK_ROOT ${PROJECT_BINARY_DIR}/temp_install CACHE PATH "" FORCE)
+        set(GTEST_ROOT ${PROJECT_BINARY_DIR}/temp_install/googletest CACHE PATH "" FORCE)
+        set(GMOCK_ROOT ${PROJECT_BINARY_DIR}/temp_install/googletest CACHE PATH "" FORCE)
         list(APPEND _deps googletest)
     endif()
 endif()
