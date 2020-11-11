@@ -182,6 +182,31 @@ public:
         EXPECT_TRUE(0 == std::memcmp(input, output, sequence_size));
     }
 
+    void double_sequence_with_aligment_serialization()
+    {
+        double input[50];
+        std::fill_n(input, sequence_size, 3.141592653589793238462);
+        double output[50];
+
+        char str_input[23] = "This is a message test";
+        char str_output[23] = {0};
+
+        EXPECT_TRUE(ucdr_serialize_string(&writer, str_input));
+        EXPECT_TRUE(ucdr_serialize_sequence_double(&writer, input, 0));
+        EXPECT_TRUE(ucdr_serialize_uint32_t(&writer, 42));
+        
+        EXPECT_TRUE(ucdr_deserialize_string(&reader, str_output, 23));
+        EXPECT_TRUE(ucdr_deserialize_sequence_double(&reader, output, 50, &output_size));
+        EXPECT_EQ(output_size, (uint32_t) 0);
+
+        uint32_t readed;
+        EXPECT_TRUE(ucdr_deserialize_uint32_t(&reader, &readed));
+        EXPECT_EQ(readed, (uint32_t) 42);
+
+        // Fix this, desctructor checks if sequence size is output_size
+        output_size = sequence_size;
+    }
+
 protected:
     uint32_t sequence_size;
     uint32_t output_size = 0;
