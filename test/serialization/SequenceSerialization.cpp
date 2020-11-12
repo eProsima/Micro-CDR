@@ -74,4 +74,3 @@ TEST_F(SequenceSerialization, Double)
     double_sequence_serialization();
 }
 
-
