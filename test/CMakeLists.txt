@@ -50,6 +50,7 @@ if(GTEST_FOUND)
             ${SRCS}
         DEPENDENCIES
             microcdr
+            fastcdr
         )
     target_include_directories(${PROJECT_NAME} PRIVATE ${GTEST_INCLUDE_DIRS} ${FASTCDR_INCLUDE_DIRS})
     target_link_libraries(${PROJECT_NAME} microcdr fastcdr ${GTEST_BOTH_LIBRARIES})
