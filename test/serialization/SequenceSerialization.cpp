@@ -74,9 +74,4 @@ TEST_F(SequenceSerialization, Double)
     double_sequence_serialization();
 }
 
-TEST_F(SequenceSerialization, Double_with_aligment)
-{
-    double_sequence_with_aligment_serialization();
-}
-
 
