@@ -25,7 +25,7 @@ endif()
 check_gtest()
 if(GTEST_FOUND)
     include(CTest)
-    find_package(fastcdr)
+    find_package(fastcdr REQUIRED)
     set(SRCS
         CommonFunctions.cpp
         serialization/BasicSerialization.cpp
