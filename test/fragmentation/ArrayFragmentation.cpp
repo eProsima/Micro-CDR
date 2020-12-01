@@ -135,7 +135,7 @@ TEST_F(ArrayFragmentation, AsymmetricFragmentation)
     double input[n_elements];
     std::fill_n(input, n_elements, 3.141592653589793238462);
     double output[n_elements];
-    std::memset(output, 0, n_elements);
+    std::memset(output, 0, n_elements * sizeof(double));
 
     ucdr_set_on_full_buffer_callback(&writer, asymmetric_first_on_full_buffer, this);
     ucdr_set_on_full_buffer_callback(&reader, asymmetric_first_on_full_buffer, this);
