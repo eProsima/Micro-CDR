@@ -40,9 +40,7 @@ bool ucdr_check_final_buffer_behavior(ucdrBuffer* ub, size_t data_size)
 size_t ucdr_next_remaining_size(ucdrBuffer* ub, size_t bytes, size_t data_size)
 {
     size_t remaining = ucdr_buffer_remaining(ub);
-    return (ub->iterator + bytes <= ub->final)
-           ? bytes
-           : remaining - (remaining % data_size);
+    return (bytes <= remaining) ? bytes : remaining;
 }
 
 size_t ucdr_check_final_buffer_behavior_array(ucdrBuffer* ub, size_t bytes, size_t data_size)
