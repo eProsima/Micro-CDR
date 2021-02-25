@@ -25,6 +25,7 @@ endif()
 check_gtest()
 if(GTEST_FOUND)
     include(CTest)
+    find_package(fastcdr REQUIRED)
     set(SRCS
         CommonFunctions.cpp
         serialization/BasicSerialization.cpp
@@ -40,6 +41,7 @@ if(GTEST_FOUND)
         Alignment.cpp
         FullBuffer.cpp
         FullBufferCallback.cpp
+        cross_serialization/FastCDRSerialization.cpp
         )
     add_executable(${PROJECT_NAME} ${SRCS})
     set_common_compile_options(${PROJECT_NAME})
@@ -48,9 +50,10 @@ if(GTEST_FOUND)
             ${SRCS}
         DEPENDENCIES
             microcdr
+            fastcdr
         )
-    target_include_directories(${PROJECT_NAME} PRIVATE ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME} microcdr ${GTEST_BOTH_LIBRARIES})
+    target_include_directories(${PROJECT_NAME} PRIVATE ${GTEST_INCLUDE_DIRS} ${FASTCDR_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} microcdr fastcdr ${GTEST_BOTH_LIBRARIES})
 
     set_target_properties(${PROJECT_NAME} PROPERTIES
         CXX_STANDARD 11

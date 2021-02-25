@@ -31,6 +31,10 @@ public:
     }
 
 protected:
+    uint8_t buffer2[BUFFER_LENGTH];
+    uint8_t asymmetric_buffer1[999];
+    uint8_t asymmetric_buffer2[1025];
+
     static bool on_full_buffer(ucdrBuffer* ub, void* args)
     {
         ArrayFragmentation* obj =  static_cast<ArrayFragmentation*>(args);
@@ -42,7 +46,23 @@ protected:
         return false;
     }
 
-    uint8_t buffer2[BUFFER_LENGTH];
+    static bool asymmetric_first_on_full_buffer(ucdrBuffer* ub, void* args)
+    {
+        ArrayFragmentation* obj =  static_cast<ArrayFragmentation*>(args);
+
+        ub->init = obj->asymmetric_buffer2;
+        ub->iterator = ub->init;
+        ub->final = ub->init + sizeof(asymmetric_buffer2);
+        ucdr_set_on_full_buffer_callback(ub, asymmetric_last_on_full_buffer, obj);
+        return false;
+    }
+
+    static bool asymmetric_last_on_full_buffer(ucdrBuffer* ub, void* args)
+    {
+        (void) ub;
+        (void) args;
+        return true;
+    }
 };
 
 TEST_F(ArrayFragmentation, Bool)
@@ -103,4 +123,25 @@ TEST_F(ArrayFragmentation, Float)
 TEST_F(ArrayFragmentation, Double)
 {
     double_array_serialization();
+}
+
+TEST_F(ArrayFragmentation, AsymmetricFragmentation)
+{
+    constexpr size_t n_elements = (sizeof(asymmetric_buffer1) +  sizeof(asymmetric_buffer2))/sizeof(double);
+    
+    ucdr_init_buffer(&writer, asymmetric_buffer1, sizeof(asymmetric_buffer1));
+    ucdr_init_buffer(&reader, asymmetric_buffer1, sizeof(asymmetric_buffer1));
+
+    double input[n_elements];
+    std::fill_n(input, n_elements, 3.141592653589793238462);
+    double output[n_elements];
+    std::memset(output, 0, n_elements * sizeof(double));
+
+    ucdr_set_on_full_buffer_callback(&writer, asymmetric_first_on_full_buffer, this);
+    ucdr_set_on_full_buffer_callback(&reader, asymmetric_first_on_full_buffer, this);
+
+    EXPECT_TRUE(ucdr_serialize_array_double(&writer, input, n_elements));
+    EXPECT_TRUE(ucdr_deserialize_array_double(&reader, output, n_elements));
+
+    EXPECT_TRUE(0 == std::memcmp(input, output, n_elements * sizeof(double)));
 }

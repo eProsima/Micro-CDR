@@ -49,6 +49,32 @@ if(UCDR_BUILD_TESTS)
         set(GMOCK_ROOT ${PROJECT_BINARY_DIR}/temp_install/googletest CACHE PATH "" FORCE)
         list(APPEND _deps googletest)
     endif()
+
+    unset(fastcdr_DIR CACHE)
+    enable_language(CXX)
+    unset(FASTCDR_ROOT CACHE)
+    ExternalProject_Add(fastcdr
+        GIT_REPOSITORY
+            https://github.com/eProsima/Fast-CDR
+        GIT_TAG
+        v1.0.13
+        PREFIX
+            ${PROJECT_BINARY_DIR}/fastcdr
+        INSTALL_DIR
+            ${PROJECT_BINARY_DIR}/temp_install/fastcdr
+        CMAKE_ARGS
+            -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+            -DCMAKE_BUILD_TYPE=${DCMAKE_BUILD_TYPE}
+        BUILD_COMMAND
+            COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config Release --target install
+            COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config Debug --target install
+        INSTALL_COMMAND
+            ""
+        )
+    set(FASTCDR_ROOT ${PROJECT_BINARY_DIR}/temp_install/fastcdr CACHE PATH "" FORCE)
+    set(FASTCDR_INCLUDE_DIRS ${PROJECT_BINARY_DIR}/temp_install/fastcdr/include CACHE PATH "" FORCE)
+        
+    list(APPEND _deps fastcdr)
 endif()
 
 # Client project.
