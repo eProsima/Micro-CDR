@@ -304,5 +304,5 @@ The last possibility gives the user the capacity to use several small buffers fo
 
 ## Quality Declaration
 
-**eprosima Micro CDR** claims to be in the **Quality Level 1** category based on the guidelines provided by [ROS 2](https://ros.org/reps/rep-2004.html).
+**eProsima Micro CDR** claims to be in the **Quality Level 1** category based on the guidelines provided by [ROS 2](https://ros.org/reps/rep-2004.html).
 See the [Quality Declaration](QUALITY.md) for more details.
