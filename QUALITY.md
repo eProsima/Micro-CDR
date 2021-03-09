@@ -46,7 +46,7 @@ All changes will occur through a pull request.
 
 ### Contributor Origin [2.ii]
 
-**eProsima Micro CDR** uses the [Developer Certificate of Origin (DCO)](https://developercertificate.org/) as its confirmation of contributor origin policy since version 1.1.
+**eProsima Micro CDR** uses the [Developer Certificate of Origin (DCO)](https://developercertificate.org/) as its confirmation of contributor origin policy since version 1.2.1.
 More information can be found in [CONTRIBUTING](CONTRIBUTING.md)
 
 ### Peer Review Policy [2.iii]
