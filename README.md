@@ -1,6 +1,5 @@
 # eProsima Micro CDR
 
-[![Releases](https://img.shields.io/github/release/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/releases)
 [![License](https://img.shields.io/github/license/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/blob/master/LICENSE)
 [![Issues](https://img.shields.io/github/issues/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/issues)
 [![Forks](https://img.shields.io/github/forks/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/network/members)
