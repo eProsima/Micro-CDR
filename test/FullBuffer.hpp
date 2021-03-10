@@ -19,13 +19,15 @@
 class FullBuffer : public BasicSerialization
 {
 public:
+
     FullBuffer()
     {
     }
 
-    void fill_buffer_except(int gap)
+    void fill_buffer_except(
+            int gap)
     {
-        for(int i = 0; i < BUFFER_LENGTH - gap; ++i)
+        for (int i = 0; i < BUFFER_LENGTH - gap; ++i)
         {
             uint8_t_serialization();
         }
@@ -67,7 +69,8 @@ public:
         EXPECT_FALSE(ucdr_deserialize_uint64_t(&reader, &output));
     }
 
-    void try_array_block_1(uint32_t size)
+    void try_array_block_1(
+            uint32_t size)
     {
         uint8_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, uint8_t(0x09));
@@ -77,7 +80,8 @@ public:
         EXPECT_FALSE(ucdr_deserialize_array_uint8_t(&reader, output, size));
     }
 
-    void try_array_block_2(uint32_t size)
+    void try_array_block_2(
+            uint32_t size)
     {
         uint16_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, int16_t(0x0A0B));
@@ -87,7 +91,8 @@ public:
         EXPECT_FALSE(ucdr_deserialize_array_uint16_t(&reader, output, size));
     }
 
-    void try_array_block_4(uint32_t size)
+    void try_array_block_4(
+            uint32_t size)
     {
 
         uint32_t input[ARRAY_CAPACITY];
@@ -98,7 +103,8 @@ public:
         EXPECT_FALSE(ucdr_deserialize_array_uint32_t(&reader, output, size));
     }
 
-    void try_array_block_8(uint32_t size)
+    void try_array_block_8(
+            uint32_t size)
     {
         uint64_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, 0x0102030405060708L);
@@ -122,4 +128,5 @@ public:
         writer.error = false;
         reader.error = false;
     }
+
 };

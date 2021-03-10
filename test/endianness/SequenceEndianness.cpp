@@ -27,8 +27,8 @@ public:
     {
     }
 
-
 protected:
+
     ucdrEndianness endianness;
 };
 
@@ -176,4 +176,5 @@ TEST_P(SequenceEndianness, Double)
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE));
 }
 
-INSTANTIATE_TEST_CASE_P(ucdrEndianness, SequenceEndianness, ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));
+INSTANTIATE_TEST_CASE_P(ucdrEndianness, SequenceEndianness,
+        ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));

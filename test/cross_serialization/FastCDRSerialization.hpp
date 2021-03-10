@@ -35,8 +35,8 @@ public:
         char buffer_fastcdr[BUFFER_LENGTH] = {0};
 
         ucdrBuffer reader_fastcdr;
-        ucdr_init_buffer(&reader_fastcdr, reinterpret_cast<uint8_t *>(buffer_fastcdr), BUFFER_LENGTH);
-        
+        ucdr_init_buffer(&reader_fastcdr, reinterpret_cast<uint8_t*>(buffer_fastcdr), BUFFER_LENGTH);
+
         FastBuffer cdrbuffer(buffer_fastcdr, BUFFER_LENGTH);
         Cdr cdr_ser(cdrbuffer);
 
@@ -49,10 +49,10 @@ public:
         EXPECT_EQ(octet_array[0], octet_array_out[0]);
         EXPECT_EQ(octet_array[1], octet_array_out[1]);
 
-        // Serialize 2 doubles = 16 Bytes + 1 Header 
+        // Serialize 2 doubles = 16 Bytes + 1 Header
         const double double_seq[2] = {3.14, 3.14};
         cdr_ser.serializeSequence(double_seq, 2);
-        
+
         double double_seq_out[2];
         uint32_t double_seq_len;
         EXPECT_TRUE(ucdr_deserialize_sequence_double(&reader_fastcdr, double_seq_out, 2, &double_seq_len));
@@ -73,6 +73,7 @@ public:
         EXPECT_EQ(octet_array[1], octet_array_out[1]);
 
     }
+
 };
 
 #endif //_FASTCDR_SERIALIZATION_HPP_

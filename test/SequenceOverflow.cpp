@@ -19,6 +19,7 @@
 class SequenceOverflow : public SequenceSerialization
 {
 public:
+
     SequenceOverflow()
     {
         set_sequence_size(SEQUENCE_SIZE_OVERFLOW);

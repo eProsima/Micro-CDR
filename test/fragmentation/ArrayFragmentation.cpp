@@ -19,23 +19,27 @@
 class ArrayFragmentation : public ArraySerialization
 {
 public:
+
     ArrayFragmentation()
     {
         ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, this);
         ucdr_set_on_full_buffer_callback(&reader, on_full_buffer, this);
         std::memset(buffer2, 0, BUFFER_LENGTH);
-        for(int i = 0; i < BUFFER_LENGTH - OFFSET; ++i)
+        for (int i = 0; i < BUFFER_LENGTH - OFFSET; ++i)
         {
             uint8_t_serialization();
         }
     }
 
 protected:
+
     uint8_t buffer2[BUFFER_LENGTH];
     uint8_t asymmetric_buffer1[999];
     uint8_t asymmetric_buffer2[1025];
 
-    static bool on_full_buffer(ucdrBuffer* ub, void* args)
+    static bool on_full_buffer(
+            ucdrBuffer* ub,
+            void* args)
     {
         ArrayFragmentation* obj =  static_cast<ArrayFragmentation*>(args);
 
@@ -46,7 +50,9 @@ protected:
         return false;
     }
 
-    static bool asymmetric_first_on_full_buffer(ucdrBuffer* ub, void* args)
+    static bool asymmetric_first_on_full_buffer(
+            ucdrBuffer* ub,
+            void* args)
     {
         ArrayFragmentation* obj =  static_cast<ArrayFragmentation*>(args);
 
@@ -57,12 +63,15 @@ protected:
         return false;
     }
 
-    static bool asymmetric_last_on_full_buffer(ucdrBuffer* ub, void* args)
+    static bool asymmetric_last_on_full_buffer(
+            ucdrBuffer* ub,
+            void* args)
     {
         (void) ub;
         (void) args;
         return true;
     }
+
 };
 
 TEST_F(ArrayFragmentation, Bool)
@@ -127,8 +136,8 @@ TEST_F(ArrayFragmentation, Double)
 
 TEST_F(ArrayFragmentation, AsymmetricFragmentation)
 {
-    constexpr size_t n_elements = (sizeof(asymmetric_buffer1) +  sizeof(asymmetric_buffer2))/sizeof(double);
-    
+    constexpr size_t n_elements = (sizeof(asymmetric_buffer1) +  sizeof(asymmetric_buffer2)) / sizeof(double);
+
     ucdr_init_buffer(&writer, asymmetric_buffer1, sizeof(asymmetric_buffer1));
     ucdr_init_buffer(&reader, asymmetric_buffer1, sizeof(asymmetric_buffer1));
 
