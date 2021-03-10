@@ -125,15 +125,9 @@ Any performance regression detected in *eprosima Micro XRCE-DDS Client* would be
 
 ### Linters and Static Analysis [4.v]
 
-
-TODO: uncrustify, check Synopsis and CodeQL
-
-<!-- **eProsima Micro CDR** [code style](https://github.com/eProsima/cpp-style) is enforced using [*uncrustify*](https://github.com/uncrustify/uncrustify).
+**eProsima Micro CDR** [code style](https://github.com/eProsima/cpp-style) is enforced using [*uncrustify*](https://github.com/uncrustify/uncrustify).
 Among the CI tests there are tests that ensures that every pull request is compliant with the code style.
-The latest pull request results can be seen [here](http://jenkins.eprosima.com:8080/job/fastcdr_github_uncrustify/lastBuild/).
-The tests only check files where changes have been made.
-Therefore, the code style is only enforced in some files.
-However, the tendency will be to homogenize the older source files to the code style. -->
+The latest pull request results can be seen [here](http://jenkins.eprosima.com:8080/job/Micro-CDR%20Manual%20Linux/lastBuild/).
 
 **eProsima Micro CDR** uses [Synopsis Coverity static code analysis](https://scan.coverity.com/projects/eprosima-micro-cdr).
 
