@@ -15,7 +15,7 @@ This library is focused on embedded and resource-limited systems.
 
 ## Usage examples
 This is a code example showing the serialization and deserialization of a string.
-As *Micro CDR* uses a static buffer, that means the user has to provide a defined buffer and its size during the *ucdrBuffer* creation.
+As *Micro CDR* uses a static buffer, the user has to provide a defined buffer and its size during the *ucdrBuffer* creation.
 
 ```c
     #include <ucdr/microcdr.h>

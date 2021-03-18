@@ -2,7 +2,7 @@ This document is a declaration of software quality for **eProsima Micro CDR** ba
 
 # Quality Declaration
 
-**eProsima Micro CDR** is a C99 library that provides a serialization mechanism: the [standard CDR](https://www.omg.org/cgi-bin/doc?formal/02-06-51) serialization mechanism.
+**eProsima Micro CDR** is a C99 library that functions as a serialization tool, according to the [standard CDR](https://www.omg.org/cgi-bin/doc?formal/02-06-51) serialization mechanism.
 
 **eProsima Micro CDR** claims to be in the **Quality Level 1** category.
 
@@ -29,7 +29,7 @@ The public API is documented [in this repo README.md](https://github.com/eProsim
 
 ### ABI Stability Policy [1.v]
 
-Any ABI break in **eProsima Micro CDR** will be done between minor versions and it should be clearly stated on the release notes.
+Any ABI break in **eProsima Micro CDR** will be done between minor versions and it should be clearly stated in the release notes.
 
 ## Change Control Process [2]
 
@@ -38,7 +38,7 @@ The change control process can be found in [CONTRIBUTING](CONTRIBUTING.md)
 
 All changes to **eProsima Micro CDR** occur through pull requests that are required to pass all CI tests.
 In case of failure, only maintainers can merge the pull request, and only when there is enough evidence that the failure is unrelated to the change.
-Additionally, all pull requests must have a positive review from one other contributor that did not author the pull request.
+Additionally, all pull requests must have at least one positive review from another contributor that did not author the pull request.
 
 ### Change Requests [2.i]
 
@@ -57,7 +57,7 @@ All pull requests will be peer-reviewed by at least one other contributor who di
 
 All pull requests must pass CI to be considered for merging, unless maintainers consider that there is enough evidence that the failure is unrelated to the changes.
 CI testing is automatically triggered by incoming pull requests.
-Current nightly results can be seen here for all supported platforms:
+Current nightly results for all supported platforms can be checked at the links:
 
 * Linux [![Linux ci](http://jenkins.eprosima.com:8080/view/Nightly/job/Micro-CDR%20Nightly%20Master%20Linux/badge/icon?subject=%20%20%20Linux%20CI%20)](http://jenkins.eprosima.com:8080/view/Micro%20XRCE/job/Micro-CDR%20Nightly%20Master%20Linux/)
 * Windows [![Windows ci](http://jenkins.eprosima.com:8080/job/Micro-CDR%20Nightly%20Master%20Windows/badge/icon?subject=%20%20%20%20Windows%20CI%20)](http://jenkins.eprosima.com:8080/view/Micro%20XRCE/job/Micro-CDR%20Nightly%20Master%20Windows/)
@@ -70,7 +70,7 @@ All pull requests must resolve related documentation changes before merging as s
 
 ### Feature Documentation [3.i]
 
-**eProsima Micro CDR** provides one features corresponding to its serialization mechanisms:
+**eProsima Micro CDR** provides one feature corresponding to its serialization mechanisms:
 
 * [Standard CDR](https://www.omg.org/cgi-bin/doc?formal/02-06-51) serialization mechanism.
 
@@ -85,7 +85,7 @@ A full copy of the license can be found [here](LICENSE).
 
 ### Copyright Statements [3.iv]
 
-**eProsima Micro CDR** copyright holder provide a statement of copyright in each source file.
+The **eProsima Micro CDR** copyright holder provides a statement of copyright in each source file.
 
 ## Testing [4]
 
@@ -108,25 +108,25 @@ The tests aim to cover typical usage and corner cases.
 [![Coverage](https://img.shields.io/jenkins/coverage/cobertura?jobUrl=http%3A%2F%2Fjenkins.eprosima.com%3A8080%2Fview%2FMicro%2520XRCE%2Fjob%2FMicro-CDR%2520Nightly%2520Master%2520Linux%2F)](http://jenkins.eprosima.com:8080/view/Micro%20XRCE/job/Micro-CDR%20Nightly%20Master%20Linux/)
 *eProsima Micro CDR* aims to provide a line coverage **above 90%**.
 *Micro CDR* code coverage policy comprises:
-1. All contributions to *Micro CDR* must increase (or at least keep) current line coverage.
+1. All contributions to *Micro CDR* must increase (or at least keep) the current line coverage.
    This is done to ensure that the **90%** line coverage goal is eventually met.
 1. Line coverage regressions are only permitted if properly justified and accepted by maintainers.
-1. If the CI system reports a coverage regression after a pull request has been merged, the maintainers must study the case and decide how to proceed, mostly reverting the changes and asking for a more thorough testing of the committed changes.
+1. If the CI system reports a coverage regression after a pull request has been merged, the maintainers must study the case and decide how to proceed, most often reverting the changes and asking for a more thorough testing of the committed changes.
 2. This policy is enforced through the [nightly Micro CDR CI job](http://jenkins.eprosima.com:8080/view/Micro%20XRCE/job/Micro-CDR%20Nightly%20Master%20Linux/).
 
-As stated in [CONTRIBUTING.md](CONTRIBUTING.md), developers and contributors are asked to run a line coverage assessment locally before submitting a PR.
+As stated in [CONTRIBUTING.md](CONTRIBUTING.md), developers and contributors are requested to run a line coverage assessment locally before submitting a PR.
 
 ### Performance [4.iv]
 
 **eProsima Micro CDR** does not provide performance tests.
 However, performance is indirectly tested by *eprosima Micro XRCE-DDS Client*.
 
-Any performance regression detected in *eprosima Micro XRCE-DDS Client* would be analyzed and, in case that it is related to **eProsima Micro CDR** or could be solved modifying this library, changes could be made to the library in order to revert the performance regression.
+Any performance regression detected in *eProsima Micro XRCE-DDS Client* would be analyz¡sed and, in case it is related to **eProsima Micro CDR** or could be solved by modifying this library, changes can be made to the library in order to revert the performance regression.
 
 ### Linters and Static Analysis [4.v]
 
 **eProsima Micro CDR** [code style](https://github.com/eProsima/cpp-style) is enforced using [*uncrustify*](https://github.com/uncrustify/uncrustify).
-Among the CI tests there are tests that ensures that every pull request is compliant with the code style.
+Among the CI tests, there are tests that ensure that every pull request is compliant with the code style.
 The latest pull request results can be seen [here](http://jenkins.eprosima.com:8080/job/Micro-CDR%20Manual%20Linux/lastBuild/).
 
 **eProsima Micro CDR** uses [Synopsis Coverity static code analysis](https://scan.coverity.com/projects/eprosima-micro-cdr).
