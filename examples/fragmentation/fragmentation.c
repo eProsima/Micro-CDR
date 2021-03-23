@@ -21,7 +21,9 @@
 #define SLOTS 12
 #define STRING_MAX 128
 
-bool on_full_buffer(ucdrBuffer* ub, void* args)
+bool on_full_buffer(
+        ucdrBuffer* ub,
+        void* args)
 {
     uint8_t* buffer =  (uint8_t*) args;
 
@@ -31,7 +33,7 @@ bool on_full_buffer(ucdrBuffer* ub, void* args)
 
     // Leave the odd slots empty.
     uint32_t next_slot = 2 + (uint32_t)(ub->init - buffer) / BUFFER_LENGTH;
-    if(next_slot < SLOTS)
+    if (next_slot < SLOTS)
     {
         // Modify the internal buffer
         ub->init = buffer + BUFFER_LENGTH * next_slot;
