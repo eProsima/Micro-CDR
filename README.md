@@ -8,14 +8,14 @@
 
 <a href="http://www.eprosima.com"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSd0PDlVz1U_7MgdTe0FRIWD0Jc9_YH-gGi0ZpLkr-qgCI6ZEoJZ5GBqQ" align="left" hspace="8" vspace="2" width="100" height="100" ></a>
 
-*eProsima MicroCDR* is a *C* library implementing the *CDR* standard serialization methods.
+*eProsima Micro CDR* is a *C* library implementing the *CDR* standard serialization methods.
 This library is focused on embedded and resource-limited systems.
 
-*MicroCDR* uses a static buffer, and allow to serialize and deserialize in both, big endianness and little endianness.
+*Micro CDR* uses a static buffer, and allow to serialize and deserialize in both, big endianness and little endianness.
 
 ## Usage examples
 This is a code example showing the serialization and deserialization of a string.
-As *MicroCDR* uses a static buffer, that means the user has to provide a defined buffer and its size during the *ucdrBuffer* creation.
+As *Micro CDR* uses a static buffer, the user has to provide a defined buffer and its size during the *ucdrBuffer* creation.
 
 ```c
     #include <ucdr/microcdr.h>
@@ -37,7 +37,7 @@ As *MicroCDR* uses a static buffer, that means the user has to provide a defined
         ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
 
         // Serialize data
-        char input[16] = "Hello MicroCDR!"; //16 characters
+        char input[16] = "Hello Micro CDR!"; //16 characters
         ucdr_serialize_array_char(&writer, input, 16);
 
         // Deserialize data
@@ -59,7 +59,7 @@ void ucdr_init_buffer_origin                (ucdrBuffer* ub, uint8_t* data, size
 void ucdr_init_buffer_origin_offset         (ucdrBuffer* ub, uint8_t* data, size_t size, size_t origin, size_t offset);
 void ucdr_init_buffer_origin_offset_endian  (ucdrBuffer* ub, uint8_t* data, size_t size, size_t origin, size_t offset, ucdrEndianness endianness);
 ```
-Initialize a `ucdrBuffer` structure, the main struct of *MicroCDR*.
+Initialize a `ucdrBuffer` structure, the main struct of *Micro CDR*.
 - `ub`: the `ucdrBuffer` struct.
 - `data`: the buffer that the `ucdrBuffer` will use.
 - `size`: the size of the buffer that the `ucdrBuffer` will use.
@@ -182,10 +182,10 @@ Adding to this, there is a big set of functions for deserialize and deserialize 
 - Basics: `bool`, `char`, `int8_t`, `uint8_t`,`int16_t`, `uint16_t`,`int32_t`, `uint32_t`,`int64_t`, `uint64_t`,`float`, `double`.
 - Arrays: Any fixed size of basics types.
 - Sequence: Similar to arrays, but the information about the size is serialized along with the data.
-- String: Wrapper of char sequence, but easily to use.
+- String: Wrapper of char sequence.
 
 ### Endianness
-*MicroCDR* supports little and big endianness.
+*Micro CDR* supports little and big endianness.
 The **machine endianness** can be set by the cmake variable: `CONFIG_BIG_ENDIANNESS`.
 By default, if this varible is `OFF` which means that the machine endianness is little endianness.
 
@@ -205,7 +205,7 @@ the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
 After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
 
 ## Serialization/deserialization list
-The available modes of serialization/deserializations in *MicroCDR* are shown in the following table.
+The available modes of serialization/deserializations in *Micro CDR* are shown in the following table.
 
 | Type                 | Endianness |
 | -------------------- | ---------- |
@@ -278,7 +278,7 @@ The available modes of serialization/deserializations in *MicroCDR* are shown in
 
 ## Additional features
 ### Endianness
-*MicroCDR* supports little and big endianness.
+*Micro CDR* supports little and big endianness.
 The configuration can be done by cmake with the cmake `__BIG_ENDIAN__` variable.
 A `0` value implies that the serialization will performed into a little endian machine, and `1` into a big endian machine.
 
@@ -298,7 +298,11 @@ the `ucdrBuffer` state can be saved using the `ucdr_copy_buffer` function.
 After the application of the wrong serialization/deserialization, only the `ucdrBuffer` that performed the operation will have a dirty state.
 
 ### Full buffer callback
-MicroCDR provides a callback that the user can set in order to control the behavior when the `ucdrBuffer` can not serialize/deserialize anymore because the buffer is full.
+Micro CDR provides a callback that the user can set in order to control the behavior when the `ucdrBuffer` can not serialize/deserialize anymore because the buffer is full.
 This allows to create a better management error and/or modify the buffer location of the `ucdrBuffer`.
 The last possibility gives the user the capacity to use several small buffers for a big serialization (see the *fragmentation* example).
 
+## Quality Declaration
+
+**eProsima Micro CDR** claims to be in the **Quality Level 1** category based on the guidelines provided by [ROS 2](https://ros.org/reps/rep-2004.html).
+See the [Quality Declaration](QUALITY.md) for more details.

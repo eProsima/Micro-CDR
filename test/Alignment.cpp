@@ -21,13 +21,14 @@ public:
     Alignment()
     {
         int offset = GetParam();
-        for(int i = 0; i < offset; ++i)
+        for (int i = 0; i < offset; ++i)
         {
             uint8_t_serialization();
         }
     }
 
-    void check_alignment(int alignment)
+    void check_alignment(
+            int alignment)
     {
         EXPECT_EQ(static_cast<int>(ucdr_buffer_length(&writer)) % alignment, 0);
         EXPECT_EQ(static_cast<int>(ucdr_buffer_length(&reader)) % alignment, 0);
@@ -36,6 +37,7 @@ public:
     virtual ~Alignment()
     {
     }
+
 };
 
 INSTANTIATE_TEST_CASE_P(Offset, Alignment, ::testing::Range(0, 17), ::testing::PrintToStringParamName());

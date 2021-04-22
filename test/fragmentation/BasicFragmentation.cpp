@@ -17,19 +17,23 @@
 class BasicFragmentation : public BasicSerialization
 {
 public:
+
     BasicFragmentation()
     {
         ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, this);
         ucdr_set_on_full_buffer_callback(&reader, on_full_buffer, this);
         std::memset(buffer2, 0, BUFFER_LENGTH);
-        for(int i = 0; i < BUFFER_LENGTH; ++i)
+        for (int i = 0; i < BUFFER_LENGTH; ++i)
         {
             uint8_t_serialization();
         }
     }
 
 protected:
-    static bool on_full_buffer(ucdrBuffer* ub, void* args)
+
+    static bool on_full_buffer(
+            ucdrBuffer* ub,
+            void* args)
     {
         BasicFragmentation* obj =  static_cast<BasicFragmentation*>(args);
 

@@ -17,6 +17,7 @@
 class FullBufferCallback : public FullBuffer
 {
 public:
+
     FullBufferCallback()
     {
         ucdr_set_on_full_buffer_callback(&writer, on_full_buffer, buffer);
@@ -24,7 +25,10 @@ public:
     }
 
 protected:
-    static bool on_full_buffer(ucdrBuffer* ub, void* args)
+
+    static bool on_full_buffer(
+            ucdrBuffer* ub,
+            void* args)
     {
         uint8_t* buffer =  static_cast<uint8_t*>(args);
 
@@ -33,6 +37,7 @@ protected:
 
         return true;
     }
+
 };
 
 TEST_F(FullBufferCallback, Block_8_callback)

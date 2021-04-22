@@ -22,6 +22,7 @@
 class StringSerialization : public BasicSerialization
 {
 public:
+
     StringSerialization()
     {
     }
@@ -40,6 +41,7 @@ public:
 
         EXPECT_STREQ(input, output);
     }
+
 };
 
 #endif //_STRING_SERIALIZATION_HPP_

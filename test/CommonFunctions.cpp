@@ -18,9 +18,11 @@
 
 #define BUFFER_LENGTH 1024
 
-bool operator==(const ucdrBuffer& rhs, const ucdrBuffer& lhs)
+bool operator ==(
+        const ucdrBuffer& rhs,
+        const ucdrBuffer& lhs)
 {
-    return 
+    return
         rhs.init            ==  lhs.init
         && rhs.final           ==  lhs.final
         && rhs.iterator        ==  lhs.iterator
@@ -33,16 +35,17 @@ bool operator==(const ucdrBuffer& rhs, const ucdrBuffer& lhs)
         && rhs.args            ==  lhs.args;
 }
 
-
 class CommonFunctions : public ::testing::Test
 {
 public:
+
     void SetUp() override
     {
         std::memset(buffer, 0, BUFFER_LENGTH);
     }
 
 protected:
+
     ucdrBuffer ub;
     uint8_t buffer[BUFFER_LENGTH];
 };

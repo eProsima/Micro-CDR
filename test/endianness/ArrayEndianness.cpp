@@ -28,6 +28,7 @@ public:
     }
 
 protected:
+
     ucdrEndianness endianness;
 };
 
@@ -127,4 +128,5 @@ TEST_P(ArrayEndianness, Double)
     EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
 }
 
-INSTANTIATE_TEST_CASE_P(ucdrEndianness, ArrayEndianness, ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));
+INSTANTIATE_TEST_CASE_P(ucdrEndianness, ArrayEndianness,
+        ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));

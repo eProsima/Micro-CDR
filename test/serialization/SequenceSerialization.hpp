@@ -24,7 +24,8 @@ class SequenceSerialization : public ArraySerialization
 {
 public:
 
-    SequenceSerialization() : sequence_size(SEQUENCE_SIZE)
+    SequenceSerialization()
+        : sequence_size(SEQUENCE_SIZE)
     {
     }
 
@@ -33,7 +34,8 @@ public:
         EXPECT_EQ(output_size, sequence_size);
     }
 
-    void set_sequence_size(uint32_t size)
+    void set_sequence_size(
+            uint32_t size)
     {
         sequence_size = size;
     }
@@ -183,6 +185,7 @@ public:
     }
 
 protected:
+
     uint32_t sequence_size;
     uint32_t output_size = 0;
 };

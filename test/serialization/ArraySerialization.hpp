@@ -174,6 +174,7 @@ public:
 
         EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE));
     }
+
 };
 
 #endif //_ARRAY_SERIALIZATION_HPP_

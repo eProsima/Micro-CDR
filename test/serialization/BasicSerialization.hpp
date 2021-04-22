@@ -33,7 +33,8 @@ public:
         ucdr_init_buffer(&reader, buffer, BUFFER_LENGTH);
     }
 
-    void check_data_size(uint32_t data_size)
+    void check_data_size(
+            uint32_t data_size)
     {
         EXPECT_EQ(writer.last_data_size, data_size);
         EXPECT_EQ(reader.last_data_size, data_size);
@@ -192,6 +193,7 @@ public:
     }
 
 protected:
+
     ucdrBuffer writer;
     ucdrBuffer reader;
     uint8_t buffer[BUFFER_LENGTH];
