@@ -29,7 +29,9 @@ The public API is documented [in this repo README.md](https://github.com/eProsim
 
 ### ABI Stability Policy [1.v]
 
-Any ABI break in **eProsima Micro CDR** will be done between minor versions and it should be clearly stated in the release notes.
+Any ABI break in **eProsima Micro CDR** will be done between minor versions and it should be clearly stated in the release notes, note that minor releases can happen within a ROS distribution.
+
+While ABI breaks are taken into consideration, they are not seen as a critical issue, since the main target of this package is micro-ROS (a static linked environment).
 
 ## Change Control Process [2]
 
