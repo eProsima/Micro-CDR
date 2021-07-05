@@ -74,7 +74,7 @@ public:
     {
         uint8_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, uint8_t(0x09));
-        uint8_t output[ARRAY_CAPACITY];
+        uint8_t output[ARRAY_CAPACITY] = {0};
 
         EXPECT_FALSE(ucdr_serialize_array_uint8_t(&writer, input, size));
         EXPECT_FALSE(ucdr_deserialize_array_uint8_t(&reader, output, size));
@@ -85,7 +85,7 @@ public:
     {
         uint16_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, int16_t(0x0A0B));
-        uint16_t output[ARRAY_CAPACITY];
+        uint16_t output[ARRAY_CAPACITY] = {0};
 
         EXPECT_FALSE(ucdr_serialize_array_uint16_t(&writer, input, size));
         EXPECT_FALSE(ucdr_deserialize_array_uint16_t(&reader, output, size));
@@ -97,7 +97,7 @@ public:
 
         uint32_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, 0x0C0D0E0F);
-        uint32_t output[ARRAY_CAPACITY];
+        uint32_t output[ARRAY_CAPACITY] = {0};
 
         EXPECT_FALSE(ucdr_serialize_array_uint32_t(&writer, input, size));
         EXPECT_FALSE(ucdr_deserialize_array_uint32_t(&reader, output, size));
@@ -108,7 +108,7 @@ public:
     {
         uint64_t input[ARRAY_CAPACITY];
         std::fill_n(input, size, 0x0102030405060708L);
-        uint64_t output[ARRAY_CAPACITY];
+        uint64_t output[ARRAY_CAPACITY] = {0};
 
         EXPECT_FALSE(ucdr_serialize_array_uint64_t(&writer, input, size));
         EXPECT_FALSE(ucdr_deserialize_array_uint64_t(&reader, output, size));
