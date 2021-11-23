@@ -91,8 +91,7 @@ void ucdr_buffer_to_array(
 
 #define UCDR_SERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
     size_t alignment = ucdr_buffer_alignment(ub, TYPE_SIZE); \
-    ub->iterator += alignment; \
-    ub->offset += alignment; \
+    ucdr_advance_buffer(ub, alignment); \
     if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
     { \
         ucdr_array_to_buffer(ub, (uint8_t*)array, size * TYPE_SIZE, TYPE_SIZE); \
@@ -131,8 +130,7 @@ void ucdr_buffer_to_array(
 
 #define UCDR_DESERIALIZE_ARRAY_BYTE_N(TYPE, TYPE_SIZE, ENDIAN) \
     size_t alignment = ucdr_buffer_alignment(ub, TYPE_SIZE); \
-    ub->iterator += alignment; \
-    ub->offset += alignment; \
+    ucdr_advance_buffer(ub, alignment); \
     if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
     { \
         ucdr_buffer_to_array(ub, (uint8_t*)array, size * TYPE_SIZE, TYPE_SIZE); \
