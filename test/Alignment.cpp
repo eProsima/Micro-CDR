@@ -40,7 +40,7 @@ public:
 
 };
 
-INSTANTIATE_TEST_CASE_P(Offset, Alignment, ::testing::Range(0, 17), ::testing::PrintToStringParamName());
+INSTANTIATE_TEST_SUITE_P(Offset, Alignment, ::testing::Range(0, 17), ::testing::PrintToStringParamName());
 
 TEST_P(Alignment, Block_8)
 {
