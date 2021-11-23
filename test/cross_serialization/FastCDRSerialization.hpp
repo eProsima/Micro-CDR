@@ -96,7 +96,8 @@ public:
                         return true;
                     }
                     ucdrBuffer temp_buffer;
-                    ucdr_init_buffer_origin(&temp_buffer, reinterpret_cast<uint8_t*>(b.front().first), b.front().second, buffer->offset);
+                    ucdr_init_buffer_origin(&temp_buffer, reinterpret_cast<uint8_t*>(b.front().first), b.front().second,
+                    buffer->offset);
 
                     ucdr_set_on_full_buffer_callback(&temp_buffer, buffer->on_full_buffer, buffer->args);
                     b.pop();
