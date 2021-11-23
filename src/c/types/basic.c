@@ -55,6 +55,7 @@
 
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     size_t alignment = ucdr_buffer_alignment(ub, SIZE); \
+    uint8_t last_data_size = ub->last_data_size; \
     ucdr_advance_buffer(ub, alignment); \
     if (ucdr_check_buffer_available_for(ub, SIZE)) \
     { \
@@ -102,6 +103,7 @@
         else { \
             ub->iterator -= first_slot_size; \
             ub->offset -= first_slot_size; \
+            ub->last_data_size = last_data_size; \
         } \
     } \
     else if (ucdr_check_final_buffer_behavior(ub, SIZE)) \
@@ -173,6 +175,7 @@
 
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     size_t alignment = ucdr_buffer_alignment(ub, SIZE); \
+    uint8_t last_data_size = ub->last_data_size; \
     ucdr_advance_buffer(ub, alignment); \
     if (ucdr_check_buffer_available_for(ub, SIZE)) \
     { \
@@ -221,6 +224,7 @@
         else { \
             ub->iterator -= first_slot_size; \
             ub->offset -= first_slot_size; \
+            ub->last_data_size = last_data_size; \
         } \
     } \
     else if (ucdr_check_final_buffer_behavior(ub, SIZE)) \
