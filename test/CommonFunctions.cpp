@@ -153,24 +153,24 @@ TEST_F(CommonFunctions, ucdr_align)
 
     ucdr_reset_buffer_offset(&ub, offset);
     EXPECT_EQ(ucdr_alignment(offset, 2), 1);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 2), 1);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 2), 0);
     ucdr_align_to(&ub, 2);
-    EXPECT_EQ(ub.iterator, ub.init + 2);
-    EXPECT_EQ(ub.offset, ub.origin + 2);
+    EXPECT_EQ(ub.iterator, ub.init + 1);
+    EXPECT_EQ(ub.offset, ub.origin + 1);
 
     ucdr_reset_buffer_offset(&ub, offset);
     EXPECT_EQ(ucdr_alignment(offset, 4), 3);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 4), 3);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 4), 2);
     ucdr_align_to(&ub, 4);
-    EXPECT_EQ(ub.iterator, ub.init + 4);
-    EXPECT_EQ(ub.offset, ub.origin + 4);
+    EXPECT_EQ(ub.iterator, ub.init + 3);
+    EXPECT_EQ(ub.offset, ub.origin + 3);
 
     ucdr_reset_buffer_offset(&ub, offset);
     EXPECT_EQ(ucdr_alignment(offset, 8), 7);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 8), 7);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 8), 6);
     ucdr_align_to(&ub, 8);
-    EXPECT_EQ(ub.iterator, ub.init + 8);
-    EXPECT_EQ(ub.offset, ub.origin + 8);
+    EXPECT_EQ(ub.iterator, ub.init + 7);
+    EXPECT_EQ(ub.offset, ub.origin + 7);
 }
 
 TEST_F(CommonFunctions, ucdr_advance_buffer)

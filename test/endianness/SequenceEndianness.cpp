@@ -176,5 +176,5 @@ TEST_P(SequenceEndianness, Double)
     EXPECT_TRUE(0 == std::memcmp(input, output, SEQUENCE_SIZE * sizeof(input[0])));
 }
 
-INSTANTIATE_TEST_CASE_P(ucdrEndianness, SequenceEndianness,
+INSTANTIATE_TEST_SUITE_P(ucdrEndianness, SequenceEndianness,
         ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));

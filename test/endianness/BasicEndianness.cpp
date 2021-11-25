@@ -120,5 +120,5 @@ TEST_P(BasicEndianness, Double)
     EXPECT_EQ(input, output);
 }
 
-INSTANTIATE_TEST_CASE_P(ucdrEndianness, BasicEndianness,
+INSTANTIATE_TEST_SUITE_P(ucdrEndianness, BasicEndianness,
         ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));
