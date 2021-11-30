@@ -55,9 +55,58 @@
 
 #define UCDR_SERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     size_t alignment = ucdr_buffer_alignment(ub, SIZE); \
-    ub->iterator += alignment; \
-    ub->offset += alignment; \
-    if (ucdr_check_final_buffer_behavior(ub, SIZE)) \
+    uint8_t last_data_size = ub->last_data_size; \
+    ucdr_advance_buffer(ub, alignment); \
+    if (ucdr_check_buffer_available_for(ub, SIZE)) \
+    { \
+        if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+        { \
+            memcpy(ub->iterator, (void*)&value, SIZE); \
+        } \
+        else \
+        { \
+            UCDR_SERIALIZE_BYTE_ ## SIZE ## _CORE() \
+        } \
+        ub->iterator += SIZE; \
+        ub->offset += SIZE; \
+        ub->last_data_size = SIZE; \
+    } \
+    else if (ub->final > ub->iterator){ \
+        void* first_slot = ub->iterator; \
+        size_t first_slot_size = (size_t) (ub->final - ub->iterator); \
+        ub->iterator += first_slot_size; \
+        ub->offset += first_slot_size; \
+        if (ucdr_check_final_buffer_behavior(ub, SIZE - first_slot_size)) \
+        { \
+            if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+            { \
+                memcpy(first_slot, (void*)&value, first_slot_size); \
+                memcpy(ub->iterator, ((uint8_t*)&value) + first_slot_size, SIZE - first_slot_size); \
+            } \
+            else \
+            { \
+                uint8_t* target = first_slot; \
+                for (size_t i = 0; i < SIZE; i++) \
+                { \
+                    *target = ((uint8_t*)&value)[SIZE - 1 - i]; \
+                    target++; \
+                    if (i >= first_slot_size) \
+                    { \
+                        target = ub->iterator; \
+                    } \
+                } \
+            } \
+            ub->iterator += SIZE - first_slot_size; \
+            ub->offset += SIZE - first_slot_size; \
+            ub->last_data_size = SIZE; \
+        } \
+        else { \
+            ub->iterator -= first_slot_size; \
+            ub->offset -= first_slot_size; \
+            ub->last_data_size = last_data_size; \
+        } \
+    } \
+    else if (ucdr_check_final_buffer_behavior(ub, SIZE)) \
     { \
         if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \
@@ -126,9 +175,59 @@
 
 #define UCDR_DESERIALIZE_BYTE_N(TYPE, SIZE, ENDIAN) \
     size_t alignment = ucdr_buffer_alignment(ub, SIZE); \
-    ub->iterator += alignment; \
-    ub->offset += alignment; \
-    if (ucdr_check_final_buffer_behavior(ub, SIZE)) \
+    uint8_t last_data_size = ub->last_data_size; \
+    ucdr_advance_buffer(ub, alignment); \
+    if (ucdr_check_buffer_available_for(ub, SIZE)) \
+    { \
+        if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+        { \
+            memcpy((void*)value, ub->iterator, SIZE); \
+        } \
+        else \
+        { \
+            UCDR_DESERIALIZE_BYTE_ ## SIZE ## _CORE() \
+        } \
+        ub->iterator += SIZE; \
+        ub->offset += SIZE; \
+        ub->last_data_size = SIZE; \
+    } \
+    else if (ub->final > ub->iterator){ \
+        void* first_slot = ub->iterator; \
+        size_t first_slot_size = (size_t) (ub->final - ub->iterator); \
+        ub->iterator += first_slot_size; \
+        ub->offset += first_slot_size; \
+        if (ucdr_check_final_buffer_behavior(ub, SIZE - first_slot_size)) \
+        { \
+            if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
+            { \
+                memcpy((void*)value, first_slot, first_slot_size); \
+                memcpy(((uint8_t*)value) + first_slot_size, ub->iterator, SIZE - first_slot_size); \
+            } \
+            else \
+            { \
+                uint8_t* target = first_slot; \
+                uint8_t* aux_value = (uint8_t*) value; \
+                for (size_t i = 0; i < SIZE; i++) \
+                { \
+                    *aux_value = ((uint8_t*)target)[SIZE - 1 - i]; \
+                    aux_value++; \
+                    if (i >= first_slot_size) \
+                    { \
+                        target = ub->iterator; \
+                    } \
+                } \
+            } \
+            ub->iterator += SIZE - first_slot_size; \
+            ub->offset += SIZE - first_slot_size; \
+            ub->last_data_size = SIZE; \
+        } \
+        else { \
+            ub->iterator -= first_slot_size; \
+            ub->offset -= first_slot_size; \
+            ub->last_data_size = last_data_size; \
+        } \
+    } \
+    else if (ucdr_check_final_buffer_behavior(ub, SIZE)) \
     { \
         if (UCDR_MACHINE_ENDIANNESS == ENDIAN) \
         { \

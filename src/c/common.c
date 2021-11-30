@@ -36,7 +36,9 @@ bool ucdr_check_final_buffer_behavior(
         ucdrBuffer* ub,
         size_t data_size)
 {
-    if (!ub->error && ub->iterator + data_size > ub->final)
+    (void) data_size;
+
+    if (!ub->error && ub->iterator >= ub->final)
     {
         ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub->args) : true;
     }
@@ -59,7 +61,9 @@ size_t ucdr_check_final_buffer_behavior_array(
         size_t bytes,
         size_t data_size)
 {
-    if (!ub->error && ub->iterator + data_size > ub->final && bytes > 0)
+    (void) data_size;
+
+    if (!ub->error && ub->iterator >= ub->final && bytes > 0)
     {
         ub->error = (NULL != ub->on_full_buffer) ? ub->on_full_buffer(ub, ub->args) : true;
     }
@@ -177,7 +181,7 @@ size_t ucdr_buffer_alignment(
         size_t data_size)
 {
     return (data_size > ub->last_data_size)
-        ? (data_size - ((uint32_t)(ub->offset - ub->origin) % data_size)) & (data_size - 1)
+        ? (data_size - ((uint32_t)(ub->offset) % data_size)) & (data_size - 1)
         : 0;
 }
 

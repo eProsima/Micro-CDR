@@ -48,7 +48,7 @@ endif()
 ###############################################################################
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 if(NOT UCDR_SUPERBUILD)
-    project(microcdr VERSION "1.2.2" LANGUAGES C)
+    project(microcdr VERSION "2.0.0" LANGUAGES C)
 else()
     project(ucdr_superbuild NONE)
     include(${PROJECT_SOURCE_DIR}/cmake/SuperBuild.cmake)

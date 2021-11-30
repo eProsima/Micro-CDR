@@ -22,58 +22,114 @@
 #include <fastcdr/FastCdr.h>
 #include <fastcdr/exceptions/Exception.h>
 
-#define BUFFER_LENGTH 2014
+#include <functional>
+#include <queue>
 
+using namespace eprosima::fastcdr;
+
+#define ELEMENT_NUMBER 50
+
+template <typename T>
 class FastCDRSerialization : public ::testing::Test
 {
 public:
 
-    void double_sequence_with_aligment_serialization()
+    constexpr static size_t buffer_size = ELEMENT_NUMBER * sizeof(T);
+    std::array<uint8_t, buffer_size> byte_buffer;
+    using partial_buffer = std::queue<std::pair<char*, size_t>>;
+
+    partial_buffer split_buffer(
+            size_t slots)
     {
-        using namespace eprosima::fastcdr;
-
-        char buffer_fastcdr[BUFFER_LENGTH] = {0};
-
-        ucdrBuffer reader_fastcdr;
-        ucdr_init_buffer(&reader_fastcdr, reinterpret_cast<uint8_t*>(buffer_fastcdr), BUFFER_LENGTH);
-
-        FastBuffer cdrbuffer(buffer_fastcdr, BUFFER_LENGTH);
-        Cdr cdr_ser(cdrbuffer);
-
-        // Serialize 2 bytes
-        const uint8_t octet_array[2] = {0xAA, 0xAA};
-        cdr_ser.serializeArray(octet_array, 2);
-
-        uint8_t octet_array_out[2] = {};
-        EXPECT_TRUE(ucdr_deserialize_array_uint8_t(&reader_fastcdr, octet_array_out, 2));
-        EXPECT_EQ(octet_array[0], octet_array_out[0]);
-        EXPECT_EQ(octet_array[1], octet_array_out[1]);
-
-        // Serialize 2 doubles = 16 Bytes + 1 Header
-        const double double_seq[2] = {3.14, 3.14};
-        cdr_ser.serializeSequence(double_seq, 2);
-
-        double double_seq_out[2];
-        uint32_t double_seq_len;
-        EXPECT_TRUE(ucdr_deserialize_sequence_double(&reader_fastcdr, double_seq_out, 2, &double_seq_len));
-        EXPECT_EQ(double_seq_len, 2u);
-
-        // Serialize 0 doubles = 1 header
-        std::vector<double> double_vector;
-        cdr_ser.serializeSequence(double_seq, 0);
-
-        EXPECT_TRUE(ucdr_deserialize_sequence_double(&reader_fastcdr, double_seq_out, 2, &double_seq_len));
-        EXPECT_EQ(double_seq_len, 0u);
-
-        // Serialize 2 bytes
-        cdr_ser.serializeArray(octet_array, 2);
-
-        EXPECT_TRUE(ucdr_deserialize_array_uint8_t(&reader_fastcdr, octet_array_out, 2));
-        EXPECT_EQ(octet_array[0], octet_array_out[0]);
-        EXPECT_EQ(octet_array[1], octet_array_out[1]);
-
+        partial_buffer result;
+        size_t slot_size = byte_buffer.size() / slots;
+        size_t rest = byte_buffer.size() % slots;
+        for (size_t i = 0; i < slots; ++i)
+        {
+            result.push(std::make_pair(reinterpret_cast<char*>(byte_buffer.data()) + i * slot_size, slot_size));
+        }
+        result.back().second += rest;
+        return result;
     }
 
+    partial_buffer split_buffer(
+            std::vector<size_t> slots_sizes)
+    {
+        partial_buffer result;
+        size_t offset = 0;
+        for (size_t slot_size : slots_sizes)
+        {
+            if (offset + slot_size > byte_buffer.size())
+            {
+                break;
+            }
+            result.push(std::make_pair(reinterpret_cast<char*>(byte_buffer.data()) + offset, slot_size));
+            offset += slot_size;
+        }
+        return result;
+    }
+
+    void prepare_fast_cdr(
+            std::function<void(Cdr&)> cb)
+    {
+        FastBuffer cdrbuffer(reinterpret_cast<char*>(byte_buffer.data()), byte_buffer.size());
+        Cdr cdr_ser(cdrbuffer);
+        cb(cdr_ser);
+    }
+
+    void prepare_micro_cdr(
+            partial_buffer buffers,
+            std::function<void(ucdrBuffer&)> cb)
+    {
+        ASSERT_GT(buffers.size(), 0UL);
+
+        ucdrBuffer ucdr_buffer;
+        ucdr_init_buffer(&ucdr_buffer, reinterpret_cast<uint8_t*>(buffers.front().first), buffers.front().second);
+        buffers.pop();
+        ucdr_set_on_full_buffer_callback(&ucdr_buffer,
+                [](struct ucdrBuffer* buffer, void* args) -> bool
+                {
+                    partial_buffer& b = *reinterpret_cast<partial_buffer*>(args);
+
+                    if (0 == b.size())
+                    {
+                        return true;
+                    }
+                    ucdrBuffer temp_buffer;
+                    ucdr_init_buffer_origin(&temp_buffer, reinterpret_cast<uint8_t*>(b.front().first), b.front().second,
+                    buffer->offset);
+
+                    ucdr_set_on_full_buffer_callback(&temp_buffer, buffer->on_full_buffer, buffer->args);
+                    b.pop();
+
+                    *buffer = temp_buffer;
+                    return false;
+                }, static_cast<void*>(&buffers));
+
+        cb(ucdr_buffer);
+    }
+
+    #define GENERATE_SERIALIZERS(TYPE) \
+    bool ucdr_serialize_array(ucdrBuffer & cdr, TYPE * d, size_t size){ return ucdr_serialize_array_ ## TYPE(&cdr, d, \
+                                                                                       size); } \
+    bool ucdr_deserialize_array(ucdrBuffer & cdr, TYPE * d, size_t size){ return ucdr_deserialize_array_ ## TYPE(&cdr, \
+                                                                                         d, \
+                                                                                         size); } \
+    bool ucdr_serialize(ucdrBuffer & cdr, TYPE d){ return ucdr_serialize_ ## TYPE(&cdr, d); } \
+    bool ucdr_deserialize(ucdrBuffer & cdr, TYPE * d){ return ucdr_deserialize_ ## TYPE(&cdr, d); }
+
+    GENERATE_SERIALIZERS(char)
+    GENERATE_SERIALIZERS(bool)
+    GENERATE_SERIALIZERS(uint8_t)
+    GENERATE_SERIALIZERS(uint16_t)
+    GENERATE_SERIALIZERS(uint32_t)
+    GENERATE_SERIALIZERS(uint64_t)
+    GENERATE_SERIALIZERS(int8_t)
+    GENERATE_SERIALIZERS(int16_t)
+    GENERATE_SERIALIZERS(int32_t)
+    GENERATE_SERIALIZERS(int64_t)
+    GENERATE_SERIALIZERS(float)
+    GENERATE_SERIALIZERS(double)
 };
 
 #endif //_FASTCDR_SERIALIZATION_HPP_

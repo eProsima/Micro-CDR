@@ -31,7 +31,7 @@ if(UCDR_BUILD_TESTS)
             GIT_REPOSITORY
                 https://github.com/google/googletest.git
             GIT_TAG
-                2fe3bd994b3189899d93f1d5a881e725e046fdc2
+                v1.10.x
             PREFIX
                 ${PROJECT_BINARY_DIR}/googletest
             INSTALL_DIR
@@ -73,7 +73,7 @@ if(UCDR_BUILD_TESTS)
         )
     set(FASTCDR_ROOT ${PROJECT_BINARY_DIR}/temp_install/fastcdr CACHE PATH "" FORCE)
     set(FASTCDR_INCLUDE_DIRS ${PROJECT_BINARY_DIR}/temp_install/fastcdr/include CACHE PATH "" FORCE)
-        
+
     list(APPEND _deps fastcdr)
 endif()
 
