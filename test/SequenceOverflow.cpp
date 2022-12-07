@@ -39,7 +39,7 @@ private:
 
 TEST_F(SequenceOverflow, Block1)
 {
-    uint8_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint8_t input[SEQUENCE_SIZE_OVERFLOW] = {0};
     uint8_t output[ARRAY_CAPACITY] = {0};
 
     EXPECT_TRUE(ucdr_serialize_sequence_uint8_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
@@ -48,7 +48,7 @@ TEST_F(SequenceOverflow, Block1)
 
 TEST_F(SequenceOverflow, Block2)
 {
-    uint16_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint16_t input[SEQUENCE_SIZE_OVERFLOW] = {0};
     uint16_t output[ARRAY_CAPACITY] = {0};
 
     EXPECT_TRUE(ucdr_serialize_sequence_uint16_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
@@ -57,7 +57,7 @@ TEST_F(SequenceOverflow, Block2)
 
 TEST_F(SequenceOverflow, Block4)
 {
-    uint32_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint32_t input[SEQUENCE_SIZE_OVERFLOW] = {0};
     uint32_t output[ARRAY_CAPACITY] = {0};
 
     EXPECT_TRUE(ucdr_serialize_sequence_uint32_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
@@ -66,7 +66,7 @@ TEST_F(SequenceOverflow, Block4)
 
 TEST_F(SequenceOverflow, Block8)
 {
-    uint64_t input[SEQUENCE_SIZE_OVERFLOW];
+    uint64_t input[SEQUENCE_SIZE_OVERFLOW] = {0};
     uint64_t output[ARRAY_CAPACITY] = {0};
 
     EXPECT_TRUE(ucdr_serialize_sequence_uint64_t(&writer, input, SEQUENCE_SIZE_OVERFLOW));
