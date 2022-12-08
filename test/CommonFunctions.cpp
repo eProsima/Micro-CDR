@@ -16,7 +16,7 @@
 #include <ucdr/microcdr.h>
 #include <cstring>
 
-#define BUFFER_LENGTH 1024
+#define BUFFER_LENGTH 1024UL
 
 bool operator ==(
         const ucdrBuffer& rhs,
@@ -56,7 +56,7 @@ TEST_F(CommonFunctions, ucdr_init_buffer)
     EXPECT_EQ(ub.init, buffer);
     EXPECT_EQ(ub.final, ub.init + BUFFER_LENGTH);
     EXPECT_EQ(ub.iterator, ub.init);
-    EXPECT_EQ(ub.origin, 0);
+    EXPECT_EQ(ub.origin, 0UL);
     EXPECT_EQ(ub.offset, ub.origin);
     EXPECT_EQ(ub.endianness, UCDR_MACHINE_ENDIANNESS);
     EXPECT_EQ(ub.last_data_size, 0);
@@ -145,29 +145,29 @@ TEST_F(CommonFunctions, ucdr_align)
     size_t offset = 1;
 
     ucdr_init_buffer_origin_offset(&ub, buffer, BUFFER_LENGTH, origin, offset);
-    EXPECT_EQ(ucdr_alignment(offset, 1), 0);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 1), 0);
+    EXPECT_EQ(ucdr_alignment(offset, 1), 0UL);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 1), 0UL);
     ucdr_align_to(&ub, 1);
     EXPECT_EQ(ub.iterator, ub.init + 1);
     EXPECT_EQ(ub.offset, ub.origin + 1);
 
     ucdr_reset_buffer_offset(&ub, offset);
-    EXPECT_EQ(ucdr_alignment(offset, 2), 1);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 2), 0);
+    EXPECT_EQ(ucdr_alignment(offset, 2), 1UL);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 2), 0UL);
     ucdr_align_to(&ub, 2);
     EXPECT_EQ(ub.iterator, ub.init + 1);
     EXPECT_EQ(ub.offset, ub.origin + 1);
 
     ucdr_reset_buffer_offset(&ub, offset);
-    EXPECT_EQ(ucdr_alignment(offset, 4), 3);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 4), 2);
+    EXPECT_EQ(ucdr_alignment(offset, 4), 3UL);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 4), 2UL);
     ucdr_align_to(&ub, 4);
     EXPECT_EQ(ub.iterator, ub.init + 3);
     EXPECT_EQ(ub.offset, ub.origin + 3);
 
     ucdr_reset_buffer_offset(&ub, offset);
-    EXPECT_EQ(ucdr_alignment(offset, 8), 7);
-    EXPECT_EQ(ucdr_buffer_alignment(&ub, 8), 6);
+    EXPECT_EQ(ucdr_alignment(offset, 8), 7UL);
+    EXPECT_EQ(ucdr_buffer_alignment(&ub, 8), 6UL);
     ucdr_align_to(&ub, 8);
     EXPECT_EQ(ub.iterator, ub.init + 7);
     EXPECT_EQ(ub.offset, ub.origin + 7);

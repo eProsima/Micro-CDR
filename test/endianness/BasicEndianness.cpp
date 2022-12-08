@@ -120,5 +120,11 @@ TEST_P(BasicEndianness, Double)
     EXPECT_EQ(input, output);
 }
 
-INSTANTIATE_TEST_SUITE_P(ucdrEndianness, BasicEndianness,
+#ifdef INSTANTIATE_TEST_SUITE_P
+#define GTEST_INSTANTIATE_TEST_MACRO(x, y, z) INSTANTIATE_TEST_SUITE_P(x, y, z)
+#else
+#define GTEST_INSTANTIATE_TEST_MACRO(x, y, z) INSTANTIATE_TEST_CASE_P(x, y, z)
+#endif // ifdef INSTANTIATE_TEST_SUITE_P
+       //
+GTEST_INSTANTIATE_TEST_MACRO(ucdrEndianness, BasicEndianness,
         ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));
