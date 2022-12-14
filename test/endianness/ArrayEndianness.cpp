@@ -128,5 +128,11 @@ TEST_P(ArrayEndianness, Double)
     EXPECT_TRUE(0 == std::memcmp(input, output, ARRAY_SIZE * sizeof(input[0])));
 }
 
-INSTANTIATE_TEST_SUITE_P(ucdrEndianness, ArrayEndianness,
+#ifdef INSTANTIATE_TEST_SUITE_P
+#define GTEST_INSTANTIATE_TEST_MACRO(x, y, z) INSTANTIATE_TEST_SUITE_P(x, y, z)
+#else
+#define GTEST_INSTANTIATE_TEST_MACRO(x, y, z) INSTANTIATE_TEST_CASE_P(x, y, z)
+#endif // ifdef INSTANTIATE_TEST_SUITE_P
+
+GTEST_INSTANTIATE_TEST_MACRO(ucdrEndianness, ArrayEndianness,
         ::testing::Values(UCDR_LITTLE_ENDIANNESS, UCDR_BIG_ENDIANNESS));

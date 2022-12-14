@@ -15,7 +15,7 @@
 ###############################################################################
 # CMake build rules for Micro CDR
 ###############################################################################
-cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15)
 
 ###############################################################################
 # Build options
@@ -48,7 +48,7 @@ endif()
 ###############################################################################
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 if(NOT UCDR_SUPERBUILD)
-    project(microcdr VERSION "2.0.0" LANGUAGES C)
+    project(microcdr VERSION "2.0.1" LANGUAGES C)
 else()
     project(ucdr_superbuild NONE)
     include(${PROJECT_SOURCE_DIR}/cmake/SuperBuild.cmake)
