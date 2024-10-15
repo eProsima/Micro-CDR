@@ -13,6 +13,12 @@ This library is focused on embedded and resource-limited systems.
 
 *Micro CDR* uses a static buffer, and allow to serialize and deserialize in both, big endianness and little endianness.
 
+## Commercial support
+
+Looking for commercial support? Write us to info@eprosima.com
+
+Find more about us at [eProsima’s webpage](https://eprosima.com/).
+
 ## Usage examples
 This is a code example showing the serialization and deserialization of a string.
 As *Micro CDR* uses a static buffer, the user has to provide a defined buffer and its size during the *ucdrBuffer* creation.
