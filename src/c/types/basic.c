@@ -19,6 +19,18 @@
 // -------------------------------------------------------------------
 //                    SERIALIZE MACROS
 // -------------------------------------------------------------------
+#define UCDR_SERIALIZE_BYTE_BOOL(TYPE, ENDIAN) \
+    (void)ENDIAN; \
+    if (ucdr_check_final_buffer_behavior(ub, 1)) \
+    { \
+        *ub->iterator = (uint8_t)((value)?0x01:0x00); \
+        ub->iterator += 1; \
+        ub->offset += 1; \
+        ub->last_data_size = 1; \
+    } \
+    return !ub->error;
+
+
 #define UCDR_SERIALIZE_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
     if (ucdr_check_final_buffer_behavior(ub, 1)) \
@@ -139,6 +151,17 @@
 // -------------------------------------------------------------------
 //                    DESERIALIZE MACROS
 // -------------------------------------------------------------------
+#define UCDR_DESERIALIZE_BYTE_BOOL(TYPE, ENDIAN) \
+    (void)ENDIAN; \
+    if (ucdr_check_final_buffer_behavior(ub, 1)) \
+    { \
+        *value = (TYPE)((*ub->iterator)?0x01:0x00); \
+        ub->iterator += 1; \
+        ub->offset += 1; \
+        ub->last_data_size = 1; \
+    } \
+    return !ub->error;
+
 #define UCDR_DESERIALIZE_BYTE_1(TYPE, ENDIAN) \
     (void)ENDIAN; \
     if (ucdr_check_final_buffer_behavior(ub, 1)) \
@@ -268,7 +291,7 @@
 //              PUBLIC DE-SERIALIZATION IMPLEMENTATIONS
 // -------------------------------------------------------------------
 UCDR_BASIC_TYPE_DEFINITIONS(_char, char, 1)
-UCDR_BASIC_TYPE_DEFINITIONS(_bool, bool, 1)
+UCDR_BASIC_TYPE_DEFINITIONS(_bool, bool, BOOL)
 UCDR_BASIC_TYPE_DEFINITIONS(_uint8_t, uint8_t, 1)
 UCDR_BASIC_TYPE_DEFINITIONS(_uint16_t, uint16_t, 2)
 UCDR_BASIC_TYPE_DEFINITIONS(_uint32_t, uint32_t, 4)
