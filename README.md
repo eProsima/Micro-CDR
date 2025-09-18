@@ -6,7 +6,7 @@
 [![Forks](https://img.shields.io/github/forks/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/network/members)
 [![Stars](https://img.shields.io/github/stars/eProsima/Micro-CDR.svg)](https://github.com/eProsima/Micro-CDR/stargazers)
 
-<a href="http://www.eprosima.com"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSd0PDlVz1U_7MgdTe0FRIWD0Jc9_YH-gGi0ZpLkr-qgCI6ZEoJZ5GBqQ" align="left" hspace="8" vspace="2" width="100" height="100" ></a>
+<a href="http://www.eprosima.com"><img src="docs/eprosima-logo.svg" align="left" hspace="8" vspace="2" width="100" height="100" ></a>
 
 *eProsima Micro CDR* is a *C* library implementing the *CDR* standard serialization methods.
 This library is focused on embedded and resource-limited systems.
