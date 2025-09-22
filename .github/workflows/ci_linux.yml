@@ -11,6 +11,9 @@ on:
   schedule:
     - cron: '35 17 * * 6'
 
+permissions:
+  checks: write
+
 jobs:
   build-test-style-cover:
     name: Build, Tests, and Coverage
@@ -105,11 +108,11 @@ jobs:
 
       - name: Publish unit test results (JUnit)
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        if: (!cancelled())
         with:
           files: build/CTestResults.xml
           check_name: "Linux Tests"
-          comment_title: "Linux Tests Results"
+          comment_mode: off
 
       - name: Coverage (human-readable summary)
         if: always()
