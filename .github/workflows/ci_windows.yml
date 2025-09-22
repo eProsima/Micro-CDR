@@ -71,25 +71,10 @@ jobs:
             build/CTestResults.xml
           if-no-files-found: error
 
-  publish-tests:
-    name: Publish Test Results
-    runs-on: ubuntu-latest
-    needs: build-and-tests
-
-    steps:
-      - name: Download test artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: test-artifact
-          path: reports
-
-      - name: List downloaded files (debug)
-        run: ls -l reports
-
       - name: Publish unit test results (JUnit)
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        if: (!cancelled())
         with:
-          files: reports/CTestResults.xml
+          files: build/CTestResults.xml
           check_name: "Windows Tests"
           comment_title: "Windows Tests Results"
