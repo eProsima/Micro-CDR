@@ -11,6 +11,7 @@ on:
 
 jobs:
   build-test-style-cover:
+    name: Build, Tests, and Coverage
     runs-on: ubuntu-22.04
 
     steps:
