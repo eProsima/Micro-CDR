@@ -8,6 +8,8 @@ on:
     inputs:
       name:
         description: "Manual trigger"
+  schedule:
+    - cron: '35 17 * * 6'
 
 jobs:
   build-test-style-cover:

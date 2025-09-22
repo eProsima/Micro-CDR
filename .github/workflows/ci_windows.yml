@@ -8,6 +8,8 @@ on:
     inputs:
       name:
         description: "Manual trigger"
+  schedule:
+    - cron: '45 17 * * 6'
 
 permissions:
   contents: read
