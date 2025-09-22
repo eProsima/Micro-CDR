@@ -106,6 +106,8 @@ jobs:
         if: always()
         with:
           files: build/CTestResults.xml
+          check_name: "Linux Tests"
+          comment_title: "Linux Tests Results"
 
       - name: Coverage (human-readable summary)
         if: always()
