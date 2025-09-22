@@ -19,8 +19,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # --- CMake 3.15.7 (same as Jenkins) ---
-      - name: Install CMake 3.15.7 and prerequisites
+      # --- Install CMake 3.15.7 (same as Jenkins) for build, and newer CTest for JUnit export ---
+      - name: Install CMake and prerequisites
         shell: bash
         run: |
           sudo apt-get update
@@ -28,10 +28,17 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install gcovr
 
-          CMAKE_VERSION=3.15.7
-          curl -L "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz" -o cmake.tgz
-          sudo tar -C /opt -xzf cmake.tgz
-          echo "/opt/cmake-${CMAKE_VERSION}-Linux-x86_64/bin" >> "$GITHUB_PATH"
+          # CMake 3.15.7 (to mirror Jenkins build environment)
+          CMAKE_OLD=3.15.7
+          curl -L "https://github.com/Kitware/CMake/releases/download/v${CMAKE_OLD}/cmake-${CMAKE_OLD}-Linux-x86_64.tar.gz" -o cmake-old.tgz
+          sudo tar -C /opt -xzf cmake-old.tgz
+          echo "/opt/cmake-${CMAKE_OLD}-Linux-x86_64/bin" >> "$GITHUB_PATH"
+
+          # Newer CTest for JUnit export
+          CMAKE_NEW=3.27.9
+          curl -L "https://github.com/Kitware/CMake/releases/download/v${CMAKE_NEW}/cmake-${CMAKE_NEW}-linux-x86_64.tar.gz" -o cmake-new.tgz
+          sudo tar -C /opt -xzf cmake-new.tgz
+          echo "CTEST_NEW=/opt/cmake-${CMAKE_NEW}-linux-x86_64/bin/ctest" >> "$GITHUB_ENV"
 
       - name: Show cmake version
         run: cmake --version
@@ -47,29 +54,27 @@ jobs:
           cd build
           make -j"$(nproc)"
 
-      - name: Collect CTest results
+      # --- Run tests with newer CTest to produce JUnit ---
+      - name: Run tests and export JUnit
         shell: bash
         run: |
-          set -e
-          if [ -f "build/microcdr-build/Testing/TAG" ]; then
-            TEST_TAG="$(head -n 1 "build/microcdr-build/Testing/TAG" || echo "")"
-            if [ -n "$TEST_TAG" ] && [ -f "build/microcdr-build/Testing/$TEST_TAG/Test.xml" ]; then
-              cp "build/microcdr-build/Testing/$TEST_TAG/Test.xml" "build/CTestResults.xml"
-            fi
-          fi
-          if [ ! -f "build/CTestResults.xml" ]; then
-            echo '<testsuite name="ctest" tests="0" failures="0" errors="0"></testsuite>' > build/CTestResults.xml
-          fi
+          "${CTEST_NEW}" --version
+          "${CTEST_NEW}" --test-dir build/microcdr-build \
+            --output-on-failure \
+            --no-tests=error \
+            --output-junit "$GITHUB_WORKSPACE/build/CTestResults.xml"
 
-      - name: Generate coverage (gcovr Cobertura XML)
+      - name: Generate coverage (gcovr Cobertura XML + HTML)
         shell: bash
         run: |
-          gcovr -x -r . \
-            --exclude-unreachable-branches \
-            --exclude ci/ \
-            --exclude test/ \
-            --exclude build/ \
-            -o build/coverage.xml
+          EXCLUDES=(
+            '--exclude-unreachable-branches'
+            '--exclude' 'ci/'
+            '--exclude' 'test/'
+            '--exclude' 'build/'
+          )
+          gcovr -x -r . "${EXCLUDES[@]}" -o build/coverage.xml
+          gcovr --html-details -r . "${EXCLUDES[@]}" -o build/coverage.html
 
       - name: Uncrustify check
         shell: bash
@@ -85,7 +90,6 @@ jobs:
             exit $UNCR_EXIT
           fi
 
-      # --- Publish reports in the PR ---
       - name: Upload artifacts (CTest & Coverage)
         uses: actions/upload-artifact@v4
         with:
@@ -93,6 +97,7 @@ jobs:
           path: |
             build/CTestResults.xml
             build/coverage.xml
+            build/coverage.html
           if-no-files-found: warn
 
       - name: Publish unit test results (JUnit)
