@@ -9,8 +9,13 @@ on:
       name:
         description: "Manual trigger"
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
-  build-test-style-cover:
+  build-and-tests:
     name: Build and Tests
     runs-on: windows-2022
 
@@ -46,7 +51,6 @@ jobs:
           cd build
           cmake --build . --config Release
 
-      # Run tests and export JUnit
       - name: Run tests and export JUnit
         shell: pwsh
         run: |
@@ -57,16 +61,33 @@ jobs:
             --output-junit "$env:GITHUB_WORKSPACE\build\CTestResults.xml"
           Get-Item "$env:GITHUB_WORKSPACE\build\CTestResults.xml" | Format-List -Property *
 
-      - name: Upload artifacts (CTest)
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: test
+          name: test-artifact
           path: |
             build/CTestResults.xml
-          if-no-files-found: warn
+          if-no-files-found: error
+
+  publish-tests:
+    name: Publish Test Results
+    runs-on: ubuntu-latest
+    needs: build-and-tests
+
+    steps:
+      - name: Download test artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: test-artifact
+          path: reports
+
+      - name: List downloaded files (debug)
+        run: ls -l reports
 
       - name: Publish unit test results (JUnit)
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: build/CTestResults.xml
+          files: reports/CTestResults.xml
+          check_name: "Windows Tests"
+          comment_title: "Windows Tests Results"
