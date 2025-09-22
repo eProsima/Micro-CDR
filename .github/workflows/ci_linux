@@ -4,6 +4,10 @@ on:
   pull_request:
     branches:
       - '**'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Manual trigger"
 
 jobs:
   build-test-style-cover:
