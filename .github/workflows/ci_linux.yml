@@ -21,9 +21,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          ref: ${{ github.ref }}
 
       # --- Install CMake 3.15.7 (same as Jenkins) for build, and newer CTest for JUnit export ---
       - name: Install CMake and prerequisites
@@ -115,7 +116,7 @@ jobs:
           comment_mode: off
 
       - name: Coverage (human-readable summary)
-        if: always()
+        if: success()
         shell: bash
         run: |
           gcovr -r . \
