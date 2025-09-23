@@ -12,7 +12,7 @@ on:
     - cron: '45 17 * * 6'
 
 permissions:
-  checks: write
+  pull-requests: write
 
 jobs:
   build-and-tests:
@@ -80,5 +80,6 @@ jobs:
         if: (!cancelled())
         with:
           files: build/CTestResults.xml
-          check_name: "Windows Tests"
-          comment_mode: off
+          check_run: false
+          comment_mode: failures
+          comment_title: "Windows Tests Results"

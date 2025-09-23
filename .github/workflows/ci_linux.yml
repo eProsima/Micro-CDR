@@ -12,7 +12,7 @@ on:
     - cron: '35 17 * * 6'
 
 permissions:
-  checks: write
+  pull-requests: write
 
 jobs:
   build-test-style-cover:
@@ -106,8 +106,9 @@ jobs:
         if: (!cancelled())
         with:
           files: build/CTestResults.xml
-          check_name: "Linux Tests"
-          comment_mode: off
+          check_run: false
+          comment_mode: failures
+          comment_title: "Linux Tests Results"
 
       - name: Coverage (human-readable summary)
         if: success()
