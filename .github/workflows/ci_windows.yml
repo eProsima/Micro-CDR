@@ -29,6 +29,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref }}
 
+      - name: Install CMake
+        uses: ssrobins/install-cmake@v1
+        with:
+          version: '3.31.8'
+
       - name: Show tool versions
         shell: pwsh
         run: |
