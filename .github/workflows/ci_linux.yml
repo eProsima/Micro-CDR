@@ -77,20 +77,6 @@ jobs:
           gcovr -x -r . "${EXCLUDES[@]}" -o build/coverage.xml
           gcovr --html-details -r . "${EXCLUDES[@]}" -o build/coverage.html
 
-      - name: Uncrustify check
-        shell: bash
-        run: |
-          curl -L https://raw.githubusercontent.com/eProsima/cpp-style/master/uncrustify.cfg -o uncrustify.cfg
-          set +e
-          find src test include examples \( -name "*.cpp" -o -name "*.c" -o -name "*.h" -o -name "*.hpp" \) \
-            -exec uncrustify -c uncrustify.cfg --check {} +
-          UNCR_EXIT=$?
-          set -e
-          if [ $UNCR_EXIT -ne 0 ]; then
-            echo "Code style violations found by uncrustify."
-            exit $UNCR_EXIT
-          fi
-
       - name: Upload artifacts (CTest & Coverage)
         uses: actions/upload-artifact@v4
         with:
@@ -119,3 +105,11 @@ jobs:
             --exclude ci/ \
             --exclude test/ \
             --exclude build/
+
+  uncrustify:
+    name: Uncrustify check
+    runs-on: ubuntu-22.04
+    if: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'conflicts') }}
+    steps:
+      - name: Run Uncrustify Linter
+        uses: eProsima/eProsima-CI/ubuntu/uncrustify@v0
